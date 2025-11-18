@@ -1,0 +1,11 @@
+# Other artifacts
+.github
+.vscode
+
+# Python artifacts
+.venv
+__pycache__
+**/__pycache__
+
+# Heavy data files
+!data/.gitkeep
