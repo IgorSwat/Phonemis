@@ -8,6 +8,6 @@ namespace phonemize::tokenizer {
 
 // Tokenizes the input text into a vector of strings (tokens).
 // Follows specific rules for special characters and special words.
-std::vector<std::string> tokenize(const std::string& text);
+std::vector<Token> tokenize(const std::string& text);
 
 } // namespace phonemize::tokenizer

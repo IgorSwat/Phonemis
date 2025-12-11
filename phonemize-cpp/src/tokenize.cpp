@@ -1,12 +1,11 @@
-#include "tokenize.h"
-#include "constants.h"
+#include <phonemize/tokenizer/tokenize.h>
+#include <phonemize/tokenizer/constants.h>
 #include <algorithm>
 #include <cctype>
 #include <optional>
 #include <stack>
 
 // TODO: add saving the trailing white spaces to Tokens
-// TODO: modify the script to resolve the trailing dot issue
 
 namespace phonemize::tokenizer {
 
@@ -43,7 +42,8 @@ bool is_hard_separator(char c) {
 }
 
 // Processes a single chunk (subword) recursively/iteratively based on special characters
-void process_chunk(const std::string& chunk, std::vector<std::string>& tokens) {
+void process_chunk(const std::string& chunk, 
+									 std::vector<Token>& tokens) {
 	// Edge case - an empty word ("")
 	if (chunk.empty()) return;
 
@@ -51,7 +51,7 @@ void process_chunk(const std::string& chunk, std::vector<std::string>& tokens) {
 	// If an entire chunk is a special word, we should return it without
 	// further divisions.
 	if (constants::kSpecialWords.count(to_lower(chunk))) {
-			tokens.push_back(chunk);
+			tokens.push_back({chunk, ""});
 			return;
 	}
 
@@ -68,7 +68,7 @@ void process_chunk(const std::string& chunk, std::vector<std::string>& tokens) {
 
 	// If no special character found, it's a simple token (an entire word)
 	if (special_pos == std::string::npos) {
-			tokens.push_back(chunk);
+			tokens.push_back({chunk, ""});
 			return;
 	}
 
@@ -89,7 +89,7 @@ void process_chunk(const std::string& chunk, std::vector<std::string>& tokens) {
 							// Be careful for dots, as they are theoretically both soft and hard characters
 							size_t next_dot = chunk.find('.');
 							if (next_dot == std::string::npos)
-								tokens.push_back(chunk);
+								tokens.push_back({chunk, ""});
 							else {
 								process_chunk(chunk.substr(0, next_dot), tokens);
 								process_chunk(chunk.substr(next_dot), tokens);
@@ -103,7 +103,7 @@ void process_chunk(const std::string& chunk, std::vector<std::string>& tokens) {
 							process_chunk(left + special_str, tokens);
 							process_chunk(right, tokens);
 					} else {
-							tokens.push_back(chunk);
+							tokens.push_back({chunk, ""});
 					}
 					break;
 
@@ -111,25 +111,26 @@ void process_chunk(const std::string& chunk, std::vector<std::string>& tokens) {
 					// xyz:abc -> xyz:abc (unless abc empty -> xyz, :)
 					if (!right.empty()) {
 							// Treat as one word (join from both sides)
-							tokens.push_back(chunk);
+							tokens.push_back({chunk, ""});
 					} else {
 							// xyz: -> xyz, :
 							process_chunk(left, tokens);
-							tokens.push_back(special_str);
+							tokens.push_back({special_str, ""});
 					}
 					break;
 
 			case rules::Separation::TOTAL_DIVIDE:
 					// xyz.abc -> xyz, ., abc
 					if (!left.empty()) process_chunk(left, tokens);
-					tokens.push_back(special_str);
+					tokens.push_back({special_str, ""});
 					if (!right.empty()) process_chunk(right, tokens);
 					break;
 	}
 }
 
 // Splits a raw word by hard separators and processes resulting parts
-void process_raw_word(const std::string& raw_word, std::vector<std::string>& tokens) {
+void process_raw_word(const std::string& raw_word, 
+											std::vector<Token>& tokens) {
 	std::string current_chunk;
 	for (char c : raw_word) {
 		if (is_hard_separator(c)) {
@@ -137,7 +138,7 @@ void process_raw_word(const std::string& raw_word, std::vector<std::string>& tok
 						process_chunk(current_chunk, tokens);
 						current_chunk.clear();
 				}
-				tokens.push_back(std::string(1, c));
+				tokens.push_back({std::string(1, c), ""});
 		} else {
 				current_chunk += c;
 		}
@@ -150,27 +151,44 @@ void process_raw_word(const std::string& raw_word, std::vector<std::string>& tok
 
 } // namespace
 
-std::vector<std::string> tokenize(const std::string& text) {
+std::vector<Token> tokenize(const std::string& text) {
 	// A resulting list of tokens
-	std::vector<std::string> tokens;
+	std::vector<Token> tokens;
 
 	// A dynamic buffer to collect characters to be processed
 	std::string current_word;
 
-	for (char c : text) {
-			if (std::isspace(static_cast<unsigned char>(c))) {
-					if (!current_word.empty()) {
-							process_raw_word(current_word, tokens);
-							current_word.clear();
-					}
-			} else {
-					current_word += c;
+	for (size_t idx = 0; idx < text.size(); ++idx) {
+		char c = text[idx];
+
+		if (std::isspace(static_cast<unsigned char>(c))) {
+			// Read all the white characters starting from the current one
+			size_t jdx = idx + 1;
+			while (jdx < text.size() && std::isspace(static_cast<unsigned char>(text[jdx])))
+				++jdx;
+			
+			std::string trailing_white_chars = text.substr(idx, jdx - idx);
+
+			// If we have a pending word, process it
+			if (!current_word.empty()) {
+				process_raw_word(current_word, tokens);
+				current_word.clear();
+
+				// The right-most token always gets the trailing white spaces
+				tokens.back().whitespace = trailing_white_chars;
 			}
+
+			// Advance the outer loop to the last consumed whitespace character
+			idx = jdx - 1;
+		} else {
+			// Non-white character - expand the current word
+			current_word += c;
+		}
 	}
 
 	// One final processing when hitting the end of the text
 	if (!current_word.empty()) {
-			process_raw_word(current_word, tokens);
+		process_raw_word(current_word, tokens);
 	}
 
 	return tokens;

@@ -1,3 +1,6 @@
+# Mac OS
+**/.DS_Store
+
 # Other artifacts
 .github
 .vscode
@@ -9,3 +12,7 @@ __pycache__
 
 # Heavy data files
 !data/.gitkeep
+
+# Test executables
+test/**
+!test/*.cpp
