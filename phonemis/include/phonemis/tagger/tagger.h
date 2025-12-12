@@ -2,7 +2,6 @@
 
 #include "../tokenizer/tokens.h"
 #include <string>
-#include <third-party/json.hpp>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
@@ -12,7 +11,7 @@ namespace phonemis::tagger {
 // Tagger class
 // Provides PoS (Part of Speech) tagging functionality.
 // Requires a previous tokenization of the text (tokenizer module).
-// A modification of the Viterbi algorithm for HMM (Hidden Markov Model) tagger.
+// A modification of the Viterbi algorithm for bigram HMM (Hidden Markov Model) tagger.
 class Tagger {
 public:
   Tagger(const std::string& hmm_data_path);

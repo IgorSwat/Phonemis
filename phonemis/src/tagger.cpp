@@ -5,8 +5,6 @@
 #include <stdexcept>
 #include <third-party/json.hpp>
 
-// TODO: implement a mechanism to counter lower/upper-case issues
-
 namespace phonemis::tagger {
 
 Tagger::Tagger(const std::string& hmm_data_path) {
