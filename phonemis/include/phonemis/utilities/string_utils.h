@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace phonemis::utilities::conversions {
+namespace phonemis::utilities::string_utils {
 
 // char32_t to utf8 string conversion
 static std::string char32_to_utf8(char32_t c) {

@@ -1,9 +1,9 @@
 #pragma once
 
-#include <array>
 #include <cstdint>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 
 namespace phonemis::preprocessor {
 
@@ -39,9 +39,9 @@ inline const std::unordered_map<std::int64_t, std::string> kLargeCardinals = {
 // ---------------
 namespace constants {
 // These are all characters that should end a correct english sentence
-inline constexpr auto kEndOfSentenceCharacters = std::to_array<char>({
+inline const std::unordered_set<char> kEndOfSentenceCharacters = {
     '.', '?', '!', ';'
-});
+};
 
 // Acceptable currencies (with spoken text representation)
 // Maps currency signatures to it's spoken representation for both main and fractional units
@@ -54,9 +54,9 @@ kAvailableCurrencies = {
 
 // Acceptable number suffixes
 // Cause numbers to be converted into ordinal instead of cardinal representation
-inline const auto kOrdinalSuffixes = std::to_array<std::string>({
+inline const std::unordered_set<std::string> kOrdinalSuffixes = {
     "st", "nd", "rd", "th"
-});
+};
 } // namespace text2sentences::constants
 
 } // namespace phonemis::preprocessor

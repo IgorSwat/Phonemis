@@ -12,6 +12,7 @@ __pycache__
 
 # Heavy data files
 !data/.gitkeep
+eng_sentences.tsv
 
 # Test executables
 test/**

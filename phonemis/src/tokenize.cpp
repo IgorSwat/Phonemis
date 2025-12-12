@@ -5,8 +5,6 @@
 #include <optional>
 #include <stack>
 
-// TODO: add saving the trailing white spaces to Tokens
-
 namespace phonemis::tokenizer {
 
 namespace {

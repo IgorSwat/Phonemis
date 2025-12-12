@@ -19,11 +19,4 @@ struct SpecialCharacter {
 	rules::Separation sep_rule;
 };
 
-// Represents a single token extracted from text
-struct Token {
-	std::string text;
-	std::string whitespace = ""; 	// Following whitespace
-	bool is_first = false;				// Whether it is a first token in the sentence
-};
-
 } // namespace phonemis::tokenizer

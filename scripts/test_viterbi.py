@@ -31,14 +31,17 @@ def viterbi(sentence, states, start_p, trans_p, emit_p):
     V = [{}]
     path = {}
     for state in states:
-        V[0][state] = start_p.get(state, 0) * emit_p.get(state, {}).get(sentence[0], 1e-6)
+        word = sentence[0]
+        V[0][state] = start_p.get(state, 0) * emit_p.get(state, {}).get(word, 1e-6)
         path[state] = [state]
+        if word[:1].isalpha():
+            V[0][state] = max(V[0][state], start_p.get(state, 0) * emit_p.get(state, {}).get(lowerize(word), 1e-7))
     for t in range(1, len(sentence)):
         V.append({})
         new_path = {}
         for curr_state in states:
             max_prob, prev_state = max(
-                (V[t - 1][y0] * trans_p.get(y0, {}).get(curr_state, 1e-6) * emit_p.get(curr_state, {}).get(sentence[t], 1e-6), y0)
+                (V[t - 1][y0] * trans_p.get(y0, {}).get(curr_state, 1e-7) * emit_p.get(curr_state, {}).get(sentence[t], 1e-7), y0)
                 for y0 in states
             )
             V[t][curr_state] = max_prob
@@ -56,13 +59,11 @@ def viterbi(sentence, states, start_p, trans_p, emit_p):
 #     "music", "song", "dance", "jump", "play", "game", "work", "job", "school", "student",
 #     ",", ".", "!", "?", ";", "n't", "'s", "yolo", "(", ")", "[", "Emma", "Michael"
 # ]
-example_words = [
-    "My", "Halloween", "was", "a", "very", "nice", "thing", "!"
+example_sentence = [
+    "Confidence", "is", "blue", "."
 ]
 
 # Print results for each word
-for word in example_words:
-    sentence = [word]
-    tags = viterbi(sentence, states, start_prob, transition, emission)
-    result_tag = tags[0]
-    print(f"{word}: \033[92m{result_tag}\033[0m")
+tags = viterbi(example_sentence, states, start_prob, transition, emission)
+for word, tag in zip(example_sentence, tags):
+    print(f"{word}: \033[92m{tag}\033[0m")
