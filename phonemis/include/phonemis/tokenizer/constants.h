@@ -5,7 +5,7 @@
 #include <string>
 #include <unordered_set>
 
-namespace phonemize::tokenizer::constants {
+namespace phonemis::tokenizer::constants {
   
   // Special characters and their separation rules
   inline constexpr std::array<SpecialCharacter, 4> kSpecialCharacters = {

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <phonemize/tokenizer/tokenize.h>
+#include <phonemis/tokenizer/tokenize.h>
 
 int main() {
     // Sample input
@@ -10,11 +10,11 @@ int main() {
     // std::string text = "``A violence is an art of destruction''.";
 
     // Tokenize
-    auto tokens = phonemize::tokenizer::tokenize(text);
+    auto tokens = phonemis::tokenizer::tokenize(text);
 
     // Print tokens
     for (const auto& token : tokens) {
-        std::cout << "[" << token.token << "] - white characters: " << token.whitespace.size() << std::endl;
+        std::cout << "[" << token.text << "] - white characters: " << token.whitespace.size() << std::endl;
     }
 
     return 0;

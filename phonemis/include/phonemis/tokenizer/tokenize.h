@@ -4,10 +4,10 @@
 #include <string>
 #include <vector>
 
-namespace phonemize::tokenizer {
+namespace phonemis::tokenizer {
 
 // Tokenizes the input text into a vector of strings (tokens).
 // Follows specific rules for special characters and special words.
 std::vector<Token> tokenize(const std::string& text);
 
-} // namespace phonemize::tokenizer
+} // namespace phonemis::tokenizer

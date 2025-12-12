@@ -9,7 +9,7 @@
 #include <type_traits>
 #include <unordered_map>
 
-namespace phonemize::preprocessor::num2words {
+namespace phonemis::preprocessor::num2words {
 
 // Specialized conversions
 // In order to cover different numeric types, we use capable
@@ -56,4 +56,4 @@ std::string convert(std::string numText) {
   }
 }
 
-} // namespace phonemize::preprocessing
+} // namespace phonemis::preprocessing

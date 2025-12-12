@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace phonemize::preprocessor {
+namespace phonemis::preprocessor {
 
 // -------------------------
 // num2word type definitions
@@ -10,7 +10,7 @@ namespace phonemize::preprocessor {
 namespace num2words {
   // Conversion type
   // Either cardinal (example: five), ordinal (example: fifth) or special (year, etc.)
-  enum ConversionMode {
+  enum class ConversionMode {
     CARDINAL = 1,
     ORDINAL,
     YEAR,
@@ -19,4 +19,4 @@ namespace num2words {
   };
 } // namespace num2words
 
-} // namespace phonemize::preprocessing
+} // namespace phonemis::preprocessing

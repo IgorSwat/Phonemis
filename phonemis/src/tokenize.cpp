@@ -1,5 +1,5 @@
-#include <phonemize/tokenizer/tokenize.h>
-#include <phonemize/tokenizer/constants.h>
+#include <phonemis/tokenizer/tokenize.h>
+#include <phonemis/tokenizer/constants.h>
 #include <algorithm>
 #include <cctype>
 #include <optional>
@@ -7,11 +7,9 @@
 
 // TODO: add saving the trailing white spaces to Tokens
 
-namespace phonemize::tokenizer {
+namespace phonemis::tokenizer {
 
-// Helper functions
 namespace {
-	
 // Helper function - convert string to lowercase
 std::string to_lower(const std::string& str) {
 	std::string lower = str;
@@ -51,7 +49,7 @@ void process_chunk(const std::string& chunk,
 	// If an entire chunk is a special word, we should return it without
 	// further divisions.
 	if (constants::kSpecialWords.count(to_lower(chunk))) {
-			tokens.push_back({chunk, ""});
+			tokens.push_back({chunk});
 			return;
 	}
 
@@ -89,7 +87,7 @@ void process_chunk(const std::string& chunk,
 							// Be careful for dots, as they are theoretically both soft and hard characters
 							size_t next_dot = chunk.find('.');
 							if (next_dot == std::string::npos)
-								tokens.push_back({chunk, ""});
+								tokens.push_back({chunk});
 							else {
 								process_chunk(chunk.substr(0, next_dot), tokens);
 								process_chunk(chunk.substr(next_dot), tokens);
@@ -103,7 +101,7 @@ void process_chunk(const std::string& chunk,
 							process_chunk(left + special_str, tokens);
 							process_chunk(right, tokens);
 					} else {
-							tokens.push_back({chunk, ""});
+							tokens.push_back({chunk});
 					}
 					break;
 
@@ -111,11 +109,11 @@ void process_chunk(const std::string& chunk,
 					// xyz:abc -> xyz:abc (unless abc empty -> xyz, :)
 					if (!right.empty()) {
 							// Treat as one word (join from both sides)
-							tokens.push_back({chunk, ""});
+							tokens.push_back({chunk});
 					} else {
 							// xyz: -> xyz, :
 							process_chunk(left, tokens);
-							tokens.push_back({special_str, ""});
+							tokens.push_back({special_str});
 					}
 					break;
 
@@ -138,7 +136,7 @@ void process_raw_word(const std::string& raw_word,
 						process_chunk(current_chunk, tokens);
 						current_chunk.clear();
 				}
-				tokens.push_back({std::string(1, c), ""});
+				tokens.push_back({std::string(1, c)});
 		} else {
 				current_chunk += c;
 		}
@@ -148,7 +146,6 @@ void process_raw_word(const std::string& raw_word,
 			process_chunk(current_chunk, tokens);
 	}
 }
-
 } // namespace
 
 std::vector<Token> tokenize(const std::string& text) {
@@ -191,7 +188,11 @@ std::vector<Token> tokenize(const std::string& text) {
 		process_raw_word(current_word, tokens);
 	}
 
+	// Mark the first token
+	if (!tokens.empty())
+		tokens.front().is_first = true;
+
 	return tokens;
 }
 
-} // namespace phonemize::tokenizer
+} // namespace phonemis::tokenizer

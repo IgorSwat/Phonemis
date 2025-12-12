@@ -1,5 +1,5 @@
-#include <phonemize/preprocessor/num2word.h>
-#include <phonemize/preprocessor/constants.h>
+#include <phonemis/preprocessor/num2word.h>
+#include <phonemis/preprocessor/constants.h>
 #include <algorithm>
 #include <cmath>
 #include <exception>
@@ -7,7 +7,7 @@
 #include <sstream>
 #include <vector>
 
-namespace phonemize::preprocessor::num2words {
+namespace phonemis::preprocessor::num2words {
 
 namespace {
 // Helper function - split string by delimiter
@@ -195,4 +195,4 @@ std::string to_year(long long value) {
   return high_text + " " + low_text;
 }
 
-} // namespace phonemize::preprocessing::num2words
+} // namespace phonemis::preprocessing::num2words

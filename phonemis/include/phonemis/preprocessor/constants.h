@@ -5,7 +5,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace phonemize::preprocessor {
+namespace phonemis::preprocessor {
 
 // -------------------
 // num2words constants
@@ -34,14 +34,29 @@ inline const std::unordered_map<std::int64_t, std::string> kLargeCardinals = {
 };
 } // namespace num2words::constants
 
-// ------------------------
-// text2sentences constants
-// ------------------------
-namespace text2sentences::constants {
+// ---------------
+// other constants
+// ---------------
+namespace constants {
 // These are all characters that should end a correct english sentence
 inline constexpr auto kEndOfSentenceCharacters = std::to_array<char>({
     '.', '?', '!', ';'
 });
+
+// Acceptable currencies (with spoken text representation)
+// Maps currency signatures to it's spoken representation for both main and fractional units
+inline const std::unordered_map<char32_t, std::pair<std::string, std::string>> 
+kAvailableCurrencies = {
+    {U'$', {"dolar", "cent"}},
+    {U'£', {"pound", "pence"}},
+    {U'€', {"euro", "cent"}}
+};
+
+// Acceptable number suffixes
+// Cause numbers to be converted into ordinal instead of cardinal representation
+inline const auto kOrdinalSuffixes = std::to_array<std::string>({
+    "st", "nd", "rd", "th"
+});
 } // namespace text2sentences::constants
 
-} // namespace phonemize::preprocessor
+} // namespace phonemis::preprocessor
