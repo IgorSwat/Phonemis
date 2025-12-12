@@ -10,7 +10,7 @@ namespace phonemis::tokenizer::constants {
   // Special characters and their separation rules
   inline constexpr std::array<SpecialCharacter, 4> kSpecialCharacters = {
       SpecialCharacter{ '\'', rules::Separation::JOIN_LEFT },      // Apostrophe joins left
-      SpecialCharacter{ '-',  rules::Separation::JOIN_RIGHT },     // Hyphen joins right
+      SpecialCharacter{ '-',  rules::Separation::TOTAL_DIVIDE },   // Hyphen always divides
       SpecialCharacter{ '.',  rules::Separation::TOTAL_DIVIDE },   // Dot always divides
       SpecialCharacter{ ':',  rules::Separation::TOTAL_JOIN }      // Colon always joins
   };

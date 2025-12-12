@@ -1,7 +1,7 @@
-#include <phonemis/preprocessor/text_utils.h>
+#include <phonemis/preprocessor/tools.h>
 #include <phonemis/preprocessor/constants.h>
 #include <phonemis/preprocessor/num2word.h>
-#include <phonemis/utilities/conversions.h>
+#include <phonemis/utilities/string_utils.h>
 #include <algorithm>
 #include <cctype>
 #include <cmath>
