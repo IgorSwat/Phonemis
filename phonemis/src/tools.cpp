@@ -1,6 +1,7 @@
 #include <phonemis/preprocessor/tools.h>
 #include <phonemis/preprocessor/constants.h>
 #include <phonemis/preprocessor/num2word.h>
+#include <phonemis/phonemizer/constants.h>
 #include <phonemis/utilities/string_utils.h>
 #include <algorithm>
 #include <cctype>
@@ -9,6 +10,8 @@
 #include <string>
 
 namespace phonemis::preprocessor {
+
+using namespace phonemizer::constants;
 
 // Sentence splitting implementation
 std::vector<std::string> split_sentences(const std::string& text) {
@@ -73,7 +76,7 @@ std::string verbalize_numbers(const std::string& text) {
 		size_t suffix_len = 0;
 
 		// 1. Check currency
-		for (const auto& [symbol, words] : constants::kAvailableCurrencies) {
+		for (const auto& [symbol, words] : alphabet::kCurrencies) {
 			std::string utf8_symbol = utilities::string_utils::char32_to_utf8(symbol);
 			if (text.substr(p_dist, utf8_symbol.size()) == utf8_symbol) {
 				currency_found = true;
@@ -86,7 +89,7 @@ std::string verbalize_numbers(const std::string& text) {
 		// 2. Check ordinal suffix (only if no currency)
 		bool ordinal_found = false;
 		if (!currency_found) {
-			for (const auto& suffix : constants::kOrdinalSuffixes) {
+			for (const auto& suffix : alphabet::kOrdinalSuffixes) {
 				if (text.substr(p_dist, suffix.size()) == suffix) {
 					ordinal_found = true;
 					suffix_len = suffix.size();

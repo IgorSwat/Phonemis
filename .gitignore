@@ -4,6 +4,7 @@
 # Other artifacts
 .github
 .vscode
+build
 
 # Python artifacts
 .venv

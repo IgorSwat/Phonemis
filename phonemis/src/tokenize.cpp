@@ -20,7 +20,7 @@ std::string to_lower(const std::string& str) {
 // Helper function - special character rule lookup
 std::optional<rules::Separation> get_special_char_rule(char c) {
 	for (const auto& sc : constants::kSpecialCharacters) {
-			if (sc.character == c) return sc.sep_rule;
+		if (sc.character == c) return sc.sep_rule;
 	}
 
 	return std::nullopt;
@@ -47,8 +47,8 @@ void process_chunk(const std::string& chunk,
 	// If an entire chunk is a special word, we should return it without
 	// further divisions.
 	if (constants::kSpecialWords.count(to_lower(chunk))) {
-			tokens.push_back({chunk});
-			return;
+		tokens.push_back({chunk});
+		return;
 	}
 
 	// Find first special character
@@ -64,8 +64,8 @@ void process_chunk(const std::string& chunk,
 
 	// If no special character found, it's a simple token (an entire word)
 	if (special_pos == std::string::npos) {
-			tokens.push_back({chunk, ""});
-			return;
+		tokens.push_back({chunk, ""});
+		return;
 	}
 
 	// If special character was found, then apply rules and divide into subwords
@@ -75,52 +75,52 @@ void process_chunk(const std::string& chunk,
 	std::string special_str(1, special_char);
 
 	switch (rule) {
-			case rules::Separation::JOIN_LEFT:
-					// xyz'abc -> xyz, 'abc (if xyz not empty)
-					// if xyz empty -> 'abc
-					if (!left.empty()) {
-							process_chunk(left, tokens);
-							process_chunk(special_str + right, tokens);
-					} else {
-							// Be careful for dots, as they are theoretically both soft and hard characters
-							size_t next_dot = chunk.find('.');
-							if (next_dot == std::string::npos)
-								tokens.push_back({chunk});
-							else {
-								process_chunk(chunk.substr(0, next_dot), tokens);
-								process_chunk(chunk.substr(next_dot), tokens);
-							}
-					}
-					break;
+		case rules::Separation::JOIN_LEFT:
+			// xyz'abc -> xyz, 'abc (if xyz not empty)
+			// if xyz empty -> 'abc
+			if (!left.empty()) {
+				process_chunk(left, tokens);
+				process_chunk(special_str + right, tokens);
+			} else {
+				// Be careful for dots, as they are theoretically both soft and hard characters
+				size_t next_dot = chunk.find('.');
+				if (next_dot == std::string::npos)
+					tokens.push_back({chunk});
+				else {
+					process_chunk(chunk.substr(0, next_dot), tokens);
+					process_chunk(chunk.substr(next_dot), tokens);
+				}
+			}
+			break;
 
-			case rules::Separation::JOIN_RIGHT:
-					// xyz-abc -> xyz-, abc (unless abc empty)
-					if (!right.empty()) {
-							process_chunk(left + special_str, tokens);
-							process_chunk(right, tokens);
-					} else {
-							tokens.push_back({chunk});
-					}
-					break;
+		case rules::Separation::JOIN_RIGHT:
+			// xyz-abc -> xyz-, abc (unless abc empty)
+			if (!right.empty()) {
+					process_chunk(left + special_str, tokens);
+					process_chunk(right, tokens);
+			} else {
+					tokens.push_back({chunk});
+			}
+			break;
 
-			case rules::Separation::TOTAL_JOIN:
-					// xyz:abc -> xyz:abc (unless abc empty -> xyz, :)
-					if (!right.empty()) {
-							// Treat as one word (join from both sides)
-							tokens.push_back({chunk});
-					} else {
-							// xyz: -> xyz, :
-							process_chunk(left, tokens);
-							tokens.push_back({special_str});
-					}
-					break;
+		case rules::Separation::TOTAL_JOIN:
+			// xyz:abc -> xyz:abc (unless abc empty -> xyz, :)
+			if (!right.empty()) {
+				// Treat as one word (join from both sides)
+				tokens.push_back({chunk});
+			} else {
+				// xyz: -> xyz, :
+				process_chunk(left, tokens);
+				tokens.push_back({special_str});
+			}
+			break;
 
-			case rules::Separation::TOTAL_DIVIDE:
-					// xyz.abc -> xyz, ., abc
-					if (!left.empty()) process_chunk(left, tokens);
-					tokens.push_back({special_str, ""});
-					if (!right.empty()) process_chunk(right, tokens);
-					break;
+		case rules::Separation::TOTAL_DIVIDE:
+			// xyz.abc -> xyz, ., abc
+			if (!left.empty()) process_chunk(left, tokens);
+			tokens.push_back({special_str, ""});
+			if (!right.empty()) process_chunk(right, tokens);
+			break;
 	}
 }
 
@@ -130,11 +130,11 @@ void process_raw_word(const std::string& raw_word,
 	std::string current_chunk;
 	for (char c : raw_word) {
 		if (is_hard_separator(c)) {
-				if (!current_chunk.empty()) {
-						process_chunk(current_chunk, tokens);
-						current_chunk.clear();
-				}
-				tokens.push_back({std::string(1, c)});
+			if (!current_chunk.empty()) {
+				process_chunk(current_chunk, tokens);
+				current_chunk.clear();
+			}
+			tokens.push_back({std::string(1, c)});
 		} else {
 				current_chunk += c;
 		}

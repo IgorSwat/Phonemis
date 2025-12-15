@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../tagger/tag.h"
 #include <optional>
 #include <string>
 
@@ -14,7 +15,7 @@ struct Token {
 	bool is_first = false;					// Whether it is a first token in the sentence
 
   // Extras
-  std::optional<std::string> tag = std::nullopt;	// A PoS (Part of Speech) tag, example: NN (noun)
+  std::optional<tagger::Tag> tag = std::nullopt;	// A PoS (Part of Speech) tag, example: NN (noun)
 };
 
 } // namespace phonemis::tokenizer

@@ -42,21 +42,6 @@ namespace constants {
 inline const std::unordered_set<char> kEndOfSentenceCharacters = {
     '.', '?', '!', ';'
 };
-
-// Acceptable currencies (with spoken text representation)
-// Maps currency signatures to it's spoken representation for both main and fractional units
-inline const std::unordered_map<char32_t, std::pair<std::string, std::string>> 
-kAvailableCurrencies = {
-    {U'$', {"dolar", "cent"}},
-    {U'£', {"pound", "pence"}},
-    {U'€', {"euro", "cent"}}
-};
-
-// Acceptable number suffixes
-// Cause numbers to be converted into ordinal instead of cardinal representation
-inline const std::unordered_set<std::string> kOrdinalSuffixes = {
-    "st", "nd", "rd", "th"
-};
 } // namespace text2sentences::constants
 
 } // namespace phonemis::preprocessor

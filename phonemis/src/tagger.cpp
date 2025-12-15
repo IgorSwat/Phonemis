@@ -1,31 +1,15 @@
 #include <phonemis/tagger/tagger.h>
+#include <phonemis/utilities/io_utils.h>
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
 #include <stdexcept>
-#include <third-party/json.hpp>
 
 namespace phonemis::tagger {
 
 Tagger::Tagger(const std::string& hmm_data_path) {
-	// File existence and regular file check
-	std::filesystem::path file_path(hmm_data_path);
-	if (!std::filesystem::exists(file_path) || !std::filesystem::is_regular_file(file_path)) {
-		throw std::invalid_argument("File not found: " + hmm_data_path);
-	}
-
-	// JSON parsing
-	std::ifstream file_stream(hmm_data_path);
-	if (!file_stream.is_open()) {
-		throw std::runtime_error("Failed to open file: " + hmm_data_path);
-	}
-
-	nlohmann::json json_obj;
-	try {
-		file_stream >> json_obj;
-	} catch (const nlohmann::json::parse_error& e) {
-		throw std::invalid_argument(std::string("Invalid JSON format: ") + e.what());
-	}
+	// Load the input JSON file
+	nlohmann::json json_obj = utilities::io_utils::load_json(hmm_data_path);
 
 	// Validate required top-level fields
 	if (!json_obj.contains("start_prob") || !json_obj.contains("emission") || !json_obj.contains("transition")) {
@@ -39,14 +23,14 @@ Tagger::Tagger(const std::string& hmm_data_path) {
   // We can simultaneously load all the possible tags here, since
   // all the tags must appear in start_prob field of the JSON file.
 	for (auto& item : json_obj["start_prob"].items()) {
-		const std::string tag = item.key();
+		const Tag tag = item.key();
     tags_.insert(tag);
 		start_probs_[tag] = item.value().get<double>();
 	}
 
 	// Load emission probabilities
 	for (auto& tag_item : json_obj["emission"].items()) {
-		const std::string tag = tag_item.key();
+		const Tag tag = tag_item.key();
 		const auto& inner = tag_item.value();
 		if (!inner.is_object()) continue;
 		for (auto& w : inner.items()) {
@@ -56,7 +40,7 @@ Tagger::Tagger(const std::string& hmm_data_path) {
 
 	// Load transition probabilities
 	for (auto& tag_item : json_obj["transition"].items()) {
-		const std::string tag = tag_item.key();
+		const Tag tag = tag_item.key();
 		const auto& inner = tag_item.value();
 		if (!inner.is_object()) continue;
 		for (auto& t : inner.items()) {
@@ -75,9 +59,9 @@ void Tagger::tag(std::vector<tokenizer::Token> &sentence) const {
 
 	// Viterbi tables
   // back_pointer table allows to reconstruct the optimal path in the state (tag) graph.
-	std::vector<std::unordered_map<std::string, double>> 
+	std::vector<std::unordered_map<Tag, double>> 
     v(sentence.size()); // v[t][state] -> probability
-	std::vector<std::unordered_map<std::string, std::string>> 
+	std::vector<std::unordered_map<Tag, Tag>> 
     back_pointer(sentence.size());  // back_pointer[t][state] -> previous_state
 
 	// Initialization
@@ -106,7 +90,7 @@ void Tagger::tag(std::vector<tokenizer::Token> &sentence) const {
 		for (const auto& curr_tag : tags_) {
       // Helper variables to track the best branch
 			double max_prob = -1.0;
-			std::string best_prev;
+			Tag best_prev;
 
       double emit_p = emission_probs_.at(curr_tag).contains(word) 
                     ? emission_probs_.at(curr_tag).at(word) : EPSILON;
@@ -136,7 +120,7 @@ void Tagger::tag(std::vector<tokenizer::Token> &sentence) const {
 	});
 
 	// Backtracking path
-	std::string current_tag = *best_it;
+	Tag current_tag = *best_it;
 	sentence[last_idx].tag = current_tag;
 
 	for (size_t t = last_idx; t > 0; --t) {

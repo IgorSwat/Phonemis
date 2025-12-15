@@ -1,5 +1,6 @@
 #pragma once
 
+#include "tag.h"
 #include "../tokenizer/tokens.h"
 #include <string>
 #include <unordered_map>
@@ -14,7 +15,7 @@ namespace phonemis::tagger {
 // A modification of the Viterbi algorithm for bigram HMM (Hidden Markov Model) tagger.
 class Tagger {
 public:
-  Tagger(const std::string& hmm_data_path);
+  explicit Tagger(const std::string& hmm_data_path);
 
   // Main tagging method - a modified Viterbi algorithm
   // Works in place bo modyfing the 'tag' fields.
@@ -22,13 +23,13 @@ public:
 
 private:
   // Set of possible tags (states)
-  std::unordered_set<std::string> tags_;
+  std::unordered_set<Tag> tags_;
 
   // Probability maps - loaded from the input json file.
-  std::unordered_map<std::string, double> start_probs_ = {};
-  std::unordered_map<std::string, std::unordered_map<std::string, double>>
+  std::unordered_map<Tag, double> start_probs_ = {};
+  std::unordered_map<Tag, std::unordered_map<std::string, double>>
     emission_probs_ = {};
-  std::unordered_map<std::string, std::unordered_map<std::string, double>>
+  std::unordered_map<Tag, std::unordered_map<Tag, double>>
     transition_probs_ = {};
 };
 
