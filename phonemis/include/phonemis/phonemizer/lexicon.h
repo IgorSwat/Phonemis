@@ -19,10 +19,24 @@ public:
   bool is_known(const std::string& word) const;
 
 private:
-  // Helper functions - dictionary lookup with stressing
-  std::u32string lookup(const std::u32string& word,
+  // Helper functions - word+suffix phonemization
+  // Phonemizes word ending with popular english suffixes, example: -ed, -s, -ing.
+  std::u32string stem_s(const std::string& word,
                         const tagger::Tag& tag,
-                        std::optional<float> stress = std::nullopt);
+                        std::optional<float> stress = std::nullopt) const;
+  std::u32string stem_ed(const std::string& word,
+                         const tagger::Tag& tag,
+                         std::optional<float> stress = std::nullopt) const;
+  std::u32string stem_ing(const std::string& word,
+                          const tagger::Tag& tag,
+                          std::optional<float> stress = std::nullopt) const;
+
+  // Helper functions - dictionary lookup with stressing
+  // Returns an empty phoneme string if failed to extract phonemes.
+  std::u32string lookup(const std::string& word,
+                        const tagger::Tag& tag,
+                        std::optional<float> stress = std::nullopt) const;
+  std::u32string lookup_nnp(const std::string& word) const;
 
   // Resolved language
   Lang language_;

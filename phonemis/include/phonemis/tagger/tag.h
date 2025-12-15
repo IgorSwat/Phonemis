@@ -1,8 +1,11 @@
 #pragma once
 
+#include "../utilities/string_utils.h"
 #include <string>
 
 namespace phonemis::tagger {
+
+using namespace utilities;
 
 // Tag class definition
 // An abstraction layer which wrapps a simple string-based tag definition
@@ -18,13 +21,13 @@ public:
   // Extra logic
   Tag parent_tag() const {
     auto this_tag = static_cast<const std::string&>(*this);
-    if (this_tag == "VERB" || substr(0, 2) == "VB")
+    if (this_tag == "VERB" || string_utils::starts_with(this_tag, "VB"))
       return {"VERB"};
-    if (this_tag == "NOUN" || substr(0, 2) == "NN")
+    if (this_tag == "NOUN" || string_utils::starts_with(this_tag, "NN"))
       return {"NOUN"};
-    if (substr(0, 3) == "ADV" || substr(0, 2) == "RB")
+    if (string_utils::starts_with(this_tag, "ADV") || string_utils::starts_with(this_tag, "RB"))
       return {"ADV"};
-    if (substr(0, 3) == "ADJ" || substr(0, 2) == "JJ")
+    if (string_utils::starts_with(this_tag, "ADJ") || string_utils::starts_with(this_tag, "JJ"))
       return {"ADJ"};
     return (*this);
   }

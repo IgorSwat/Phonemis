@@ -37,16 +37,18 @@ kCurrencies = {
 };
 } // namespace alphabet
 
+// Language (spoken) constants
+namespace language {
+inline const std::u32string kConsonants = U"bdfhjklmnpstvwzðŋɡɹɾʃʒʤʧθ";
+inline const std::u32string kUSTaus = U"AIOWYiuæɑəɛɪɹʊʌ";
+} // namespace language
+
 // Stress calculation constants
 namespace stress {
 inline constexpr char32_t kPrimary = '\'';
 inline constexpr char32_t kSecondary = ',';
 
-inline const std::unordered_set<char32_t> kVowels = {
-    U'A', U'I', U'O', U'Q', U'W', U'Y',
-    U'a', U'i', U'u',
-    U'æ', U'ɑ', U'ɒ', U'ɔ', U'ə', U'ɛ', U'ɜ', U'ɪ', U'ʊ', U'ʌ', U'ᵻ'
-};
+inline const std::u32string kVowels = U"AIOQWYaiuæɑɒɔəɛɜɪʊʌᵻ";
 } // namespace stress
 
 

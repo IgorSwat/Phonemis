@@ -5,6 +5,7 @@
 namespace phonemis::phonemizer {
 
 using namespace utilities;
+using constants::stress::kVowels;
 
 std::u32string apply_stress(const std::u32string& phonemes, float stress) {
   std::u32string result = phonemes;
@@ -13,16 +14,16 @@ std::u32string apply_stress(const std::u32string& phonemes, float stress) {
   bool has_secondary = phonemes.find(constants::stress::kSecondary) != std::u32string::npos;
   bool has_vowel = std::any_of(
     phonemes.begin(), phonemes.end(),                           
-    [](auto c) -> bool { return constants::stress::kVowels.contains(c); }
+    [](auto c) -> bool { return kVowels.find(c) != std::u32string::npos; }
   );
 
   if (stress < -1.F) {
-    string_utils::replace(result, constants::stress::kPrimary, {});
-    string_utils::replace(result, constants::stress::kSecondary, {});
+    string_utils::replace__(result, constants::stress::kPrimary, {});
+    string_utils::replace__(result, constants::stress::kSecondary, {});
   }
   else if (stress == -1.F || (stress == 0.F || stress == 0.5F) && has_primary) {
-    string_utils::replace(result, constants::stress::kSecondary, {});
-    string_utils::replace(result, constants::stress::kPrimary,
+    string_utils::replace__(result, constants::stress::kSecondary, {});
+    string_utils::replace__(result, constants::stress::kPrimary,
                                   {constants::stress::kSecondary});    
   }
   else if ((stress == 0.F || stress == 0.5F || stress == 1.F ) &&
@@ -30,7 +31,7 @@ std::u32string apply_stress(const std::u32string& phonemes, float stress) {
     return restress(std::u32string(1, constants::stress::kSecondary) + result);
   }
   else if (stress >= 1.F && !has_primary && has_secondary) {
-    string_utils::replace(result, constants::stress::kSecondary,
+    string_utils::replace__(result, constants::stress::kSecondary,
                                   {constants::stress::kPrimary});  
   }
   else if (stress > 1.F && !has_primary && !has_secondary && has_vowel) {
@@ -53,7 +54,7 @@ std::u32string restress(const std::u32string& phonemes) {
     if (ch == constants::stress::kPrimary || ch == constants::stress::kSecondary) {
       std::size_t j = i + 1;
       for (; j < indexed_positions.size(); ++j) {
-        if (constants::stress::kVowels.contains(indexed_positions[j].second)) break;
+        if (kVowels.find(indexed_positions[j].second) != std::u32string::npos) break;
       }
       if (j < indexed_positions.size()) {
         indexed_positions[i].first = static_cast<float>(j) - 0.5F; // place before vowel
