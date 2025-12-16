@@ -6,6 +6,7 @@
 #include <optional>
 #include <string>
 #include <string_view>
+#include <vector>
 
 namespace phonemis::utilities::string_utils {
 
@@ -23,6 +24,11 @@ inline std::string char32_to_utf8(char32_t c) {
 inline std::u32string utf8_to_u32string(const std::string& utf8) {
 	std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> convert;
 	return convert.from_bytes(utf8);
+}
+
+inline std::string u32string_to_utf8(const std::u32string& u32) {
+	std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> convert;
+	return convert.to_bytes(u32);
 }
 
 // ----------------------------------------
@@ -71,20 +77,56 @@ inline void replace__(StringT& str, CharT a, std::optional<CharT> b) {
 		str.erase(std::remove(str.begin(), str.end(), a), str.end());
 }
 
+// Splits the string by the given character.
+template <typename StringT, typename CharT>
+inline std::vector<StringT> split(const StringT& str, CharT bpoint) {
+	std::vector<StringT> result = {};
+
+	auto it = str.begin();
+	while (it != str.end()) {
+		auto next = std::find(it, str.end(), bpoint);
+		result.emplace_back(it, next);
+
+		it = next;
+		if (it != str.end()) it++;
+	}
+
+	return result;
+}
+
+// Removes the leading and trailing characters equals to given character.
+// If the character is not specified, it removes white spaces instead.
+template <typename StringT, typename CharT>
+inline StringT strip(const StringT& str, std::optional<CharT> c = std::nullopt) {
+	auto lbound = std::find_if(str.cbegin(), str.cend(), 
+														 [&c](CharT a) -> bool { return c.has_value() ? a != c : !std::isspace(a); });
+	auto rbound = std::find_if(str.crbegin(), str.crend(),
+														 [&c](CharT a) -> bool { return c.has_value() ? a != c : !std::isspace(a); });
+	
+	return lbound != str.end() ? StringT(lbound, std::prev(rbound.base())) : StringT();
+}
+
 // -------------------------
 // String utils - predicates
 // -------------------------
 
+// Returns true if the string contains only alphabetic characters.
+template <typename StringT>
+inline bool is_alpha(const StringT& str) {
+	return std::all_of(str.cbegin(), str.cend(), 
+										 [](char c) -> bool { return std::isalpha(c); });
+}
+
 // Returns true if the string starts with given suffix and false otherwise
-template <typename StringT1>
-inline bool starts_with(const StringT1& str, std::string_view prefix) {
+template <typename StringT>
+inline bool starts_with(const StringT& str, std::string_view prefix) {
 	return str.size() >= prefix.size() &&
 				 str.substr(0, prefix.size()) == prefix;
 }
 
 // Returns true if the string ends with given suffix and false otherwise
-template <typename StringT1>
-inline bool ends_with(const StringT1& str, std::string_view suffix) {
+template <typename StringT>
+inline bool ends_with(const StringT& str, std::string_view suffix) {
 	return str.size() >= suffix.size() &&
 				 str.substr(str.size() - suffix.size()) == suffix;
 }

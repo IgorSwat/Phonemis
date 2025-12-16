@@ -5,6 +5,7 @@
 #include <phonemis/utilities/string_utils.h>
 #include <filesystem>
 #include <fstream>
+#include <numeric>
 #include <regex>
 #include <stdexcept>
 
@@ -43,6 +44,66 @@ Lexicon::Lexicon(Lang language, const std::string& dict_filepath)
 bool Lexicon::is_known(const std::string& word) const {
   return dict_.contains(word) || dict_.contains(string_utils::to_lower(word)) ||
          word.size() == 1 && (std::isalpha(word[0]) || constants::alphabet::kSymbols.contains(word[0]));
+}
+
+std::u32string Lexicon::get(const std::string& word, 
+                            const tagger::Tag& tag,
+                            std::optional<float> base_stress,
+                            std::optional<bool> vowel_next) {
+  std::optional<float> stress = word == string_utils::to_lower(word) ? std::nullopt :
+                                word == string_utils::to_upper(word) ? 
+                                  std::make_optional(2.F) : std::make_optional(0.5F);
+  
+  // Phonemize
+  std::u32string phonemes = get_word(word, tag, stress, vowel_next);
+
+  // Apply base stress
+  // TODO: consider dealing with some trailing currency characters here
+  if (!phonemes.empty() && base_stress.has_value())
+    return apply_stress(phonemes, base_stress.value());
+  
+  return phonemes;
+}
+
+std::u32string Lexicon::get_word(const std::string& word,
+                                 const tagger::Tag& tag,
+                                 std::optional<float> stress,
+                                 std::optional<bool> vowel_next) const {
+  // Lookup for special words
+  std::u32string phonemes = lookup_special(word, tag, stress, vowel_next);
+  if (!phonemes.empty())
+    return phonemes;
+  
+  // TODO: add unicode normalization
+  std::string used_word = word;
+  if (word.size() > 1 &&
+      string_utils::is_alpha(string_utils::filter(word, [](char c) -> bool { return c != '\''; })) &&
+      word != string_utils::to_lower(word) &&
+      (tag != "NNP" || word.size() > 7) &&
+      !dict_.contains(word) &&
+      (word == string_utils::to_upper(word) || word.substr(1) == string_utils::to_lower(word.substr(1))) &&
+      (dict_.contains(string_utils::to_lower(word)) || stem_s(word, tag, stress) != U"" ||
+        stem_ed(word, tag, stress) != U"" || stem_ing(word, tag, stress) != U""))
+    used_word = string_utils::to_lower(word);
+  
+  if (is_known(used_word))
+    return lookup(word, tag, stress);
+  if (string_utils::ends_with(used_word, "s'") && is_known(used_word.substr(0, used_word.size() - 2) + "'s"))
+    return lookup(used_word.substr(0, used_word.size() - 2) + "'s", tag, stress);
+  if (string_utils::ends_with(used_word, "'") && is_known(used_word.substr(0, used_word.size() - 1)))
+    return lookup(used_word.substr(0, used_word.size() - 1), tag, stress);
+  
+  for (auto stem_f : {&Lexicon::stem_s, &Lexicon::stem_ed}) {
+    phonemes = (this->*stem_f)(used_word, tag, stress);
+    if (!phonemes.empty()) 
+      return phonemes;
+  }
+
+  phonemes = stem_ing(used_word, tag, stress.has_value() ? stress.value() : 0.5F);
+  if (!phonemes.empty())
+    return phonemes;
+  
+  return U"";
 }
 
 std::u32string Lexicon::stem_s(const std::string& word,
@@ -202,6 +263,63 @@ std::u32string Lexicon::lookup_nnp(const std::string& word) const {
 
   // Join and return
   return first_part + std::u32string(1, constants::stress::kPrimary) + second_part;
+}
+
+std::u32string 
+Lexicon::lookup_special(const std::string& word,
+                        const tagger::Tag& tag,
+                        std::optional<float> stress,
+                        std::optional<bool> vowel_next) const {
+  bool is_single_char = word.size() == 1;
+  bool is_add_symbol = is_single_char && constants::alphabet::kAddSymbols.contains(word[0]);
+  bool is_other_symbol = is_single_char && constants::alphabet::kSymbols.contains(word[0]);
+
+  std::string word_stripped = string_utils::strip(word, std::make_optional('.'));
+  std::string word_without_dots = string_utils::filter(word, [](char c) -> bool { return c != '.'; });
+  std::vector<std::string> word_splitted = string_utils::split(word_stripped, '.');
+  size_t max_subword_size = 
+    std::accumulate(word_splitted.begin(), word_splitted.end(), 0LL, 
+      [](size_t m, const auto& str) { return std::max(m, str.size()); });
+  
+  
+  if (tag == "ADD" && is_add_symbol)
+    return lookup(constants::alphabet::kAddSymbols.at(word[0]), {""}, {-0.5F});
+  else if (is_other_symbol)
+    return lookup(constants::alphabet::kSymbols.at(word[0]), {""}, {});
+  else if (word_stripped.find('.') != std::string::npos &&
+           string_utils::is_alpha(word_without_dots) && 
+           max_subword_size < 3)
+    return lookup_nnp(word);
+  else if (is_single_char && (word[0] == 'a' || word[0] == 'A'))
+    return tag == "DT" ? U"ɐ" : U"ˈA";
+  else if (word == "am" || word == "Am" || word == "AM") {
+    if (string_utils::starts_with(tag, "NN"))
+      return lookup_nnp(word);
+    if (!vowel_next.has_value() || word != "am" || stress.has_value() && stress.value() > 0)
+      return dict_.at("am");
+    else
+      return U"ɐm";
+  }
+  else if (word == "an" || word == "An" || word == "AN")
+    return word == "AN" && string_utils::starts_with(tag, "NN") ? lookup_nnp(word) : U"ɐn";
+  else if (is_single_char && word[0] == 'I' && tag == "PRP")
+    return std::u32string(1, constants::stress::kSecondary) + U"I";
+  else if ((word == "by" || word == "By" || word == "BY") && tag.parent_tag() == "ADV")
+    return U"bˈI";
+  else if (word == "to" || word == "To" || word == "TO" && (tag == "TO" || tag == "IN"))
+    return !vowel_next.has_value() ? dict_.at("to") :
+           vowel_next.value() ? U"tʊ" : U"tə";
+  else if (word == "in" || word == "In" || word == "IN" && tag != "NNP")
+    return (!vowel_next.has_value() || tag != "IN" ? std::u32string(1, constants::stress::kPrimary) : U"") + U"ɪn";
+  else if (word == "the" || word == "The" || word == "THE" && tag == "DT")
+    return vowel_next.has_value() && vowel_next.value() ? U"ði" : U"ðə";
+  else if (std::regex_match(word, std::regex(R"(vs\.?$)", std::regex_constants::icase)))
+    return lookup("versus", {""}, {});
+  else if (word == "used" || word == "Used" || word == "USED")
+    return dict_.at("word");
+  
+  // If the word is not a special case, return no phonemes
+  return U"";
 }
 
 } // namespace phonemis::phonemizer

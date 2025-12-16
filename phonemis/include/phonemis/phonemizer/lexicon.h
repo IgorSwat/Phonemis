@@ -18,25 +18,41 @@ public:
   // Checks if given world exists in the lexicon in any form
   bool is_known(const std::string& word) const;
 
+  // Returns the phonemization for given word, or "" if the phonemization failed
+  std::u32string get(const std::string& word, 
+                     const tagger::Tag& tag,
+                     std::optional<float> base_stress = std::nullopt,
+                     std::optional<bool> vowel_next = std::nullopt);
+
 private:
+  // Helper functions - extract phonemes without stressing
+  std::u32string get_word(const std::string& word,
+                          const tagger::Tag& tag,
+                          std::optional<float> stress,
+                          std::optional<bool> vowel_next) const;
+
   // Helper functions - word+suffix phonemization
   // Phonemizes word ending with popular english suffixes, example: -ed, -s, -ing.
   std::u32string stem_s(const std::string& word,
                         const tagger::Tag& tag,
-                        std::optional<float> stress = std::nullopt) const;
+                        std::optional<float> stress) const;
   std::u32string stem_ed(const std::string& word,
                          const tagger::Tag& tag,
-                         std::optional<float> stress = std::nullopt) const;
+                         std::optional<float> stress) const;
   std::u32string stem_ing(const std::string& word,
                           const tagger::Tag& tag,
-                          std::optional<float> stress = std::nullopt) const;
+                          std::optional<float> stress) const;
 
   // Helper functions - dictionary lookup with stressing
   // Returns an empty phoneme string if failed to extract phonemes.
   std::u32string lookup(const std::string& word,
                         const tagger::Tag& tag,
-                        std::optional<float> stress = std::nullopt) const;
+                        std::optional<float> stress) const;
   std::u32string lookup_nnp(const std::string& word) const;
+  std::u32string lookup_special(const std::string& word,
+                                const tagger::Tag& tag,
+                                std::optional<float> stress,
+                                std::optional<bool> vowel_next) const;
 
   // Resolved language
   Lang language_;

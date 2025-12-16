@@ -64,7 +64,7 @@ std::u32string restress(const std::u32string& phonemes) {
 
   // Sort by position and rebuild string
   std::sort(indexed_positions.begin(), indexed_positions.end(),
-            [](auto const& a, auto const& b) { return a.first < b.first; });
+            [](const auto& a, const auto& b) { return a.first < b.first; });
 
   std::u32string result;
   result.reserve(indexed_positions.size());
