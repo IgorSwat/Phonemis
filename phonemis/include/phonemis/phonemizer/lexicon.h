@@ -19,7 +19,7 @@ public:
   bool is_known(const std::string& word) const;
 
   // Returns the phonemization for given word, or "" if the phonemization failed
-  std::u32string get(const std::string& word, 
+  std::u32string get(const std::string& word,
                      const tagger::Tag& tag,
                      std::optional<float> base_stress = std::nullopt,
                      std::optional<bool> vowel_next = std::nullopt);

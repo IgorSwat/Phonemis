@@ -27,6 +27,10 @@ inline const std::unordered_map<char, std::string> kSymbols = {
   {'=', "equals"}
 };
 
+inline const std::unordered_set<char> kPunctations = {
+  ';', ':', ',', '.', '!', '?', '-', '"', '\''
+};
+
 // Acceptable currencies (with spoken text representation)
 // Maps currency signatures to it's spoken representation for both main and fractional units
 inline const std::unordered_map<char32_t, std::pair<std::string, std::string>> 
