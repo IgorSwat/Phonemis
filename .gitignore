@@ -4,7 +4,9 @@
 # Other artifacts
 .github
 .vscode
-build
+build*
+output*
+!scripts/build*
 
 # Python artifacts
 .venv

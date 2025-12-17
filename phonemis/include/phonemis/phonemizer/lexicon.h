@@ -1,8 +1,8 @@
 #pragma once
 
 #include "types.h"
+#include "../tagger/tag.h"
 #include <optional>
-#include <phonemis/tagger/tag.h>
 #include <string>
 #include <unordered_map>
 

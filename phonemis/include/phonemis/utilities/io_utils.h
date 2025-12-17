@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
-#include <third-party/json.hpp>
+#include "../../third-party/json.hpp"
 
 namespace phonemis::utilities::io_utils {
 
