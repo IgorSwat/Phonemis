@@ -6,6 +6,9 @@ namespace phonemis {
 
 using namespace utilities;
 using phonemizer::constants::alphabet::kPunctations;
+using phonemizer::constants::alphabet::kNonQuotePunctations;
+using phonemizer::constants::language::kVowels;
+using phonemizer::constants::language::kConsonants;
 using tagger::Tag;
 
 Pipeline::Pipeline(Lang language,
@@ -47,6 +50,7 @@ std::u32string Pipeline::process(const std::string& text) {
     }
 
     // TODO: intermediate part of preprocessing
+    std::optional<bool> vowel_next = {};
 
     // Phonemize tokens
     // We concatenate phonemized words and add unchanged white spaces
@@ -56,7 +60,7 @@ std::u32string Pipeline::process(const std::string& text) {
       const auto& word = token.text;
       const auto& tag = token.tag.value();
 
-      auto phonemes = phonemizer_->phonemize(word, tag, {}, {});
+      auto phonemes = phonemizer_->phonemize(word, tag, {}, vowel_next);
       phonemized_sentence += phonemes;
 
       bool is_single_char = word.size() == 1;
@@ -65,6 +69,18 @@ std::u32string Pipeline::process(const std::string& text) {
       
       if (!token.whitespace.empty())
         phonemized_sentence += string_utils::utf8_to_u32string(token.whitespace);
+
+      // Check if the latest phonemization contains any vowels
+      // This will affect the following phonemization (of the next token).
+      // TODO: should be moves into Phonemizer's territory
+      for (char32_t p : phonemes) {
+        if (p <= 127 && kNonQuotePunctations.contains(static_cast<char>(p)))
+          vowel_next = {};
+        if (kVowels.find(p) != std::u32string::npos)
+          vowel_next = {true};
+        else if (kConsonants.find(p) != std::u32string::npos)
+          vowel_next = {false};
+      }
     }
 
     // Expand text phonemization with the processed sentence

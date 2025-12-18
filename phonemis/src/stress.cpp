@@ -5,7 +5,7 @@
 namespace phonemis::phonemizer {
 
 using namespace utilities;
-using constants::stress::kVowels;
+using constants::language::kVowels;
 
 std::u32string apply_stress(const std::u32string& phonemes, float stress) {
   std::u32string result = phonemes;

@@ -76,15 +76,16 @@ std::u32string Lexicon::get_word(const std::string& word,
   
   // TODO: add unicode normalization
   std::string used_word = word;
+  std::string lower = string_utils::to_lower(word);
   if (word.size() > 1 &&
       string_utils::is_alpha(string_utils::filter(word, [](char c) -> bool { return c != '\''; })) &&
-      word != string_utils::to_lower(word) &&
+      word != lower &&
       (tag != "NNP" || word.size() > 7) &&
       !dict_.contains(word) &&
       (word == string_utils::to_upper(word) || word.substr(1) == string_utils::to_lower(word.substr(1))) &&
-      (dict_.contains(string_utils::to_lower(word)) || stem_s(word, tag, stress) != U"" ||
+      (dict_.contains(lower) || stem_s(word, tag, stress) != U"" ||
         stem_ed(word, tag, stress) != U"" || stem_ing(word, tag, stress) != U""))
-    used_word = string_utils::to_lower(word);
+    used_word = lower;
   
   if (is_known(used_word))
     return lookup(word, tag, stress);
@@ -102,6 +103,10 @@ std::u32string Lexicon::get_word(const std::string& word,
   phonemes = stem_ing(used_word, tag, stress.has_value() ? stress.value() : 0.5F);
   if (!phonemes.empty())
     return phonemes;
+  
+  if (used_word != lower && 
+      dict_.contains(lower))
+    return dict_.at(lower);
   
   return U"";
 }
@@ -230,8 +235,9 @@ std::u32string Lexicon::lookup(const std::string& word,
   // in the dict, we try to manually resolve them.
   // Note that we also treat unknown words like NNPs.
   if (phonemes.empty() || is_nnp && !has_primary_stress) {
-    phonemes = lookup_nnp(word);
-    if (!phonemes.empty()) return phonemes;
+    auto phonemes_nnp = lookup_nnp(word);
+    if (!phonemes_nnp.empty()) return phonemes_nnp;
+    else return phonemes;
   }
 
   return stress.has_value() ? apply_stress(phonemes, stress.value()) : phonemes;
@@ -260,6 +266,9 @@ std::u32string Lexicon::lookup_nnp(const std::string& word) const {
   bool has_secondary = last_ssc != std::u32string::npos;
   std::u32string first_part = has_secondary ? phonemes.substr(0, last_ssc) : U"";
   std::u32string second_part = has_secondary ? phonemes.substr(last_ssc + 1) : phonemes;
+
+  if (first_part.empty() && second_part.empty())
+    return U"";
 
   // Join and return
   return first_part + std::u32string(1, constants::stress::kPrimary) + second_part;
