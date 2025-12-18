@@ -74,12 +74,18 @@ std::u32string Pipeline::process(const std::string& text) {
       // This will affect the following phonemization (of the next token).
       // TODO: should be moves into Phonemizer's territory
       for (char32_t p : phonemes) {
-        if (p <= 127 && kNonQuotePunctations.contains(static_cast<char>(p)))
+        if (p <= 127 && kNonQuotePunctations.contains(static_cast<char>(p))) {
           vowel_next = {};
-        if (kVowels.find(p) != std::u32string::npos)
+          break;
+        }
+        else if (kVowels.find(p) != std::u32string::npos) {
           vowel_next = {true};
-        else if (kConsonants.find(p) != std::u32string::npos)
+          break;
+        }
+        else if (kConsonants.find(p) != std::u32string::npos) {
           vowel_next = {false};
+          break;
+        }
       }
     }
 
