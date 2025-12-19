@@ -12,7 +12,7 @@ int main() {
   std::string LEXICON_DATA_PATH = "../data/dictionaries/us_merged.json";
 
   // const std::string text = "I love it! This is the best day of my entire life.";
-  const std::string text = "Jacob cloud is a real beast! He is the 66th of the raiders!";
+  const std::string text = "Damian cloud is a real beast! He is the 66th of the raiders!";
 
   Pipeline pipeline(Lang::EN_US, TAGGER_DATA_PATH, LEXICON_DATA_PATH);
   auto phonemes = pipeline.process(text);

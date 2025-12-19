@@ -6,8 +6,16 @@
 
 namespace phonemis::phonemizer::constants {
 
+// Control constants & hyperparameters
+// Determine the behavior of the phonemization algorithms.
+inline constexpr int32_t kMaxSyllabeLength = 6; // See the fallback phonemization mechanism
+inline constexpr int32_t kVowelSyllabePenalty = 2;  // See the fallback phonemization mechanism
+
 // Alphabet-related constants
 namespace alphabet {
+inline const std::string kVowels = "aeiouy";  // Written vowels
+inline const std::string kConsosants = "bcdfghjklmnpqrstvwxz";  // Written consosants
+
 // Acceptable number suffixes
 // Cause numbers to be converted into ordinal instead of cardinal representation
 inline const std::unordered_set<std::string> kOrdinalSuffixes = {
@@ -47,8 +55,8 @@ kCurrencies = {
 
 // Language (spoken) constants
 namespace language {
-inline const std::u32string kVowels = U"AIOQWYaiuæɑɒɔəɛɜɪʊʌᵻ";
-inline const std::u32string kConsonants = U"bdfhjklmnpstvwzðŋɡɹɾʃʒʤʧθ";
+inline const std::u32string kVowels = U"AIOQWYaiuæɑɒɔəɛɜɪʊʌᵻ";  // Spoken vowels
+inline const std::u32string kConsonants = U"bdfhjklmnpstvwzðŋɡɹɾʃʒʤʧθ"; // Spoken consosants
 inline const std::u32string kUSTaus = U"AIOWYiuæɑəɛɪɹʊʌ";
 } // namespace language
 

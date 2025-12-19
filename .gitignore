@@ -20,3 +20,7 @@ eng_sentences.tsv
 # Test executables
 test/**
 !test/*.cpp
+
+# Local test/playground files
+scripts/phonemization_playground.py
+scripts/test_dynamic_algo.py
