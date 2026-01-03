@@ -228,7 +228,7 @@ std::u32string Lexicon::lookup(const std::string& word,
                               ? dict_.at(string_utils::to_lower(word)) : U"";
   
   bool is_nnp = tag == "NNP";
-  bool has_primary_stress = phonemes.find(static_cast<char>(constants::stress::kPrimary)) != std::string::npos;
+  bool has_primary_stress = phonemes.find(constants::stress::kPrimary) != std::u32string::npos;
 
   // Special case - unknown words & NNP (proper nouns)
   // Since proper noun names could be very unique and not present
