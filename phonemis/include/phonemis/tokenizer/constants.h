@@ -23,7 +23,8 @@ namespace phonemis::tokenizer::constants {
     "'bout", "'d", "'em", "'ll", "'m", "'re", "'s", "'ve",
     "can't", "cain't", "goin'", "let's", "ma'am", "musn't", "n't",
     "nothin'", "o'clock", "o'er", "out'n", "po'k", "pop'lar",
-    "somethin'", "tain't", "we'uns", "what's", "y'know", "you'uns", "y'all",
+    "somethin'", "tain't", "we'uns", "what's", 
+    "y'know", "yesterday's", "you'uns", "y'all",
 
     // Abbreviations and acronyms
     "a.m.", "aug.", "b.c.", "bros.", "co.", "corp.", "dr.",

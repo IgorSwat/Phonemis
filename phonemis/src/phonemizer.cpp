@@ -87,6 +87,12 @@ Phonemizer::fallback(const std::string& word,
             syllabe.back() == 'e' && 
             constants::language::kConsonants.find(phonemes.back()) != std::u32string::npos)
           phonemes += U"ɜ";
+
+        // Or replace the primary stress with the secondary stress in case of
+        // trailing syllabes.
+        auto primary_stress_pos = phonemes.find(constants::stress::kPrimary);
+        if (i > d && primary_stress_pos != std::u32string::npos)
+          phonemes[primary_stress_pos] = constants::stress::kSecondary;
         
         // Apply penalty for using syllabes starting with vowels
         if (i > d && 
