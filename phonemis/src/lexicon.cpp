@@ -9,6 +9,8 @@
 #include <regex>
 #include <stdexcept>
 
+#include <iostream>
+
 namespace phonemis::phonemizer {
 
 using namespace utilities;
@@ -325,7 +327,7 @@ Lexicon::lookup_special(const std::string& word,
   else if (std::regex_match(word, std::regex(R"(vs\.?$)", std::regex_constants::icase)))
     return lookup("versus", {""}, {});
   else if (word == "used" || word == "Used" || word == "USED")
-    return dict_.at("word");
+    return dict_.at(word);
   
   // If the word is not a special case, return no phonemes
   return U"";
