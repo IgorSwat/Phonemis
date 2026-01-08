@@ -13,9 +13,14 @@ output*
 __pycache__
 **/__pycache__
 
-# Heavy data files
+# Heavy / temporary data files
 !data/.gitkeep
-eng_sentences.tsv
+data/rules.txt
+data/brown.txt
+data/eng_sentences.tsv
+data/common_english_words.csv
+data/missing.txt
+data/missing_to_fill.txt
 
 # Test executables
 test/**

@@ -328,6 +328,8 @@ Lexicon::lookup_special(const std::string& word,
     return lookup("versus", {""}, {});
   else if (word == "used" || word == "Used" || word == "USED")
     return dict_.at(word);
+  else if (string_utils::to_lower(word) == "src")
+    return dict_.at("source");
   
   // If the word is not a special case, return no phonemes
   return U"";

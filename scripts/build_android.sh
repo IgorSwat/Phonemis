@@ -57,7 +57,9 @@ do
         -DANDROID_ABI="$abi" \
         -DANDROID_PLATFORM="android-$MIN_SDK" \
         -DCMAKE_BUILD_TYPE=Release \
-        -DANDROID_STL=c++_static
+        -DANDROID_STL=c++_static \
+        -DCMAKE_C_FLAGS_RELEASE="-Os -g0 -ffunction-sections -fdata-sections" \
+        -DCMAKE_CXX_FLAGS_RELEASE="-Os -g0 -ffunction-sections -fdata-sections" 
 
     # Build
     cmake --build "$build_dir" --parallel $(nproc)
