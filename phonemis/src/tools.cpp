@@ -98,9 +98,21 @@ std::string verbalize_numbers(const std::string& text) {
 			}
 		}
 
+		// 3. Check if the number is a year
+		// We use a simple (but sometimes innacurate) heuristic to detect a year,
+		// since full detection would require some context-knowledge aquired
+		// only after the POS tagging phase.
+		bool assume_year = false;
+		if (std::all_of(match_begin, match_end, [](char c) -> bool { return std::isdigit(c); })) {
+			int number = std::stoi(match.str());
+			assume_year = number >= 1000 && number < 3000;
+		}
+
 		// Convert and append
 		if (ordinal_found) {
 			output.append(num2words::convert<num2words::ConversionMode::ORDINAL>(match.str()));
+		} else if (assume_year && !currency_found) {
+			output.append(num2words::convert<num2words::ConversionMode::YEAR>(match.str()));
 		} else {
 			output.append(num2words::convert<num2words::ConversionMode::CARDINAL>(match.str()));
 			
