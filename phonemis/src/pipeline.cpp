@@ -25,8 +25,11 @@ Pipeline::Pipeline(Lang language,
 // of the solution
 std::u32string Pipeline::process(const std::string& text) {
   // Start by preprocessing the text
+  // Normalize the text to replace any foreign characters.
+  auto normalized_text = preprocessor::normalize_unicode(text);
+
   // We remove numbers by replacing them with their verbalized representations.
-  auto verbalized_text = preprocessor::verbalize_numbers(text);
+  auto verbalized_text = preprocessor::verbalize_numbers(normalized_text);
 
   // Since HMM tagger processes entire sentences, we divide
   // the text for separate sentences to be processed.

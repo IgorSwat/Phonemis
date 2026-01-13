@@ -12,6 +12,26 @@
 namespace phonemis::preprocessor {
 
 using namespace phonemizer::constants;
+using namespace utilities;
+using unicode::constants::kForeignToLatin;
+
+// Text characters normalization
+std::string normalize_unicode(const std::string& text) {
+	// Start by converting to u32 format to easily iterate character by character
+	auto u32text = string_utils::utf8_to_u32string(text);
+
+	// Iterate character by character, replacing incompatible characters with latin-only phrases
+	std::string converted;
+	converted.reserve(text.size());	// The conversion should be at least 1:1
+	for (char32_t c : u32text) {
+		if (kForeignToLatin.contains(c))
+			converted.append(kForeignToLatin.at(c));
+		else if (c < 128)
+			converted.push_back(static_cast<char>(c));
+	}
+
+	return converted;
+}
 
 // Sentence splitting implementation
 std::vector<std::string> split_sentences(const std::string& text) {
