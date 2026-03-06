@@ -15,31 +15,53 @@ namespace phonemis::phonemizer {
 
 using namespace utilities;
 
+static std::string get_parent_tag(const std::string& tag) {
+  if (tag.size() >= 2 && tag.substr(0, 2) == "VB") return "VERB";
+  if (tag.size() >= 2 && tag.substr(0, 2) == "NN") return "NOUN";
+  if (tag.size() >= 3 && tag.substr(0, 3) == "ADV") return "ADV";
+  if (tag.size() >= 2 && tag.substr(0, 2) == "RB") return "ADV";
+  if (tag.size() >= 3 && tag.substr(0, 3) == "ADJ") return "ADJ";
+  if (tag.size() >= 2 && tag.substr(0, 2) == "JJ") return "ADJ";
+  return tag;
+}
+
 Lexicon::Lexicon(Lang language, const std::string& dict_filepath)
   : language_(language) {
   // Load the input JSON file
 	auto json_obj = io_utils::load_json(dict_filepath);
 
-  // We assume that loaded JSON file is in plain string: string format
+  // Dictionary entries can be either plain strings or objects with POS variants
   for (auto& item : json_obj.items()) {
     const std::string text = item.key();
     const auto& phonemes = item.value();
 
-    if (!phonemes.is_string())
+    DictEntry entry;
+    if (phonemes.is_string()) {
+      auto ps = string_utils::utf8_to_u32string(phonemes.get<std::string>());
+      entry = DictEntry{ps, {}};
+    } else if (phonemes.is_object()) {
+      for (auto& [pos, val] : phonemes.items()) {
+        if (val.is_null() || pos == "None") continue;
+        auto ps = string_utils::utf8_to_u32string(val.get<std::string>());
+        if (pos == "DEFAULT") entry.default_phonemes = ps;
+        else entry.pos_variants[pos] = ps;
+      }
+      if (entry.default_phonemes.empty() && !entry.pos_variants.empty())
+        entry.default_phonemes = entry.pos_variants.begin()->second;
+    } else {
       throw std::invalid_argument("Unexpected JSON structure in file " + dict_filepath);
-    
-    // Convert the value to u32string and add the entry
-    auto phonemes_u32 = string_utils::utf8_to_u32string(phonemes.get<std::string>());
-    dict_[text] = phonemes_u32;
+    }
 
-    // In order to make the vocab less case-sensitive, we expand it with 
+    dict_[text] = entry;
+
+    // In order to make the vocab less case-sensitive, we expand it with
     // additional entries: lowered and capitalized one if needed.
     auto text_lowered = string_utils::to_lower(text);
     auto text_capitalized = string_utils::capitalize(text);
     if (text.size() >= 2 && text == text_lowered && text != text_capitalized)
-      dict_[text_capitalized] = phonemes_u32;
+      dict_[text_capitalized] = entry;
     else if (text.size() >= 2 && text == string_utils::capitalize(text_lowered))
-      dict_[text_lowered] = phonemes_u32;
+      dict_[text_lowered] = entry;
   }
 }
 
@@ -48,16 +70,17 @@ bool Lexicon::is_known(const std::string& word) const {
          word.size() == 1 && (std::isalpha(word[0]) || constants::alphabet::kSymbols.contains(word[0]));
 }
 
-std::u32string Lexicon::get(const std::string& word, 
+std::u32string Lexicon::get(const std::string& word,
                             const tagger::Tag& tag,
                             std::optional<float> base_stress,
-                            std::optional<bool> vowel_next) {
+                            std::optional<bool> vowel_next,
+                            bool future_to) {
   std::optional<float> stress = word == string_utils::to_lower(word) ? std::nullopt :
-                                word == string_utils::to_upper(word) ? 
+                                word == string_utils::to_upper(word) ?
                                   std::make_optional(2.F) : std::make_optional(0.5F);
-  
+
   // Phonemize
-  std::u32string phonemes = get_word(word, tag, stress, vowel_next);
+  std::u32string phonemes = get_word(word, tag, stress, vowel_next, future_to);
 
   // Apply base stress
   // TODO: consider dealing with some trailing currency characters here
@@ -70,9 +93,10 @@ std::u32string Lexicon::get(const std::string& word,
 std::u32string Lexicon::get_word(const std::string& word,
                                  const tagger::Tag& tag,
                                  std::optional<float> stress,
-                                 std::optional<bool> vowel_next) const {
+                                 std::optional<bool> vowel_next,
+                                 bool future_to) const {
   // Lookup for special words
-  std::u32string phonemes = lookup_special(word, tag, stress, vowel_next);
+  std::u32string phonemes = lookup_special(word, tag, stress, vowel_next, future_to);
   if (!phonemes.empty())
     return phonemes;
   
@@ -106,9 +130,9 @@ std::u32string Lexicon::get_word(const std::string& word,
   if (!phonemes.empty())
     return phonemes;
   
-  if (used_word != lower && 
+  if (used_word != lower &&
       dict_.contains(lower))
-    return dict_.at(lower);
+    return dict_.at(lower).default_phonemes;
   
   return U"";
 }
@@ -223,12 +247,34 @@ std::u32string Lexicon::stem_ing(const std::string& word,
 
 std::u32string Lexicon::lookup(const std::string& word,
                                const tagger::Tag& tag,
-                               std::optional<float> stress) const {
+                               std::optional<float> stress,
+                               const std::string& pos_tag) const {
   // Lookup with both exact and lower case
-  std::u32string phonemes = dict_.contains(word) ? dict_.at(word) :
-                            dict_.contains(string_utils::to_lower(word)) 
-                              ? dict_.at(string_utils::to_lower(word)) : U"";
-  
+  const DictEntry* entry = nullptr;
+  if (dict_.contains(word))
+    entry = &dict_.at(word);
+  else if (dict_.contains(string_utils::to_lower(word)))
+    entry = &dict_.at(string_utils::to_lower(word));
+
+  std::u32string phonemes = U"";
+  if (entry) {
+    // Check POS variants if a tag is available
+    std::string effective_tag = pos_tag.empty() ? std::string(tag) : pos_tag;
+    if (!effective_tag.empty() && !entry->pos_variants.empty()) {
+      if (entry->pos_variants.count(effective_tag))
+        phonemes = entry->pos_variants.at(effective_tag);
+      else {
+        auto parent = get_parent_tag(effective_tag);
+        if (entry->pos_variants.count(parent))
+          phonemes = entry->pos_variants.at(parent);
+        else
+          phonemes = entry->default_phonemes;
+      }
+    } else {
+      phonemes = entry->default_phonemes;
+    }
+  }
+
   bool is_nnp = tag == "NNP";
   bool has_primary_stress = phonemes.find(constants::stress::kPrimary) != std::u32string::npos;
 
@@ -256,8 +302,8 @@ std::u32string Lexicon::lookup_nnp(const std::string& word) const {
   for (char c : word_alpha) {
     if (!dict_.contains(std::string(1, c)))
       return U"";
-    
-    phonemes += dict_.at(std::string(1, c));
+
+    phonemes += dict_.at(std::string(1, c)).default_phonemes;
   }
 
   phonemes = apply_stress(phonemes, 1.F);
@@ -276,11 +322,12 @@ std::u32string Lexicon::lookup_nnp(const std::string& word) const {
   return first_part + std::u32string(1, constants::stress::kPrimary) + second_part;
 }
 
-std::u32string 
+std::u32string
 Lexicon::lookup_special(const std::string& word,
                         const tagger::Tag& tag,
                         std::optional<float> stress,
-                        std::optional<bool> vowel_next) const {
+                        std::optional<bool> vowel_next,
+                        bool future_to) const {
   bool is_single_char = word.size() == 1;
   bool is_add_symbol = is_single_char && constants::alphabet::kAddSymbols.contains(word[0]);
   bool is_other_symbol = is_single_char && constants::alphabet::kSymbols.contains(word[0]);
@@ -307,7 +354,7 @@ Lexicon::lookup_special(const std::string& word,
     if (string_utils::starts_with(tag, "NN"))
       return lookup_nnp(word);
     if (!vowel_next.has_value() || word != "am" || stress.has_value() && stress.value() > 0)
-      return dict_.at("am");
+      return dict_.at("am").default_phonemes;
     else
       return U"ɐm";
   }
@@ -318,7 +365,7 @@ Lexicon::lookup_special(const std::string& word,
   else if ((word == "by" || word == "By" || word == "BY") && tag.parent_tag() == "ADV")
     return U"bˈI";
   else if (word == "to" || word == "To" || word == "TO" && (tag == "TO" || tag == "IN"))
-    return !vowel_next.has_value() ? dict_.at("to") :
+    return !vowel_next.has_value() ? dict_.at("to").default_phonemes :
            vowel_next.value() ? U"tʊ" : U"tə";
   else if (word == "in" || word == "In" || word == "IN" && tag != "NNP")
     return (!vowel_next.has_value() || tag != "IN" ? std::u32string(1, constants::stress::kPrimary) : U"") + U"ɪn";
@@ -326,10 +373,20 @@ Lexicon::lookup_special(const std::string& word,
     return vowel_next.has_value() && vowel_next.value() ? U"ði" : U"ðə";
   else if (std::regex_match(word, std::regex(R"(vs\.?$)", std::regex_constants::icase)))
     return lookup("versus", {""}, {});
-  else if (word == "used" || word == "Used" || word == "USED")
-    return dict_.at(word);
+  else if (word == "used" || word == "Used" || word == "USED") {
+    const auto& used_entry = dict_.at("used");
+    if ((tag == "VBD" || tag == "JJ") && future_to) {
+      auto phonemes = used_entry.pos_variants.count("VBD")
+        ? used_entry.pos_variants.at("VBD")
+        : used_entry.default_phonemes;
+      return stress.has_value() ? apply_stress(phonemes, stress.value()) : phonemes;
+    }
+    return stress.has_value()
+      ? apply_stress(used_entry.default_phonemes, stress.value())
+      : used_entry.default_phonemes;
+  }
   else if (string_utils::to_lower(word) == "src")
-    return dict_.at("source");
+    return dict_.at("source").default_phonemes;
   
   // If the word is not a special case, return no phonemes
   return U"";

@@ -13,18 +13,19 @@ Phonemizer::Phonemizer(Lang language, const std::string& lexicon_filepath) {
     lexicon_ = std::make_unique<Lexicon>(language, lexicon_filepath);
 }
 
-std::u32string 
+std::u32string
 Phonemizer::phonemize(const std::string& word,
                       const tagger::Tag& tag,
                       std::optional<float> base_stress,
-                      std::optional<bool> vowel_next) const {
+                      std::optional<bool> vowel_next,
+                      bool future_to) const {
   if (word.empty())
     return U"";
-  
+
   std::u32string phonemes = U"";
-  
+
   if (lexicon_ != nullptr)
-    phonemes = lexicon_->get(word, tag, base_stress, vowel_next);
+    phonemes = lexicon_->get(word, tag, base_stress, vowel_next, future_to);
   
   if (phonemes.empty() && string_utils::is_alpha(word))
     phonemes = fallback(word, tag);

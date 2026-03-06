@@ -16,7 +16,8 @@ public:
   std::u32string phonemize(const std::string& word,
                            const tagger::Tag& tag,
                            std::optional<float> base_stress = std::nullopt,
-                           std::optional<bool> vowel_next = std::nullopt) const;
+                           std::optional<bool> vowel_next = std::nullopt,
+                           bool future_to = false) const;
 
 private:
   // Helper functions - rule-based fallback methods

@@ -66,7 +66,13 @@ std::u32string Pipeline::process(const std::string& text) {
       const auto& word = token.text;
       const auto& tag = token.tag.value();
 
-      auto phonemes = phonemizer_->phonemize(word, tag, {}, vowel_next);
+      // Lookahead for "to" within next 2 tokens (for "used to" etc.)
+      bool future_to = false;
+      for (size_t j = i + 1; j < std::min(i + 3, tokens.size()); j++) {
+        if (tokens[j].text == "to") { future_to = true; break; }
+      }
+
+      auto phonemes = phonemizer_->phonemize(word, tag, {}, vowel_next, future_to);
       phonemized_sentence += phonemes;
 
       // Handle reimaining punctation characters

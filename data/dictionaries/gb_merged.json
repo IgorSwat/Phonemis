@@ -52,11 +52,15 @@
   "ay": "ˈI",
   "az": "ˈaz",
   "ba": "bˈɑː",
-  "be": "biː",
+  "be": {
+    "DEFAULT": "biː"
+  },
   "bi": "bˈI",
   "bo": "bˈQ",
   "bu": "bˈuː",
-  "by": "bI",
+  "by": {
+    "DEFAULT": "bI"
+  },
   "ca": "kˈɑː",
   "ce": "sˈiː",
   "ci": "sˌiːˈI",
@@ -162,7 +166,9 @@
   "mi": "mˈI",
   "mo": "mˈQ",
   "mu": "mjˈuː",
-  "my": "mI",
+  "my": {
+    "DEFAULT": "mI"
+  },
   "na": "nˈʌ",
   "ne": "nˈiː",
   "ni": "nˈI",
@@ -273,7 +279,9 @@
   "yb": "ˈɪb",
   "yc": "ˈɪk",
   "yd": "wˌIdˈiː",
-  "ye": "jiː",
+  "ye": {
+    "DEFAULT": "jiː"
+  },
   "yf": "ˈɪf",
   "yg": "ˈɪɡ",
   "yh": "ˈɪ",
@@ -1143,7 +1151,10 @@
   "bot": "bˈɒt",
   "bou": "bˈuː",
   "bov": "bˈɒv",
-  "bow": "bˈQ",
+  "bow": {
+    "DEFAULT": "bˈQ",
+    "VERB": "bˈW"
+  },
   "box": "bˈɒks",
   "boy": "bˈY",
   "boz": "bˈɒz",
@@ -1266,7 +1277,9 @@
   "cak": "kˈak",
   "cal": "kˈal",
   "cam": "kˈam",
-  "can": "kan",
+  "can": {
+    "DEFAULT": "kan"
+  },
   "cao": "kˈW",
   "cap": "kˈap",
   "caq": "kˈak",
@@ -2820,7 +2833,9 @@
   "geq": "ʤˈɛk",
   "ger": "ʤˈɜː",
   "ges": "ʤˈɛs",
-  "get": "ɡɛt",
+  "get": {
+    "DEFAULT": "ɡɛt"
+  },
   "geu": "ʤjˈuː",
   "gev": "ʤˈɛv",
   "gew": "ʤjˈuː",
@@ -2920,7 +2935,9 @@
   "goq": "ɡˈɒk",
   "gor": "ɡˈɔː",
   "gos": "ɡˌQz",
-  "got": "ɡɒt",
+  "got": {
+    "DEFAULT": "ɡɒt"
+  },
   "gou": "ɡˈuː",
   "gov": "ɡˈɒv",
   "gow": "ɡˈW",
@@ -3036,7 +3053,9 @@
   "haa": "hˈɑː",
   "hab": "hˈab",
   "hac": "hˈak",
-  "had": "had",
+  "had": {
+    "DEFAULT": "had"
+  },
   "hae": "hˈA",
   "haf": "hˈaf",
   "hag": "hˈaɡ",
@@ -3051,7 +3070,9 @@
   "hap": "hˈap",
   "haq": "hˈak",
   "har": "hˈɑː",
-  "has": "haz",
+  "has": {
+    "DEFAULT": "haz"
+  },
   "hat": "hˈat",
   "hau": "hˈW",
   "hav": "hˈav",
@@ -3094,7 +3115,9 @@
   "heo": "hˈiːQ",
   "hep": "hˈɛp",
   "heq": "hˈɛk",
-  "her": "hɜː",
+  "her": {
+    "DEFAULT": "hɜː"
+  },
   "hes": "hiːz",
   "het": "hˈɛt",
   "heu": "hjˈuː",
@@ -3139,7 +3162,9 @@
   "hip": "hˈɪp",
   "hiq": "hˈɪk",
   "hir": "hˈɪə",
-  "his": "hɪz",
+  "his": {
+    "DEFAULT": "hɪz"
+  },
   "hit": "hˈɪt",
   "hiu": "hˈɪuː",
   "hiv": "ˌAʧˌIvˈiː",
@@ -7035,7 +7060,10 @@
   "sot": "sˈɒt",
   "sou": "sˈuː",
   "sov": "sˈɒv",
-  "sow": "sˈQ",
+  "sow": {
+    "DEFAULT": "sˈQ",
+    "NOUN": "sˈW"
+  },
   "sox": "sˈɒks",
   "soy": "sˈY",
   "soz": "sˈɒz",
@@ -7893,7 +7921,10 @@
   "usb": "jˌuːˌɛsbˈiː",
   "usc": "ˈʌsk",
   "usd": "ˈʌsd",
-  "use": "jˈuːz",
+  "use": {
+    "DEFAULT": "jˈuːz",
+    "NOUN": "jˈuːs"
+  },
   "usf": "ˈʌsf",
   "usg": "ˈʌsɡ",
   "ush": "ˈʌʃ",
@@ -9046,7 +9077,9 @@
   "yeo": "jˈQ",
   "yep": "jˈɛp",
   "yeq": "jˈɛk",
-  "yer": "jɜː",
+  "yer": {
+    "DEFAULT": "jɜː"
+  },
   "yes": "jˈɛs",
   "yet": "jˈɛt",
   "yeu": "jjˈuː",
@@ -17623,7 +17656,10 @@
   "allv": "ˈalv",
   "allw": "ˈalwə",
   "allx": "ˈalks",
-  "ally": "ˈalI",
+  "ally": {
+    "DEFAULT": "ˈalI",
+    "VERB": "əlˈI"
+  },
   "allz": "ˈalz",
   "alma": "ˈɒlmə",
   "almb": "ˈɒlm",
@@ -25547,7 +25583,10 @@
   "axep": "ˈaksɛp",
   "axeq": "ˈaksɛk",
   "axer": "ˈaksə",
-  "axes": "ˈaksiːz",
+  "axes": {
+    "DEFAULT": "ˈaksiːz",
+    "VERB": "ˈaksɪz"
+  },
   "axet": "ˈaksɪt",
   "axeu": "ˈaksjuː",
   "axev": "ˈaksɛv",
@@ -27939,7 +27978,10 @@
   "basp": "bˈasp",
   "basq": "bˈask",
   "basr": "bˈasə",
-  "bass": "bˈas",
+  "bass": {
+    "ADJ": "bˈAs",
+    "DEFAULT": "bˈas"
+  },
   "bast": "bˈast",
   "basu": "bˈɑːsuː",
   "basv": "bˈasv",
@@ -29074,7 +29116,9 @@
   "beek": "bˈiːk",
   "beel": "bˈiːl",
   "beem": "bˈiːm",
-  "been": "biːn",
+  "been": {
+    "DEFAULT": "biːn"
+  },
   "beeo": "bˈiːQ",
   "beep": "bˈiːp",
   "beeq": "bˈiːk",
@@ -33107,7 +33151,10 @@
   "bowp": "bˈQp",
   "bowq": "bˈQk",
   "bowr": "bˈQə",
-  "bows": "bˈQz",
+  "bows": {
+    "DEFAULT": "bˈQz",
+    "VERB": "bˈWz"
+  },
   "bowt": "bˈQt",
   "bowu": "bˈQuː",
   "bowv": "bˈQv",
@@ -52170,7 +52217,9 @@
   "dote": "dˈQt",
   "dotf": "dˈɒtf",
   "dotg": "dˈɒtɡ",
-  "doth": "dʌθ",
+  "doth": {
+    "DEFAULT": "dʌθ"
+  },
   "doti": "dˈQti",
   "dotj": "dˈɒtʤ",
   "dotk": "dˈɒtk",
@@ -52219,7 +52268,10 @@
   "dovb": "dˈɒvb",
   "dovc": "dˈɒvk",
   "dovd": "dˈɒvd",
-  "dove": "dˈʌv",
+  "dove": {
+    "DEFAULT": "dˈʌv",
+    "VERB": "dˈQv"
+  },
   "dovf": "dˈɒvf",
   "dovg": "dˈɒvɡ",
   "dovh": "dˈɒv",
@@ -88739,7 +88791,9 @@
   "gonb": "ɡˈɒnb",
   "gonc": "ɡˈɒŋk",
   "gond": "ɡˈɒnd",
-  "gone": "ɡɒn",
+  "gone": {
+    "DEFAULT": "ɡɒn"
+  },
   "gonf": "ɡˈɒnf",
   "gong": "ɡˈɒŋ",
   "gonh": "ɡˈɒn",
@@ -93459,7 +93513,9 @@
   "havb": "hˈavb",
   "havc": "hˈavk",
   "havd": "hˈavd",
-  "have": "hav",
+  "have": {
+    "DEFAULT": "hav"
+  },
   "havf": "hˈavf",
   "havg": "hˈavɡ",
   "havh": "hˈav",
@@ -94873,7 +94929,9 @@
   "herp": "hˈɜːp",
   "herq": "hˈɜːk",
   "herr": "hˈɛː",
-  "hers": "hɜːz",
+  "hers": {
+    "DEFAULT": "hɜːz"
+  },
   "hert": "hˈɜːt",
   "heru": "hˈɛɹuː",
   "herv": "hˈɜːv",
@@ -142771,7 +142829,10 @@
   "livb": "lˈɪvb",
   "livc": "lˈɪvk",
   "livd": "lˈɪvd",
-  "live": "lˈIv",
+  "live": {
+    "DEFAULT": "lˈIv",
+    "VERB": "lˈɪv"
+  },
   "livf": "lˈɪvf",
   "livg": "lˈɪvɡ",
   "livh": "lˈɪv",
@@ -206176,7 +206237,13 @@
   "reaa": "ɹˈiːə",
   "reab": "ɹˈiːb",
   "reac": "ɹˈiːk",
-  "read": "ɹˈiːd",
+  "read": {
+    "ADJ": "ɹˈɛd",
+    "DEFAULT": "ɹˈiːd",
+    "VBD": "ɹˈɛd",
+    "VBN": "ɹˈɛd",
+    "VBP": "ɹˈɛd"
+  },
   "reae": "ɹˈiː",
   "reaf": "ɹˈiːf",
   "reag": "ɹˈiːɡ",
@@ -206265,7 +206332,10 @@
   "redl": "ɹˈɛdᵊl",
   "redm": "ɹˈɛdəm",
   "redn": "ɹˈɛdən",
-  "redo": "ɹˌiːdˈuː",
+  "redo": {
+    "DEFAULT": "ɹˌiːdˈuː",
+    "NOUN": "ɹˈiːdˌuː"
+  },
   "redp": "ɹˈɛdp",
   "redq": "ɹˈɛdk",
   "redr": "ɹˈɛdə",
@@ -219899,7 +219969,10 @@
   "sowp": "sˈQp",
   "sowq": "sˈQk",
   "sowr": "sˈQə",
-  "sows": "sˈQz",
+  "sows": {
+    "DEFAULT": "sˈQz",
+    "NOUN": "sˈWz"
+  },
   "sowt": "sˈQt",
   "sowu": "sˈQuː",
   "sowv": "sˈQv",
@@ -225342,7 +225415,10 @@
   "teao": "tˈiːQ",
   "teap": "tˈiːp",
   "teaq": "tˈiːk",
-  "tear": "tˈɪə",
+  "tear": {
+    "DEFAULT": "tˈɪə",
+    "VERB": "tˈɛː"
+  },
   "teas": "tˈiːz",
   "teat": "tˈiːt",
   "teau": "tˈQ",
@@ -226572,7 +226648,10 @@
   "thaq": "θˈak",
   "thar": "θˈɑː",
   "thas": "θˈɑːz",
-  "that": "ðat",
+  "that": {
+    "DEFAULT": "ðat",
+    "DT": "ðˈat"
+  },
   "thau": "θˈW",
   "thav": "θˈav",
   "thaw": "θˈɔː",
@@ -226601,7 +226680,9 @@
   "theb": "θˈɛb",
   "thec": "θˈɛk",
   "thed": "ðəd",
-  "thee": "ðiː",
+  "thee": {
+    "DEFAULT": "ðiː"
+  },
   "thef": "θˈɛf",
   "theg": "θˈɛɡ",
   "theh": "θˈA",
@@ -226659,7 +226740,9 @@
   "thip": "θˈɪp",
   "thiq": "θˈɪk",
   "thir": "θˈɜː",
-  "this": "ðɪs",
+  "this": {
+    "DEFAULT": "ðɪs"
+  },
   "thit": "θˈɪt",
   "thiu": "θˈɪuː",
   "thiv": "θˈɪv",
@@ -245672,7 +245755,10 @@
   "usea": "jˈuːziə",
   "useb": "jˈuːzɛb",
   "usec": "jˈuːzɛk",
-  "used": "jˈuːzd",
+  "used": {
+    "DEFAULT": "jˈuːzd",
+    "VBD": "jˈuːst"
+  },
   "usee": "jˈuːziː",
   "usef": "jˈuːzɛf",
   "useg": "jˈuːzɛɡ",
@@ -245687,7 +245773,10 @@
   "usep": "jˈuːzɛp",
   "useq": "jˈuːzɛk",
   "user": "jˈuːzə",
-  "uses": "jˈuːzɪz",
+  "uses": {
+    "DEFAULT": "jˈuːzɪz",
+    "NOUN": "jˈuːsɪz"
+  },
   "uset": "jˈuːzɛt",
   "useu": "jˈuːzjuː",
   "usev": "jˈuːzɛv",
@@ -263854,7 +263943,9 @@
   "wili": "wˈɪli",
   "wilj": "wˈɪlʤ",
   "wilk": "wˈɪlk",
-  "will": "wɪl",
+  "will": {
+    "DEFAULT": "wɪl"
+  },
   "wilm": "wˈɪlm",
   "wiln": "wˈɪln",
   "wilo": "wˈIlQ",
@@ -263898,7 +263989,10 @@
   "wina": "wˈiːnə",
   "winb": "wˈɪnb",
   "winc": "wˈɪŋk",
-  "wind": "wˈɪnd",
+  "wind": {
+    "DEFAULT": "wˈɪnd",
+    "VERB": "wˈInd"
+  },
   "wine": "wˈIn",
   "winf": "wˈɪnf",
   "wing": "wˈɪŋ",
@@ -414730,33 +414824,53 @@
   "A-list": "ˈAlɪst",
   "A-side": "ˈAsId",
   "A-team": "ˈAtˌiːm",
-  "AA": "ˈɑːˌɑː",
-  "ABS": "ˈabz",
+  "AA": {
+    "DEFAULT": "ˈɑːˌɑː"
+  },
+  "ABS": {
+    "DEFAULT": "ˈabz"
+  },
   "ABTA": "ˈabtə",
   "ACAS": "ˈAkas",
   "ACAT": "ˈAkat",
   "ACOSS": "ˈAkɒs",
-  "ACT": "ˈakt",
-  "AD": "ˈad",
+  "ACT": {
+    "DEFAULT": "ˈakt"
+  },
+  "AD": {
+    "DEFAULT": "ˈad"
+  },
   "ADA-accessible": "ˌAdiːAəksˈɛsɪbᵊl",
   "ADA-compliant": "ˌAdiːAkəmplˈIənt",
   "ADAS": "ˈAdas",
-  "ADD": "ˈad",
-  "AG": "ˈaɡ",
-  "AH": "ˈɑː",
+  "ADD": {
+    "DEFAULT": "ˈad"
+  },
+  "AG": {
+    "DEFAULT": "ˈaɡ"
+  },
+  "AH": {
+    "DEFAULT": "ˈɑː"
+  },
   "AI": "ˈAˌI",
-  "AID": "ˈAd",
+  "AID": {
+    "DEFAULT": "ˈAd"
+  },
   "AIDS": "ˈAdz",
   "AIM": "ˈAm",
   "AJ": "ˈAʤˌA",
-  "AM": "am",
+  "AM": {
+    "DEFAULT": "am"
+  },
   "AMAT": "ˈAmat",
   "AMRAAM": "ˈamɹˌam",
   "ANSI": "ˈansi",
   "APEC": "ˈApɛk",
   "APRA": "ˈapɹə",
   "ARC": "ˈɑːk",
-  "AS": "az",
+  "AS": {
+    "DEFAULT": "az"
+  },
   "ASAP": "ˈAsap",
   "ASAT": "ˈAsat",
   "ASBO": "ˈazbQ",
@@ -415483,14 +415597,18 @@
   "B-list": "bˈiːlɪst",
   "B-lymphocyte": "biːlˈɪmfəsIt",
   "B-movie": "bˈiːmuːvi",
-  "BA": "bˈɑː",
+  "BA": {
+    "DEFAULT": "bˈɑː"
+  },
   "BAFTA": "bˈaftə",
   "BAMF": "bˈamf",
   "BASIC": "bˈAsɪk",
   "BAe": "biːAˈiː",
   "BBQ": "bˈɑːbɪkjuː",
   "BCAT": "bˈiːkat",
-  "BE": "biː",
+  "BE": {
+    "DEFAULT": "biː"
+  },
   "BEd": "biːˈɛd",
   "BILF": "bˈɪlf",
   "BIOS": "bˈIɒs",
@@ -415498,7 +415616,9 @@
   "BITNET": "bˈɪtnɛt",
   "BJ": "bˈiːʤˌA",
   "BMAT": "bˈiːmat",
-  "BO": "bˈQ",
+  "BO": {
+    "DEFAULT": "bˈQ"
+  },
   "BOGO": "bˈQɡQ",
   "BOGOF": "bˈɒɡɒf",
   "BRICS": "bɹˈɪks",
@@ -416084,7 +416204,9 @@
   "CAM": "kˈam",
   "CAMRA": "kˈamɹə",
   "CANDU": "kˈanduː",
-  "CAP": "kˈap",
+  "CAP": {
+    "DEFAULT": "kˈap"
+  },
   "CARE": "kˈɛː",
   "CARICOM": "kˈaɹɪkɒm",
   "CAT": "kˈat",
@@ -416093,19 +416215,25 @@
   "CENTCOM": "sˈɛntkɒm",
   "CERN": "sˈɜːn",
   "CINC": "sˌiːɪnsˈiː",
-  "CIS": "sˈɪs",
+  "CIS": {
+    "DEFAULT": "sˈɪs"
+  },
   "CITES": "sˈItiːz",
   "CJ": "sˈiːʤˌA",
   "CMAT": "sˈiːmat",
   "COBE": "kˈQbi",
   "COBOL": "kˈQbɒl",
   "COBRA": "kˈQbɹə",
-  "COD": "kˈɒd",
+  "COD": {
+    "DEFAULT": "kˈɒd"
+  },
   "CODA": "kˈQdə",
   "COM": "kˈɒm",
   "COMINT": "kˈɒmɪnt",
   "CONUS": "kˈQnəs",
-  "COO": "kˈuː",
+  "COO": {
+    "DEFAULT": "kˈuː"
+  },
   "CORE": "kˈɔː",
   "COSPAR": "kˈQspɑː",
   "COVID": "kˈQvɪd",
@@ -416778,8 +416906,12 @@
   "D-Day": "dˈiːdA",
   "D-layer": "dˈiːlAə",
   "D-lock": "dˈiːlɒk",
-  "DA": "də",
-  "DAB": "dˈab",
+  "DA": {
+    "DEFAULT": "də"
+  },
+  "DAB": {
+    "DEFAULT": "dˈab"
+  },
   "DAFTA": "dˈaftə",
   "DARPA": "dˈɑːpə",
   "DAT": "dˈat",
@@ -416788,17 +416920,23 @@
   "DDoS": "dˈiːdɒs",
   "DEFCON": "dˈɛfkɒn",
   "DEFRA": "dˈɛfɹə",
-  "DEW": "djˈuː",
+  "DEW": {
+    "DEFAULT": "djˈuː"
+  },
   "DILF": "dˈɪlf",
   "DIN": "dˈɪn",
   "DINO": "dˈInQ",
-  "DIP": "dˈɪp",
+  "DIP": {
+    "DEFAULT": "dˈɪp"
+  },
   "DIYer": "diːIwˈIə",
   "DJ": "dˈiːʤˌA",
   "DMAT": "dˈiːmat",
   "DMs": "diːˈɛmz",
   "DNase": "dˌiːɛnˈAz",
-  "DOE": "dˈQ",
+  "DOE": {
+    "DEFAULT": "dˈQ"
+  },
   "DOS": "dˈɒs",
   "DPhil": "diːfˈɪl",
   "DRAM": "dˈiːɹam",
@@ -417158,7 +417296,9 @@
   "EFTPOS": "ˈɛftpɒs",
   "EGOT": "ˈiːɡɒt",
   "EJ": "ˈiːʤˌA",
-  "ELF": "ˈɛlf",
+  "ELF": {
+    "DEFAULT": "ˈɛlf"
+  },
   "ELINT": "ˈɛlɪnt",
   "ELISA": "ɪlˈIzə",
   "EMAT": "ˈiːmat",
@@ -417166,12 +417306,20 @@
   "ENSA": "ˈɛnsə",
   "EPOS": "ˈiːpɒs",
   "EPROM": "ˈiːpɹˌɒm",
-  "ER": "ˈɜː",
+  "ER": {
+    "DEFAULT": "ˈɜː"
+  },
   "ESAT": "ˈiːsat",
   "ESOL": "ˈiːsɒl",
-  "EST": "ˈɛst",
-  "ETA": "ˈiːtə",
-  "ETC": "ɛtsˈɛtəɹə",
+  "EST": {
+    "DEFAULT": "ˈɛst"
+  },
+  "ETA": {
+    "DEFAULT": "ˈiːtə"
+  },
+  "ETC": {
+    "DEFAULT": "ɛtsˈɛtəɹə"
+  },
   "EULA": "jˈuːlə",
   "EURIBOR": "jˈʊəɹɪbɔː",
   "Eastbourne": "ˈiːstbɔːn",
@@ -417661,7 +417809,9 @@
   "GATT": "ɡˈat",
   "GCAT": "ʤˈiːkat",
   "GERD": "ɡˈɜːd",
-  "GI": "ɡˈiː",
+  "GI": {
+    "DEFAULT": "ɡˈiː"
+  },
   "GIF": "ɡˈɪf",
   "GIFT": "ɡˈɪft",
   "GIGO": "ɡˈIɡQ",
@@ -418019,15 +418169,21 @@
   "H": "ˈAʧ",
   "HAFTA": "hˈaftə",
   "HCAT": "ˈAʧkat",
-  "HE": "hiː",
-  "HI": "hˈI",
+  "HE": {
+    "DEFAULT": "hiː"
+  },
+  "HI": {
+    "DEFAULT": "hˈI"
+  },
   "HIIT": "hˈɪt",
   "HILF": "hˈɪlf",
   "HIP": "hˈɪp",
   "HIPAA": "hˈɪpə",
   "HJ": "ˈAʧʤˌA",
   "HMAT": "ˈAʧmat",
-  "HMM": "hmm",
+  "HMM": {
+    "DEFAULT": "hmm"
+  },
   "HODL": "hˈɒdᵊl",
   "HSAT": "ˈAʧsat",
   "HTOL": "ˈAʧtɒl",
@@ -418470,7 +418626,9 @@
   "IBAN": "ˈIban",
   "ICAT": "ˈIkat",
   "ICE": "ˈIs",
-  "ID": "ˈɪd",
+  "ID": {
+    "DEFAULT": "ˈɪd"
+  },
   "IELTS": "ˈIɛlts",
   "IJ": "ˈIʤˌA",
   "IJssel": "ˈIsᵊl",
@@ -418479,15 +418637,23 @@
   "IMAT": "ˈImat",
   "IMAX": "ˈImaks",
   "IMP": "ˈɪmp",
-  "IN": "ɪn",
+  "IN": {
+    "DEFAULT": "ɪn"
+  },
   "INSET": "ˈɪnsɛt",
   "IRAS": "ˈIɹas",
-  "IS": "ɪz",
+  "IS": {
+    "DEFAULT": "ɪz"
+  },
   "ISAT": "ˈIsat",
   "ISIL": "ˈIsɪl",
   "ISIS": "ˈIsɪs",
-  "ISO": "ˈIsQ",
-  "IT": "ɪt",
+  "ISO": {
+    "DEFAULT": "ˈIsQ"
+  },
+  "IT": {
+    "DEFAULT": "ɪt"
+  },
   "ITAR-Tass": "ˌiːtɑːtˈas",
   "IUPAC": "ˌIjˈuːpˌak",
   "Iapetus": "Iˈapɪtəs",
@@ -419261,17 +419427,25 @@
   "L-driver": "ˈɛldɹIvə",
   "L-plate": "ˈɛlplˌAt",
   "L-word": "ˈɛlwəːd",
-  "LA": "lˌɑː",
+  "LA": {
+    "DEFAULT": "lˌɑː"
+  },
   "LAFTA": "lˈaftə",
   "LAN": "lˈan",
   "LARP": "lˈɑːp",
   "LASIK": "lˈAsɪk",
   "LCAT": "ˈɛlkat",
-  "LEA": "lˈiː",
-  "LED": "lˈɛd",
+  "LEA": {
+    "DEFAULT": "lˈiː"
+  },
+  "LED": {
+    "DEFAULT": "lˈɛd"
+  },
   "LEED": "lˈiːd",
   "LEM": "lˈɛm",
-  "LI": "lˈiː",
+  "LI": {
+    "DEFAULT": "lˈiː"
+  },
   "LIBOR": "lˈIbɔː",
   "LIFO": "lˈIfQ",
   "LILF": "lˈɪlf",
@@ -419661,7 +419835,9 @@
   "Lysippus": "lIsˈɪpəs",
   "Lysol": "lˈIsɒl",
   "M": "ˈɛm",
-  "MA": "mˈɑː",
+  "MA": {
+    "DEFAULT": "mˈɑː"
+  },
   "MACHO": "mˈaʧQ",
   "MADD": "mˈad",
   "MAFF": "mˈaf",
@@ -419670,7 +419846,9 @@
   "MASH": "mˈaʃ",
   "MC'ing": "ˌɛmsˈiːɪŋ",
   "MCAT": "ˈɛmkat",
-  "ME": "mˌiː",
+  "ME": {
+    "DEFAULT": "mˌiː"
+  },
   "MERS": "mˈɜːz",
   "MIDI": "mˈɪdi",
   "MILF": "mˈɪlf",
@@ -419679,16 +419857,26 @@
   "MIRAS": "mˈIɹəs",
   "MIRV": "mˈɜːv",
   "MJ": "ˈɛmʤˌA",
-  "MM": "m",
+  "MM": {
+    "DEFAULT": "m"
+  },
   "MMAT": "ˈɛmmat",
-  "MO": "mˈQ",
+  "MO": {
+    "DEFAULT": "mˈQ"
+  },
   "MOAB": "mˈQab",
-  "MOD": "mˈɒd",
+  "MOD": {
+    "DEFAULT": "mˈɒd"
+  },
   "MOOC": "mˈuːk",
-  "MOR": "mˈɔː",
+  "MOR": {
+    "DEFAULT": "mˈɔː"
+  },
   "MORI": "mˈɒɹi",
   "MOSFET": "mˈɒsfɛt",
-  "MOT": "mˈQ",
+  "MOT": {
+    "DEFAULT": "mˈQ"
+  },
   "MOX": "mˈɒks",
   "MPEG": "ˈɛmpɛɡ",
   "MRAM": "ˈɛmɹam",
@@ -420790,21 +420978,33 @@
   "O-Bon": "Qbˈɒn",
   "OAPEC": "ˌQˈApɛk",
   "OCAT": "ˈQkat",
-  "OD": "ˈɒd",
-  "OFT": "ˈɒft",
+  "OD": {
+    "DEFAULT": "ˈɒd"
+  },
+  "OFT": {
+    "DEFAULT": "ˈɒft"
+  },
   "OGPU": "ˈɒɡpuː",
-  "OH": "ˈQ",
+  "OH": {
+    "DEFAULT": "ˈQ"
+  },
   "OJ": "ˈQʤˌA",
   "OK": "ˌQkˈA",
   "OLE": "ˌQlˈA",
   "OLED": "ˈQlɛd",
   "OMAT": "ˈQmat",
   "OPEC": "ˈQpɛk",
-  "OR": "ɔː",
-  "OS": "ˈɒs",
+  "OR": {
+    "DEFAULT": "ɔː"
+  },
+  "OS": {
+    "DEFAULT": "ˈɒs"
+  },
   "OSAT": "ˈQsat",
   "OSHA": "ˈQʃə",
-  "OU": "ˈQ",
+  "OU": {
+    "DEFAULT": "ˈQ"
+  },
   "Oahu": "Qˈɑːhuː",
   "Oakland": "ˈQklənd",
   "Oaxaca": "wəhˈɑːkə",
@@ -421021,7 +421221,9 @@
   "Oz": "ˈɒz",
   "Ozalid": "ˈɒzəlɪd",
   "P": "pˈiː",
-  "PA": "pˈɑː",
+  "PA": {
+    "DEFAULT": "pˈɑː"
+  },
   "PAC": "pˈak",
   "PACE": "pˈAs",
   "PAFTA": "pˈaftə",
@@ -421043,7 +421245,9 @@
   "POP": "pˈɒp",
   "POSSLQ": "pˈɒsᵊlkjˌuː",
   "POTUS": "pˈQtəs",
-  "POW": "pˈW",
+  "POW": {
+    "DEFAULT": "pˈW"
+  },
   "PROM": "pɹˈɒm",
   "PSAT": "pˈiːsat",
   "PUFA": "pˈuːfə",
@@ -421697,14 +421901,18 @@
   "RAID": "ɹˈAd",
   "RAM": "ɹˈam",
   "RCAT": "ˈɑːkat",
-  "RE": "ɹˌA",
+  "RE": {
+    "DEFAULT": "ɹˌA"
+  },
   "REM": "ɹˈɛm",
   "REME": "ɹˈiːmi",
   "RICE": "ɹˈIs",
   "RICO": "ɹˈiːkQ",
   "RILF": "ɹˈɪlf",
   "RINO": "ɹˈInQ",
-  "RIP": "ɹˈɪp",
+  "RIP": {
+    "DEFAULT": "ɹˈɪp"
+  },
   "RISC": "ɹˈɪsk",
   "RJ": "ˈɑːʤˌA",
   "RMAT": "ˈɑːmat",
@@ -421970,21 +422178,29 @@
   "SAM": "sˈam",
   "SAR": "sˈɑː",
   "SARS": "sˈɑːz",
-  "SAT": "sˈat",
+  "SAT": {
+    "DEFAULT": "sˈat"
+  },
   "SAVAK": "sˈavak",
   "SCBU": "skɪbˈuː",
   "SCOTUS": "skˈQtəs",
   "SCSI": "skˈʌzi",
   "SEAL": "sˈiːl",
   "SEATO": "sˈiːtQ",
-  "SEC": "sˈɛk",
+  "SEC": {
+    "DEFAULT": "sˈɛk"
+  },
   "SECAM": "sˈiːkam",
   "SEM": "sˈɛm",
   "SERPS": "sˈɜːps",
   "SETI": "sˈɛti",
   "SHAPE": "ʃˈAp",
-  "SI": "sˈiː",
-  "SIB": "sˈɪb",
+  "SI": {
+    "DEFAULT": "sˈiː"
+  },
+  "SIB": {
+    "DEFAULT": "sˈɪb"
+  },
   "SIDS": "sˈɪdz",
   "SIFI": "sˈɪfi",
   "SIG": "sˈɪɡ",
@@ -421998,7 +422214,9 @@
   "SMERSH": "smˈɜːʃ",
   "SNAP": "snˈap",
   "SNOBOL": "snˈQbɔːl",
-  "SOB": "sˈɒb",
+  "SOB": {
+    "DEFAULT": "sˈɒb"
+  },
   "SOCA": "sˈɒkə",
   "SOFAR": "sˈQfɑː",
   "SOHCAHTOA": "sˌɒkətˈQə",
@@ -422849,7 +423067,9 @@
   "T-junction": "tˈiːʤˌʌŋkʃᵊn",
   "T-lymphocyte": "tiːlˈɪmfəsIt",
   "T-shirt": "tˈiːʃəːt",
-  "TA": "tˈɑː",
+  "TA": {
+    "DEFAULT": "tˈɑː"
+  },
   "TAB": "tˈab",
   "TAFE": "tˈAf",
   "TAFTA": "tˈaftə",
@@ -423428,7 +423648,9 @@
   "UNITAR": "jˈuːnɪtɑː",
   "UNO": "ˈuːnQ",
   "UNRWA": "ˈʌnɹə",
-  "US": "jˌuːˈɛs",
+  "US": {
+    "DEFAULT": "ˌʌs"
+  },
   "USAT": "jˈuːsat",
   "Ubaid": "uːbˈAd",
   "Udmurt": "ˈʊdmʊət",
@@ -423717,7 +423939,9 @@
   "WATS": "wˈɒts",
   "WAVES": "wˈAvz",
   "WCAT": "dˈʌbᵊljuːkat",
-  "WHO": "hˌuː",
+  "WHO": {
+    "DEFAULT": "hˌuː"
+  },
   "WIC": "wˈɪk",
   "WILF": "wˈɪlf",
   "WIMP": "wˈɪmp",
@@ -424319,7 +424543,10 @@
   "abseil": "ˈabsAl",
   "abseiling": "ˈabsAlɪŋ",
   "absence": "ˈabsᵊns",
-  "absent": "ˈabsᵊnt",
+  "absent": {
+    "DEFAULT": "ˈabsᵊnt",
+    "VERB": "absˈɛnt"
+  },
   "absent-minded": "ˌabsᵊntmˈIndɪd",
   "absent-mindedly": "absəntmˈIndɪdli",
   "absent-mindedness": "absəntmˈIndɪdnəs",
@@ -424366,7 +424593,10 @@
   "abstention": "əbstˈɛnʃᵊn",
   "abstinence": "ˈabstɪnəns",
   "abstinent": "ˈabstɪnənt",
-  "abstract": "ˈabstɹakt",
+  "abstract": {
+    "DEFAULT": "ˈabstɹakt",
+    "VERB": "əbstɹˈakt"
+  },
   "abstract's": "ˈabstɹakts",
   "abstracted": "əbstɹˈaktɪd",
   "abstractedly": "əbstɹˈaktɪdli",
@@ -424376,7 +424606,10 @@
   "abstractionist": "əbstɹˈakʃənɪst",
   "abstractly": "ˈabstɹaktli",
   "abstractor": "əbstɹˈaktə",
-  "abstracts": "ˈabstɹakts",
+  "abstracts": {
+    "DEFAULT": "ˈabstɹakts",
+    "VERB": "əbstɹˈakts"
+  },
   "abstruse": "əbstɹˈuːs",
   "abstrusely": "əbstɹˈuːsli",
   "abstruseness": "əbstɹˈuːsnəs",
@@ -424395,11 +424628,17 @@
   "abundant": "əbˈʌndᵊnt",
   "abundantly": "əbˈʌndᵊntli",
   "abura": "əbjˈʊəɹə",
-  "abuse": "əbjˈuːz",
+  "abuse": {
+    "DEFAULT": "əbjˈuːz",
+    "NOUN": "əbjˈuːs"
+  },
   "abuse's": "əbjˈuːsɪz",
   "abused": "əbjˈuːzd",
   "abuser": "əbjˈuːzə",
-  "abuses": "əbjˈuːzɪz",
+  "abuses": {
+    "DEFAULT": "əbjˈuːzɪz",
+    "NOUN": "əbjˈuːsɪz"
+  },
   "abusing": "əbjˈuːzɪŋ",
   "abusive": "əbjˈuːsɪv",
   "abusively": "əbjˈuːsɪvli",
@@ -424782,14 +425021,20 @@
   "addenda": "ədˈɛndə",
   "addendum": "ədˈɛndəm",
   "adder": "ˈadə",
-  "addict": "ˈadɪkt",
+  "addict": {
+    "DEFAULT": "ˈadɪkt",
+    "VERB": "ədˈɪkt"
+  },
   "addict's": "ˈadɪkts",
   "addicted": "ədˈɪktɪd",
   "addicting": "ədˈɪktɪŋ",
   "addictingly": "ədˈɪktɪŋli",
   "addiction": "ədˈɪkʃᵊn",
   "addictive": "ədˈɪktɪv",
-  "addicts": "ˈadɪkts",
+  "addicts": {
+    "DEFAULT": "ˈadɪkts",
+    "VERB": "ədˈɪkts"
+  },
   "addition": "ədˈɪʃᵊn",
   "additional": "ədˈɪʃənᵊl",
   "additionally": "ədˈɪʃənəli",
@@ -424966,7 +425211,10 @@
   "adulatory": "ˌadjʊlˈAtəɹi",
   "adult": "ˈadʌlt",
   "adulterant": "ədˈʌltəɹənt",
-  "adulterate": "ədˈʌltəɹAt",
+  "adulterate": {
+    "ADJ": "ədˈʌltəɹət",
+    "DEFAULT": "ədˈʌltəɹAt"
+  },
   "adulteration": "ədˌʌltəɹˈAʃᵊn",
   "adulterator": "ədˈʌltəɹAtə",
   "adulterer": "ədˈʌltəɹə",
@@ -425033,10 +425281,16 @@
   "advisory": "ədvˈIzəɹi",
   "advocaat": "ˈadvəkɑːt",
   "advocacy": "ˈadvəkəsi",
-  "advocate": "ˈadvəkət",
+  "advocate": {
+    "DEFAULT": "ˈadvəkət",
+    "VERB": "ˈadvəkAt"
+  },
   "advocate's": "ˈadvəkəts",
   "advocated": "ˈadvəkAtɪd",
-  "advocates": "ˈadvəkəts",
+  "advocates": {
+    "DEFAULT": "ˈadvəkəts",
+    "VERB": "ˈadvəkAts"
+  },
   "advocating": "ˈadvəkAtɪŋ",
   "advocation": "ˌadvəkˈAʃᵊn",
   "advowson": "ədvˈWzᵊn",
@@ -425127,7 +425381,10 @@
   "affably": "ˈafəbli",
   "affair": "əfˈɛː",
   "affaire": "əfˈɛː",
-  "affect": "ˈafɛkt",
+  "affect": {
+    "DEFAULT": "ˈafɛkt",
+    "VERB": "əfˈɛkt"
+  },
   "affect's": "ˈafɛkts",
   "affectation": "ˌafɛktˈAʃᵊn",
   "affected": "əfˈɛktɪd",
@@ -425143,16 +425400,25 @@
   "affective": "əfˈɛktɪv",
   "affectivity": "əfˌɛktˈɪvɪti",
   "affectless": "ˈafɛktləs",
-  "affects": "ˈafɛkts",
+  "affects": {
+    "DEFAULT": "ˈafɛkts",
+    "VERB": "əfˈɛkts"
+  },
   "afferent": "ˈafəɹənt",
   "affiance": "əfˈIəns",
   "affianced": "əfˈIənst",
   "affiant": "əfˈIənt",
   "affidavit": "ˌafɪdˈAvɪt",
-  "affiliate": "əfˈɪlɪət",
+  "affiliate": {
+    "DEFAULT": "əfˈɪlɪət",
+    "VERB": "əfˈɪlɪAt"
+  },
   "affiliate's": "əfˈɪlɪəts",
   "affiliated": "əfˈɪlɪAtɪd",
-  "affiliates": "əfˈɪlɪəts",
+  "affiliates": {
+    "DEFAULT": "əfˈɪlɪəts",
+    "VERB": "əfˈɪlɪAts"
+  },
   "affiliating": "əfˈɪlɪAtɪŋ",
   "affiliation": "əfˌɪlɪˈAʃᵊn",
   "affiliative": "əfˈɪlɪətɪv",
@@ -425165,11 +425431,17 @@
   "affirmative": "əfˈɜːmətɪv",
   "affirmatively": "əfˈɜːmətɪvli",
   "affirmatory": "əfˈɜːmətəɹi",
-  "affix": "ˈafɪks",
+  "affix": {
+    "DEFAULT": "ˈafɪks",
+    "VERB": "əfˈɪks"
+  },
   "affix's": "ˈafɪksɪz",
   "affixation": "afɪksˈAʃᵊn",
   "affixed": "əfˈɪkst",
-  "affixes": "ˈafɪksɪz",
+  "affixes": {
+    "DEFAULT": "ˈafɪksɪz",
+    "VERB": "əfˈɪksɪz"
+  },
   "affixing": "əfˈɪksɪŋ",
   "afflatus": "əflˈAtəs",
   "afflict": "əflˈɪkt",
@@ -425265,10 +425537,16 @@
   "agent": "ˈAʤᵊnt",
   "agentive": "ˈAʤᵊntɪv",
   "agflation": "aɡflˈAʃᵊn",
-  "agglomerate": "əɡlˈɒməɹət",
+  "agglomerate": {
+    "DEFAULT": "əɡlˈɒməɹət",
+    "VERB": "əɡlˈɒməɹAt"
+  },
   "agglomerate's": "əɡlˈɒməɹəts",
   "agglomerated": "əɡlˈɒməɹAtɪd",
-  "agglomerates": "əɡlˈɒməɹəts",
+  "agglomerates": {
+    "DEFAULT": "əɡlˈɒməɹəts",
+    "VERB": "əɡlˈɒməɹAts"
+  },
   "agglomerating": "əɡlˈɒməɹAtɪŋ",
   "agglomeration": "əɡlˌɒməɹˈAʃᵊn",
   "agglomerative": "əɡlˈɒməɹətɪv",
@@ -425286,10 +425564,16 @@
   "aggravated": "ˈaɡɹəvAtɪd",
   "aggravating": "ˈaɡɹəvAtɪŋ",
   "aggravation": "ˌaɡɹəvˈAʃᵊn",
-  "aggregate": "ˈaɡɹɪɡət",
+  "aggregate": {
+    "DEFAULT": "ˈaɡɹɪɡət",
+    "VERB": "ˈaɡɹɪɡAt"
+  },
   "aggregate's": "ˈaɡɹɪɡəts",
   "aggregated": "ˈaɡɹɪɡAtɪd",
-  "aggregates": "ˈaɡɹɪɡəts",
+  "aggregates": {
+    "DEFAULT": "ˈaɡɹɪɡəts",
+    "VERB": "ˈaɡɹɪɡAts"
+  },
   "aggregating": "ˈaɡɹɪɡAtɪŋ",
   "aggregation": "ˌaɡɹɪɡˈAʃᵊn",
   "aggregative": "ˈaɡɹɪɡətɪv",
@@ -425749,8 +426033,14 @@
   "alliaceous": "ˌalɪˈAʃəs",
   "alliance": "əlˈIəns",
   "allicin": "ˈalɪsɪn",
-  "allied": "ˈalId",
-  "allies": "ˈalIz",
+  "allied": {
+    "DEFAULT": "ˈalId",
+    "VERB": "əlˈId"
+  },
+  "allies": {
+    "DEFAULT": "ˈalIz",
+    "VERB": "əlˈIz"
+  },
   "alligator": "ˈalɪɡAtə",
   "alliterate": "əlˈɪtəɹAt",
   "alliteration": "əlˌɪtəɹˈAʃᵊn",
@@ -425795,11 +426085,20 @@
   "allowance": "əlˈWəns",
   "allowedly": "əlˈWɪdli",
   "alloxan": "alˈɒksᵊn",
-  "alloy": "ˈalY",
+  "alloy": {
+    "DEFAULT": "ˈalY",
+    "VERB": "əlˈY"
+  },
   "alloy's": "ˈalYz",
-  "alloyed": "ˈalYd",
+  "alloyed": {
+    "DEFAULT": "ˈalYd",
+    "VERB": "əlˈYd"
+  },
   "alloying": "əlˈYɪŋ",
-  "alloys": "ˈalYz",
+  "alloys": {
+    "DEFAULT": "ˈalYz",
+    "VERB": "əlˈYz"
+  },
   "allseed": "ˈɔːlsiːd",
   "allspice": "ˈɔːlspIs",
   "allude": "əljˈuːd",
@@ -425884,11 +426183,17 @@
   "altering": "ˈɔːltəɹɪŋ",
   "alterity": "ɒltˈɛɹɪti",
   "alternant": "ˈɔːltənənt",
-  "alternate": "ɔːltˈɜːnɪt",
+  "alternate": {
+    "DEFAULT": "ɔːltˈɜːnɪt",
+    "VERB": "ˈɔːltənAt"
+  },
   "alternate's": "ɔːltˈɜːnɪts",
   "alternated": "ˈɔːltənAtɪd",
   "alternately": "ɔːltˈɜːnɪtli",
-  "alternates": "ɔːltˈɜːnɪts",
+  "alternates": {
+    "DEFAULT": "ɔːltˈɜːnɪts",
+    "VERB": "ˈɔːltənAts"
+  },
   "alternating": "ˈɔːltənAtɪŋ",
   "alternation": "ˌɔːltənˈAʃᵊn",
   "alternative": "ɔːltˈɜːnətɪv",
@@ -426242,7 +426547,10 @@
   "analysand": "ənˈalɪsand",
   "analyse": "ˈanəlIz",
   "analyser": "ˈanəlIzə",
-  "analyses": "ənˈalɪsiːz",
+  "analyses": {
+    "DEFAULT": "ənˈalɪsiːz",
+    "VERB": "ˈanəlIzɪz"
+  },
   "analysis": "ənˈalɪsɪs",
   "analyst": "ˈanəlɪst",
   "analyte": "ˈanəlIt",
@@ -426453,7 +426761,10 @@
   "animality": "ˌanɪmˈalɪti",
   "animalization": "ˌanɪməlIzˈAʃᵊn",
   "animalize": "ˈanɪməlIz",
-  "animate": "ˈanɪmAt",
+  "animate": {
+    "ADJ": "ˈanɪmət",
+    "DEFAULT": "ˈanɪmAt"
+  },
   "animated": "ˈanɪmAtɪd",
   "animatedly": "ˈanɪmAtɪdli",
   "animateur": "anɪmətˈɜː",
@@ -427150,7 +427461,10 @@
   "approbative": "ˈapɹəbAtɪv",
   "approbatory": "ˈapɹəbˌAtəɹi",
   "appropriacy": "əpɹˈQpɹɪəsi",
-  "appropriate": "əpɹˈQpɹɪət",
+  "appropriate": {
+    "DEFAULT": "əpɹˈQpɹɪət",
+    "VERB": "əpɹˈQpɹɪAt"
+  },
   "appropriated": "əpɹˈQpɹɪAtɪd",
   "appropriately": "əpɹˈQpɹɪətli",
   "appropriateness": "əpɹˈQpɹɪətnəs",
@@ -427166,10 +427480,16 @@
   "approving": "əpɹˈuːvɪŋ",
   "approvingly": "əpɹˈuːvɪŋli",
   "approximant": "əpɹˈɒksɪmᵊnt",
-  "approximate": "əpɹˈɒksɪmət",
+  "approximate": {
+    "DEFAULT": "əpɹˈɒksɪmət",
+    "VERB": "əpɹˈɒksɪmAt"
+  },
   "approximated": "əpɹˈɒksɪmAtɪd",
   "approximately": "əpɹˈɒksɪmətli",
-  "approximates": "əpɹˈɒksɪməts",
+  "approximates": {
+    "DEFAULT": "əpɹˈɒksɪməts",
+    "VERB": "əpɹˈɒksɪmAts"
+  },
   "approximating": "əpɹˈɒksɪmAtɪŋ",
   "approximation": "əpɹˌɒksɪmˈAʃᵊn",
   "approximative": "əpɹˈɒksɪmətɪv",
@@ -427419,7 +427739,10 @@
   "aristocratic": "ˌaɹɪstəkɹˈatɪk",
   "aristocratically": "ˌaɹɪstəkɹˈatɪkᵊli",
   "aristotle": "ˈaɹɪstɒtᵊl",
-  "arithmetic": "əɹˈɪθmətɪk",
+  "arithmetic": {
+    "ADJ": "ˌaɹɪθmˈɛtɪk",
+    "DEFAULT": "əɹˈɪθmətɪk"
+  },
   "arithmetical": "ˌaɹɪθmˈɛtɪkᵊl",
   "arithmetically": "ˌaɹɪθmˈɛtɪkli",
   "arithmetician": "əɹˌɪθmətˈɪʃᵊn",
@@ -427530,7 +427853,10 @@
   "arseholed": "ˈɑːshQld",
   "arsenal": "ˈɑːsənᵊl",
   "arsenate": "ˈɑːsɪnAt",
-  "arsenic": "ˈɑːsᵊnɪk",
+  "arsenic": {
+    "ADJ": "ɑːsˈɛnɪk",
+    "DEFAULT": "ˈɑːsᵊnɪk"
+  },
   "arsenical": "ɑːsˈɛnɪkᵊl",
   "arsenide": "ˈɑːsᵊnId",
   "arsenious": "ɑːsˈiːnɪəs",
@@ -427577,7 +427903,10 @@
   "articleship": "ˈɑːtɪkəlʃɪp",
   "articulacy": "ɑːtˈɪkjʊləsi",
   "articular": "ɑːtˈɪkjʊlə",
-  "articulate": "ɑːtˈɪkjʊlət",
+  "articulate": {
+    "DEFAULT": "ɑːtˈɪkjʊlət",
+    "VERB": "ɑːtˈɪkjʊlAt"
+  },
   "articulated": "ɑːtˈɪkjʊlAtɪd",
   "articulately": "ɑːtˈɪkjʊlətli",
   "articulateness": "ɑːtˈɪkjʊlətnəs",
@@ -427714,10 +428043,17 @@
   "aspic": "ˈaspɪk",
   "aspidistra": "ˌaspɪdˈɪstɹə",
   "aspirant": "ˈaspɪɹənt",
-  "aspirate": "ˈaspɪɹAt",
+  "aspirate": {
+    "ADJ": "ˈaspəɹət",
+    "DEFAULT": "ˈaspɪɹAt",
+    "NOUN": "ˈaspəɹət"
+  },
   "aspirate's": "ˈaspəɹəts",
   "aspirated": "ˈaspɪɹAtɪd",
-  "aspirates": "ˈaspɪɹAts",
+  "aspirates": {
+    "DEFAULT": "ˈaspɪɹAts",
+    "NOUN": "ˈaspəɹəts"
+  },
   "aspirating": "ˈaspɪɹAtɪŋ",
   "aspiration": "ˌaspɪɹˈAʃᵊn",
   "aspirational": "ˌaspɪɹˈAʃənᵊl",
@@ -427800,10 +428136,16 @@
   "assload": "ˈaslQd",
   "associability": "əsˌQʃəbˈɪləti",
   "associable": "əsˈQʃɪəbᵊl",
-  "associate": "əsˈQʃɪət",
+  "associate": {
+    "DEFAULT": "əsˈQʃɪət",
+    "VERB": "əsˈQʃɪAt"
+  },
   "associate's": "əsˈQʃɪəts",
   "associated": "əsˈQʃɪAtɪd",
-  "associates": "əsˈQʃɪəts",
+  "associates": {
+    "DEFAULT": "əsˈQʃɪəts",
+    "VERB": "əsˈQʃɪAts"
+  },
   "associateship": "əsˈQʃɪəʧɪp",
   "associating": "əsˈQʃɪAtɪŋ",
   "association": "əsˌQsɪˈAʃᵊn",
@@ -428038,7 +428380,10 @@
   "attentive": "ətˈɛntɪv",
   "attentively": "ətˈɛntɪvli",
   "attentiveness": "ətˈɛntɪvnɪs",
-  "attenuate": "ətˈɛnjʊAt",
+  "attenuate": {
+    "ADJ": "ətˈɛnjʊət",
+    "DEFAULT": "ətˈɛnjʊAt"
+  },
   "attenuated": "ətˈɛnjʊAtɪd",
   "attenuation": "ətɛnjʊˈAʃᵊn",
   "attenuator": "ətˈɛnjʊAtə",
@@ -428060,10 +428405,16 @@
   "attractively": "ətɹˈaktɪvli",
   "attractiveness": "ətɹˈaktɪvnɪs",
   "attributable": "ətɹˈɪbjʊtəbᵊl",
-  "attribute": "ˈatɹɪbjuːt",
+  "attribute": {
+    "DEFAULT": "ˈatɹɪbjuːt",
+    "VERB": "ətɹˈɪbjuːt"
+  },
   "attribute's": "ˈatɹɪbjuːts",
   "attributed": "ətɹˈɪbjuːtɪd",
-  "attributes": "ˈatɹɪbjuːts",
+  "attributes": {
+    "DEFAULT": "ˈatɹɪbjuːts",
+    "VERB": "ətɹˈɪbjuːts"
+  },
   "attributing": "ətɹˈɪbjuːtɪŋ",
   "attribution": "atɹɪbjˈuːʃᵊn",
   "attributive": "ətɹˈɪbjʊtɪv",
@@ -428115,13 +428466,22 @@
   "auger": "ˈɔːɡə",
   "aught": "ˈɔːt",
   "augite": "ˈɔːʤIt",
-  "augment": "ˈɔːɡmənt",
+  "augment": {
+    "DEFAULT": "ˈɔːɡmənt",
+    "VERB": "ɔːɡmˈɛnt"
+  },
   "augment's": "ˈɔːɡmənts",
   "augmentation": "ˌɔːɡmɛntˈAʃᵊn",
   "augmentative": "ɔːɡmˈɛntətɪv",
-  "augmented": "ˈɔːɡməntɪd",
+  "augmented": {
+    "DEFAULT": "ˈɔːɡməntɪd",
+    "VERB": "ɔːɡmˈɛntɪd"
+  },
   "augmenting": "ˈɔːɡməntɪŋ",
-  "augments": "ˈɔːɡmənts",
+  "augments": {
+    "DEFAULT": "ˈɔːɡmənts",
+    "VERB": "ɔːɡmˈɛnts"
+  },
   "augur": "ˈɔːɡə",
   "augural": "ˈɔːɡjʊɹəl",
   "augury": "ˈɔːɡjʊɹi",
@@ -429948,7 +430308,10 @@
   "bifocal": "bIfˈQkᵊl",
   "bifold": "bˈIfQld",
   "bifter": "bˈɪftə",
-  "bifurcate": "bˈIfəkAt",
+  "bifurcate": {
+    "ADJ": "bIfˈɜːkət",
+    "DEFAULT": "bˈIfəkAt"
+  },
   "bifurcation": "bˌIfəːkˈAʃᵊn",
   "big-head": "bˈɪɡhɛd",
   "big-headed": "bˌɪɡhˈɛdɪd",
@@ -430932,7 +431295,10 @@
   "bolthole": "bˈQlthQl",
   "bolting": "bˈQltɪŋ",
   "bolus": "bˈQləs",
-  "bombard": "bɒmbˈɑːd",
+  "bombard": {
+    "DEFAULT": "bɒmbˈɑːd",
+    "NOUN": "bˈɒmbɑːd"
+  },
   "bombard's": "bˈɒmbɑːdz",
   "bombarde": "bˈɒmbɑːd",
   "bombarded": "bɒmbˈɑːdɪd",
@@ -430940,7 +431306,10 @@
   "bombarding": "bɒmbˈɑːdɪŋ",
   "bombardment": "bɒmbˈɑːdmᵊnt",
   "bombardon": "bˈɒmbədᵊn",
-  "bombards": "bɒmbˈɑːdz",
+  "bombards": {
+    "DEFAULT": "bɒmbˈɑːdz",
+    "NOUN": "bˈɒmbɑːdz"
+  },
   "bombast": "bˈɒmbast",
   "bombastic": "bɒmbˈastɪk",
   "bombastically": "bɒmbˈastɪkli",
@@ -431326,7 +431695,10 @@
   "bracer": "bɹˈAsə",
   "bracero": "bɹəsˈɛːɹQ",
   "brachial": "bɹˈAkɪəl",
-  "brachiate": "bɹˈakɪAt",
+  "brachiate": {
+    "ADJ": "bɹˈakɪət",
+    "DEFAULT": "bɹˈakɪAt"
+  },
   "brachiation": "bɹAkɪˈAʃᵊn",
   "brachiopod": "bɹˈakɪəpɒd",
   "brachiosaurus": "bɹˌakɪQsˈɔːɹəs",
@@ -431905,11 +432277,17 @@
   "buffalo": "bˈʌfəlQ",
   "buffed": "bˈʌft",
   "buffer": "bˈʌfə",
-  "buffet": "bˈʌfA",
+  "buffet": {
+    "DEFAULT": "bˈʌfA",
+    "VERB": "bˈʌfɪt"
+  },
   "buffet's": "bˈʌfAz",
   "buffeted": "bˈʌfɪtɪd",
   "buffeting": "bˈʌfɪtɪŋ",
-  "buffets": "bˈʌfAz",
+  "buffets": {
+    "DEFAULT": "bˈʌfAz",
+    "VERB": "bˈʌfɪts"
+  },
   "bufflehead": "bˈʌfᵊlhɛd",
   "buffo": "bˈʊfQ",
   "buffoon": "bəfˈuːn",
@@ -432951,10 +433329,16 @@
   "carbonaceous": "kˌɑːbənˈAʃəs",
   "carbonado": "kˌɑːbənˈAdQ",
   "carbonara": "kˌɑːbənˈɑːɹə",
-  "carbonate": "kˈɑːbənət",
+  "carbonate": {
+    "DEFAULT": "kˈɑːbənət",
+    "VERB": "kˈɑːbənAt"
+  },
   "carbonate's": "kˈɑːbənəts",
   "carbonated": "kˈɑːbənAtɪd",
-  "carbonates": "kˈɑːbənəts",
+  "carbonates": {
+    "DEFAULT": "kˈɑːbənəts",
+    "VERB": "kˈɑːbənAts"
+  },
   "carbonating": "kˈɑːbənAtɪŋ",
   "carbonation": "kˌɑːbənˈAʃᵊn",
   "carbonatite": "kɑːbˈɒnətIt",
@@ -433725,10 +434109,16 @@
   "certes": "sˈɜːtɪz",
   "certifiable": "sˈɜːtɪfIəbᵊl",
   "certifiably": "sˌɜːtɪfˈIəbli",
-  "certificate": "sətˈɪfɪkət",
+  "certificate": {
+    "DEFAULT": "sətˈɪfɪkət",
+    "VERB": "sətˈɪfɪkAt"
+  },
   "certificate's": "sətˈɪfɪkəts",
   "certificated": "sətˈɪfɪkAtɪd",
-  "certificates": "sətˈɪfɪkəts",
+  "certificates": {
+    "DEFAULT": "sətˈɪfɪkəts",
+    "VERB": "sətˈɪfɪkAts"
+  },
   "certificating": "sətˈɪfɪkAtɪŋ",
   "certification": "sˌɜːtɪfɪkˈAʃᵊn",
   "certified": "sˈɜːtɪfId",
@@ -435028,7 +435418,10 @@
   "cleaning": "klˈiːnɪŋ",
   "cleanliest": "klˈiːnliɪst",
   "cleanliness": "klˈɛnlɪnɪs",
-  "cleanly": "klˈiːnli",
+  "cleanly": {
+    "ADJ": "klˈɛnli",
+    "DEFAULT": "klˈiːnli"
+  },
   "cleanness": "klˈiːnnɪs",
   "cleanse": "klˈɛnz",
   "cleanser": "klˈɛnzə",
@@ -435200,7 +435593,11 @@
   "clonic": "klˈɒnɪk",
   "clonk": "klˈɒŋk",
   "clonus": "klˈQnəs",
-  "close": "klˈQs",
+  "close": {
+    "DEFAULT": "klˈQs",
+    "NOUN": "klˈQz",
+    "VERB": "klˈQz"
+  },
   "close's": "klˈQzɪz",
   "close-cropped": "klQskɹˈɒpt",
   "close-down": "klˈQzdWn",
@@ -435214,7 +435611,10 @@
   "closely": "klˈQsli",
   "closeness": "klˈQsnəs",
   "closeout": "klˈQzWt",
-  "closer": "klˈQsə",
+  "closer": {
+    "DEFAULT": "klˈQsə",
+    "NOUN": "klˈQzə"
+  },
   "closer's": "klˈQzəz",
   "closers": "klˈQzəz",
   "closes": "klˈQzɪz",
@@ -435741,10 +436141,16 @@
   "collinear": "kɒlˈɪnɪə",
   "collinearity": "kəlɪnɪˈaɹɪti",
   "collision": "kəlˈɪʒᵊn",
-  "collocate": "kˈɒləkAt",
+  "collocate": {
+    "DEFAULT": "kˈɒləkAt",
+    "NOUN": "kˈɒləkət"
+  },
   "collocate's": "kˈɒləkəts",
   "collocated": "kˈɒləkAtɪd",
-  "collocates": "kˈɒləkAts",
+  "collocates": {
+    "DEFAULT": "kˈɒləkAts",
+    "NOUN": "kˈɒləkəts"
+  },
   "collocating": "kˈɒləkAtɪŋ",
   "collocation": "kˌɒləkˈAʃᵊn",
   "collocutor": "kQlˈɒkjʊtə",
@@ -435878,11 +436284,17 @@
   "combinatorial": "kˌɒmbɪnətˈɔːɹɪəl",
   "combinatorics": "kˌɒmbɪnətˈɒɹɪks",
   "combinatory": "kˈɒmbɪnətəɹi",
-  "combine": "kəmbˈIn",
+  "combine": {
+    "DEFAULT": "kəmbˈIn",
+    "NOUN": "kˈɒmbIn"
+  },
   "combine's": "kˈɒmbInz",
   "combined": "kəmbˈInd",
   "combiner": "kˈɒmbInə",
-  "combines": "kəmbˈInz",
+  "combines": {
+    "DEFAULT": "kəmbˈInz",
+    "NOUN": "kˈɒmbInz"
+  },
   "combings": "kˈQmɪŋz",
   "combining": "kəmbˈInɪŋ",
   "combo": "kˈɒmbQ",
@@ -436041,10 +436453,16 @@
   "communalize": "kˈɒmjʊnəlIz",
   "communally": "kˈɒmjʊnəli",
   "communard": "kˈɒmjʊnɑːd",
-  "commune": "kˈɒmjuːn",
+  "commune": {
+    "DEFAULT": "kˈɒmjuːn",
+    "VERB": "kəmjˈuːn"
+  },
   "commune's": "kˈɒmjuːnz",
   "communed": "kəmjˈuːnd",
-  "communes": "kˈɒmjuːnz",
+  "communes": {
+    "DEFAULT": "kˈɒmjuːnz",
+    "VERB": "kəmjˈuːnz"
+  },
   "communicability": "kəmjˌuːnɪkəbˈɪlɪti",
   "communicable": "kəmjˈuːnɪkəbᵊl",
   "communicant": "kəmjˈuːnɪkᵊnt",
@@ -436073,7 +436491,11 @@
   "commuter": "kəmjˈuːtə",
   "comorbid": "kˌQmˈɔːbɪd",
   "comorbidity": "kˌQmɔːbˈɪdɪti",
-  "compact": "kˈɒmpakt",
+  "compact": {
+    "ADJ": "kəmpˈakt",
+    "DEFAULT": "kˈɒmpakt",
+    "VERB": "kəmpˈakt"
+  },
   "compact's": "kˈɒmpakts",
   "compacted": "kəmpˈaktɪd",
   "compacting": "kəmpˈaktɪŋ",
@@ -436081,7 +436503,10 @@
   "compactly": "kəmpˈaktli",
   "compactness": "kəmpˈaktnəs",
   "compactor": "kəmpˈaktə",
-  "compacts": "kˈɒmpakts",
+  "compacts": {
+    "DEFAULT": "kˈɒmpakts",
+    "VERB": "kəmpˈakts"
+  },
   "compadre": "kəmpˈɑːdɹA",
   "compand": "kəmpˈand",
   "compander": "kəmpˈandə",
@@ -436160,7 +436585,10 @@
   "complaisance": "kəmplˈAsᵊns",
   "complaisant": "kəmplˈAzᵊnt",
   "complected": "kəmplˈɛktɪd",
-  "complement": "kˈɒmplɪmᵊnt",
+  "complement": {
+    "DEFAULT": "kˈɒmplɪmᵊnt",
+    "VERB": "kˈɒmplɪmɛnt"
+  },
   "complement's": "kˈɒmplɪmᵊnts",
   "complemental": "kɒmplɪmˈɛntᵊl",
   "complementarity": "kˌɒmplɪmɛntˈaɹɪti",
@@ -436169,7 +436597,10 @@
   "complemented": "kˈɒmplɪmɛntɪd",
   "complementing": "kˈɒmplɪmɛntɪŋ",
   "complementizer": "kˈɒmplɪməntIzə",
-  "complements": "kˈɒmplɪmᵊnts",
+  "complements": {
+    "DEFAULT": "kˈɒmplɪmᵊnts",
+    "VERB": "kˈɒmplɪmɛnts"
+  },
   "complete": "kəmplˈiːt",
   "completely": "kəmplˈiːtli",
   "completeness": "kəmplˈiːtnɪs",
@@ -436190,12 +436621,18 @@
   "complicit": "kəmplˈɪsɪt",
   "complicitous": "kəmplˈɪsɪtəs",
   "complicity": "kəmplˈɪsɪti",
-  "compliment": "kˈɒmplɪmᵊnt",
+  "compliment": {
+    "DEFAULT": "kˈɒmplɪmᵊnt",
+    "VERB": "kˈɒmplɪmɛnt"
+  },
   "compliment's": "kˈɒmplɪmᵊnts",
   "complimentary": "kˌɒmplɪmˈɛntəɹi",
   "complimented": "kˈɒmplɪmɛntɪd",
   "complimenting": "kˈɒmplɪmɛntɪŋ",
-  "compliments": "kˈɒmplɪmᵊnts",
+  "compliments": {
+    "DEFAULT": "kˈɒmplɪmᵊnts",
+    "VERB": "kˈɒmplɪmɛnts"
+  },
   "compline": "kˈɒmplɪn",
   "complot": "kˈɒmplɒt",
   "comply": "kəmplˈI",
@@ -436220,13 +436657,19 @@
   "compostable": "kɒmpˈɒstəbᵊl",
   "composure": "kəmpˈQʒə",
   "compote": "kˈɒmpQt",
-  "compound": "kˈɒmpWnd",
+  "compound": {
+    "DEFAULT": "kˈɒmpWnd",
+    "VERB": "kəmpˈWnd"
+  },
   "compound's": "kˈɒmpWndz",
   "compoundable": "kəmpˈWndəbᵊl",
   "compounded": "kəmpˈWndɪd",
   "compounder": "kəmpˈWndə",
   "compounding": "kəmpˈWndɪŋ",
-  "compounds": "kˈɒmpWndz",
+  "compounds": {
+    "DEFAULT": "kˈɒmpWndz",
+    "VERB": "kəmpˈWndz"
+  },
   "comprador": "kˌɒmpɹədˈɔː",
   "comprehend": "kˌɒmpɹɪhˈɛnd",
   "comprehensibility": "kˌɒmpɹɪhˌɛnsɪbˈɪlɪti",
@@ -436237,10 +436680,16 @@
   "comprehensively": "kˌɒmpɹɪhˈɛnsɪvli",
   "comprehensiveness": "kˌɒmpɹɪhˈɛnsɪvnɪs",
   "compresence": "kɒmpɹˈɛzᵊns",
-  "compress": "kəmpɹˈɛs",
+  "compress": {
+    "DEFAULT": "kəmpɹˈɛs",
+    "NOUN": "kˈɒmpɹɛs"
+  },
   "compress's": "kˈɒmpɹɛsɪz",
   "compressed": "kəmpɹˈɛst",
-  "compresses": "kəmpɹˈɛsɪz",
+  "compresses": {
+    "DEFAULT": "kəmpɹˈɛsɪz",
+    "NOUN": "kˈɒmpɹɛsɪz"
+  },
   "compressibility": "kˌɒmpɹɛsəbˈɪləti",
   "compressible": "kəmpɹˈɛsɪbᵊl",
   "compressing": "kəmpɹˈɛsɪŋ",
@@ -436335,7 +436784,10 @@
   "concernedly": "kənsˈɜːnɪdli",
   "concerning": "kənsˈɜːnɪŋ",
   "concernment": "kənsˈɜːnmᵊnt",
-  "concert": "kˈɒnsət",
+  "concert": {
+    "DEFAULT": "kˈɒnsət",
+    "VERB": "kənsˈɜːt"
+  },
   "concert's": "kˈɒnsəts",
   "concertante": "kˌɒnʧətˈantA",
   "concerted": "kənsˈɜːtɪd",
@@ -436349,7 +436801,10 @@
   "concertize": "kˈɒnsətIz",
   "concertmaster": "kˈɒnsətmˌɑːstə",
   "concerto": "kənʧˈɛːtQ",
-  "concerts": "kˈɒnsəts",
+  "concerts": {
+    "DEFAULT": "kˈɒnsəts",
+    "VERB": "kənsˈɜːts"
+  },
   "concession": "kənsˈɛʃᵊn",
   "concessionaire": "kənsˌɛʃənˈɛː",
   "concessional": "kənsˈɛʃənᵊl",
@@ -436454,7 +436909,10 @@
   "condottiere": "kˌɒndɒtjˈɛːɹA",
   "conduce": "kəndjˈuːs",
   "conducive": "kəndjˈuːsɪv",
-  "conduct": "kˈɒndʌkt",
+  "conduct": {
+    "DEFAULT": "kˈɒndʌkt",
+    "VERB": "kəndˈʌkt"
+  },
   "conduct's": "kˈɒndʌkts",
   "conductance": "kəndˈʌktᵊns",
   "conducted": "kəndˈʌktɪd",
@@ -436468,7 +436926,10 @@
   "conductor": "kəndˈʌktə",
   "conductorship": "kəndˈʌktəʃɪp",
   "conductress": "kəndˈʌktɹɪs",
-  "conducts": "kˈɒndʌkts",
+  "conducts": {
+    "DEFAULT": "kˈɒndʌkts",
+    "VERB": "kəndˈʌkts"
+  },
   "conductus": "kəndˈʌktəs",
   "conduit": "kˈɒndwɪt",
   "condylarth": "kˈɒndɪlɑːθ",
@@ -436491,10 +436952,16 @@
   "confectionery": "kənfˈɛkʃənəɹi",
   "confederacy": "kənfˈɛdəɹəsi",
   "confederal": "kənfˈɛdəɹəl",
-  "confederate": "kənfˈɛdəɹət",
+  "confederate": {
+    "DEFAULT": "kənfˈɛdəɹət",
+    "VERB": "kənfˈɛdəɹAt"
+  },
   "confederate's": "kənfˈɛdəɹəts",
   "confederated": "kənfˈɛdəɹAtɪd",
-  "confederates": "kənfˈɛdəɹəts",
+  "confederates": {
+    "DEFAULT": "kənfˈɛdəɹəts",
+    "VERB": "kənfˈɛdəɹAts"
+  },
   "confederating": "kənfˈɛdəɹAtɪŋ",
   "confederation": "kənfˌɛdəɹˈAʃᵊn",
   "confer": "kənfˈɜː",
@@ -436527,11 +436994,17 @@
   "configuration": "kənfˌɪɡəɹˈAʃᵊn",
   "configurator": "kənfˈɪɡəɹAtə",
   "configure": "kənfˈɪɡə",
-  "confine": "kənfˈIn",
+  "confine": {
+    "DEFAULT": "kənfˈIn",
+    "NOUN": "kˈɒnfIn"
+  },
   "confine's": "kˈɒnfInz",
   "confined": "kənfˈInd",
   "confinement": "kənfˈInmᵊnt",
-  "confines": "kənfˈInz",
+  "confines": {
+    "DEFAULT": "kənfˈInz",
+    "NOUN": "kˈɒnfInz"
+  },
   "confining": "kənfˈInɪŋ",
   "confirm": "kənfˈɜːm",
   "confirmand": "kˈɒnfəmand",
@@ -436550,11 +437023,17 @@
   "conflagration": "kˌɒnfləɡɹˈAʃᵊn",
   "conflate": "kənflˈAt",
   "conflation": "kənflˈAʃᵊn",
-  "conflict": "kˈɒnflɪkt",
+  "conflict": {
+    "DEFAULT": "kˈɒnflɪkt",
+    "VERB": "kənflˈɪkt"
+  },
   "conflict's": "kˈɒnflɪkts",
   "conflicted": "kənflˈɪktɪd",
   "conflicting": "kənflˈɪktɪŋ",
-  "conflicts": "kˈɒnflɪkts",
+  "conflicts": {
+    "DEFAULT": "kˈɒnflɪkts",
+    "VERB": "kənflˈɪkts"
+  },
   "conflictual": "kənflˈɪkʧʊəl",
   "confluence": "kˈɒnflʊəns",
   "confluent": "kˈɒnflʊənt",
@@ -436617,10 +437096,16 @@
   "congii": "kˈɒnʤɪI",
   "congius": "kˈɒnʤɪəs",
   "conglobulate": "kɒnɡlˈɒbjʊlAt",
-  "conglomerate": "kənɡlˈɒməɹət",
+  "conglomerate": {
+    "DEFAULT": "kənɡlˈɒməɹət",
+    "VERB": "kənɡlˈɒməɹAt"
+  },
   "conglomerate's": "kənɡlˈɒməɹəts",
   "conglomerated": "kənɡlˈɒməɹAtɪd",
-  "conglomerates": "kənɡlˈɒməɹəts",
+  "conglomerates": {
+    "DEFAULT": "kənɡlˈɒməɹəts",
+    "VERB": "kənɡlˈɒməɹAts"
+  },
   "conglomerating": "kənɡlˈɒməɹAtɪŋ",
   "conglomeration": "kənɡlˌɒməɹˈAʃᵊn",
   "congou": "kˈɒŋɡuː",
@@ -436661,14 +437146,23 @@
   "conjointly": "kənʤˈYntli",
   "conjugal": "kˈɒnʤʊɡᵊl",
   "conjugality": "kˌɒnʤʊɡˈalɪti",
-  "conjugate": "kˈɒnʤʊɡət",
+  "conjugate": {
+    "DEFAULT": "kˈɒnʤʊɡət",
+    "VERB": "kˈɒnʤʊɡAt"
+  },
   "conjugate's": "kˈɒnʤʊɡəts",
   "conjugated": "kˈɒnʤʊɡAtɪd",
-  "conjugates": "kˈɒnʤʊɡəts",
+  "conjugates": {
+    "DEFAULT": "kˈɒnʤʊɡəts",
+    "VERB": "kˈɒnʤʊɡAts"
+  },
   "conjugating": "kˈɒnʤʊɡAtɪŋ",
   "conjugation": "kˌɒnʤʊɡˈAʃᵊn",
   "conjugational": "kˌɒnʤʊɡˈAʃᵊnᵊl",
-  "conjunct": "kənʤˈʌŋkt",
+  "conjunct": {
+    "DEFAULT": "kənʤˈʌŋkt",
+    "NOUN": "kˈɒnʤʌŋkt"
+  },
   "conjunct's": "kˈɒnʤʌŋkts",
   "conjunction": "kənʤˈʌŋkʃᵊn",
   "conjunctional": "kənʤˈʌŋkʃənᵊl",
@@ -436737,12 +437231,18 @@
   "consciousness": "kˈɒnʃəsnəs",
   "consciousness-raising": "kˈɒnʃəsnəsɹˌAzɪŋ",
   "conscribe": "kənskɹˈIb",
-  "conscript": "kˈɒnskɹɪpt",
+  "conscript": {
+    "DEFAULT": "kˈɒnskɹɪpt",
+    "VERB": "kənskɹˈɪpt"
+  },
   "conscript's": "kˈɒnskɹɪpts",
   "conscripted": "kənskɹˈɪptɪd",
   "conscripting": "kənskɹˈɪptɪŋ",
   "conscription": "kənskɹˈɪpʃᵊn",
-  "conscripts": "kˈɒnskɹɪpts",
+  "conscripts": {
+    "DEFAULT": "kˈɒnskɹɪpts",
+    "VERB": "kənskɹˈɪpts"
+  },
   "consecrate": "kˈɒnsɪkɹAt",
   "consecrated": "kˈɒnsɪkɹAtɪd",
   "consecration": "kˌɒnsɪkɹˈAʃᵊn",
@@ -436774,10 +437274,16 @@
   "conservator": "kənsˈɜːvətə",
   "conservatorium": "kənsˌɜːvətˈɔːɹɪəm",
   "conservatory": "kənsˈɜːvətəɹi",
-  "conserve": "kənsˈɜːv",
+  "conserve": {
+    "DEFAULT": "kənsˈɜːv",
+    "NOUN": "kˈɒnsəːv"
+  },
   "conserve's": "kˈɒnsəːvz",
   "conserved": "kənsˈɜːvd",
-  "conserves": "kənsˈɜːvz",
+  "conserves": {
+    "DEFAULT": "kənsˈɜːvz",
+    "NOUN": "kˈɒnsəːvz"
+  },
   "conserving": "kənsˈɜːvɪŋ",
   "consider": "kənsˈɪdə",
   "considerable": "kənsˈɪdəɹəbᵊl",
@@ -436796,7 +437302,10 @@
   "consignor": "kənsˈInə",
   "consilience": "kənsˈɪlɪəns",
   "consilient": "kənsˈɪlɪənt",
-  "consist": "kənsˈɪst",
+  "consist": {
+    "DEFAULT": "kənsˈɪst",
+    "NOUN": "kˈɒnsɪst"
+  },
   "consist's": "kˈɒnsɪsts",
   "consisted": "kənsˈɪstɪd",
   "consistency": "kənsˈɪstᵊnsi",
@@ -436805,7 +437314,10 @@
   "consisting": "kənsˈɪstɪŋ",
   "consistorial": "kˌɒnsɪstˈɔːɹɪəl",
   "consistory": "kənsˈɪstəɹi",
-  "consists": "kənsˈɪsts",
+  "consists": {
+    "DEFAULT": "kənsˈɪsts",
+    "NOUN": "kˈɒnsɪsts"
+  },
   "consociate": "kɒnsˈQʃɪət",
   "consociation": "kɒnsQʃɪˈAʃᵊn",
   "consociational": "kˌɒnsQʃɪˈAʃᵊnᵊl",
@@ -436813,11 +437325,17 @@
   "consolable": "kɒnsˈQləbᵊl",
   "consolation": "kˌɒnsəlˈAʃᵊn",
   "consolatory": "kənsˈɒlətəɹi",
-  "console": "kˈɒnsQl",
+  "console": {
+    "DEFAULT": "kˈɒnsQl",
+    "VERB": "kənsˈQl"
+  },
   "console's": "kˈɒnsQlz",
   "consoled": "kənsˈQld",
   "consoler": "kənsˈQlə",
-  "consoles": "kˈɒnsQlz",
+  "consoles": {
+    "DEFAULT": "kˈɒnsQlz",
+    "VERB": "kənsˈQlz"
+  },
   "consolidate": "kənsˈɒlɪdAt",
   "consolidation": "kənsˌɒlɪdˈAʃᵊn",
   "consolidator": "kənsˈɒlɪdAtə",
@@ -436825,13 +437343,19 @@
   "consonance": "kˈɒnsənəns",
   "consonant": "kˈɒnsənənt",
   "consonantal": "kˌɒnsənˈantᵊl",
-  "consort": "kˈɒnsɔːt",
+  "consort": {
+    "DEFAULT": "kˈɒnsɔːt",
+    "VERB": "kənsˈɔːt"
+  },
   "consort's": "kˈɒnsɔːts",
   "consorted": "kənsˈɔːtɪd",
   "consortia": "kənsˈɔːtɪə",
   "consorting": "kənsˈɔːtɪŋ",
   "consortium": "kənsˈɔːtɪəm",
-  "consorts": "kˈɒnsɔːts",
+  "consorts": {
+    "DEFAULT": "kˈɒnsɔːts",
+    "VERB": "kənsˈɔːts"
+  },
   "conspecific": "kˌɒnspɪsˈɪfɪk",
   "conspectus": "kənspˈɛktəs",
   "conspicuity": "kˌɒnspɪkjˈuːɪti",
@@ -436882,7 +437406,10 @@
   "constrictive": "kənstɹˈɪktɪv",
   "constrictor": "kənstɹˈɪktə",
   "constringent": "kənstɹˈɪnʤᵊnt",
-  "construct": "kənstɹˈʌkt",
+  "construct": {
+    "DEFAULT": "kənstɹˈʌkt",
+    "NOUN": "kˈɒnstɹʌkt"
+  },
   "construct's": "kˈɒnstɹʌkts",
   "constructed": "kənstɹˈʌktɪd",
   "constructible": "kənstɹˈʌktɪbᵊl",
@@ -436897,7 +437424,10 @@
   "constructivism": "kənstɹˈʌktɪvɪzəm",
   "constructivist": "kənstɹˈʌktɪvɪst",
   "constructor": "kənstɹˈʌktə",
-  "constructs": "kənstɹˈʌkts",
+  "constructs": {
+    "DEFAULT": "kənstɹˈʌkts",
+    "NOUN": "kˈɒnstɹʌkts"
+  },
   "construe": "kənstɹˈuː",
   "consubstantial": "kɒnsəbstˈanʃᵊl",
   "consubstantiality": "kˌɒnsəbstanʃɪˈalɪti",
@@ -436921,7 +437451,10 @@
   "consumerism": "kənsjˈuːməɹɪzəm",
   "consumerist": "kənsjˈuːməɹɪst",
   "consuming": "kənsjˈuːmɪŋ",
-  "consummate": "kˈɒnsjʊmAt",
+  "consummate": {
+    "ADJ": "kˈɒnsjʊmət",
+    "DEFAULT": "kˈɒnsjʊmAt"
+  },
   "consummately": "kˈɒnsjʊmətli",
   "consummation": "kˌɒnsjʊmˈAʃᵊn",
   "consumption": "kənsˈʌmpʃᵊn",
@@ -436973,7 +437506,10 @@
   "contemptuousness": "kəntˈɛmptjʊəsnəs",
   "contend": "kəntˈɛnd",
   "contender": "kəntˈɛndə",
-  "content": "kəntˈɛnt",
+  "content": {
+    "DEFAULT": "kəntˈɛnt",
+    "NOUN": "kˈɒntɛnt"
+  },
   "content's": "kˈɒntɛnts",
   "contented": "kəntˈɛntɪd",
   "contentedly": "kəntˈɛntɪdli",
@@ -436984,10 +437520,16 @@
   "contentiously": "kəntˈɛnʧəsli",
   "contentiousness": "kəntˈɛnʃəsnəs",
   "contentment": "kəntˈɛntmᵊnt",
-  "contents": "kəntˈɛnts",
+  "contents": {
+    "DEFAULT": "kəntˈɛnts",
+    "NOUN": "kˈɒntɛnts"
+  },
   "conterminous": "kɒntˈɜːmɪnəs",
   "contessa": "kɒntˈɛsə",
-  "contest": "kˈɒntɛst",
+  "contest": {
+    "DEFAULT": "kˈɒntɛst",
+    "VERB": "kəntˈɛst"
+  },
   "contest's": "kˈɒntɛsts",
   "contestable": "kəntˈɛstəbᵊl",
   "contestably": "kəntˈɛstəbli",
@@ -436996,7 +437538,10 @@
   "contested": "kəntˈɛstɪd",
   "contester": "kəntˈɛstə",
   "contesting": "kəntˈɛstɪŋ",
-  "contests": "kˈɒntɛsts",
+  "contests": {
+    "DEFAULT": "kˈɒntɛsts",
+    "VERB": "kəntˈɛsts"
+  },
   "context": "kˈɒntɛkst",
   "contextual": "kəntˈɛksʧʊəl",
   "contextualise": "kəntˈɛkstjʊəlIz",
@@ -437045,7 +437590,10 @@
   "contrabassoon": "kˌɒntɹəbəsˈuːn",
   "contraception": "kˌɒntɹəsˈɛpʃᵊn",
   "contraceptive": "kˌɒntɹəsˈɛptɪv",
-  "contract": "kˈɒntɹakt",
+  "contract": {
+    "DEFAULT": "kˈɒntɹakt",
+    "VERB": "kəntɹˈakt"
+  },
   "contract's": "kˈɒntɹakts",
   "contractable": "kəntɹˈaktəbᵊl",
   "contracted": "kəntɹˈaktɪd",
@@ -437059,7 +437607,10 @@
   "contractor": "kəntɹˈaktə",
   "contractorization": "kəntɹˌaktəɹIzˈAʃᵊn",
   "contractorize": "kɒntɹˈaktəɹIz",
-  "contracts": "kˈɒntɹakts",
+  "contracts": {
+    "DEFAULT": "kˈɒntɹakts",
+    "VERB": "kəntɹˈakts"
+  },
   "contractual": "kəntɹˈakʧʊəl",
   "contractually": "kəntɹˈakʧʊəli",
   "contractural": "kəntɹˈakʧəɹᵊl",
@@ -437092,12 +437643,18 @@
   "contrariness": "kəntɹˈɛːɹɪnɪs",
   "contrariwise": "kəntɹˈɛːɹɪwIz",
   "contrary": "kˈɒntɹəɹi",
-  "contrast": "kˈɒntɹɑːst",
+  "contrast": {
+    "DEFAULT": "kˈɒntɹɑːst",
+    "VERB": "kəntɹˈɑːst"
+  },
   "contrast's": "kˈɒntɹɑːsts",
   "contrasted": "kəntɹˈɑːstɪd",
   "contrasting": "kəntɹˈɑːstɪŋ",
   "contrastive": "kəntɹˈɑːstɪv",
-  "contrasts": "kˈɒntɹɑːsts",
+  "contrasts": {
+    "DEFAULT": "kˈɒntɹɑːsts",
+    "VERB": "kəntɹˈɑːsts"
+  },
   "contrasty": "kˈɒntɹɑːsti",
   "contravene": "kˌɒntɹəvˈiːn",
   "contravener": "kˌɒntɹəvˈiːnə",
@@ -437180,22 +437737,35 @@
   "conversationally": "kˌɒnvəsˈAʃənəli",
   "conversazione": "kˌɒnvəsatsɪˈQnA",
   "conversazioni": "kˌɒnvəsatsɪˈQni",
-  "converse": "kənvˈɜːs",
+  "converse": {
+    "ADJ": "kˈɒnvəːs",
+    "DEFAULT": "kənvˈɜːs",
+    "NOUN": "kˈɒnvəːs"
+  },
   "converse's": "kˈɒnvəːsɪz",
   "conversed": "kənvˈɜːst",
   "conversely": "kənvˈɜːsli",
   "converser": "kənvˈɜːsə",
-  "converses": "kənvˈɜːsɪz",
+  "converses": {
+    "DEFAULT": "kənvˈɜːsɪz",
+    "NOUN": "kˈɒnvəːsɪz"
+  },
   "conversing": "kənvˈɜːsɪŋ",
   "conversion": "kənvˈɜːʃᵊn",
-  "convert": "kənvˈɜːt",
+  "convert": {
+    "DEFAULT": "kənvˈɜːt",
+    "NOUN": "kˈɒnvəːt"
+  },
   "convert's": "kˈɒnvəːts",
   "converted": "kənvˈɜːtɪd",
   "converter": "kənvˈɜːtə",
   "convertibility": "kənvˌɜːtɪbˈɪlɪti",
   "convertible": "kənvˈɜːtɪbᵊl",
   "converting": "kənvˈɜːtɪŋ",
-  "converts": "kənvˈɜːts",
+  "converts": {
+    "DEFAULT": "kənvˈɜːts",
+    "NOUN": "kˈɒnvəːts"
+  },
   "convex": "kˈɒnvɛks",
   "convexity": "kɒnvˈɛksɪti",
   "convexly": "kˌɒnvˈɛksli",
@@ -437206,12 +437776,18 @@
   "conveyancer": "kənvˈAənsə",
   "conveyancing": "kənvˈAənsɪŋ",
   "conveyor": "kənvˈAə",
-  "convict": "kənvˈɪkt",
+  "convict": {
+    "DEFAULT": "kənvˈɪkt",
+    "NOUN": "kˈɒnvɪkt"
+  },
   "convict's": "kˈɒnvɪkts",
   "convicted": "kənvˈɪktɪd",
   "convicting": "kənvˈɪktɪŋ",
   "conviction": "kənvˈɪkʃᵊn",
-  "convicts": "kənvˈɪkts",
+  "convicts": {
+    "DEFAULT": "kənvˈɪkts",
+    "NOUN": "kˈɒnvɪkts"
+  },
   "convince": "kənvˈɪns",
   "convinced": "kənvˈɪnst",
   "convincing": "kənvˈɪnsɪŋ",
@@ -437277,10 +437853,16 @@
   "cooperator": "kQˈɒpəɹAtə",
   "coopery": "kˈuːpəɹi",
   "coopetition": "kQˌɒpətˈɪʃᵊn",
-  "coordinate": "kQˈɔːdɪnət",
+  "coordinate": {
+    "DEFAULT": "kQˈɔːdɪnət",
+    "VERB": "kQˈɔːdɪnAt"
+  },
   "coordinate's": "kQˈɔːdɪnəts",
   "coordinated": "kQˈɔːdɪnAtɪd",
-  "coordinates": "kQˈɔːdɪnəts",
+  "coordinates": {
+    "DEFAULT": "kQˈɔːdɪnəts",
+    "VERB": "kQˈɔːdɪnAts"
+  },
   "coordinating": "kQˈɔːdɪnAtɪŋ",
   "coordination": "kQˌɔːdɪnˈAʃᵊn",
   "coordinative": "kQˈɔːdɪnətɪv",
@@ -437508,10 +438090,16 @@
   "correctly": "kəɹˈɛktli",
   "correctness": "kəɹˈɛktnəs",
   "corrector": "kəɹˈɛktə",
-  "correlate": "kˈɒɹəlAt",
+  "correlate": {
+    "DEFAULT": "kˈɒɹəlAt",
+    "NOUN": "kˈɒɹələt"
+  },
   "correlate's": "kˈɒɹələts",
   "correlated": "kˈɒɹəlAtɪd",
-  "correlates": "kˈɒɹəlAts",
+  "correlates": {
+    "DEFAULT": "kˈɒɹəlAts",
+    "NOUN": "kˈɒɹələts"
+  },
   "correlating": "kˈɒɹəlAtɪŋ",
   "correlation": "kˌɒɹɪlˈAʃᵊn",
   "correlative": "kəɹˈɛlətɪv",
@@ -437689,10 +438277,16 @@
   "couching": "kˈuːʧɪŋ",
   "cougar": "kˈuːɡə",
   "cough": "kˈɒf",
-  "could": "kʊd",
-  "could've": "kʊdəv",
+  "could": {
+    "DEFAULT": "kʊd"
+  },
+  "could've": {
+    "DEFAULT": "kʊdəv"
+  },
   "could-be": "kˈʊdbi",
-  "couldn't": "kˌʊdᵊnt",
+  "couldn't": {
+    "DEFAULT": "kˌʊdᵊnt"
+  },
   "coulee": "kˈuːli",
   "coulibiac": "kˌuːlɪbjˈak",
   "coulis": "kˈuːli",
@@ -437733,10 +438327,16 @@
   "counteractive": "kˌWntəɹˈaktɪv",
   "counteragent": "kˈWntəɹˌAʤᵊnt",
   "counterargument": "kˈWntəˌɑːɡjʊmᵊnt",
-  "counterbalance": "kˈWntəbˌaləns",
+  "counterbalance": {
+    "DEFAULT": "kˈWntəbˌaləns",
+    "VERB": "kˌWntəbˈaləns"
+  },
   "counterbalance's": "kˈWntəbˌalənsɪz",
   "counterbalanced": "kˌWntəbˈalənst",
-  "counterbalances": "kˈWntəbˌalənsɪz",
+  "counterbalances": {
+    "DEFAULT": "kˈWntəbˌalənsɪz",
+    "VERB": "kˌWntəbˈalənsɪz"
+  },
   "counterbalancing": "kˌWntəbˈalənsɪŋ",
   "counterblast": "kˈWntəblɑːst",
   "counterbore": "kˈWntəbɔː",
@@ -437900,7 +438500,10 @@
   "covering": "kˈʌvəɹɪŋ",
   "coverlet": "kˈʌvəlɪt",
   "coverslip": "kˈʌvəslɪp",
-  "covert": "kˈQvəːt",
+  "covert": {
+    "DEFAULT": "kˈQvəːt",
+    "NOUN": "kˈʌvət"
+  },
   "covert's": "kˈʌvəts",
   "covertly": "kˈQvəːtli",
   "coverts": "kˈʌvəts",
@@ -438355,7 +438958,10 @@
   "crook": "kɹˈʊk",
   "crookback": "kɹˈʊkbak",
   "crookbacked": "kɹˈʊkbakt",
-  "crooked": "kɹˈʊkɪd",
+  "crooked": {
+    "DEFAULT": "kɹˈʊkɪd",
+    "VERB": "kɹˈʊkt"
+  },
   "crookedest": "kɹˈʊkɪdɪst",
   "crookedly": "kɹˈʊkɪdli",
   "crookedness": "kɹˈʊkɪdnɪs",
@@ -438746,10 +439352,16 @@
   "cumin": "kˈʌmɪn",
   "cummerbund": "kˈʌməbʌnd",
   "cummingtonite": "kˈʌmɪŋtənIt",
-  "cumulate": "kjˈuːmjʊlAt",
+  "cumulate": {
+    "DEFAULT": "kjˈuːmjʊlAt",
+    "NOUN": "kjˈuːmjʊlət"
+  },
   "cumulate's": "kjˈuːmjʊləts",
   "cumulated": "kjˈuːmjʊlAtɪd",
-  "cumulates": "kjˈuːmjʊlAts",
+  "cumulates": {
+    "DEFAULT": "kjˈuːmjʊlAts",
+    "NOUN": "kjˈuːmjʊləts"
+  },
   "cumulating": "kjˈuːmjʊlAtɪŋ",
   "cumulation": "kjˌuːmjʊlˈAʃᵊn",
   "cumulative": "kjˈuːmjʊlətɪv",
@@ -438798,10 +439410,16 @@
   "curandero": "kjˌʊəɹəndˈɛːɹQ",
   "curare": "kjʊɹˈɑːɹi",
   "curassow": "kjˈʊəɹəsQ",
-  "curate": "kjʊəɹˈAt",
+  "curate": {
+    "DEFAULT": "kjʊəɹˈAt",
+    "NOUN": "kjˈʊəɹət"
+  },
   "curate's": "kjˈʊəɹəts",
   "curated": "kjʊəɹˈAtɪd",
-  "curates": "kjʊəɹˈAts",
+  "curates": {
+    "DEFAULT": "kjʊəɹˈAts",
+    "NOUN": "kjˈʊəɹəts"
+  },
   "curating": "kjʊəɹˈAtɪŋ",
   "curation": "kjʊɹˈAʃᵊn",
   "curative": "kjˈʊəɹətɪv",
@@ -439717,10 +440335,16 @@
   "decorum": "dɪkˈɔːɹəm",
   "decouple": "diːkˈʌpᵊl",
   "decoy": "dˈiːkY",
-  "decrease": "dˈiːkɹiːs",
+  "decrease": {
+    "DEFAULT": "dˈiːkɹiːs",
+    "VERB": "dɪkɹˈiːs"
+  },
   "decrease's": "dˈiːkɹiːsɪz",
   "decreased": "dɪkɹˈiːst",
-  "decreases": "dˈiːkɹiːsɪz",
+  "decreases": {
+    "DEFAULT": "dˈiːkɹiːsɪz",
+    "VERB": "dɪkɹˈiːsɪz"
+  },
   "decreasing": "dɪkɹˈiːsɪŋ",
   "decreasingly": "dɪkɹˈiːsɪŋli",
   "decree": "dɪkɹˈiː",
@@ -439812,7 +440436,10 @@
   "defeatist": "dɪfˈiːtɪst",
   "defecate": "dˈɛfɪkAt",
   "defecation": "dˌɛfɪkˈAʃᵊn",
-  "defect": "dˈiːfɛkt",
+  "defect": {
+    "DEFAULT": "dˈiːfɛkt",
+    "VERB": "dɪfˈɛkt"
+  },
   "defect's": "dˈiːfɛkts",
   "defected": "dɪfˈɛktɪd",
   "defecting": "dɪfˈɛktɪŋ",
@@ -439821,7 +440448,10 @@
   "defectively": "dɪfˈɛktɪvli",
   "defectiveness": "dɪfˈɛktɪvnɪs",
   "defector": "dɪfˈɛktə",
-  "defects": "dˈiːfɛkts",
+  "defects": {
+    "DEFAULT": "dˈiːfɛkts",
+    "VERB": "dɪfˈɛkts"
+  },
   "defeminize": "diːfˈɛmɪnIz",
   "defence": "dɪfˈɛns",
   "defenceless": "dɪfˈɛnsləs",
@@ -439932,11 +440562,17 @@
   "degauss": "dˌiːɡˈWs",
   "degaussing": "dˌiːɡˈWsɪŋ",
   "degeneracy": "dɪʤˈɛnəɹəsi",
-  "degenerate": "dɪʤˈɛnəɹət",
+  "degenerate": {
+    "DEFAULT": "dɪʤˈɛnəɹət",
+    "VERB": "dɪʤˈɛnəɹAt"
+  },
   "degenerate's": "dɪʤˈɛnəɹəts",
   "degenerated": "dɪʤˈɛnəɹAtɪd",
   "degenerately": "dɪʤˈɛnəɹətli",
-  "degenerates": "dɪʤˈɛnəɹəts",
+  "degenerates": {
+    "DEFAULT": "dɪʤˈɛnəɹəts",
+    "VERB": "dɪʤˈɛnəɹAts"
+  },
   "degenerating": "dɪʤˈɛnəɹAtɪŋ",
   "degeneration": "dɪʤˌɛnəɹˈAʃᵊn",
   "degenerative": "dɪʤˈɛnəɹətɪv",
@@ -440027,10 +440663,16 @@
   "delectation": "dˌiːlɛktˈAʃᵊn",
   "delegable": "dˈɛlɪɡəbᵊl",
   "delegacy": "dˈɛlɪɡəsi",
-  "delegate": "dˈɛlɪɡət",
+  "delegate": {
+    "DEFAULT": "dˈɛlɪɡət",
+    "VERB": "dˈɛlɪɡAt"
+  },
   "delegate's": "dˈɛlɪɡəts",
   "delegated": "dˈɛlɪɡAtɪd",
-  "delegates": "dˈɛlɪɡəts",
+  "delegates": {
+    "DEFAULT": "dˈɛlɪɡəts",
+    "VERB": "dˈɛlɪɡAts"
+  },
   "delegating": "dˈɛlɪɡAtɪŋ",
   "delegation": "dˌɛlɪɡˈAʃᵊn",
   "delegitimate": "dˌiːlɪʤˈɪtɪmAt",
@@ -440044,7 +440686,10 @@
   "delexical": "dˌiːlˈɛksɪkᵊl",
   "delft": "dˈɛlft",
   "delftware": "dˈɛlftwɛː",
-  "deliberate": "dɪlˈɪbəɹAt",
+  "deliberate": {
+    "ADJ": "dɪlˈɪbəɹət",
+    "DEFAULT": "dɪlˈɪbəɹAt"
+  },
   "deliberated": "dɪlˈɪbəɹAtɪd",
   "deliberately": "dɪlˈɪbəɹətli",
   "deliberateness": "dɪlˈɪbəɹətnəs",
@@ -440482,10 +441127,16 @@
   "depurative": "dɪpjˈʊəɹətɪv",
   "depurator": "dˈɛpjʊɹAtə",
   "deputation": "dˌɛpjʊtˈAʃᵊn",
-  "depute": "dɪpjˈuːt",
+  "depute": {
+    "DEFAULT": "dɪpjˈuːt",
+    "NOUN": "dˈɛpjuːt"
+  },
   "depute's": "dˈɛpjuːts",
   "deputed": "dɪpjˈuːtɪd",
-  "deputes": "dɪpjˈuːts",
+  "deputes": {
+    "DEFAULT": "dɪpjˈuːts",
+    "NOUN": "dˈɛpjuːts"
+  },
   "deputing": "dɪpjˈuːtɪŋ",
   "deputise": "dˈɛpjʊtIz",
   "deputize": "dˈɛpjʊtIz",
@@ -440582,11 +441233,17 @@
   "descale": "dˌiːskˈAl",
   "descaler": "diːskˈAlə",
   "descamisado": "dɛskˌamɪsˈɑːdQ",
-  "descant": "dˈɛskant",
+  "descant": {
+    "DEFAULT": "dˈɛskant",
+    "VERB": "dɛskˈant"
+  },
   "descant's": "dˈɛskants",
   "descanted": "dɛskˈantɪd",
   "descanting": "dɛskˈantɪŋ",
-  "descants": "dˈɛskants",
+  "descants": {
+    "DEFAULT": "dˈɛskants",
+    "VERB": "dɛskˈants"
+  },
   "descend": "dɪsˈɛnd",
   "descendant": "dɪsˈɛndᵊnt",
   "descendent": "dɪsˈɛndᵊnt",
@@ -440624,7 +441281,10 @@
   "desensitize": "diːsˈɛnsɪtIz",
   "desensitized": "diːsˈɛnsɪtIzd",
   "desensitizer": "dˌiːsˈɛnsɪtIzə",
-  "desert": "dˈɛzət",
+  "desert": {
+    "DEFAULT": "dˈɛzət",
+    "VERB": "dɪzˈɜːt"
+  },
   "desert's": "dˈɛzəts",
   "deserted": "dɪzˈɜːtɪd",
   "deserter": "dɪzˈɜːtə",
@@ -440632,7 +441292,10 @@
   "desertify": "dɪzˈɜːtɪfI",
   "deserting": "dɪzˈɜːtɪŋ",
   "desertion": "dɪzˈɜːʃᵊn",
-  "deserts": "dˈɛzəts",
+  "deserts": {
+    "DEFAULT": "dˈɛzəts",
+    "VERB": "dɪzˈɜːts"
+  },
   "deserve": "dɪzˈɜːv",
   "deserved": "dɪzˈɜːvd",
   "deservedly": "dɪzˈɜːvɪdli",
@@ -440652,7 +441315,10 @@
   "desiderative": "dɪzˈɪdəɹətɪv",
   "desideratum": "dɪzˌɪdəɹˈɑːtəm",
   "design": "dɪzˈIn",
-  "designate": "dˈɛzɪɡnAt",
+  "designate": {
+    "ADJ": "dˈɛzɪɡnət",
+    "DEFAULT": "dˈɛzɪɡnAt"
+  },
   "designation": "dˌɛzɪɡnˈAʃᵊn",
   "designative": "dˈɛzɪɡnAtɪv",
   "designator": "dˈɛzɪɡnAtə",
@@ -440677,7 +441343,10 @@
   "desmid": "dˈɛzmɪd",
   "desmoid": "dˈɛzmYd",
   "desmosome": "dˈɛsməsQm",
-  "desolate": "dˈɛsələt",
+  "desolate": {
+    "DEFAULT": "dˈɛsələt",
+    "VERB": "dˈɛsəlAt"
+  },
   "desolated": "dˈɛsəlAtɪd",
   "desolately": "dˈɛsələtli",
   "desolateness": "dˈɛsələtnəs",
@@ -440877,10 +441546,17 @@
   "deviance": "dˈiːvɪəns",
   "deviancy": "dˈiːvɪənsi",
   "deviant": "dˈiːvɪənt",
-  "deviate": "dˈiːvɪAt",
+  "deviate": {
+    "ADJ": "dˈiːvɪət",
+    "DEFAULT": "dˈiːvɪAt",
+    "NOUN": "dˈiːvɪət"
+  },
   "deviate's": "dˈiːvɪəts",
   "deviated": "dˈiːvɪAtɪd",
-  "deviates": "dˈiːvɪAts",
+  "deviates": {
+    "DEFAULT": "dˈiːvɪAts",
+    "NOUN": "dˈiːvɪəts"
+  },
   "deviating": "dˈiːvɪAtɪŋ",
   "deviation": "dˌiːvɪˈAʃᵊn",
   "deviationism": "dˌiːvɪˈAʃᵊnɪzəm",
@@ -441000,7 +441676,10 @@
   "diagenesis": "dˌIəʤˈɛnɪsɪs",
   "diagnose": "dˌIəɡnˈQz",
   "diagnosed": "dˌIəɡnˈQzd",
-  "diagnoses": "dˌIəɡnˈQzɪz",
+  "diagnoses": {
+    "DEFAULT": "dˌIəɡnˈQzɪz",
+    "NOUN": "dˌIəɡnˈQsiːz"
+  },
   "diagnosing": "dˌIəɡnˈQzɪŋ",
   "diagnosis": "dˌIəɡnˈQsɪs",
   "diagnostic": "dˌIəɡnˈɒstɪk",
@@ -441142,10 +441821,16 @@
   "dicrotic": "dIkɹˈɒtɪk",
   "dicta": "dˈɪktə",
   "dictamnus": "dɪktˈamnəs",
-  "dictate": "dɪktˈAt",
+  "dictate": {
+    "DEFAULT": "dɪktˈAt",
+    "NOUN": "dˈɪktAt"
+  },
   "dictate's": "dˈɪktAts",
   "dictated": "dɪktˈAtɪd",
-  "dictates": "dɪktˈAts",
+  "dictates": {
+    "DEFAULT": "dɪktˈAts",
+    "NOUN": "dˈɪktAts"
+  },
   "dictating": "dɪktˈAtɪŋ",
   "dictation": "dɪktˈAʃᵊn",
   "dictator": "dɪktˈAtə",
@@ -441223,7 +441908,10 @@
   "diffraction": "dɪfɹˈakʃᵊn",
   "diffractive": "dɪfɹˈaktɪv",
   "diffractometer": "dˌɪfɹaktˈɒmɪtə",
-  "diffuse": "dɪfjˈuːz",
+  "diffuse": {
+    "ADJ": "dɪfjˈuːs",
+    "DEFAULT": "dɪfjˈuːz"
+  },
   "diffusely": "dɪfjˈuːsli",
   "diffuseness": "dɪfjˈuːsnəs",
   "diffuser": "dɪfjˈuːzə",
@@ -441237,7 +441925,10 @@
   "digastric": "dIɡˈastɹɪk",
   "digenean": "dˌIʤɪnˈiːən",
   "digerati": "dˌɪʤəɹˈɑːti",
-  "digest": "dIʤˈɛst",
+  "digest": {
+    "DEFAULT": "dIʤˈɛst",
+    "NOUN": "dˈIʤɛst"
+  },
   "digest's": "dˈIʤɛsts",
   "digested": "dIʤˈɛstɪd",
   "digester": "dIʤˈɛstə",
@@ -441249,7 +441940,10 @@
   "digestive": "dIʤˈɛstɪv",
   "digestivi": "dˌiːʤɛstˈiːvi",
   "digestivo": "dˌiːʤɛstˈiːvQ",
-  "digests": "dIʤˈɛsts",
+  "digests": {
+    "DEFAULT": "dIʤˈɛsts",
+    "NOUN": "dˈIʤɛsts"
+  },
   "digger": "dˈɪɡə",
   "diggings": "dˈɪɡɪŋz",
   "dight": "dˈIt",
@@ -441580,12 +442274,18 @@
   "disburse": "dɪsbˈɜːs",
   "disbursement": "dɪsbˈɜːsmᵊnt",
   "discalced": "dɪskˈalst",
-  "discard": "dɪskˈɑːd",
+  "discard": {
+    "DEFAULT": "dɪskˈɑːd",
+    "NOUN": "dˈɪskɑːd"
+  },
   "discard's": "dˈɪskɑːdz",
   "discardable": "dɪskˈɑːdəbᵊl",
   "discarded": "dɪskˈɑːdɪd",
   "discarding": "dɪskˈɑːdɪŋ",
-  "discards": "dɪskˈɑːdz",
+  "discards": {
+    "DEFAULT": "dɪskˈɑːdz",
+    "NOUN": "dˈɪskɑːdz"
+  },
   "discarnate": "dɪskˈɑːnət",
   "discectomy": "dɪskˈɛktəmi",
   "discern": "dɪsˈɜːn",
@@ -441594,12 +442294,18 @@
   "discerning": "dɪsˈɜːnɪŋ",
   "discernment": "dɪsˈɜːnmᵊnt",
   "discerption": "dɪsˈɜːpʃᵊn",
-  "discharge": "dɪsʧˈɑːʤ",
+  "discharge": {
+    "DEFAULT": "dɪsʧˈɑːʤ",
+    "NOUN": "dˈɪsʧɑːʤ"
+  },
   "discharge's": "dˈɪsʧɑːʤɪz",
   "dischargeable": "dɪsʧˈɑːʤəbᵊl",
   "discharged": "dɪsʧˈɑːʤd",
   "discharger": "dɪsʧˈɑːʤə",
-  "discharges": "dɪsʧˈɑːʤɪz",
+  "discharges": {
+    "DEFAULT": "dɪsʧˈɑːʤɪz",
+    "NOUN": "dˈɪsʧɑːʤɪz"
+  },
   "discharging": "dɪsʧˈɑːʤɪŋ",
   "disciple": "dɪsˈIpᵊl",
   "discipleship": "dɪsˈIplʃɪp",
@@ -441672,23 +442378,35 @@
   "discordant": "dɪskˈɔːdnt",
   "discordantly": "dɪskˈɔːdntli",
   "discotheque": "dˈɪskətɛk",
-  "discount": "dˈɪskWnt",
+  "discount": {
+    "DEFAULT": "dˈɪskWnt",
+    "VERB": "dɪskˈWnt"
+  },
   "discount's": "dˈɪskWnts",
   "discountable": "dɪskˈWntəbᵊl",
   "discounted": "dɪskˈWntɪd",
   "discountenance": "dɪskˈWntɪnəns",
   "discounter": "dˈɪskWntə",
   "discounting": "dɪskˈWntɪŋ",
-  "discounts": "dˈɪskWnts",
+  "discounts": {
+    "DEFAULT": "dˈɪskWnts",
+    "VERB": "dɪskˈWnts"
+  },
   "discourage": "dɪskˈʌɹɪʤ",
   "discouraged": "dɪskˈʌɹɪʤd",
   "discouragement": "dɪskˈʌɹɪʤmᵊnt",
   "discouraging": "dɪskˈʌɹɪʤɪŋ",
   "discouragingly": "dɪskˈʌɹɪʤɪŋli",
-  "discourse": "dˈɪskɔːs",
+  "discourse": {
+    "DEFAULT": "dˈɪskɔːs",
+    "VERB": "dɪskˈɔːs"
+  },
   "discourse's": "dˈɪskɔːsɪz",
   "discoursed": "dɪskˈɔːst",
-  "discourses": "dˈɪskɔːsɪz",
+  "discourses": {
+    "DEFAULT": "dˈɪskɔːsɪz",
+    "VERB": "dɪskˈɔːsɪz"
+  },
   "discoursing": "dɪskˈɔːsɪŋ",
   "discourteous": "dɪskˈɜːtɪəs",
   "discourteously": "dɪskˈɜːtɪəsli",
@@ -442356,7 +443074,10 @@
   "doctrinally": "dɒktɹˈInəli",
   "doctrine": "dˈɒktɹɪn",
   "docudrama": "dˈɒkjʊdɹˌɑːmə",
-  "document": "dˈɒkjʊmᵊnt",
+  "document": {
+    "DEFAULT": "dˈɒkjʊmᵊnt",
+    "VERB": "dˈɒkjʊmɛnt"
+  },
   "document's": "dˈɒkjʊmᵊnts",
   "documental": "dɒkjʊmˈɛntᵊl",
   "documentalist": "dˌɒkjʊmˈɛntəlɪst",
@@ -442366,7 +443087,10 @@
   "documentative": "dˌɒkjʊmˈɛntətɪv",
   "documented": "dˈɒkjʊmɛntɪd",
   "documenting": "dˈɒkjʊmɛntɪŋ",
-  "documents": "dˈɒkjʊmᵊnts",
+  "documents": {
+    "DEFAULT": "dˈɒkjʊmᵊnts",
+    "VERB": "dˈɒkjʊmɛnts"
+  },
   "docuseries": "dˈɒkjʊsˌɪəɹɪz",
   "docusoap": "dˈɒkjʊsQp",
   "docutainment": "dˌɒkjʊtˈAnmᵊnt",
@@ -442406,7 +443130,10 @@
   "dogfighting": "dˈɒɡfItɪŋ",
   "dogfish": "dˈɒɡfɪʃ",
   "dogfooding": "dˈɒɡfˌuːdɪŋ",
-  "dogged": "dˈɒɡɪd",
+  "dogged": {
+    "DEFAULT": "dˈɒɡɪd",
+    "VERB": "dˈɒɡd"
+  },
   "doggedly": "dˈɒɡɪdli",
   "doggedness": "dˈɒɡɪdnɪs",
   "dogger": "dˈɒɡə",
@@ -442478,10 +443205,16 @@
   "domestic": "dəmˈɛstɪk",
   "domesticable": "dəmˈɛstɪkəbᵊl",
   "domestically": "dəmˈɛstɪkli",
-  "domesticate": "dəmˈɛstɪkAt",
+  "domesticate": {
+    "DEFAULT": "dəmˈɛstɪkAt",
+    "NOUN": "dəmˈɛstɪkət"
+  },
   "domesticate's": "dəmˈɛstɪkəts",
   "domesticated": "dəmˈɛstɪkAtɪd",
-  "domesticates": "dəmˈɛstɪkAts",
+  "domesticates": {
+    "DEFAULT": "dəmˈɛstɪkAts",
+    "NOUN": "dəmˈɛstɪkəts"
+  },
   "domesticating": "dəmˈɛstɪkAtɪŋ",
   "domestication": "dəmˌɛstɪkˈAʃᵊn",
   "domesticity": "dˌɒmɪstˈɪsɪti",
@@ -442726,7 +443459,11 @@
   "downgrade": "dˈWnɡɹAd",
   "downhaul": "dˈWnhɔːl",
   "downhearted": "dˌWnhˈɑːtɪd",
-  "downhill": "dˌWnhˈɪl",
+  "downhill": {
+    "ADJ": "dˈWnhɪl",
+    "DEFAULT": "dˌWnhˈɪl",
+    "NOUN": "dˈWnhɪl"
+  },
   "downhill's": "dˈWnhɪlz",
   "downhiller": "dˈWnhˌɪlə",
   "downhills": "dˈWnhɪlz",
@@ -442755,7 +443492,10 @@
   "downslope": "dˈWnslQp",
   "downspout": "dˈWnspWt",
   "downstage": "dˌWnstˈAʤ",
-  "downstairs": "dˌWnstˈɛːz",
+  "downstairs": {
+    "ADJ": "dˈWnstɛːz",
+    "DEFAULT": "dˌWnstˈɛːz"
+  },
   "downstate": "dˌWnstˈAt",
   "downstream": "dˌWnstɹˈiːm",
   "downstroke": "dˈWnstɹQk",
@@ -443239,10 +443979,16 @@
   "duplex": "djˈuːplɛks",
   "duplexity": "djuːplˈɛksɪti",
   "duplicable": "djˈuːplɪkəbᵊl",
-  "duplicate": "djˈuːplɪkət",
+  "duplicate": {
+    "DEFAULT": "djˈuːplɪkət",
+    "VERB": "djˈuːplɪkAt"
+  },
   "duplicate's": "djˈuːplɪkəts",
   "duplicated": "djˈuːplɪkAtɪd",
-  "duplicates": "djˈuːplɪkəts",
+  "duplicates": {
+    "DEFAULT": "djˈuːplɪkəts",
+    "VERB": "djˈuːplɪkAts"
+  },
   "duplicating": "djˈuːplɪkAtɪŋ",
   "duplication": "djˌuːplɪkˈAʃᵊn",
   "duplicator": "djˈuːplɪkAtə",
@@ -443815,10 +444561,16 @@
   "eisteddfod": "Istˈɛðvɒd",
   "eisteddfodau": "IstɛðvˈɒdI",
   "either": "ˈIðə",
-  "ejaculate": "ɪʤˈakjʊlAt",
+  "ejaculate": {
+    "DEFAULT": "ɪʤˈakjʊlAt",
+    "NOUN": "ɪʤˈakjʊlət"
+  },
   "ejaculate's": "ɪʤˈakjʊləts",
   "ejaculated": "ɪʤˈakjʊlAtɪd",
-  "ejaculates": "ɪʤˈakjʊlAts",
+  "ejaculates": {
+    "DEFAULT": "ɪʤˈakjʊlAts",
+    "NOUN": "ɪʤˈakjʊləts"
+  },
   "ejaculating": "ɪʤˈakjʊlAtɪŋ",
   "ejaculation": "ɪʤˌakjʊlˈAʃᵊn",
   "ejaculator": "ɪʤˈakjʊlAtə",
@@ -443837,7 +444589,10 @@
   "el-Djem": "ɛlʤˈɛm",
   "el-Giza": "ɛlʤˈiːzə",
   "el-Uqsur": "ɛlˈʊksʊə",
-  "elaborate": "ɪlˈabəɹAt",
+  "elaborate": {
+    "ADJ": "ɪlˈabəɹət",
+    "DEFAULT": "ɪlˈabəɹAt"
+  },
   "elaborately": "ɪlˈabəɹətli",
   "elaborateness": "ɪlˈabəɹətnəs",
   "elaboration": "ɪlˌabəɹˈAʃᵊn",
@@ -444534,7 +445289,10 @@
   "energize": "ˈɛnəʤIz",
   "energumen": "ˌɛnəɡjˈuːmən",
   "energy": "ˈɛnəʤi",
-  "enervate": "ˈɛnəvAt",
+  "enervate": {
+    "ADJ": "ˈɛnəːvət",
+    "DEFAULT": "ˈɛnəvAt"
+  },
   "enervated": "ˈɛnəvAtɪd",
   "enervating": "ˈɛnəvAtɪŋ",
   "enervation": "ˌɛnəvˈAʃᵊn",
@@ -444672,12 +445430,18 @@
   "enswathe": "ɪnswˈAð",
   "entablature": "ɛntˈabləʧə",
   "entablement": "ɛntˈAbᵊlmᵊnt",
-  "entail": "ɪntˈAl",
+  "entail": {
+    "DEFAULT": "ɪntˈAl",
+    "NOUN": "ˈɛntAl"
+  },
   "entail's": "ˈɛntAlz",
   "entailed": "ɪntˈAld",
   "entailing": "ɪntˈAlɪŋ",
   "entailment": "ɪntˈAlmᵊnt",
-  "entails": "ɪntˈAlz",
+  "entails": {
+    "DEFAULT": "ɪntˈAlz",
+    "NOUN": "ˈɛntAlz"
+  },
   "entamoeba": "ˌɛntəmˈiːbə",
   "entamoebae": "ˌɛntəmˈiːbiː",
   "entangle": "ɪntˈaŋɡᵊl",
@@ -444754,10 +445518,16 @@
   "entrails": "ˈɛntɹAlz",
   "entrain": "ɪntɹˈAn",
   "entrammel": "ɪntɹˈamᵊl",
-  "entrance": "ˈɛntɹəns",
+  "entrance": {
+    "DEFAULT": "ˈɛntɹəns",
+    "VERB": "ɪntɹˈɑːns"
+  },
   "entrance's": "ˈɛntɹənsɪz",
   "entrancement": "ɪntɹˈɑːnsmᵊnt",
-  "entrances": "ˈɛntɹənsɪz",
+  "entrances": {
+    "DEFAULT": "ˈɛntɹənsɪz",
+    "VERB": "ɪntɹˈɑːnsɪz"
+  },
   "entranceway": "ˈɛntɹᵊnswA",
   "entrancing": "ɪntɹˈɑːnsɪŋ",
   "entrancingly": "ɪntɹˈɑːnsɪŋli",
@@ -445250,11 +446020,17 @@
   "eschscholtzia": "ɛʃʃˈɒltsɪə",
   "eschscholzia": "ɪsʃˈɒlzɪə",
   "escolar": "ˌɛskəlˈɑː",
-  "escort": "ˈɛskɔːt",
+  "escort": {
+    "DEFAULT": "ˈɛskɔːt",
+    "VERB": "ɪskˈɔːt"
+  },
   "escort's": "ˈɛskɔːts",
   "escorted": "ɪskˈɔːtɪd",
   "escorting": "ɪskˈɔːtɪŋ",
-  "escorts": "ˈɛskɔːts",
+  "escorts": {
+    "DEFAULT": "ˈɛskɔːts",
+    "VERB": "ɪskˈɔːts"
+  },
   "escovitch": "ˈɛskəvɪʧ",
   "escritoire": "ˌɛskɹiːtwˈɑː",
   "escrow": "ˈɛskɹQ",
@@ -445286,13 +446062,19 @@
   "esquire": "ɪskwˈIə",
   "esquisse": "ɛskˈiːs",
   "esquisses": "ɛskˈiːs",
-  "essay": "ˈɛsA",
+  "essay": {
+    "DEFAULT": "ˈɛsA",
+    "VERB": "ɛsˈA"
+  },
   "essay's": "ˈɛsAz",
   "essayed": "ɛsˈAd",
   "essaying": "ɛsˈAɪŋ",
   "essayist": "ˈɛsAɪst",
   "essayistic": "ɛsAˈɪstɪk",
-  "essays": "ˈɛsAz",
+  "essays": {
+    "DEFAULT": "ˈɛsAz",
+    "VERB": "ɛsˈAz"
+  },
   "essence": "ˈɛsns",
   "essential": "ɪsˈɛnʃl",
   "essentialism": "ɪsˈɛnʃᵊlɪzəm",
@@ -445319,10 +446101,16 @@
   "esthetically": "iːsθˈɛtɪkli",
   "esthetics": "iːsθˈɛtɪks",
   "estimable": "ˈɛstɪməbᵊl",
-  "estimate": "ˈɛstɪmAt",
+  "estimate": {
+    "DEFAULT": "ˈɛstɪmAt",
+    "NOUN": "ˈɛstɪmət"
+  },
   "estimate's": "ˈɛstɪməts",
   "estimated": "ˈɛstɪmAtɪd",
-  "estimates": "ˈɛstɪmAts",
+  "estimates": {
+    "DEFAULT": "ˈɛstɪmAts",
+    "NOUN": "ˈɛstɪməts"
+  },
   "estimating": "ˈɛstɪmAtɪŋ",
   "estimation": "ˌɛstɪmˈAʃᵊn",
   "estimative": "ˈɛstɪmətɪv",
@@ -445710,11 +446498,17 @@
   "exchequer": "ɪksʧˈɛkə",
   "excimer": "ˈɛksɪmə",
   "excipient": "ɛksˈɪpɪənt",
-  "excise": "ˈɛksIz",
+  "excise": {
+    "DEFAULT": "ˈɛksIz",
+    "VERB": "ɪksˈIz"
+  },
   "excise's": "ˈɛksIzɪz",
   "excised": "ɪksˈIzd",
   "exciseman": "ˈɛksIzmən",
-  "excises": "ˈɛksIzɪz",
+  "excises": {
+    "DEFAULT": "ˈɛksIzɪz",
+    "VERB": "ɪksˈIzɪz"
+  },
   "excising": "ɪksˈIzɪŋ",
   "excision": "ɪksˈɪʒᵊn",
   "excisional": "ɪksˈɪʒᵊnᵊl",
@@ -445751,10 +446545,17 @@
   "excogitate": "ɪkskˈɒʤɪtAt",
   "excogitation": "ɪkskɒʤɪtˈAʃᵊn",
   "excommunicant": "ˌɛkskəmjˈuːnɪkᵊnt",
-  "excommunicate": "ˌɛkskəmjˈuːnɪkAt",
+  "excommunicate": {
+    "ADJ": "ˌɛkskəmjˈuːnɪkət",
+    "DEFAULT": "ˌɛkskəmjˈuːnɪkAt",
+    "NOUN": "ˌɛkskəmjˈuːnɪkət"
+  },
   "excommunicate's": "ˌɛkskəmjˈuːnɪkəts",
   "excommunicated": "ˌɛkskəmjˈuːnɪkAtɪd",
-  "excommunicates": "ˌɛkskəmjˈuːnɪkAts",
+  "excommunicates": {
+    "DEFAULT": "ˌɛkskəmjˈuːnɪkAts",
+    "NOUN": "ˌɛkskəmjˈuːnɪkəts"
+  },
   "excommunicating": "ˌɛkskəmjˈuːnɪkAtɪŋ",
   "excommunication": "ˌɛkskəmjˌuːnɪkˈAʃᵊn",
   "excommunicative": "ˌɛkskəmjˈuːnɪkAtɪv",
@@ -445787,10 +446588,16 @@
   "excusably": "ɪkskjˈuːzəbli",
   "excusal": "ɛkskjˈuːzᵊl",
   "excusatory": "ɪkskjˈuːzətɹi",
-  "excuse": "ɪkskjˈuːz",
+  "excuse": {
+    "DEFAULT": "ɪkskjˈuːz",
+    "NOUN": "ɪkskjˈuːs"
+  },
   "excuse's": "ɪkskjˈuːsɪz",
   "excused": "ɪkskjˈuːzd",
-  "excuses": "ɪkskjˈuːzɪz",
+  "excuses": {
+    "DEFAULT": "ɪkskjˈuːzɪz",
+    "NOUN": "ɪkskjˈuːsɪz"
+  },
   "excusing": "ɪkskjˈuːzɪŋ",
   "exeat": "ˈɛksɪat",
   "execrable": "ˈɛksɪkɹəbᵊl",
@@ -445971,10 +446778,16 @@
   "expat": "ˌɛkspˈat",
   "expatiate": "ɪkspˈAʃɪAt",
   "expatiation": "ɪkspˈAʃɪAᵊn",
-  "expatriate": "ɛkspˈatɹɪət",
+  "expatriate": {
+    "DEFAULT": "ɛkspˈatɹɪət",
+    "VERB": "ɛkspˈatɹɪAt"
+  },
   "expatriate's": "ɛkspˈatɹɪəts",
   "expatriated": "ɛkspˈatɹɪAtɪd",
-  "expatriates": "ɛkspˈatɹɪəts",
+  "expatriates": {
+    "DEFAULT": "ɛkspˈatɹɪəts",
+    "VERB": "ɛkspˈatɹɪAts"
+  },
   "expatriating": "ɛkspˈatɹɪAtɪŋ",
   "expatriation": "ɛkspˌatɹɪˈAʃᵊn",
   "expect": "ɪkspˈɛkt",
@@ -446044,12 +446857,18 @@
   "explanantia": "ˌɛksplənˈantɪə",
   "explanation": "ˌɛksplənˈAʃᵊn",
   "explanatory": "ɪksplˈanətəɹi",
-  "explant": "ɛksplˈɑːnt",
+  "explant": {
+    "DEFAULT": "ɛksplˈɑːnt",
+    "NOUN": "ˈɛksplɑːnt"
+  },
   "explant's": "ˈɛksplɑːnts",
   "explantation": "ɛksplɑːntˈAʃᵊn",
   "explanted": "ɛksplˈɑːntɪd",
   "explanting": "ɛksplˈɑːntɪŋ",
-  "explants": "ɛksplˈɑːnts",
+  "explants": {
+    "DEFAULT": "ɛksplˈɑːnts",
+    "NOUN": "ˈɛksplɑːnts"
+  },
   "expletive": "ɪksplˈiːtɪv",
   "explicable": "ɪksplˈɪkəbᵊl",
   "explicanda": "ˌɛksplɪkˈandə",
@@ -446066,7 +446885,10 @@
   "explicitness": "ɪksplˈɪsɪtnɪs",
   "explode": "ɪksplˈQd",
   "exploded": "ɪksplˈQdɪd",
-  "exploit": "ɪksplˈYt",
+  "exploit": {
+    "DEFAULT": "ɪksplˈYt",
+    "NOUN": "ˈɛksplYt"
+  },
   "exploit's": "ˈɛksplYts",
   "exploitable": "ɪksplˈYtəbᵊl",
   "exploitation": "ˌɛksplYtˈAʃᵊn",
@@ -446075,7 +446897,10 @@
   "exploiter": "ɪksplˈYtə",
   "exploiting": "ɪksplˈYtɪŋ",
   "exploitive": "ɪksplˈYtɪv",
-  "exploits": "ɪksplˈYts",
+  "exploits": {
+    "DEFAULT": "ɪksplˈYts",
+    "NOUN": "ˈɛksplYts"
+  },
   "exploration": "ˌɛkspləɹˈAʃᵊn",
   "explorative": "ɪksplˈɒɹətɪv",
   "exploratory": "ɪksplˈɒɹətəɹi",
@@ -446214,7 +447039,10 @@
   "extra": "ˈɛkstɹə",
   "extracellular": "ˌɛkstɹəsˈɛljʊlə",
   "extracorporeal": "ˌɛkstɹəkɔːpˈɔːɹɪəl",
-  "extract": "ɪkstɹˈakt",
+  "extract": {
+    "DEFAULT": "ɪkstɹˈakt",
+    "NOUN": "ˈɛkstɹakt"
+  },
   "extract's": "ˈɛkstɹakts",
   "extractability": "ɛkstɹaktəbˈɪlɪti",
   "extractable": "ɪkstɹˈaktəbᵊl",
@@ -446223,7 +447051,10 @@
   "extraction": "ɪkstɹˈakʃᵊn",
   "extractive": "ɪkstɹˈaktɪv",
   "extractor": "ɪkstɹˈaktə",
-  "extracts": "ɪkstɹˈakts",
+  "extracts": {
+    "DEFAULT": "ɪkstɹˈakts",
+    "NOUN": "ˈɛkstɹakts"
+  },
   "extracurricular": "ˌɛkstɹəkəɹˈɪkjʊlə",
   "extraditable": "ˈɛkstɹədˌItəbᵊl",
   "extradite": "ˈɛkstɹədIt",
@@ -446851,7 +447682,10 @@
   "federalist": "fˈɛdəɹəlɪst",
   "federalize": "fˈɛdəɹəlIz",
   "federally": "fˈɛdəɹəli",
-  "federate": "fˈɛdəɹAt",
+  "federate": {
+    "ADJ": "fˈɛdəɹət",
+    "DEFAULT": "fˈɛdəɹAt"
+  },
   "federated": "fˈɛdəɹAtɪd",
   "federation": "fˌɛdəɹˈAʃᵊn",
   "federative": "fˈɛdəɹətɪv",
@@ -446973,7 +447807,10 @@
   "feringhee": "fəɹˈɪŋɡi",
   "ferity": "fˈɛɹɪti",
   "fermata": "fəːmˈɑːtə",
-  "ferment": "fəmˈɛnt",
+  "ferment": {
+    "DEFAULT": "fəmˈɛnt",
+    "NOUN": "fˈɜːmɛnt"
+  },
   "ferment's": "fˈɜːmɛnts",
   "fermentable": "fəmˈɛntəbᵊl",
   "fermentation": "fˌɜːmɛntˈAʃᵊn",
@@ -446981,7 +447818,10 @@
   "fermented": "fəmˈɛntɪd",
   "fermenter": "fəmˈɛntə",
   "fermenting": "fəmˈɛntɪŋ",
-  "ferments": "fəmˈɛnts",
+  "ferments": {
+    "DEFAULT": "fəmˈɛnts",
+    "NOUN": "fˈɜːmɛnts"
+  },
   "fermi": "fˈɜːmi",
   "fermion": "fˈɜːmɪɒn",
   "fermium": "fˈɜːmɪəm",
@@ -448049,7 +448889,10 @@
   "foliaceous": "fˌQlɪˈAʃəs",
   "foliage": "fˈQliɪʤ",
   "foliar": "fˈQlɪə",
-  "foliate": "fˈQlɪAt",
+  "foliate": {
+    "ADJ": "fˈQlɪət",
+    "DEFAULT": "fˈQlɪAt"
+  },
   "foliated": "fˈQlɪAtɪd",
   "foliation": "fˌQlɪˈAʃᵊn",
   "folio": "fˈQlɪQ",
@@ -448294,11 +449137,17 @@
   "foretaste": "fˈɔːtAst",
   "foretell": "fɔːtˈɛl",
   "forethought": "fˈɔːθɔːt",
-  "foretoken": "fɔːtˈQkᵊn",
+  "foretoken": {
+    "DEFAULT": "fɔːtˈQkᵊn",
+    "NOUN": "fˈɔːtˌQkᵊn"
+  },
   "foretoken's": "fˈɔːtˌQkᵊnz",
   "foretokened": "fɔːtˈQkᵊnd",
   "foretokening": "fɔːtˈQkᵊnɪŋ",
-  "foretokens": "fɔːtˈQkᵊnz",
+  "foretokens": {
+    "DEFAULT": "fɔːtˈQkᵊnz",
+    "NOUN": "fˈɔːtˌQkᵊnz"
+  },
   "foretold": "fɔːtˈQld",
   "foretop": "fˈɔːtɒp",
   "foretopmast": "fɔːtˈɒpmɑːst",
@@ -448532,14 +449381,20 @@
   "fractured": "fɹˈakʧəd",
   "fragile": "fɹˈaʤIl",
   "fragility": "fɹəʤˈɪlɪti",
-  "fragment": "fɹˈaɡmᵊnt",
+  "fragment": {
+    "DEFAULT": "fɹˈaɡmᵊnt",
+    "VERB": "fɹaɡmˈɛnt"
+  },
   "fragment's": "fɹˈaɡmᵊnts",
   "fragmental": "fɹaɡmˈɛntᵊl",
   "fragmentary": "fɹˈaɡmᵊntɹi",
   "fragmentation": "fɹˌaɡmᵊntˈAʃᵊn",
   "fragmented": "fɹaɡmˈɛntɪd",
   "fragmenting": "fɹaɡmˈɛntɪŋ",
-  "fragments": "fɹˈaɡmᵊnts",
+  "fragments": {
+    "DEFAULT": "fɹˈaɡmᵊnts",
+    "VERB": "fɹaɡmˈɛnts"
+  },
   "fragrance": "fɹˈAɡɹᵊns",
   "fragrancy": "fɹˈAɡɹᵊnsi",
   "fragrant": "fɹˈAɡɹᵊnt",
@@ -448674,7 +449529,10 @@
   "frenzy": "fɹˈɛnzi",
   "freon": "fɹˈiːɒn",
   "frequency": "fɹˈiːkwᵊnsi",
-  "frequent": "fɹˈiːkwᵊnt",
+  "frequent": {
+    "DEFAULT": "fɹˈiːkwᵊnt",
+    "VERB": "fɹɪkwˈɛnt"
+  },
   "frequentation": "fɹˌiːkwᵊntˈAʃᵊn",
   "frequentative": "fɹɪkwˈɛntətɪv",
   "frequented": "fɹɪkwˈɛntɪd",
@@ -449603,7 +450461,10 @@
   "gelsemium": "ʤɛlsˈiːmɪəm",
   "gematria": "ɡɪmˈAtɹɪə",
   "geminal": "ʤˈɛmɪnᵊl",
-  "geminate": "ʤˈɛmɪnAt",
+  "geminate": {
+    "ADJ": "ʤˈɛmɪnət",
+    "DEFAULT": "ʤˈɛmɪnAt"
+  },
   "gemination": "ʤɛmɪnˈAʃᵊn",
   "gemma": "ʤˈɛmə",
   "gemmae": "ʤˈɛmiː",
@@ -450630,10 +451491,16 @@
   "gradually": "ɡɹˈaʤʊli",
   "gradualness": "ɡɹˈaʤʊəlnəs",
   "graduand": "ɡɹˈadjʊənd",
-  "graduate": "ɡɹˈaʤʊət",
+  "graduate": {
+    "DEFAULT": "ɡɹˈaʤʊət",
+    "VERB": "ɡɹˈaʤʊAt"
+  },
   "graduate's": "ɡɹˈaʤʊəts",
   "graduated": "ɡɹˈaʤʊAtɪd",
-  "graduates": "ɡɹˈaʤʊəts",
+  "graduates": {
+    "DEFAULT": "ɡɹˈaʤʊəts",
+    "VERB": "ɡɹˈaʤʊAts"
+  },
   "graduating": "ɡɹˈaʤʊAtɪŋ",
   "graduation": "ɡɹˌaʤʊˈAʃᵊn",
   "gradus": "ɡɹˈAdəs",
@@ -451128,7 +451995,10 @@
   "growly": "ɡɹˈWli",
   "growmore": "ɡɹˈQmɔː",
   "grown": "ɡɹˈQn",
-  "grown-up": "ɡɹˈQnʌp",
+  "grown-up": {
+    "ADJ": "ɡɹˌQnˈʌp",
+    "DEFAULT": "ɡɹˈQnʌp"
+  },
   "growth": "ɡɹˈQθ",
   "groyne": "ɡɹˈYn",
   "grubber": "ɡɹˈʌbə",
@@ -451215,10 +452085,16 @@
   "guerrilla": "ɡəɹˈɪlə",
   "guess": "ɡˈɛs",
   "guessable": "ɡˈɛsəbᵊl",
-  "guesstimate": "ɡˈɛstɪmət",
+  "guesstimate": {
+    "DEFAULT": "ɡˈɛstɪmət",
+    "VERB": "ɡˈɛstɪmAt"
+  },
   "guesstimate's": "ɡˈɛstɪməts",
   "guesstimated": "ɡˈɛstɪmAtɪd",
-  "guesstimates": "ɡˈɛstɪməts",
+  "guesstimates": {
+    "DEFAULT": "ɡˈɛstɪməts",
+    "VERB": "ɡˈɛstɪmAts"
+  },
   "guesstimating": "ɡˈɛstɪmAtɪŋ",
   "guesswork": "ɡˈɛswəːk",
   "guest": "ɡˈɛst",
@@ -453512,7 +454388,10 @@
   "hourglass": "ˈWəɡlɑːs",
   "houri": "hˈʊəɹi",
   "hourly": "ˈWəli",
-  "house": "hˈWs",
+  "house": {
+    "DEFAULT": "hˈWs",
+    "VERB": "hˈWz"
+  },
   "house's": "hˈWsɪz",
   "house-hunter": "hˈWshˌʌntə",
   "house-hunting": "hˈWshʌntɪŋ",
@@ -453552,7 +454431,10 @@
   "houseparent": "hˈWspˌɛːɹᵊnt",
   "houseplant": "hˈWsplɑːnt",
   "houseroom": "hˈWsɹuːm",
-  "houses": "hˈWsɪz",
+  "houses": {
+    "DEFAULT": "hˈWsɪz",
+    "VERB": "hˈWzɪz"
+  },
   "houseshare": "hˈWsʃɛː",
   "housetop": "hˈWstɒp",
   "housewares": "hˈWswɛːz",
@@ -454376,11 +455258,17 @@
   "illegible": "ɪlˈɛʤɪbᵊl",
   "illegibly": "ɪlˈɛʤɪbli",
   "illegitimacy": "ˌɪlɪʤˈɪtɪməsi",
-  "illegitimate": "ˌɪlɪʤˈɪtɪmət",
+  "illegitimate": {
+    "DEFAULT": "ˌɪlɪʤˈɪtɪmət",
+    "VERB": "ɪlɪʤˈɪtɪmˌAt"
+  },
   "illegitimate's": "ˌɪlɪʤˈɪtɪməts",
   "illegitimated": "ɪlɪʤˈɪtɪmˌAtɪd",
   "illegitimately": "ˌɪlɪʤˈɪtɪmətli",
-  "illegitimates": "ˌɪlɪʤˈɪtɪməts",
+  "illegitimates": {
+    "DEFAULT": "ˌɪlɪʤˈɪtɪməts",
+    "VERB": "ɪlɪʤˈɪtɪmˌAts"
+  },
   "illegitimating": "ɪlɪʤˈɪtɪmˌAtɪŋ",
   "illiberal": "ɪlˈɪbəɹəl",
   "illiberality": "ɪlɪbəɹˈalɪti",
@@ -454465,7 +455353,10 @@
   "imbibition": "ˌɪmbɪbˈɪʃᵊn",
   "imbizo": "ɪmbˈiːzQ",
   "imbongi": "ɪmbˈɒŋɡi",
-  "imbricate": "ˈɪmbɹɪkAt",
+  "imbricate": {
+    "ADJ": "ˈɪmbɹɪkət",
+    "DEFAULT": "ˈɪmbɹɪkAt"
+  },
   "imbrication": "ˌɪmbɹɪkˈAʃᵊn",
   "imbroglio": "ɪmbɹˈQlɪQ",
   "imbrue": "ɪmbɹˈuː",
@@ -454718,28 +455609,46 @@
   "implacability": "ɪmplˌakəbˈɪlɪti",
   "implacable": "ɪmplˈakəbᵊl",
   "implacably": "ɪmplˈakəbli",
-  "implant": "ɪmplˈɑːnt",
+  "implant": {
+    "DEFAULT": "ɪmplˈɑːnt",
+    "NOUN": "ˈɪmplɑːnt"
+  },
   "implant's": "ˈɪmplɑːnts",
   "implantable": "ɪmplˈɑːntəbᵊl",
   "implantation": "ˌɪmplɑːntˈAʃᵊn",
   "implanted": "ɪmplˈɑːntɪd",
   "implanting": "ɪmplˈɑːntɪŋ",
-  "implants": "ɪmplˈɑːnts",
+  "implants": {
+    "DEFAULT": "ɪmplˈɑːnts",
+    "NOUN": "ˈɪmplɑːnts"
+  },
   "implausibility": "ɪmplˌɔːzɪbˈɪlɪti",
   "implausible": "ɪmplˈɔːzɪbᵊl",
   "implausibly": "ɪmplˈɔːzɪbli",
   "implead": "ɪmplˈiːd",
-  "implement": "ˈɪmplɪmᵊnt",
+  "implement": {
+    "DEFAULT": "ˈɪmplɪmᵊnt",
+    "VERB": "ˈɪmplɪmɛnt"
+  },
   "implement's": "ˈɪmplɪmᵊnts",
   "implementation": "ˌɪmplɪmɛntˈAʃᵊn",
   "implemented": "ˈɪmplɪmɛntɪd",
   "implementer": "ˈɪmplɪmɛntə",
   "implementing": "ˈɪmplɪmɛntɪŋ",
-  "implements": "ˈɪmplɪmᵊnts",
-  "implicate": "ˈɪmplɪkAt",
+  "implements": {
+    "DEFAULT": "ˈɪmplɪmᵊnts",
+    "VERB": "ˈɪmplɪmɛnts"
+  },
+  "implicate": {
+    "DEFAULT": "ˈɪmplɪkAt",
+    "NOUN": "ˈɪmplɪkət"
+  },
   "implicate's": "ˈɪmplɪkəts",
   "implicated": "ˈɪmplɪkAtɪd",
-  "implicates": "ˈɪmplɪkAts",
+  "implicates": {
+    "DEFAULT": "ˈɪmplɪkAts",
+    "NOUN": "ˈɪmplɪkəts"
+  },
   "implicating": "ˈɪmplɪkAtɪŋ",
   "implication": "ˌɪmplɪkˈAʃᵊn",
   "implicative": "ɪmplˈɪkətɪv",
@@ -454766,7 +455675,10 @@
   "impolitic": "ɪmpˈɒlɪtɪk",
   "imponderability": "ɪmpˌɒndəɹəbˈɪlɪti",
   "imponderable": "ɪmpˈɒndəɹəbᵊl",
-  "import": "ɪmpˈɔːt",
+  "import": {
+    "DEFAULT": "ɪmpˈɔːt",
+    "NOUN": "ˈɪmpɔːt"
+  },
   "import's": "ˈɪmpɔːts",
   "importable": "ɪmpˈɔːtəbᵊl",
   "importance": "ɪmpˈɔːtᵊns",
@@ -454776,7 +455688,10 @@
   "imported": "ɪmpˈɔːtɪd",
   "importer": "ɪmpˈɔːtə",
   "importing": "ɪmpˈɔːtɪŋ",
-  "imports": "ɪmpˈɔːts",
+  "imports": {
+    "DEFAULT": "ɪmpˈɔːts",
+    "NOUN": "ˈɪmpɔːts"
+  },
   "importunate": "ɪmpˈɔːtjʊnət",
   "importunately": "ɪmpˈɔːʧənətli",
   "importune": "ˌɪmpətjˈuːn",
@@ -454820,10 +455735,16 @@
   "impregnation": "ˌɪmpɹɛɡnˈAʃᵊn",
   "impresario": "ˌɪmpɹɪsˈɑːɹɪQ",
   "imprescriptible": "ˌɪmpɹɪskɹˈɪptɪbᵊl",
-  "impress": "ɪmpɹˈɛs",
+  "impress": {
+    "DEFAULT": "ɪmpɹˈɛs",
+    "NOUN": "ˈɪmpɹɛs"
+  },
   "impress's": "ˈɪmpɹɛsɪz",
   "impressed": "ɪmpɹˈɛst",
-  "impresses": "ɪmpɹˈɛsɪz",
+  "impresses": {
+    "DEFAULT": "ɪmpɹˈɛsɪz",
+    "NOUN": "ˈɪmpɹɛsɪz"
+  },
   "impressible": "ɪmpɹˈɛsɪbᵊl",
   "impressing": "ɪmpɹˈɛsɪŋ",
   "impression": "ɪmpɹˈɛʃᵊn",
@@ -454838,11 +455759,17 @@
   "impressment": "ɪmpɹˈɛsmᵊnt",
   "imprest": "ˈɪmpɹɛst",
   "imprimatur": "ˌɪmpɹɪmˈɑːtə",
-  "imprint": "ɪmpɹˈɪnt",
+  "imprint": {
+    "DEFAULT": "ɪmpɹˈɪnt",
+    "NOUN": "ˈɪmpɹɪnt"
+  },
   "imprint's": "ˈɪmpɹɪnts",
   "imprinted": "ɪmpɹˈɪntɪd",
   "imprinting": "ɪmpɹˈɪntɪŋ",
-  "imprints": "ɪmpɹˈɪnts",
+  "imprints": {
+    "DEFAULT": "ɪmpɹˈɪnts",
+    "NOUN": "ˈɪmpɹɪnts"
+  },
   "imprison": "ɪmpɹˈɪzᵊn",
   "imprisoned": "ɪmpɹˈɪzənd",
   "imprisonment": "ɪmpɹˈɪzᵊnmᵊnt",
@@ -455022,7 +455949,10 @@
   "incarceration": "ɪnkˌɑːsəɹˈAʃᵊn",
   "incarcerator": "ɪnkˈɑːsəɹAtə",
   "incarnadine": "ɪnkˈɑːnədIn",
-  "incarnate": "ɪnkˈɑːnAt",
+  "incarnate": {
+    "ADJ": "ɪnkˈɑːnət",
+    "DEFAULT": "ɪnkˈɑːnAt"
+  },
   "incarnation": "ˌɪnkɑːnˈAʃᵊn",
   "incaution": "ɪŋkˈɔːʃᵊn",
   "incautious": "ɪnkˈɔːʃəs",
@@ -455032,10 +455962,16 @@
   "incendiarism": "ɪnsˈɛndɪəɹɪzəm",
   "incendiary": "ɪnsˈɛndɪəɹi",
   "incensation": "ɪnsɛnsˈAʃᵊn",
-  "incense": "ˈɪnsɛns",
+  "incense": {
+    "DEFAULT": "ˈɪnsɛns",
+    "VERB": "ɪnsˈɛns"
+  },
   "incense's": "ˈɪnsɛnsɪz",
   "incensed": "ɪnsˈɛnst",
-  "incenses": "ˈɪnsɛnsɪz",
+  "incenses": {
+    "DEFAULT": "ˈɪnsɛnsɪz",
+    "VERB": "ɪnsˈɛnsɪz"
+  },
   "incensing": "ɪnsˈɛnsɪŋ",
   "incensory": "ˈɪnsɛnsəɹi",
   "incent": "ɪnsˈɛnt",
@@ -455089,10 +456025,16 @@
   "inclement": "ɪnklˈɛmᵊnt",
   "inclinable": "ɪnklˈInəbᵊl",
   "inclination": "ˌɪnklɪnˈAʃᵊn",
-  "incline": "ɪnklˈIn",
+  "incline": {
+    "DEFAULT": "ɪnklˈIn",
+    "NOUN": "ˈɪnklIn"
+  },
   "incline's": "ˈɪnklInz",
   "inclined": "ɪnklˈInd",
-  "inclines": "ɪnklˈInz",
+  "inclines": {
+    "DEFAULT": "ɪnklˈInz",
+    "NOUN": "ˈɪnklInz"
+  },
   "inclining": "ɪnklˈInɪŋ",
   "inclinometer": "ˌɪnklɪnˈɒmɪtə",
   "include": "ɪnklˈuːd",
@@ -455204,7 +456146,10 @@
   "inconvertibility": "ɪnkənvəːtɪbˈɪlɪti",
   "inconvertible": "ɪnkənvˈɜːtɪbᵊl",
   "incoordination": "ˌɪnkQɔːdɪnˈAʃᵊn",
-  "incorporate": "ɪnkˈɔːpəɹAt",
+  "incorporate": {
+    "ADJ": "ɪnkˈɔːpəɹət",
+    "DEFAULT": "ɪnkˈɔːpəɹAt"
+  },
   "incorporated": "ɪnkˈɔːpəɹAtɪd",
   "incorporation": "ɪnkˌɔːpəɹˈAʃᵊn",
   "incorporative": "ɪnkˈɔːpəɹətɪv",
@@ -455225,10 +456170,16 @@
   "incrassate": "ɪnkɹˈasAt",
   "incrassated": "ɪnkɹˈasAtɪd",
   "increasable": "ɪŋkɹˈiːsəbᵊl",
-  "increase": "ɪnkɹˈiːs",
+  "increase": {
+    "DEFAULT": "ɪnkɹˈiːs",
+    "NOUN": "ˈɪnkɹiːs"
+  },
   "increase's": "ˈɪnkɹiːsɪz",
   "increased": "ɪnkɹˈiːst",
-  "increases": "ɪnkɹˈiːsɪz",
+  "increases": {
+    "DEFAULT": "ɪnkɹˈiːsɪz",
+    "NOUN": "ˈɪnkɹiːsɪz"
+  },
   "increasing": "ɪnkɹˈiːsɪŋ",
   "increasingly": "ɪnkɹˈiːsɪŋli",
   "increate": "ˌɪnkɹiːˈAt",
@@ -455277,7 +456228,10 @@
   "incurrent": "ɪnkˈʌɹᵊnt",
   "incursion": "ɪnkˈɜːʃᵊn",
   "incursive": "ɪnkˈɜːsɪv",
-  "incurvate": "ɪnkˈɜːvAt",
+  "incurvate": {
+    "ADJ": "ɪnkˈɜːvət",
+    "DEFAULT": "ɪnkˈɜːvAt"
+  },
   "incurvated": "ɪnkˈɜːvAtɪd",
   "incurve": "ɪnkˈɜːv",
   "incurved": "ɪnkˈɜːvd",
@@ -455331,14 +456285,20 @@
   "indemnity": "ɪndˈɛmnɪti",
   "indemonstrable": "ˌɪndɪmˈɒnstɹəbᵊl",
   "indene": "ˈɪndiːn",
-  "indent": "ɪndˈɛnt",
+  "indent": {
+    "DEFAULT": "ɪndˈɛnt",
+    "NOUN": "ˈɪndɛnt"
+  },
   "indent's": "ˈɪndɛnts",
   "indentation": "ˌɪndɛntˈAʃᵊn",
   "indented": "ɪndˈɛntɪd",
   "indenter": "ɪndˈɛntə",
   "indenting": "ɪndˈɛntɪŋ",
   "indention": "ɪndˈɛnʃᵊn",
-  "indents": "ɪndˈɛnts",
+  "indents": {
+    "DEFAULT": "ɪndˈɛnts",
+    "NOUN": "ˈɪndɛnts"
+  },
   "indenture": "ɪndˈɛnʧə",
   "independence": "ˌɪndɪpˈɛndᵊns",
   "independency": "ɪndɪpˈɛndᵊnsi",
@@ -455533,10 +456493,17 @@
   "indwell": "ɪndwˈɛl",
   "indwelling": "ɪndwˈɛlɪŋ",
   "inearth": "ɪnˈɜːθ",
-  "inebriate": "ɪnˈiːbɹɪAt",
+  "inebriate": {
+    "ADJ": "ɪnˈiːbɹɪət",
+    "DEFAULT": "ɪnˈiːbɹɪAt",
+    "NOUN": "ɪnˈiːbɹɪət"
+  },
   "inebriate's": "ɪnˈiːbɹɪəts",
   "inebriated": "ɪnˈiːbɹɪAtɪd",
-  "inebriates": "ɪnˈiːbɹɪAts",
+  "inebriates": {
+    "DEFAULT": "ɪnˈiːbɹɪAts",
+    "NOUN": "ɪnˈiːbɹɪəts"
+  },
   "inebriating": "ɪnˈiːbɹɪAtɪŋ",
   "inebriation": "ɪnˌiːbɹɪˈAʃᵊn",
   "inebriety": "ˌɪnɪbɹˈIɪti",
@@ -455710,11 +456677,17 @@
   "infielder": "ˈɪnfiːldə",
   "infighter": "ˈɪnfˌItə",
   "infighting": "ˈɪnfˌItɪŋ",
-  "infill": "ˈɪnfɪl",
+  "infill": {
+    "DEFAULT": "ˈɪnfɪl",
+    "VERB": "ɪnfˈɪl"
+  },
   "infill's": "ˈɪnfɪlz",
   "infilled": "ɪnfˈɪld",
   "infilling": "ɪnfˈɪlɪŋ",
-  "infills": "ˈɪnfɪlz",
+  "infills": {
+    "DEFAULT": "ˈɪnfɪlz",
+    "VERB": "ɪnfˈɪlz"
+  },
   "infiltrate": "ˈɪnfɪltɹAt",
   "infiltration": "ˌɪnfɪltɹˈAʃᵊn",
   "infiltrator": "ˈɪnfɪltɹAtə",
@@ -455733,11 +456706,17 @@
   "infirmarer": "ɪnfˈɜːməɹə",
   "infirmary": "ɪnfˈɜːməɹi",
   "infirmity": "ɪnfˈɜːmɪti",
-  "infix": "ɪnfˈɪks",
+  "infix": {
+    "DEFAULT": "ɪnfˈɪks",
+    "NOUN": "ˈɪnfɪks"
+  },
   "infix's": "ˈɪnfɪksɪz",
   "infixation": "ˌɪnfɪksˈAʃᵊn",
   "infixed": "ɪnfˈɪkst",
-  "infixes": "ɪnfˈɪksɪz",
+  "infixes": {
+    "DEFAULT": "ɪnfˈɪksɪz",
+    "NOUN": "ˈɪnfɪksɪz"
+  },
   "infixing": "ɪnfˈɪksɪŋ",
   "inflame": "ɪnflˈAm",
   "inflamed": "ɪnflˈAmd",
@@ -455940,10 +456919,16 @@
   "initialize": "ɪnˈɪʃəlIz",
   "initially": "ɪnˈɪʃəli",
   "initiand": "ɪnˈɪʃɪand",
-  "initiate": "ɪnˈɪʃɪət",
+  "initiate": {
+    "DEFAULT": "ɪnˈɪʃɪət",
+    "VERB": "ɪnˈɪʃɪAt"
+  },
   "initiate's": "ɪnˈɪʃɪəts",
   "initiated": "ɪnˈɪʃɪAtɪd",
-  "initiates": "ɪnˈɪʃɪəts",
+  "initiates": {
+    "DEFAULT": "ɪnˈɪʃɪəts",
+    "VERB": "ɪnˈɪʃɪAts"
+  },
   "initiating": "ɪnˈɪʃɪAtɪŋ",
   "initiation": "ɪnˌɪʃɪˈAʃᵊn",
   "initiative": "ɪnˈɪʃətɪv",
@@ -455980,11 +456965,17 @@
   "inlaid": "ɪnlˈAd",
   "inland": "ˈɪnland",
   "inlander": "ˈɪnlandə",
-  "inlay": "ɪnlˈA",
+  "inlay": {
+    "DEFAULT": "ɪnlˈA",
+    "NOUN": "ˈɪnlA"
+  },
   "inlay's": "ˈɪnlAz",
   "inlayer": "ɪnlˈAə",
   "inlaying": "ɪnlˈAɪŋ",
-  "inlays": "ɪnlˈAz",
+  "inlays": {
+    "DEFAULT": "ɪnlˈAz",
+    "NOUN": "ˈɪnlAz"
+  },
   "inlet": "ˈɪnlɪt",
   "inlier": "ˈɪnlˌIə",
   "inlying": "ˈɪnlIɪŋ",
@@ -456131,16 +457122,25 @@
   "inseparability": "ɪnsˌɛpəɹəbˈɪlɪti",
   "inseparable": "ɪnsˈɛpəɹəbᵊl",
   "inseparably": "ɪnsˈɛpəɹəbli",
-  "insert": "ɪnsˈɜːt",
+  "insert": {
+    "DEFAULT": "ɪnsˈɜːt",
+    "NOUN": "ˈɪnsəːt"
+  },
   "insert's": "ˈɪnsəːts",
   "inserted": "ɪnsˈɜːtɪd",
   "inserting": "ɪnsˈɜːtɪŋ",
   "insertion": "ɪnsˈɜːʃᵊn",
-  "inserts": "ɪnsˈɜːts",
+  "inserts": {
+    "DEFAULT": "ɪnsˈɜːts",
+    "NOUN": "ˈɪnsəːts"
+  },
   "inset": "ˈɪnsɛt",
   "inshallah": "ɪnʃˈalə",
   "inshore": "ˌɪnʃˈɔː",
-  "inside": "ˌɪnsˈId",
+  "inside": {
+    "ADJ": "ˌɪnsˈId",
+    "DEFAULT": "ˌɪnsˈId"
+  },
   "insider": "ɪnsˈIdə",
   "insidery": "ɪnsˈIdəɹi",
   "insidious": "ɪnsˈɪdɪəs",
@@ -456295,12 +457295,18 @@
   "insulator": "ˈɪnsjʊlAtə",
   "insulin": "ˈɪnsjʊlɪn",
   "insulitis": "ˌɪnsjʊlˈItɪs",
-  "insult": "ˈɪnsʌlt",
+  "insult": {
+    "DEFAULT": "ˈɪnsʌlt",
+    "VERB": "ɪnsˈʌlt"
+  },
   "insult's": "ˈɪnsʌlts",
   "insulted": "ɪnsˈʌltɪd",
   "insulting": "ɪnsˈʌltɪŋ",
   "insultingly": "ɪnsˈʌltɪŋli",
-  "insults": "ˈɪnsʌlts",
+  "insults": {
+    "DEFAULT": "ˈɪnsʌlts",
+    "VERB": "ɪnsˈʌlts"
+  },
   "insuperability": "ɪnsˌuːpəɹəbˈɪlɪti",
   "insuperable": "ɪnsjˈuːpəɹəbᵊl",
   "insuperably": "ɪnsjˈuːpəɹəbli",
@@ -456427,25 +457433,37 @@
   "interceder": "ˌɪntəsˈiːdə",
   "intercellular": "ˌɪntəsˈɛljʊlə",
   "intercensal": "ˌɪntəsˈɛnsᵊl",
-  "intercept": "ˈɪntəsɛpt",
+  "intercept": {
+    "DEFAULT": "ˈɪntəsɛpt",
+    "VERB": "ˌɪntəsˈɛpt"
+  },
   "intercept's": "ˈɪntəsɛpts",
   "intercepted": "ˌɪntəsˈɛptɪd",
   "intercepting": "ˌɪntəsˈɛptɪŋ",
   "interception": "ˌɪntəsˈɛpʃᵊn",
   "interceptive": "ˌɪntəsˈɛptɪv",
   "interceptor": "ˈɪntəsˌɛptə",
-  "intercepts": "ˈɪntəsɛpts",
+  "intercepts": {
+    "DEFAULT": "ˈɪntəsɛpts",
+    "VERB": "ˌɪntəsˈɛpts"
+  },
   "intercession": "ˌɪntəsˈɛʃᵊn",
   "intercessional": "ˌɪntəsˈɛʃənᵊl",
   "intercessor": "ˈɪntəsˌɛsə",
   "interchain": "ˈɪntəʧAn",
-  "interchange": "ˌɪntəʧˈAnʤ",
+  "interchange": {
+    "DEFAULT": "ˌɪntəʧˈAnʤ",
+    "NOUN": "ˈɪntəʧAnʤ"
+  },
   "interchange's": "ˈɪntəʧAnʤɪz",
   "interchangeability": "ˌɪntəʧˌAnʤəbˈɪlɪti",
   "interchangeable": "ˌɪntəʧˈAnʤəbᵊl",
   "interchangeably": "ˌɪntəʧˈAnʤəbli",
   "interchanged": "ˌɪntəʧˈAnʤd",
-  "interchanges": "ˌɪntəʧˈAnʤɪz",
+  "interchanges": {
+    "DEFAULT": "ˌɪntəʧˈAnʤɪz",
+    "NOUN": "ˈɪntəʧAnʤɪz"
+  },
   "interchanging": "ˌɪntəʧˈAnʤɪŋ",
   "intercity": "ˌɪntəsˈɪti",
   "intercollegiate": "ˌɪntəkəlˈiːʤɪət",
@@ -456487,14 +457505,20 @@
   "interdepend": "ˌɪntədɪpˈɛnd",
   "interdependence": "ˌɪntədɪpˈɛndᵊns",
   "interdependent": "ˌɪntədɪpˈɛndᵊnt",
-  "interdict": "ˈɪntədɪkt",
+  "interdict": {
+    "DEFAULT": "ˈɪntədɪkt",
+    "VERB": "ˌɪntədˈɪkt"
+  },
   "interdict's": "ˈɪntədɪkts",
   "interdicted": "ˌɪntədˈɪktɪd",
   "interdicting": "ˌɪntədˈɪktɪŋ",
   "interdiction": "ˌɪntədˈɪkʃᵊn",
   "interdictor": "ˌɪntədˈɪktə",
   "interdictory": "ˌɪntədˈɪktəɹi",
-  "interdicts": "ˈɪntədɪkts",
+  "interdicts": {
+    "DEFAULT": "ˈɪntədɪkts",
+    "VERB": "ˌɪntədˈɪkts"
+  },
   "interdigital": "ˌɪntədˈɪʤɪtᵊl",
   "interdigitate": "ˌɪntədˈɪʤɪtAt",
   "interdigitating": "ˌɪntədˈɪʤɪtAtɪŋ",
@@ -456537,10 +457561,16 @@
   "intergeneric": "ˌɪntəʤɪnˈɛɹɪk",
   "interglacial": "ɪntəɡlˈAsɪəl",
   "intergovernmental": "ˌɪntəɡʌvnmˈɛntᵊl",
-  "intergrade": "ˌɪntəɡɹˈAd",
+  "intergrade": {
+    "DEFAULT": "ˌɪntəɡɹˈAd",
+    "NOUN": "ˈɪntəɡɹAd"
+  },
   "intergrade's": "ˈɪntəɡɹAdz",
   "intergraded": "ˌɪntəɡɹˈAdɪd",
-  "intergrades": "ˌɪntəɡɹˈAdz",
+  "intergrades": {
+    "DEFAULT": "ˌɪntəɡɹˈAdz",
+    "NOUN": "ˈɪntəɡɹAdz"
+  },
   "intergrading": "ˌɪntəɡɹˈAdɪŋ",
   "intergroup": "ˈɪntəɡɹuːp",
   "intergrow": "ɪntəɡɹˈQ",
@@ -456562,11 +457592,17 @@
   "interlanguage": "ˈɪntəlˌaŋɡwɪʤ",
   "interlap": "ɪntəlˈap",
   "interlard": "ˌɪntəlˈɑːd",
-  "interlay": "ɪntəlˈA",
+  "interlay": {
+    "DEFAULT": "ɪntəlˈA",
+    "NOUN": "ˈɪntəlA"
+  },
   "interlay's": "ˈɪntəlAz",
   "interlayer": "ˈɪntəlAə",
   "interlaying": "ɪntəlˈAɪŋ",
-  "interlays": "ɪntəlˈAz",
+  "interlays": {
+    "DEFAULT": "ɪntəlˈAz",
+    "NOUN": "ˈɪntəlAz"
+  },
   "interleaf": "ˈɪntəliːf",
   "interleave": "ˌɪntəlˈiːv",
   "interleukin": "ˌɪntəljˈuːkɪn",
@@ -456581,11 +457617,17 @@
   "interlink": "ˌɪntəlˈɪŋk",
   "interlinkage": "ɪntəlˈɪŋkɪʤ",
   "interlobular": "ˌɪntəlˈɒbjʊlə",
-  "interlock": "ˌɪntəlˈɒk",
+  "interlock": {
+    "DEFAULT": "ˌɪntəlˈɒk",
+    "NOUN": "ˈɪntəlɒk"
+  },
   "interlock's": "ˈɪntəlɒks",
   "interlocked": "ˌɪntəlˈɒkt",
   "interlocking": "ˌɪntəlˈɒkɪŋ",
-  "interlocks": "ˌɪntəlˈɒks",
+  "interlocks": {
+    "DEFAULT": "ˌɪntəlˈɒks",
+    "NOUN": "ˈɪntəlɒks"
+  },
   "interlocution": "ˌɪntələkjˈuːʃᵊn",
   "interlocutor": "ɪntəlˈɒkjʊtə",
   "interlocutory": "ˌɪntəlˈɒkjʊtəɹi",
@@ -456724,10 +457766,16 @@
   "intersex": "ˈɪntəsɛks",
   "intersexual": "ˌɪntəsˈɛkʃʊəl",
   "intersexuality": "ˌɪntəsˌɛkʃʊˈalɪti",
-  "interspace": "ˈɪntəspAs",
+  "interspace": {
+    "DEFAULT": "ˈɪntəspAs",
+    "VERB": "ɪntəspˈAs"
+  },
   "interspace's": "ˈɪntəspAsɪz",
   "interspaced": "ɪntəspˈAst",
-  "interspaces": "ˈɪntəspAsɪz",
+  "interspaces": {
+    "DEFAULT": "ˈɪntəspAsɪz",
+    "VERB": "ɪntəspˈAsɪz"
+  },
   "interspacing": "ɪntəspˈAsɪŋ",
   "interspecific": "ˌɪntəspɪsˈɪfɪk",
   "intersperse": "ˌɪntəspˈɜːs",
@@ -456783,11 +457831,17 @@
   "intima": "ˈɪntɪmə",
   "intimacy": "ˈɪntɪməsi",
   "intimae": "ˈɪntɪmiː",
-  "intimate": "ˈɪntɪmət",
+  "intimate": {
+    "DEFAULT": "ˈɪntɪmət",
+    "VERB": "ˈɪntɪmAt"
+  },
   "intimate's": "ˈɪntɪməts",
   "intimated": "ˈɪntɪmAtɪd",
   "intimately": "ˈɪntɪmətli",
-  "intimates": "ˈɪntɪməts",
+  "intimates": {
+    "DEFAULT": "ˈɪntɪməts",
+    "VERB": "ˈɪntɪmAts"
+  },
   "intimating": "ˈɪntɪmAtɪŋ",
   "intimation": "ˌɪntɪmˈAʃᵊn",
   "intimidate": "ɪntˈɪmɪdAt",
@@ -456852,11 +457906,17 @@
   "intricate": "ˈɪntɹɪkət",
   "intricately": "ˈɪntɹɪkətli",
   "intrigant": "ˈɪntɹɪɡᵊnt",
-  "intrigue": "ɪntɹˈiːɡ",
+  "intrigue": {
+    "DEFAULT": "ɪntɹˈiːɡ",
+    "NOUN": "ˈɪntɹiːɡ"
+  },
   "intrigue's": "ˈɪntɹiːɡz",
   "intrigued": "ɪntɹˈiːɡd",
   "intriguer": "ɪntɹˈiːɡə",
-  "intrigues": "ɪntɹˈiːɡz",
+  "intrigues": {
+    "DEFAULT": "ɪntɹˈiːɡz",
+    "NOUN": "ˈɪntɹiːɡz"
+  },
   "intriguing": "ɪntɹˈiːɡɪŋ",
   "intriguingly": "ɪntɹˈiːɡɪŋli",
   "intrinsic": "ɪntɹˈɪnsɪk",
@@ -456918,7 +457978,10 @@
   "invader": "ɪnvˈAdə",
   "invaginate": "ɪnvˈaʤɪnAt",
   "invagination": "ɪnvˌaʤɪnˈAʃᵊn",
-  "invalid": "ɪnvˈalɪd",
+  "invalid": {
+    "DEFAULT": "ɪnvˈalɪd",
+    "NOUN": "ˈɪnvəlɪd"
+  },
   "invalid's": "ˈɪnvəlɪdz",
   "invalidate": "ɪnvˈalɪdAt",
   "invalidation": "ɪnvˌalɪdˈAʃᵊn",
@@ -456926,7 +457989,10 @@
   "invaliding": "ˈɪnvəlɪdɪŋ",
   "invalidity": "ˌɪnvəlˈɪdɪti",
   "invalidly": "ɪnvˈalɪdli",
-  "invalids": "ɪnvˈalɪdz",
+  "invalids": {
+    "DEFAULT": "ɪnvˈalɪdz",
+    "NOUN": "ˈɪnvəlɪdz"
+  },
   "invaluable": "ɪnvˈaljʊəbᵊl",
   "invaluably": "ɪnvˈaljʊəbli",
   "invariability": "ɪnvˌɛːɹɪəbˈɪlɪti",
@@ -456954,7 +458020,10 @@
   "inversely": "ˈɪnvəːsli",
   "inversion": "ɪnvˈɜːʃᵊn",
   "inversive": "ɪnvˈɜːsɪv",
-  "invert": "ɪnvˈɜːt",
+  "invert": {
+    "DEFAULT": "ɪnvˈɜːt",
+    "NOUN": "ˈɪnvəːt"
+  },
   "invert's": "ˈɪnvəːts",
   "invertase": "ˈɪnvətAz",
   "invertebrate": "ɪnvˈɜːtɪbɹət",
@@ -456963,7 +458032,10 @@
   "invertibility": "ɪnvəːtəbˈɪlɪti",
   "invertible": "ɪnvˈɜːtɪbᵊl",
   "inverting": "ɪnvˈɜːtɪŋ",
-  "inverts": "ɪnvˈɜːts",
+  "inverts": {
+    "DEFAULT": "ɪnvˈɜːts",
+    "NOUN": "ˈɪnvəːts"
+  },
   "invest": "ɪnvˈɛst",
   "investible": "ɪnvˈɛstɪbᵊl",
   "investigable": "ɪnvˈɛstɪɡəbᵊl",
@@ -457004,12 +458076,18 @@
   "invitation": "ˌɪnvɪtˈAʃᵊn",
   "invitational": "ɪnvɪtˈAʃənᵊl",
   "invitatory": "ɪnvˈItətəɹi",
-  "invite": "ɪnvˈIt",
+  "invite": {
+    "DEFAULT": "ɪnvˈIt",
+    "NOUN": "ˈɪnvIt"
+  },
   "invite's": "ˈɪnvIts",
   "invited": "ɪnvˈItɪd",
   "invitee": "ɪnvˌItˈiː",
   "inviter": "ɪnvˈItə",
-  "invites": "ɪnvˈIts",
+  "invites": {
+    "DEFAULT": "ɪnvˈIts",
+    "NOUN": "ˈɪnvIts"
+  },
   "inviting": "ɪnvˈItɪŋ",
   "invitingly": "ɪnvˈItɪŋli",
   "invocation": "ˌɪnvQkˈAʃᵊn",
@@ -457276,10 +458354,16 @@
   "isohyet": "ˈIsQhˌIɪt",
   "isokinetic": "ˌIsQkɪnˈɛtɪk",
   "isolable": "ˈIsələbᵊl",
-  "isolate": "ˈIsəlAt",
+  "isolate": {
+    "DEFAULT": "ˈIsəlAt",
+    "NOUN": "ˈIsələt"
+  },
   "isolate's": "ˈIsələts",
   "isolated": "ˈIsəlAtɪd",
-  "isolates": "ˈIsəlAts",
+  "isolates": {
+    "DEFAULT": "ˈIsəlAts",
+    "NOUN": "ˈIsələts"
+  },
   "isolating": "ˈIsəlAtɪŋ",
   "isolation": "IsəlˈAʃᵊn",
   "isolationism": "ˌIsəlˈAʃənɪzəm",
@@ -457432,7 +458516,10 @@
   "jaeger": "ʤˈAɡə",
   "jaffle": "ʤˈafᵊl",
   "jafta": "ʤˈaftə",
-  "jagged": "ʤˈaɡɪd",
+  "jagged": {
+    "DEFAULT": "ʤˈaɡɪd",
+    "VERB": "ʤˈaɡd"
+  },
   "jaggedness": "ʤˈaɡɪdnɪs",
   "jagger": "ʤˈaɡə",
   "jaggery": "ʤˈaɡəɹi",
@@ -458843,10 +459930,16 @@
   "laminae": "lˈamɪniː",
   "laminal": "lˈamɪnᵊl",
   "laminar": "lˈamɪnə",
-  "laminate": "lˈamɪnAt",
+  "laminate": {
+    "DEFAULT": "lˈamɪnAt",
+    "NOUN": "lˈamɪnət"
+  },
   "laminate's": "lˈamɪnəts",
   "laminated": "lˈamɪnAtɪd",
-  "laminates": "lˈamɪnAts",
+  "laminates": {
+    "DEFAULT": "lˈamɪnAts",
+    "NOUN": "lˈamɪnəts"
+  },
   "laminating": "lˈamɪnAtɪŋ",
   "lamination": "lˌamɪnˈAʃᵊn",
   "laminectomy": "lˌamɪnˈɛktəmi",
@@ -459221,7 +460314,10 @@
   "leapt": "lˈɛpt",
   "learn": "lˈɜːn",
   "learnability": "ləːnəbˈɪlɪti",
-  "learned": "lˈɜːnd",
+  "learned": {
+    "ADJ": "lˈɜːnɪd",
+    "DEFAULT": "lˈɜːnd"
+  },
   "learnedly": "lˈɜːnɪdli",
   "learner": "lˈɜːnə",
   "learnfare": "lˈɜːnfɛː",
@@ -459352,11 +460448,17 @@
   "legislature": "lˈɛʤɪsləʧə",
   "legit": "lɪʤˈɪt",
   "legitimacy": "lɪʤˈɪtɪməsi",
-  "legitimate": "lɪʤˈɪtɪmət",
+  "legitimate": {
+    "DEFAULT": "lɪʤˈɪtɪmət",
+    "VERB": "lɪʤˈɪtɪmˌAt"
+  },
   "legitimate's": "lɪʤˈɪtɪməts",
   "legitimated": "lɪʤˈɪtɪmˌAtɪd",
   "legitimately": "lɪʤˈɪtɪmətli",
-  "legitimates": "lɪʤˈɪtɪməts",
+  "legitimates": {
+    "DEFAULT": "lɪʤˈɪtɪməts",
+    "VERB": "lɪʤˈɪtɪmˌAts"
+  },
   "legitimating": "lɪʤˈɪtɪmˌAtɪŋ",
   "legitimation": "lɪʤˌɪtɪmˈAʃᵊn",
   "legitimatization": "lɪʤˌɪtɪmətIzˈAʃᵊn",
@@ -460079,7 +461181,10 @@
   "liverwort": "lˈɪvəwəːt",
   "livery": "lˈɪvəɹi",
   "liveryman": "lˈɪvəɹɪmən",
-  "lives": "lˈIvz",
+  "lives": {
+    "DEFAULT": "lˈIvz",
+    "VERB": "lˈɪvz"
+  },
   "livestock": "lˈIvstɒk",
   "liveware": "lˈIvwɛː",
   "livid": "lˈɪvɪd",
@@ -460613,7 +461718,10 @@
   "lunchtime": "lˈʌnʧtIm",
   "lunette": "luːnˈɛt",
   "lunge": "lˈʌnʤ",
-  "lunged": "lˈʌnʤd",
+  "lunged": {
+    "ADJ": "lˈʌŋd",
+    "DEFAULT": "lˈʌnʤd"
+  },
   "lungfish": "lˈʌŋfɪʃ",
   "lungful": "lˈʌŋfʊl",
   "lungi": "lˈʊŋɡi",
@@ -461271,10 +462379,16 @@
   "mandarin": "mˈandəɹɪn",
   "mandarine": "mˈandəɹiːn",
   "mandatary": "mˈandətəɹi",
-  "mandate": "mˈandAt",
+  "mandate": {
+    "DEFAULT": "mˈandAt",
+    "VERB": "mˌandˈAt"
+  },
   "mandate's": "mˈandAts",
   "mandated": "mˌandˈAtɪd",
-  "mandates": "mˈandAts",
+  "mandates": {
+    "DEFAULT": "mˈandAts",
+    "VERB": "mˌandˈAts"
+  },
   "mandating": "mˌandˈAtɪŋ",
   "mandatory": "mˈandətəɹi",
   "mandazi": "mandˈɑːzi",
@@ -461525,7 +462639,10 @@
   "marginalize": "mˈɑːʤɪnəlIz",
   "marginalized": "mˈɑːʤɪnəlIzd",
   "marginally": "mˈɑːʤɪnəli",
-  "marginate": "mˈɑːʤɪnAt",
+  "marginate": {
+    "ADJ": "mˈɑːʤɪnət",
+    "DEFAULT": "mˈɑːʤɪnAt"
+  },
   "margination": "mɑːʤɪnˈAʃᵊn",
   "margined": "mˈɑːʤɪnd",
   "margosa": "mɑːɡˈQsə",
@@ -461995,7 +463112,10 @@
   "mediastina": "mˌiːdɪəstˈInə",
   "mediastinal": "mˌiːdɪəstˈInᵊl",
   "mediastinum": "mˌiːdɪəstˈInəm",
-  "mediate": "mˈiːdɪAt",
+  "mediate": {
+    "ADJ": "mˈiːdɪət",
+    "DEFAULT": "mˈiːdɪAt"
+  },
   "mediately": "mˈiːdɪətli",
   "mediation": "mˌiːdɪˈAʃᵊn",
   "mediator": "mˈiːdɪAtə",
@@ -462285,11 +463405,17 @@
   "mercerized": "mˈɜːsəɹIzd",
   "mercery": "mˈɜːsəɹi",
   "merch": "mˈɜːʧ",
-  "merchandise": "mˈɜːʧᵊndIs",
+  "merchandise": {
+    "DEFAULT": "mˈɜːʧᵊndIs",
+    "VERB": "mˈɜːʧᵊndIz"
+  },
   "merchandise's": "mˈɜːʧᵊndIsɪz",
   "merchandised": "mˈɜːʧᵊndIzd",
   "merchandiser": "mˈɜːʧᵊndIzə",
-  "merchandises": "mˈɜːʧᵊndIsɪz",
+  "merchandises": {
+    "DEFAULT": "mˈɜːʧᵊndIsɪz",
+    "VERB": "mˈɜːʧᵊndIzɪz"
+  },
   "merchandising": "mˈɜːʧᵊndIzɪŋ",
   "merchant": "mˈɜːʧənt",
   "merchantable": "mˈɜːʧᵊntəbᵊl",
@@ -463178,7 +464304,10 @@
   "minus": "mˈInəs",
   "minuscular": "mɪnˈʌskjʊlə",
   "minuscule": "mˈɪnɪskjuːl",
-  "minute": "mˈɪnɪt",
+  "minute": {
+    "ADJ": "mInjˈuːt",
+    "DEFAULT": "mˈɪnɪt"
+  },
   "minutely": "mInjˈuːtli",
   "minuteman": "mˈɪnɪtman",
   "minuteness": "mInjˈuːtnəs",
@@ -463271,11 +464400,17 @@
   "misconceive": "mˌɪskənsˈiːv",
   "misconceived": "mˌɪskənsˈiːvd",
   "misconception": "mˌɪskənsˈɛpʃᵊn",
-  "misconduct": "mˌɪskˈɒndʌkt",
+  "misconduct": {
+    "DEFAULT": "mˌɪskˈɒndʌkt",
+    "VERB": "mˌɪskəndˈʌkt"
+  },
   "misconduct's": "mˌɪskˈɒndʌkts",
   "misconducted": "mˌɪskəndˈʌktɪd",
   "misconducting": "mˌɪskəndˈʌktɪŋ",
-  "misconducts": "mˌɪskˈɒndʌkts",
+  "misconducts": {
+    "DEFAULT": "mˌɪskˈɒndʌkts",
+    "VERB": "mˌɪskəndˈʌkts"
+  },
   "misconfigure": "mˌɪskənfˈɪɡə",
   "misconfigured": "mˌɪskənfˈɪɡəd",
   "misconstrual": "mˌɪskənstɹˈuːəl",
@@ -463283,11 +464418,17 @@
   "misconstruction": "mˌɪskənstɹˈʌkʃᵊn",
   "misconstrue": "mˌɪskənstɹˈuː",
   "miscopy": "mˌɪskˈɒpi",
-  "miscount": "mˌɪskˈWnt",
+  "miscount": {
+    "DEFAULT": "mˌɪskˈWnt",
+    "NOUN": "mˈɪskWnt"
+  },
   "miscount's": "mˈɪskWnts",
   "miscounted": "mˌɪskˈWntɪd",
   "miscounting": "mˌɪskˈWntɪŋ",
-  "miscounts": "mˌɪskˈWnts",
+  "miscounts": {
+    "DEFAULT": "mˌɪskˈWnts",
+    "NOUN": "mˈɪskWnts"
+  },
   "miscreant": "mˈɪskɹɪənt",
   "miscreated": "mˌɪskɹɪˈAtɪd",
   "miscreation": "mˌɪskɹɪˈAʃᵊn",
@@ -463327,10 +464468,16 @@
   "misfeed": "mˌɪsfˈiːd",
   "misfield": "mˌɪsfˈiːld",
   "misfile": "mˌɪsfˈIl",
-  "misfire": "mˌɪsfˈIə",
+  "misfire": {
+    "DEFAULT": "mˌɪsfˈIə",
+    "NOUN": "mˈɪsfIə"
+  },
   "misfire's": "mˈɪsfIəz",
   "misfired": "mˌɪsfˈIəd",
-  "misfires": "mˌɪsfˈIəz",
+  "misfires": {
+    "DEFAULT": "mˌɪsfˈIəz",
+    "NOUN": "mˈɪsfIəz"
+  },
   "misfiring": "mˌɪsfˈIəɹɪŋ",
   "misfit": "mˈɪsfɪt",
   "misfortune": "mˌɪsfˈɔːʧuːn",
@@ -463349,9 +464496,15 @@
   "mishap": "mˈɪshap",
   "mishear": "mˌɪshˈɪə",
   "misheard": "mɪshˈɜːd",
-  "mishit": "mˌɪshˈɪt",
+  "mishit": {
+    "DEFAULT": "mˌɪshˈɪt",
+    "NOUN": "mˈɪshˌɪt"
+  },
   "mishit's": "mˈɪshˌɪts",
-  "mishits": "mˌɪshˈɪts",
+  "mishits": {
+    "DEFAULT": "mˌɪshˈɪts",
+    "NOUN": "mˈɪshˌɪts"
+  },
   "mishitting": "mˌɪshˈɪtɪŋ",
   "mishmash": "mˈɪʃmaʃ",
   "misidentification": "mɪsIdɛntɪfɪkˈAʃᵊn",
@@ -463375,10 +464528,16 @@
   "mismanage": "mɪsmˈanɪʤ",
   "mismanagement": "mɪsmˈanɪʤmᵊnt",
   "mismarriage": "mɪsmˈaɹɪʤ",
-  "mismatch": "mˈɪsmaʧ",
+  "mismatch": {
+    "DEFAULT": "mˈɪsmaʧ",
+    "VERB": "mˌɪsmˈaʧ"
+  },
   "mismatch's": "mˈɪsmaʧɪz",
   "mismatched": "mˌɪsmˈaʧt",
-  "mismatches": "mˈɪsmaʧɪz",
+  "mismatches": {
+    "DEFAULT": "mˈɪsmaʧɪz",
+    "VERB": "mˌɪsmˈaʧɪz"
+  },
   "mismatching": "mˌɪsmˈaʧɪŋ",
   "mismate": "mˌɪsmˈAt",
   "mismated": "mɪsmˈAtɪd",
@@ -463399,16 +464558,28 @@
   "misplace": "mˌɪsplˈAs",
   "misplaced": "mˌɪsplˈAst",
   "misplacement": "mˌɪsplˈAsmᵊnt",
-  "misplay": "mˌɪsplˈA",
+  "misplay": {
+    "DEFAULT": "mˌɪsplˈA",
+    "NOUN": "mˈɪsplˌA"
+  },
   "misplay's": "mˈɪsplˌAz",
   "misplayed": "mˌɪsplˈAd",
   "misplaying": "mˌɪsplˈAɪŋ",
-  "misplays": "mˌɪsplˈAz",
-  "misprint": "mˈɪspɹɪnt",
+  "misplays": {
+    "DEFAULT": "mˌɪsplˈAz",
+    "NOUN": "mˈɪsplˌAz"
+  },
+  "misprint": {
+    "DEFAULT": "mˈɪspɹɪnt",
+    "VERB": "mˌɪspɹˈɪnt"
+  },
   "misprint's": "mˈɪspɹɪnts",
   "misprinted": "mˌɪspɹˈɪntɪd",
   "misprinting": "mˌɪspɹˈɪntɪŋ",
-  "misprints": "mˈɪspɹɪnts",
+  "misprints": {
+    "DEFAULT": "mˈɪspɹɪnts",
+    "VERB": "mˌɪspɹˈɪnts"
+  },
   "misprision": "mˌɪspɹˈɪʒᵊn",
   "misprize": "mˌɪspɹˈIz",
   "mispronounce": "mˌɪspɹənˈWns",
@@ -463485,10 +464656,16 @@
   "misunderstanding": "mˌɪsʌndəstˈandɪŋ",
   "misunderstood": "mˌɪsʌndəstˈʊd",
   "misusage": "mˌɪsjˈuːsɪʤ",
-  "misuse": "mˌɪsjˈuːz",
+  "misuse": {
+    "DEFAULT": "mˌɪsjˈuːz",
+    "NOUN": "mˌɪsjˈuːs"
+  },
   "misuse's": "mˌɪsjˈuːsɪz",
   "misused": "mˌɪsjˈuːzd",
-  "misuses": "mˌɪsjˈuːzɪz",
+  "misuses": {
+    "DEFAULT": "mˌɪsjˈuːzɪz",
+    "NOUN": "mˌɪsjˈuːsɪz"
+  },
   "misusing": "mˌɪsjˈuːzɪŋ",
   "mitch": "mˈɪʧ",
   "miter": "mˈItə",
@@ -463580,11 +464757,17 @@
   "modeller": "mˈɒdələ",
   "modelling": "mˈɒdlɪŋ",
   "modem": "mˈQdɛm",
-  "moderate": "mˈɒdəɹət",
+  "moderate": {
+    "DEFAULT": "mˈɒdəɹət",
+    "VERB": "mˈɒdəɹAt"
+  },
   "moderate's": "mˈɒdəɹəts",
   "moderated": "mˈɒdəɹAtɪd",
   "moderately": "mˈɒdəɹətli",
-  "moderates": "mˈɒdəɹəts",
+  "moderates": {
+    "DEFAULT": "mˈɒdəɹəts",
+    "VERB": "mˈɒdəɹAts"
+  },
   "moderating": "mˈɒdəɹAtɪŋ",
   "moderation": "mˌɒdəɹˈAʃᵊn",
   "moderatism": "mˈɒdəɹətɪzəm",
@@ -464023,7 +465206,10 @@
   "moosewood": "mˈuːswʊd",
   "mopane": "məpˈɑːnA",
   "mopboard": "mˈɒpbɔːd",
-  "moped": "mˈQpɛd",
+  "moped": {
+    "DEFAULT": "mˈQpɛd",
+    "VERB": "mˈQpt"
+  },
   "mopery": "mˈQpəɹi",
   "mophead": "mˈɒphɛd",
   "mopish": "mˈQpɪʃ",
@@ -464286,7 +465472,10 @@
   "moustached": "məstˈɑːʃt",
   "moustachioed": "məstˈɑːʃɪQd",
   "mousy": "mˈWsi",
-  "mouth": "mˈWθ",
+  "mouth": {
+    "DEFAULT": "mˈWθ",
+    "VERB": "mˈWð"
+  },
   "mouth's": "mˈWθs",
   "mouth-watering": "mˈWθwˌɔːtəɹɪŋ",
   "mouthbrooder": "mˈWθbɹˌuːdə",
@@ -464300,7 +465489,10 @@
   "mouthless": "mˈWθlɪs",
   "mouthpart": "mˈWθpɑːt",
   "mouthpiece": "mˈWθpiːs",
-  "mouths": "mˈWθs",
+  "mouths": {
+    "DEFAULT": "mˈWθs",
+    "VERB": "mˈWðz"
+  },
   "mouthwash": "mˈWθwɒʃ",
   "mouthy": "mˈWði",
   "mouton": "mˈuːtɒn",
@@ -465208,7 +466400,10 @@
   "nduja": "əndˈuːjə",
   "ne'er": "nˈɛː",
   "ne'er-do-well": "nˈɛːduːwɛl",
-  "nearby": "nˌɪəbˈI",
+  "nearby": {
+    "ADJ": "nˈɪəbI",
+    "DEFAULT": "nˌɪəbˈI"
+  },
   "nearer": "nˈɪəɹə",
   "nearest": "nˈɪəɹɪst",
   "nearly": "nˈɪəli",
@@ -465810,10 +467005,16 @@
   "nitpicker": "nˈɪtpˌɪkə",
   "nitpicking": "nˈɪtpˌɪkɪŋ",
   "nitpicky": "nˈɪtpɪki",
-  "nitrate": "nˈItɹAt",
+  "nitrate": {
+    "DEFAULT": "nˈItɹAt",
+    "VERB": "nItɹˈAt"
+  },
   "nitrate's": "nˈItɹAts",
   "nitrated": "nItɹˈAtɪd",
-  "nitrates": "nˈItɹAts",
+  "nitrates": {
+    "DEFAULT": "nˈItɹAts",
+    "VERB": "nItɹˈAts"
+  },
   "nitrating": "nItɹˈAtɪŋ",
   "nitration": "nItɹˈAʃᵊn",
   "nitrazepam": "nItɹˈAzɪpam",
@@ -465939,7 +467140,10 @@
   "nominalization": "nˌɒmɪnəlIzˈAʃᵊn",
   "nominalize": "nˈɒmɪnəlIz",
   "nominally": "nˈɒmɪnəli",
-  "nominate": "nˈɒmɪnAt",
+  "nominate": {
+    "ADJ": "nˈɒmɪnət",
+    "DEFAULT": "nˈɒmɪnAt"
+  },
   "nomination": "nˌɒmɪnˈAʃᵊn",
   "nominative": "nˈɒmɪnətɪv",
   "nominator": "nˈɒmɪnAtə",
@@ -466380,7 +467584,10 @@
   "nuclear": "njˈuːklɪə",
   "nuclear-powered": "njˌuːklɪəpˈWəd",
   "nuclease": "njˈuːklɪAz",
-  "nucleate": "njˈuːklɪAt",
+  "nucleate": {
+    "ADJ": "njˈuːklɪət",
+    "DEFAULT": "njˈuːklɪAt"
+  },
   "nucleated": "njˈuːklɪAtɪd",
   "nucleation": "njˌuːklɪˈAʃᵊn",
   "nuclei": "njˈuːklɪI",
@@ -466597,7 +467804,10 @@
   "obiter": "ˈɒbɪtə",
   "obituarist": "əbˈɪʧʊəɹɪst",
   "obituary": "əbˈɪʧʊəɹi",
-  "object": "ˈɒbʤɛkt",
+  "object": {
+    "DEFAULT": "ˈɒbʤɛkt",
+    "VERB": "əbʤˈɛkt"
+  },
   "object's": "ˈɒbʤɛkts",
   "objected": "əbʤˈɛktɪd",
   "objectification": "əbʤˌɛktɪfɪkˈAʃᵊn",
@@ -466615,7 +467825,10 @@
   "objectivize": "əbʤˈɛktɪvIz",
   "objectless": "ˈɒbʤəktləs",
   "objector": "əbʤˈɛktə",
-  "objects": "ˈɒbʤɛkts",
+  "objects": {
+    "DEFAULT": "ˈɒbʤɛkts",
+    "VERB": "əbʤˈɛkts"
+  },
   "objet": "ˈɒbʒA",
   "objurgate": "ˈɒbʤəɡAt",
   "objurgation": "ɒbʤəɡˈAʃᵊn",
@@ -466625,7 +467838,10 @@
   "oblate": "ˈɒblAt",
   "oblation": "QblˈAʃᵊn",
   "oblatory": "ˈɒblətəɹi",
-  "obligate": "ˈɒblɪɡAt",
+  "obligate": {
+    "ADJ": "ˈɒblɪɡət",
+    "DEFAULT": "ˈɒblɪɡAt"
+  },
   "obligation": "ˌɒblɪɡˈAʃᵊn",
   "obligatorily": "əblˈɪɡətəɹɪli",
   "obligatory": "əblˈɪɡətəɹi",
@@ -466735,7 +467951,10 @@
   "obtuse": "əbtjˈuːs",
   "obtusely": "əbtjˈuːsli",
   "obtuseness": "əbtjˈuːsnəs",
-  "obverse": "ˈɒbvəːs",
+  "obverse": {
+    "ADJ": "ˈɒbvəːs",
+    "DEFAULT": "ˈɒbvəːs"
+  },
   "obversely": "ˈɒbvəːsli",
   "obvert": "əbvˈɜːt",
   "obviate": "ˈɒbvɪAt",
@@ -466983,9 +468202,15 @@
   "offload": "ˌɒflˈQd",
   "offprint": "ˈɒfpɹɪnt",
   "offscourings": "ˈɒfskWəɹɪŋz",
-  "offset": "ˈɒfsɛt",
+  "offset": {
+    "DEFAULT": "ˈɒfsɛt",
+    "VERB": "ˌɒfsˈɛt"
+  },
   "offset's": "ˈɒfsɛts",
-  "offsets": "ˈɒfsɛts",
+  "offsets": {
+    "DEFAULT": "ˈɒfsɛts",
+    "VERB": "ˌɒfsˈɛts"
+  },
   "offsetting": "ˌɒfsˈɛtɪŋ",
   "offshoot": "ˈɒfʃuːt",
   "offshore": "ˌɒfʃˈɔː",
@@ -467341,10 +468566,16 @@
   "ophthalmoscope": "ɒfθˈalməskQp",
   "ophthalmoscopic": "ɒfθˌalməskˈɒpɪk",
   "ophthalmoscopy": "ˌɒfθalmˈɒskəpi",
-  "opiate": "ˈQpɪət",
+  "opiate": {
+    "DEFAULT": "ˈQpɪət",
+    "VERB": "ˈQpɪAt"
+  },
   "opiate's": "ˈQpɪəts",
   "opiated": "ˈQpɪAtɪd",
-  "opiates": "ˈQpɪəts",
+  "opiates": {
+    "DEFAULT": "ˈQpɪəts",
+    "VERB": "ˈQpɪAts"
+  },
   "opiating": "ˈQpɪAtɪŋ",
   "opine": "QpˈIn",
   "opinion": "əpˈɪnjən",
@@ -467563,7 +468794,10 @@
   "oribi": "ˈɒɹɪbi",
   "orichalc": "ˈɒɹɪkalk",
   "oriel": "ˈɔːɹɪəl",
-  "orient": "ˈɔːɹɪənt",
+  "orient": {
+    "DEFAULT": "ˈɔːɹɪənt",
+    "VERB": "ˈɔːɹɪɛnt"
+  },
   "orient's": "ˈɔːɹɪənts",
   "oriental": "ˌɔːɹɪˈɛntᵊl",
   "orientalia": "ˌɔːɹɪəntˈAlɪə",
@@ -467576,7 +468810,10 @@
   "orienteer": "ˌɔːɹɪɛntˈɪə",
   "orienteering": "ˌɔːɹɪɛntˈɪəɹɪŋ",
   "orienting": "ˈɔːɹɪɛntɪŋ",
-  "orients": "ˈɔːɹɪənts",
+  "orients": {
+    "DEFAULT": "ˈɔːɹɪənts",
+    "VERB": "ˈɔːɹɪɛnts"
+  },
   "orifice": "ˈɒɹɪfɪs",
   "oriflamme": "ˈɒɹɪflam",
   "origami": "ˌɒɹɪɡˈɑːmi",
@@ -467596,14 +468833,20 @@
   "orlop": "ˈɔːlɒp",
   "ormer": "ˈɔːmə",
   "ormolu": "ˈɔːməluː",
-  "ornament": "ˈɔːnəmᵊnt",
+  "ornament": {
+    "DEFAULT": "ˈɔːnəmᵊnt",
+    "VERB": "ˈɔːnəmɛnt"
+  },
   "ornament's": "ˈɔːnəmᵊnts",
   "ornamental": "ˌɔːnəmˈɛntᵊl",
   "ornamentally": "ˌɔːnəmˈɛntəli",
   "ornamentation": "ˌɔːnəmɛntˈAʃᵊn",
   "ornamented": "ˈɔːnəmɛntɪd",
   "ornamenting": "ˈɔːnəmɛntɪŋ",
-  "ornaments": "ˈɔːnəmᵊnts",
+  "ornaments": {
+    "DEFAULT": "ˈɔːnəmᵊnts",
+    "VERB": "ˈɔːnəmɛnts"
+  },
   "ornate": "ɔːnˈAt",
   "ornately": "ɔːnˈAtli",
   "ornateness": "ɔːnˈAtnɪs",
@@ -467859,10 +469102,16 @@
   "outburst": "ˈWtbəːst",
   "outcall": "ˈWtkɔːl",
   "outcast": "ˈWtkɑːst",
-  "outcaste": "ˈWtkɑːst",
+  "outcaste": {
+    "DEFAULT": "ˈWtkɑːst",
+    "VERB": "ˌWtkˈɑːst"
+  },
   "outcaste's": "ˈWtkɑːsts",
   "outcasted": "ˈWtkɑːstɪd",
-  "outcastes": "ˈWtkɑːsts",
+  "outcastes": {
+    "DEFAULT": "ˈWtkɑːsts",
+    "VERB": "ˌWtkˈɑːsts"
+  },
   "outcasting": "ˈWtkɑːstɪŋ",
   "outclass": "ˌWtklˈɑːs",
   "outcome": "ˈWtkʌm",
@@ -467906,9 +469155,15 @@
   "outgain": "WtɡˈAn",
   "outgas": "ˌWtɡˈas",
   "outgeneral": "ˌWtʤˈɛnəɹəl",
-  "outgo": "ˈWtɡQ",
+  "outgo": {
+    "DEFAULT": "ˈWtɡQ",
+    "VERB": "ˌWtɡˈQ"
+  },
   "outgo's": "ˈWtɡQz",
-  "outgoes": "ˈWtɡQz",
+  "outgoes": {
+    "DEFAULT": "ˈWtɡQz",
+    "VERB": "ˌWtɡˈQz"
+  },
   "outgoing": "ˈWtɡQɪŋ",
   "outgone": "Wtɡˈɒn",
   "outgross": "ˌWtɡɹˈQs",
@@ -467973,16 +469228,25 @@
   "outran": "ˌWtɹˈan",
   "outrange": "ˌWtɹˈAnʤ",
   "outrank": "ˌWtɹˈaŋk",
-  "outreach": "ˈWtɹiːʧ",
+  "outreach": {
+    "DEFAULT": "ˈWtɹiːʧ",
+    "VERB": "ˌWtɹˈiːʧ"
+  },
   "outreach's": "ˈWtɹiːʧɪz",
   "outreached": "ˌWtɹˈiːʧt",
-  "outreaches": "ˈWtɹiːʧɪz",
+  "outreaches": {
+    "DEFAULT": "ˈWtɹiːʧɪz",
+    "VERB": "ˌWtɹˈiːʧɪz"
+  },
   "outreaching": "ˌWtɹˈiːʧɪŋ",
   "outrebound": "WtɹˈiːbWnd",
   "outride": "WtɹˈId",
   "outrider": "ˈWtɹˌIdə",
   "outrigger": "ˈWtɹˌɪɡə",
-  "outright": "WtɹˈIt",
+  "outright": {
+    "ADJ": "ˈWtɹIt",
+    "DEFAULT": "WtɹˈIt"
+  },
   "outrival": "ˌWtɹˈIvᵊl",
   "outro": "ˈWtɹQ",
   "outrode": "ˌWtɹˈQd",
@@ -468089,7 +469353,10 @@
   "overactive": "ˌQvəɹˈaktɪv",
   "overactivity": "ˌQvəɹaktˈɪvɪti",
   "overage": "ˈQvəɹɪʤ",
-  "overall": "ˈQvəɹɔːl",
+  "overall": {
+    "ADV": "ˌQvəɹˈɔːl",
+    "DEFAULT": "ˈQvəɹɔːl"
+  },
   "overalled": "ˈQvəɹɔːld",
   "overambition": "ˌQvəɹambˈɪʃᵊn",
   "overambitious": "ˌQvəɹambˈɪʃəs",
@@ -468108,11 +469375,17 @@
   "overbearing": "ˌQvəbˈɛːɹɪŋ",
   "overbearingly": "ˌQvəbˈɛːɹɪŋli",
   "overbearingness": "ˌQvəbˈɛːɹɪŋnɪs",
-  "overbid": "ˌQvəbˈɪd",
+  "overbid": {
+    "DEFAULT": "ˌQvəbˈɪd",
+    "NOUN": "ˈQvəbɪd"
+  },
   "overbid's": "ˈQvəbɪdz",
   "overbidder": "ˌQvəbˈɪdə",
   "overbidding": "ˌQvəbˈɪdɪŋ",
-  "overbids": "ˌQvəbˈɪdz",
+  "overbids": {
+    "DEFAULT": "ˌQvəbˈɪdz",
+    "NOUN": "ˈQvəbɪdz"
+  },
   "overbite": "ˈQvəbIt",
   "overblouse": "ˈQvəblWz",
   "overblowing": "ˌQvəblˈQɪŋ",
@@ -468134,35 +469407,59 @@
   "overbrimming": "ˌQvəbɹˈɪmɪŋ",
   "overbuild": "ˌQvəbˈɪld",
   "overbuilding": "ˌQvəbˈɪldɪŋ",
-  "overburden": "ˌQvəbˈɜːdᵊn",
+  "overburden": {
+    "DEFAULT": "ˌQvəbˈɜːdᵊn",
+    "NOUN": "ˈQvəbˌɜːdᵊn"
+  },
   "overburden's": "ˈQvəbˌɜːdᵊnz",
   "overburdened": "ˌQvəbˈɜːdᵊnd",
   "overburdening": "ˌQvəbˈɜːdᵊnɪŋ",
-  "overburdens": "ˌQvəbˈɜːdᵊnz",
+  "overburdens": {
+    "DEFAULT": "ˌQvəbˈɜːdᵊnz",
+    "NOUN": "ˈQvəbˌɜːdᵊnz"
+  },
   "overburdensome": "Qvəbˈɜːdᵊnsəm",
   "overbusy": "ˌQvəbˈɪzi",
   "overbuy": "ˌQvəbˈI",
-  "overcall": "ˌQvəkˈɔːl",
+  "overcall": {
+    "DEFAULT": "ˌQvəkˈɔːl",
+    "NOUN": "ˈQvəkɔːl"
+  },
   "overcall's": "ˈQvəkɔːlz",
   "overcalled": "ˌQvəkˈɔːld",
   "overcalling": "ˌQvəkˈɔːlɪŋ",
-  "overcalls": "ˌQvəkˈɔːlz",
+  "overcalls": {
+    "DEFAULT": "ˌQvəkˈɔːlz",
+    "NOUN": "ˈQvəkɔːlz"
+  },
   "overcame": "ˌQvəkˈAm",
   "overcapacity": "ˌQvəkəpˈasɪti",
   "overcapitalize": "ˌQvəkˈapɪtəlIz",
   "overcareful": "Qvəkˈɛːfʊl",
-  "overcast": "ˈQvəkɑːst",
+  "overcast": {
+    "DEFAULT": "ˈQvəkɑːst",
+    "VERB": "ˌQvəkˈɑːst"
+  },
   "overcast's": "ˈQvəkɑːsts",
   "overcasted": "ˌQvəkˈɑːstɪd",
   "overcasting": "ˌQvəkˈɑːstɪŋ",
-  "overcasts": "ˈQvəkɑːsts",
+  "overcasts": {
+    "DEFAULT": "ˈQvəkɑːsts",
+    "VERB": "ˌQvəkˈɑːsts"
+  },
   "overcaution": "ˌQvəkˈɔːʃᵊn",
   "overcautious": "ˌQvəkˈɔːʃəs",
   "overcautiously": "ˌQvəkˈɔːʃəsli",
-  "overcharge": "ˌQvəʧˈɑːʤ",
+  "overcharge": {
+    "DEFAULT": "ˌQvəʧˈɑːʤ",
+    "NOUN": "ˈQvəʧɑːʤ"
+  },
   "overcharge's": "ˈQvəʧɑːʤɪz",
   "overcharged": "ˌQvəʧˈɑːʤd",
-  "overcharges": "ˌQvəʧˈɑːʤɪz",
+  "overcharges": {
+    "DEFAULT": "ˌQvəʧˈɑːʤɪz",
+    "NOUN": "ˈQvəʧɑːʤɪz"
+  },
   "overcharging": "ˌQvəʧˈɑːʤɪŋ",
   "overcheck": "ˈQvəʧɛk",
   "overclass": "ˈQvəklɑːs",
@@ -468201,30 +469498,48 @@
   "overdog": "ˈQvədɒɡ",
   "overdone": "ˌQvədˈʌn",
   "overdosage": "QvədˈQsɪʤ",
-  "overdose": "ˈQvədˌQs",
+  "overdose": {
+    "DEFAULT": "ˈQvədˌQs",
+    "VERB": "ˌQvədˈQs"
+  },
   "overdose's": "ˈQvədˌQsɪz",
   "overdosed": "ˌQvədˈQst",
-  "overdoses": "ˈQvədˌQsɪz",
+  "overdoses": {
+    "DEFAULT": "ˈQvədˌQsɪz",
+    "VERB": "ˌQvədˈQsɪz"
+  },
   "overdosing": "ˌQvədˈQsɪŋ",
   "overdraft": "ˈQvədɹɑːft",
   "overdramatic": "ˌQvədɹəmˈatɪk",
   "overdramatize": "ˌQvədɹˈamətIz",
   "overdraw": "ˌQvədɹˈɔː",
-  "overdress": "ˌQvədɹˈɛs",
+  "overdress": {
+    "DEFAULT": "ˌQvədɹˈɛs",
+    "NOUN": "ˈQvədɹɛs"
+  },
   "overdress's": "ˈQvədɹɛsɪz",
   "overdressed": "ˌQvədɹˈɛst",
-  "overdresses": "ˌQvədɹˈɛsɪz",
+  "overdresses": {
+    "DEFAULT": "ˌQvədɹˈɛsɪz",
+    "NOUN": "ˈQvədɹɛsɪz"
+  },
   "overdressing": "ˌQvədɹˈɛsɪŋ",
   "overdrink": "ˌQvədɹˈɪŋk",
   "overdrinking": "ˌQvədɹˈɪŋkɪŋ",
   "overdrive": "ˈQvədɹIv",
   "overdriven": "ˌQvədɹˈɪvᵊn",
   "overdry": "ˌQvədɹˈI",
-  "overdub": "Qvədˈʌb",
+  "overdub": {
+    "DEFAULT": "Qvədˈʌb",
+    "NOUN": "ˈQvədʌb"
+  },
   "overdub's": "ˈQvədʌbz",
   "overdubbed": "Qvədˈʌbd",
   "overdubbing": "Qvədˈʌbɪŋ",
-  "overdubs": "Qvədˈʌbz",
+  "overdubs": {
+    "DEFAULT": "Qvədˈʌbz",
+    "NOUN": "ˈQvədʌbz"
+  },
   "overdue": "ˌQvədjˈuː",
   "overdye": "ˌQvədˈI",
   "overeager": "ˌQvəɹˈiːɡə",
@@ -468240,10 +469555,16 @@
   "overenthusiasm": "Qvəɹɪnθjˈuːzɪazəm",
   "overenthusiastic": "ˌQvəɹɪnθjˌuːzɪˈastɪk",
   "overenthusiastically": "ˌQvəɹɪnθjˌuːzɪˈastɪkli",
-  "overestimate": "ˌQvəɹˈɛstɪmAt",
+  "overestimate": {
+    "DEFAULT": "ˌQvəɹˈɛstɪmAt",
+    "NOUN": "ˌQvəɹˈɛstɪmət"
+  },
   "overestimate's": "ˌQvəɹˈɛstɪməts",
   "overestimated": "ˌQvəɹˈɛstɪmAtɪd",
-  "overestimates": "ˌQvəɹˈɛstɪmAts",
+  "overestimates": {
+    "DEFAULT": "ˌQvəɹˈɛstɪmAts",
+    "NOUN": "ˌQvəɹˈɛstɪməts"
+  },
   "overestimating": "ˌQvəɹˈɛstɪmAtɪŋ",
   "overestimation": "ˌQvəɹˌɛstɪmˈAʃᵊn",
   "overexact": "Qvəɹɪɡzˈakt",
@@ -468268,11 +469589,17 @@
   "overfine": "ˌQvəfˈIn",
   "overfish": "ˌQvəfˈɪʃ",
   "overflight": "ˈQvəflIt",
-  "overflow": "ˌQvəflˈQ",
+  "overflow": {
+    "DEFAULT": "ˌQvəflˈQ",
+    "NOUN": "ˈQvəflQ"
+  },
   "overflow's": "ˈQvəflQz",
   "overflowed": "ˌQvəflˈQd",
   "overflowing": "ˌQvəflˈQɪŋ",
-  "overflows": "ˌQvəflˈQz",
+  "overflows": {
+    "DEFAULT": "ˌQvəflˈQz",
+    "NOUN": "ˈQvəflQz"
+  },
   "overfly": "ˌQvəflˈI",
   "overfold": "ˈQvəfQld",
   "overfond": "ˌQvəfˈɒnd",
@@ -468293,17 +469620,32 @@
   "overgrown": "ˌQvəɡɹˈQn",
   "overgrowth": "ˈQvəɡɹQθ",
   "overhand": "ˈQvəhand",
-  "overhang": "ˌQvəhˈaŋ",
+  "overhang": {
+    "DEFAULT": "ˌQvəhˈaŋ",
+    "NOUN": "ˈQvəhaŋ"
+  },
   "overhang's": "ˈQvəhaŋz",
   "overhanging": "ˌQvəhˈaŋɪŋ",
-  "overhangs": "ˌQvəhˈaŋz",
+  "overhangs": {
+    "DEFAULT": "ˌQvəhˈaŋz",
+    "NOUN": "ˈQvəhaŋz"
+  },
   "overhasty": "ˌQvəhˈAsti",
-  "overhaul": "ˌQvəhˈɔːl",
+  "overhaul": {
+    "DEFAULT": "ˌQvəhˈɔːl",
+    "NOUN": "ˈQvəhɔːl"
+  },
   "overhaul's": "ˈQvəhɔːlz",
   "overhauled": "ˌQvəhˈɔːld",
   "overhauling": "ˌQvəhˈɔːlɪŋ",
-  "overhauls": "ˌQvəhˈɔːlz",
-  "overhead": "ˌQvəhˈɛd",
+  "overhauls": {
+    "DEFAULT": "ˌQvəhˈɔːlz",
+    "NOUN": "ˈQvəhɔːlz"
+  },
+  "overhead": {
+    "DEFAULT": "ˌQvəhˈɛd",
+    "NOUN": "ˈQvəhɛd"
+  },
   "overhead's": "ˈQvəhɛdz",
   "overheads": "ˈQvəhɛdz",
   "overhear": "ˌQvəhˈɪə",
@@ -468328,40 +469670,67 @@
   "overlaid": "ˌQvəlˈAd",
   "overlain": "ˌQvəlˈAn",
   "overland": "ˈQvəland",
-  "overlap": "ˌQvəlˈap",
+  "overlap": {
+    "DEFAULT": "ˌQvəlˈap",
+    "NOUN": "ˈQvəlap"
+  },
   "overlap's": "ˈQvəlaps",
   "overlapped": "ˌQvəlˈapt",
   "overlapping": "ˌQvəlˈapɪŋ",
-  "overlaps": "ˌQvəlˈaps",
+  "overlaps": {
+    "DEFAULT": "ˌQvəlˈaps",
+    "NOUN": "ˈQvəlaps"
+  },
   "overlarge": "ˌQvəlˈɑːʤ",
-  "overlay": "ˌQvəlˈA",
+  "overlay": {
+    "DEFAULT": "ˌQvəlˈA",
+    "NOUN": "ˈQvəlA"
+  },
   "overlay's": "ˈQvəlAz",
   "overlayer": "ˈQvəlˌAə",
   "overlaying": "ˌQvəlˈAɪŋ",
-  "overlays": "ˌQvəlˈAz",
+  "overlays": {
+    "DEFAULT": "ˌQvəlˈAz",
+    "NOUN": "ˈQvəlAz"
+  },
   "overleaf": "ˌQvəlˈiːf",
   "overleap": "ˌQvəlˈiːp",
   "overleveraged": "ˌQvəlˈiːvəɹɪʤd",
   "overlie": "ˌQvəlˈI",
-  "overload": "ˌQvəlˈQd",
+  "overload": {
+    "DEFAULT": "ˌQvəlˈQd",
+    "NOUN": "ˈQvəlQd"
+  },
   "overload's": "ˈQvəlQdz",
   "overloaded": "ˌQvəlˈQdɪd",
   "overloading": "ˌQvəlˈQdɪŋ",
-  "overloads": "ˌQvəlˈQdz",
+  "overloads": {
+    "DEFAULT": "ˌQvəlˈQdz",
+    "NOUN": "ˈQvəlQdz"
+  },
   "overlock": "ˌQvəlˈɒk",
   "overlong": "ˌQvəlˈɒŋ",
-  "overlook": "ˌQvəlˈʊk",
+  "overlook": {
+    "DEFAULT": "ˌQvəlˈʊk",
+    "NOUN": "ˈQvəlʊk"
+  },
   "overlook's": "ˈQvəlʊks",
   "overlooked": "ˌQvəlˈʊkt",
   "overlooker": "ˈQvəlˌʊkə",
   "overlooking": "ˌQvəlˈʊkɪŋ",
-  "overlooks": "ˌQvəlˈʊks",
+  "overlooks": {
+    "DEFAULT": "ˌQvəlˈʊks",
+    "NOUN": "ˈQvəlʊks"
+  },
   "overlord": "ˈQvəlɔːd",
   "overlordship": "ˈQvəlˌɔːdʃɪp",
   "overloud": "ˌQvəlˈWd",
   "overly": "ˈQvəli",
   "overlying": "ˌQvəlˈIɪŋ",
-  "overman": "ˌQvəmˈan",
+  "overman": {
+    "DEFAULT": "ˌQvəmˈan",
+    "NOUN": "ˈQvəmˌan"
+  },
   "overman's": "ˌQvəmˈanz",
   "overmanned": "ˌQvəmˈand",
   "overmanning": "ˌQvəmˈanɪŋ",
@@ -468384,10 +469753,16 @@
   "overparent": "Qvəpˈɛːɹᵊnt",
   "overparenting": "ˌQvəpˈɛːɹəntɪŋ",
   "overparted": "ˌQvəpˈɑːtɪd",
-  "overpass": "ˈQvəpɑːs",
+  "overpass": {
+    "DEFAULT": "ˈQvəpɑːs",
+    "VERB": "ˌQvəpˈɑːs"
+  },
   "overpass's": "ˈQvəpɑːsɪz",
   "overpassed": "ˌQvəpˈɑːst",
-  "overpasses": "ˈQvəpɑːsɪz",
+  "overpasses": {
+    "DEFAULT": "ˈQvəpɑːsɪz",
+    "VERB": "ˌQvəpˈɑːsɪz"
+  },
   "overpassing": "ˌQvəpˈɑːsɪŋ",
   "overpay": "ˌQvəpˈA",
   "overpayment": "ˌQvəpˈAmᵊnt",
@@ -468407,11 +469782,17 @@
   "overprescription": "ˌQvəpɹɪskɹˈɪpʃᵊn",
   "overprice": "ˌQvəpɹˈIs",
   "overpriced": "ˌQvəpɹˈIst",
-  "overprint": "ˌQvəpɹˈɪnt",
+  "overprint": {
+    "DEFAULT": "ˌQvəpɹˈɪnt",
+    "NOUN": "ˈQvəpɹɪnt"
+  },
   "overprint's": "ˈQvəpɹɪnts",
   "overprinted": "ˌQvəpɹˈɪntɪd",
   "overprinting": "ˌQvəpɹˈɪntɪŋ",
-  "overprints": "ˌQvəpɹˈɪnts",
+  "overprints": {
+    "DEFAULT": "ˌQvəpɹˈɪnts",
+    "NOUN": "ˈQvəpɹɪnts"
+  },
   "overprize": "ˌQvəpɹˈIz",
   "overproduce": "ˌQvəpɹədjˈuːs",
   "overproduced": "ˌQvəpɹədjˈuːst",
@@ -468432,19 +469813,31 @@
   "overreact": "ˌQvəɹɪˈakt",
   "overreaction": "ˌQvəɹɪˈakʃᵊn",
   "overreliance": "ˌQvəɹɪlˈIəns",
-  "override": "ˌQvəɹˈId",
+  "override": {
+    "DEFAULT": "ˌQvəɹˈId",
+    "NOUN": "ˈQvəɹId"
+  },
   "override's": "ˈQvəɹIdz",
   "overrider": "ˈQvəɹˌIdə",
-  "overrides": "ˌQvəɹˈIdz",
+  "overrides": {
+    "DEFAULT": "ˌQvəɹˈIdz",
+    "NOUN": "ˈQvəɹIdz"
+  },
   "overriding": "ˌQvəɹˈIdɪŋ",
   "overripe": "ˌQvəɹˈIp",
   "overrode": "ˌQvəɹˈQd",
   "overruff": "ˌQvəɹˈʌf",
   "overrule": "ˌQvəɹˈuːl",
-  "overrun": "ˌQvəɹˈʌn",
+  "overrun": {
+    "DEFAULT": "ˌQvəɹˈʌn",
+    "NOUN": "ˈQvəɹʌn"
+  },
   "overrun's": "ˈQvəɹʌnz",
   "overrunning": "ˌQvəɹˈʌnɪŋ",
-  "overruns": "ˌQvəɹˈʌnz",
+  "overruns": {
+    "DEFAULT": "ˌQvəɹˈʌnz",
+    "NOUN": "ˈQvəɹʌnz"
+  },
   "oversail": "ˌQvəsˈAl",
   "oversampling": "ˌQvəsˈɑːmplɪŋ",
   "oversaw": "ˌQvəsˈɔː",
@@ -468465,10 +469858,16 @@
   "oversharing": "ˈQvəʃˌɛːɹɪŋ",
   "overshirt": "ˈQvəʃəːt",
   "overshoe": "ˈQvəʃuː",
-  "overshoot": "ˌQvəʃˈuːt",
+  "overshoot": {
+    "DEFAULT": "ˌQvəʃˈuːt",
+    "NOUN": "ˈQvəʃuːt"
+  },
   "overshoot's": "ˈQvəʃuːts",
   "overshooting": "ˌQvəʃˈuːtɪŋ",
-  "overshoots": "ˌQvəʃˈuːts",
+  "overshoots": {
+    "DEFAULT": "ˌQvəʃˈuːts",
+    "NOUN": "ˈQvəʃuːts"
+  },
   "overshot": "ˌQvəʃˈɒt",
   "overside": "ˌQvəsˈId",
   "oversight": "ˈQvəsIt",
@@ -468489,10 +469888,16 @@
   "overspecialization": "QvəspɛʃᵊlIzˈAʃᵊn",
   "overspecialize": "ˌQvəspˈɛʃəlIz",
   "overspecialized": "ˌQvəspˈɛʃəlIzd",
-  "overspend": "ˌQvəspˈɛnd",
+  "overspend": {
+    "DEFAULT": "ˌQvəspˈɛnd",
+    "NOUN": "ˈQvəspɛnd"
+  },
   "overspend's": "ˈQvəspɛndz",
   "overspending": "ˌQvəspˈɛndɪŋ",
-  "overspends": "ˌQvəspˈɛndz",
+  "overspends": {
+    "DEFAULT": "ˌQvəspˈɛndz",
+    "NOUN": "ˈQvəspɛndz"
+  },
   "overspent": "ˌQvəspˈɛnt",
   "overspill": "ˈQvəspɪl",
   "overspin": "ˈQvəspɪn",
@@ -468505,20 +469910,32 @@
   "overstatement": "ˌQvəstˈAtmᵊnt",
   "overstay": "ˌQvəstˈA",
   "overstayer": "ˌQvəstˈAə",
-  "oversteer": "ˌQvəstˈɪə",
+  "oversteer": {
+    "DEFAULT": "ˌQvəstˈɪə",
+    "NOUN": "ˈQvəstɪə"
+  },
   "oversteer's": "ˈQvəstɪəz",
   "oversteered": "ˌQvəstˈɪəd",
   "oversteering": "ˌQvəstˈɪəɹɪŋ",
-  "oversteers": "ˌQvəstˈɪəz",
+  "oversteers": {
+    "DEFAULT": "ˌQvəstˈɪəz",
+    "NOUN": "ˈQvəstɪəz"
+  },
   "overstep": "ˌQvəstˈɛp",
   "overstimulate": "ˌQvəstˈɪmjʊlAt",
   "overstimulation": "ˌQvəstˌɪmjʊlˈAʃᵊn",
   "overstitch": "ˈQvəstɪʧ",
-  "overstock": "ˌQvəstˈɒk",
+  "overstock": {
+    "DEFAULT": "ˌQvəstˈɒk",
+    "NOUN": "ˈQvəstɒk"
+  },
   "overstock's": "ˈQvəstɒks",
   "overstocked": "ˌQvəstˈɒkt",
   "overstocking": "ˌQvəstˈɒkɪŋ",
-  "overstocks": "ˌQvəstˈɒks",
+  "overstocks": {
+    "DEFAULT": "ˌQvəstˈɒks",
+    "NOUN": "ˈQvəstɒks"
+  },
   "overstorey": "ˈQvəstˌɔːɹi",
   "overstrain": "ˌQvəstɹˈAn",
   "overstress": "ˌQvəstɹˈɛs",
@@ -468527,8 +469944,14 @@
   "overstrike": "ˈQvəstɹIk",
   "overstrung": "Qvəstɹˈʌŋ",
   "overstudied": "ˌQvəstˈʌdid",
-  "overstudies": "ˌQvəstˈʌdiz",
-  "overstudy": "ˌQvəstˈʌdi",
+  "overstudies": {
+    "DEFAULT": "ˌQvəstˈʌdiz",
+    "NOUN": "ˈQvəstʌdiz"
+  },
+  "overstudy": {
+    "DEFAULT": "ˌQvəstˈʌdi",
+    "NOUN": "ˈQvəstʌdi"
+  },
   "overstudy's": "ˈQvəstʌdiz",
   "overstudying": "ˌQvəstˈʌdiɪŋ",
   "overstuff": "ˌQvəstˈʌf",
@@ -468546,11 +469969,17 @@
   "overtaxation": "ˌQvətaksˈAʃᵊn",
   "overthink": "ˌQvəθˈɪŋk",
   "overthrew": "ˌQvəθɹˈuː",
-  "overthrow": "ˌQvəθɹˈQ",
+  "overthrow": {
+    "DEFAULT": "ˌQvəθɹˈQ",
+    "NOUN": "ˈQvəθɹQ"
+  },
   "overthrow's": "ˈQvəθɹQz",
   "overthrowing": "ˌQvəθɹˈQɪŋ",
   "overthrown": "ˌQvəθɹˈQn",
-  "overthrows": "ˌQvəθɹˈQz",
+  "overthrows": {
+    "DEFAULT": "ˌQvəθɹˈQz",
+    "NOUN": "ˈQvəθɹQz"
+  },
   "overthrust": "ˈQvəθɹʌst",
   "overtime": "ˈQvətIm",
   "overtip": "ˌQvətˈɪp",
@@ -468566,38 +469995,65 @@
   "overtrousers": "ˈQvətɹˌWzəz",
   "overtrump": "ˌQvətɹˈʌmp",
   "overture": "ˈQvətjʊə",
-  "overturn": "ˌQvətˈɜːn",
+  "overturn": {
+    "DEFAULT": "ˌQvətˈɜːn",
+    "NOUN": "ˈQvətəːn"
+  },
   "overturn's": "ˈQvətəːnz",
   "overturned": "ˌQvətˈɜːnd",
   "overturning": "ˌQvətˈɜːnɪŋ",
-  "overturns": "ˌQvətˈɜːnz",
+  "overturns": {
+    "DEFAULT": "ˌQvətˈɜːnz",
+    "NOUN": "ˈQvətəːnz"
+  },
   "overtype": "ˌQvətˈIp",
-  "overuse": "ˌQvəjˈuːz",
+  "overuse": {
+    "DEFAULT": "ˌQvəjˈuːz",
+    "NOUN": "ˌQvəjˈuːs"
+  },
   "overuse's": "ˌQvəjˈuːsɪz",
   "overused": "ˌQvəjˈuːzd",
-  "overuses": "ˌQvəjˈuːzɪz",
+  "overuses": {
+    "DEFAULT": "ˌQvəjˈuːzɪz",
+    "NOUN": "ˌQvəjˈuːsɪz"
+  },
   "overusing": "ˌQvəjˈuːzɪŋ",
   "overvalue": "ˌQvəvˈaljuː",
   "overview": "ˈQvəvjuː",
-  "overwater": "Qvəwˈɔːtə",
+  "overwater": {
+    "ADJ": "ˈQvəwɔːtə",
+    "DEFAULT": "Qvəwˈɔːtə"
+  },
   "overwear": "ˈQvəwɛː",
   "overweening": "ˌQvəwˈiːnɪŋ",
   "overweeningly": "ˌQvəwˈiːnɪŋli",
-  "overweight": "ˌQvəwˈAt",
+  "overweight": {
+    "DEFAULT": "ˌQvəwˈAt",
+    "NOUN": "ˈQvəwAt"
+  },
   "overweight's": "ˈQvəwAts",
   "overweighted": "ˌQvəwˈAtɪd",
   "overweighting": "ˌQvəwˈAtɪŋ",
-  "overweights": "ˌQvəwˈAts",
+  "overweights": {
+    "DEFAULT": "ˌQvəwˈAts",
+    "NOUN": "ˈQvəwAts"
+  },
   "overwhelm": "ˌQvəwˈɛlm",
   "overwhelming": "ˌQvəwˈɛlmɪŋ",
   "overwhelmingly": "ˌQvəwˈɛlmɪŋli",
   "overwind": "ˌQvəwˈInd",
   "overwinter": "ˌQvəwˈɪntə",
-  "overwork": "ˌQvəwˈɜːk",
+  "overwork": {
+    "DEFAULT": "ˌQvəwˈɜːk",
+    "NOUN": "ˈQvəwˌɜːk"
+  },
   "overwork's": "ˈQvəwˌɜːks",
   "overworked": "ˌQvəwˈɜːkt",
   "overworking": "ˌQvəwˈɜːkɪŋ",
-  "overworks": "ˌQvəwˈɜːks",
+  "overworks": {
+    "DEFAULT": "ˌQvəwˈɜːks",
+    "NOUN": "ˈQvəwˌɜːks"
+  },
   "overwrap": "ˌQvəɹˈap",
   "overwrite": "ˌQvəɹˈIt",
   "overwriting": "ˌQvəɹˈItɪŋ",
@@ -469690,7 +471146,10 @@
   "pasturage": "pˈɑːsʧəɹɪʤ",
   "pasture": "pˈɑːsʧə",
   "pastureland": "pˈɑːsʧəland",
-  "pasty": "pˈasti",
+  "pasty": {
+    "ADJ": "pˈAsti",
+    "DEFAULT": "pˈasti"
+  },
   "pata-pata": "pɑːtəpˈɑːtə",
   "pataca": "pətˈɑːkə",
   "patagia": "pˌatəʤˈIə",
@@ -470341,7 +471800,10 @@
   "perennially": "pəɹˈɛnɪəli",
   "perentie": "pəɹˈɛnti",
   "perestroika": "pˌɛɹɪstɹˈYɪkə",
-  "perfect": "pˈɜːfɪkt",
+  "perfect": {
+    "DEFAULT": "pˈɜːfɪkt",
+    "VERB": "pəfˈɛkt"
+  },
   "perfect's": "pˈɜːfɪkts",
   "perfecta": "pəfˈɛktə",
   "perfected": "pəfˈɛktɪd",
@@ -470356,7 +471818,10 @@
   "perfectly": "pˈɜːfɪktli",
   "perfectness": "pˈɜːfɪktnɪs",
   "perfecto": "pəfˈɛktQ",
-  "perfects": "pˈɜːfɪkts",
+  "perfects": {
+    "DEFAULT": "pˈɜːfɪkts",
+    "VERB": "pəfˈɛkts"
+  },
   "perfervid": "pəfˈɜːvɪd",
   "perfidious": "pəfˈɪdɪəs",
   "perfidiously": "pəfˈɪdɪəsli",
@@ -470364,7 +471829,10 @@
   "perfidy": "pˈɜːfɪdi",
   "perfin": "pˈɜːfɪn",
   "perfoliate": "pəfˈQlɪət",
-  "perforate": "pˈɜːfəɹAt",
+  "perforate": {
+    "ADJ": "pˈɜːfəɹət",
+    "DEFAULT": "pˈɜːfəɹAt"
+  },
   "perforated": "pˈɜːfəɹAtɪd",
   "perforation": "pˌɜːfəɹˈAʃᵊn",
   "perforative": "pˈɜːfəɹətɪv",
@@ -470553,9 +472021,15 @@
   "permissive": "pəmˈɪsɪv",
   "permissively": "pəmˈɪsɪvli",
   "permissiveness": "pəmˈɪsɪvnɪs",
-  "permit": "pˈɜːmɪt",
+  "permit": {
+    "DEFAULT": "pˈɜːmɪt",
+    "VERB": "pəmˈɪt"
+  },
   "permit's": "pˈɜːmɪts",
-  "permits": "pˈɜːmɪts",
+  "permits": {
+    "DEFAULT": "pˈɜːmɪts",
+    "VERB": "pəmˈɪts"
+  },
   "permitted": "pəmˈɪtɪd",
   "permittee": "pˌɜːmɪtˈiː",
   "permitting": "pəmˈɪtɪŋ",
@@ -470695,13 +472169,19 @@
   "perversion": "pəvˈɜːʃᵊn",
   "perversity": "pəvˈɜːsɪti",
   "perversive": "pəvˈɜːsɪv",
-  "pervert": "pəvˈɜːt",
+  "pervert": {
+    "DEFAULT": "pəvˈɜːt",
+    "NOUN": "pˈɜːvəːt"
+  },
   "pervert's": "pˈɜːvəːts",
   "perverted": "pəvˈɜːtɪd",
   "pervertedly": "pəvˈɜːtɪdli",
   "perverter": "pəvˈɜːtə",
   "perverting": "pəvˈɜːtɪŋ",
-  "perverts": "pəvˈɜːts",
+  "perverts": {
+    "DEFAULT": "pəvˈɜːts",
+    "NOUN": "pˈɜːvəːts"
+  },
   "pervicacious": "pˌɜːvɪkˈAʃəs",
   "pervious": "pˈɜːvɪəs",
   "perviousness": "pˈɜːvɪəsnəs",
@@ -471443,12 +472923,18 @@
   "pightle": "pˈItᵊl",
   "piglet": "pˈɪɡlɪt",
   "pigman": "pˈɪɡmən",
-  "pigment": "pˈɪɡmᵊnt",
+  "pigment": {
+    "DEFAULT": "pˈɪɡmᵊnt",
+    "VERB": "pɪɡmˈɛnt"
+  },
   "pigment's": "pˈɪɡmᵊnts",
   "pigmentation": "pˌɪɡmᵊntˈAʃᵊn",
   "pigmented": "pˈɪɡmᵊntɪd",
   "pigmenting": "pɪɡmˈɛntɪŋ",
-  "pigments": "pˈɪɡmᵊnts",
+  "pigments": {
+    "DEFAULT": "pˈɪɡmᵊnts",
+    "VERB": "pɪɡmˈɛnts"
+  },
   "pignut": "pˈɪɡnʌt",
   "pigpen": "pˈɪɡpɛn",
   "pigskin": "pˈɪɡskɪn",
@@ -472628,10 +474114,16 @@
   "pontifex": "pˈɒntɪfɛks",
   "pontiff": "pˈɒntɪf",
   "pontifical": "pɒntˈɪfɪkᵊl",
-  "pontificate": "pɒntˈɪfɪkAt",
+  "pontificate": {
+    "DEFAULT": "pɒntˈɪfɪkAt",
+    "NOUN": "pɒntˈɪfɪkət"
+  },
   "pontificate's": "pɒntˈɪfɪkəts",
   "pontificated": "pɒntˈɪfɪkAtɪd",
-  "pontificates": "pɒntˈɪfɪkAts",
+  "pontificates": {
+    "DEFAULT": "pɒntˈɪfɪkAts",
+    "NOUN": "pɒntˈɪfɪkəts"
+  },
   "pontificating": "pɒntˈɪfɪkAtɪŋ",
   "pontification": "kˈAʃᵊn",
   "pontifices": "pɒntˈɪfɪsiːz",
@@ -472874,10 +474366,16 @@
   "posterize": "pˈQstəɹIz",
   "postern": "pˈɒstᵊn",
   "postface": "pˈQstfAs",
-  "postfix": "pQstfˈɪks",
+  "postfix": {
+    "DEFAULT": "pQstfˈɪks",
+    "NOUN": "pˈQstfɪks"
+  },
   "postfix's": "pˈQstfɪksɪz",
   "postfixed": "pQstfˈɪkst",
-  "postfixes": "pQstfˈɪksɪz",
+  "postfixes": {
+    "DEFAULT": "pQstfˈɪksɪz",
+    "NOUN": "pˈQstfɪksɪz"
+  },
   "postfixing": "pQstfˈɪksɪŋ",
   "postfrontal": "pˌQstfɹˈʌntᵊl",
   "postgame": "pˈQstɡAm",
@@ -472925,10 +474423,16 @@
   "postscript": "pˈQstskɹɪpt",
   "postseason": "pˌQstsˈiːzᵊn",
   "postulant": "pˈɒstjʊlənt",
-  "postulate": "pˈɒstjʊlAt",
+  "postulate": {
+    "DEFAULT": "pˈɒstjʊlAt",
+    "NOUN": "pˈɒstjʊlət"
+  },
   "postulate's": "pˈɒstjʊləts",
   "postulated": "pˈɒstjʊlAtɪd",
-  "postulates": "pˈɒstjʊlAts",
+  "postulates": {
+    "DEFAULT": "pˈɒstjʊlAts",
+    "NOUN": "pˈɒstjʊləts"
+  },
   "postulating": "pˈɒstjʊlAtɪŋ",
   "postulation": "pˌɒstjʊlˈAʃᵊn",
   "postulational": "pˌɒstjʊlˈAʃənᵊl",
@@ -473244,11 +474748,17 @@
   "precipitance": "pɹɪsˈɪpɪtᵊns",
   "precipitancy": "pɹɪsˈɪpɪtᵊnsi",
   "precipitant": "pɹɪsˈɪpɪtᵊnt",
-  "precipitate": "pɹɪsˈɪpɪtət",
+  "precipitate": {
+    "DEFAULT": "pɹɪsˈɪpɪtət",
+    "VERB": "pɹɪsˈɪpɪtAt"
+  },
   "precipitate's": "pɹɪsˈɪpɪtəts",
   "precipitated": "pɹɪsˈɪpɪtAtɪd",
   "precipitately": "pɹɪsˈɪpɪtətli",
-  "precipitates": "pɹɪsˈɪpɪtəts",
+  "precipitates": {
+    "DEFAULT": "pɹɪsˈɪpɪtəts",
+    "VERB": "pɹɪsˈɪpɪtAts"
+  },
   "precipitating": "pɹɪsˈɪpɪtAtɪŋ",
   "precipitation": "pɹɪsˌɪpɪtˈAʃᵊn",
   "precipitator": "pɹɪsˈɪpɪtAtə",
@@ -473310,7 +474820,10 @@
   "predella": "pɹɪdˈɛlə",
   "predestinarian": "pɹˌiːdɛstɪnˈɛːɹɪən",
   "predestinarianism": "pɹˌiːdɛstɪnˈɛːɹɪənɪzəm",
-  "predestinate": "pɹˌiːdˈɛstɪnAt",
+  "predestinate": {
+    "ADJ": "pɹiːdˈɛstɪnət",
+    "DEFAULT": "pɹˌiːdˈɛstɪnAt"
+  },
   "predestination": "pɹiːdˌɛstɪnˈAʃᵊn",
   "predestine": "pɹiːdˈɛstɪn",
   "predestined": "pɹiːdˈɛstɪnd",
@@ -473328,10 +474841,16 @@
   "predicable": "pɹˈɛdɪkəbᵊl",
   "predicament": "pɹɪdˈɪkəmᵊnt",
   "predicant": "pɹˈɛdɪkᵊnt",
-  "predicate": "pɹˈɛdɪkət",
+  "predicate": {
+    "DEFAULT": "pɹˈɛdɪkət",
+    "VERB": "pɹˈɛdɪkAt"
+  },
   "predicate's": "pɹˈɛdɪkəts",
   "predicated": "pɹˈɛdɪkAtɪd",
-  "predicates": "pɹˈɛdɪkəts",
+  "predicates": {
+    "DEFAULT": "pɹˈɛdɪkəts",
+    "VERB": "pɹˈɛdɪkAts"
+  },
   "predicating": "pɹˈɛdɪkAtɪŋ",
   "predication": "pɹˌɛdɪkˈAʃᵊn",
   "predicative": "pɹɪdˈɪkətɪv",
@@ -473388,10 +474907,16 @@
   "preferential": "pɹˌɛfəɹˈɛnʃl",
   "preferentially": "pɹˌɛfəɹˈɛnʃəli",
   "preferment": "pɹɪfˈɜːmᵊnt",
-  "prefetch": "pɹiːfˈɛʧ",
+  "prefetch": {
+    "DEFAULT": "pɹiːfˈɛʧ",
+    "NOUN": "pɹˈiːfɛʧ"
+  },
   "prefetch's": "pɹˈiːfɛʧɪz",
   "prefetched": "pɹiːfˈɛʧt",
-  "prefetches": "pɹiːfˈɛʧɪz",
+  "prefetches": {
+    "DEFAULT": "pɹiːfˈɛʧɪz",
+    "NOUN": "pɹˈiːfɛʧɪz"
+  },
   "prefetching": "pɹiːfˈɛʧɪŋ",
   "prefiguration": "pɹiːfˌɪɡəɹˈAʃᵊn",
   "prefigurative": "pɹiːfˈɪɡəɹətɪv",
@@ -473444,11 +474969,17 @@
   "preliminary": "pɹɪlˈɪmɪnəɹi",
   "prelinguistic": "pɹˌiːlɪŋɡwˈɪstɪk",
   "preliterate": "pɹˌiːlˈɪtəɹət",
-  "preload": "pɹˌiːlˈQd",
+  "preload": {
+    "DEFAULT": "pɹˌiːlˈQd",
+    "NOUN": "pɹˈiːlQd"
+  },
   "preload's": "pɹˈiːlQdz",
   "preloaded": "pɹˌiːlˈQdɪd",
   "preloading": "pɹˌiːlˈQdɪŋ",
-  "preloads": "pɹˌiːlˈQdz",
+  "preloads": {
+    "DEFAULT": "pɹˌiːlˈQdz",
+    "NOUN": "pɹˈiːlQdz"
+  },
   "prelude": "pɹˈɛljuːd",
   "preludial": "pɹɪljˈuːdɪəl",
   "prelusive": "pɹɪljˈuːsɪv",
@@ -473472,18 +475003,30 @@
   "premiership": "pɹˈɛmɪəʃɪp",
   "premillennial": "pɹˌiːmɪlˈɛnɪəl",
   "premillennialism": "pɹˌiːmɪlˈɛnɪəlɪzəm",
-  "premise": "pɹˈɛmɪs",
+  "premise": {
+    "DEFAULT": "pɹˈɛmɪs",
+    "VERB": "pɹɪmˈIz"
+  },
   "premise's": "pɹˈɛmɪsɪz",
   "premised": "pɹɪmˈIzt",
-  "premises": "pɹˈɛmɪsɪz",
+  "premises": {
+    "DEFAULT": "pɹˈɛmɪsɪz",
+    "VERB": "pɹɪmˈIzɪz"
+  },
   "premising": "pɹɪmˈIzɪŋ",
   "premium": "pɹˈiːmɪəm",
   "premiumization": "pɹiːmɪəmIzˈAʃᵊn",
   "premiumize": "pɹˈiːmɪəmIz",
-  "premix": "pɹiːmˈɪks",
+  "premix": {
+    "DEFAULT": "pɹiːmˈɪks",
+    "NOUN": "pɹˈiːmɪks"
+  },
   "premix's": "pɹˈiːmɪksɪz",
   "premixed": "pɹiːmˈɪkst",
-  "premixes": "pɹiːmˈɪksɪz",
+  "premixes": {
+    "DEFAULT": "pɹiːmˈɪksɪz",
+    "NOUN": "pɹˈiːmɪksɪz"
+  },
   "premixing": "pɹˈiːmɪksɪŋ",
   "premodify": "pɹˌiːmˈɒdɪfI",
   "premolar": "pɹˌiːmˈQlə",
@@ -473591,7 +475134,10 @@
   "preselector": "pɹiːsɪlˈɛktə",
   "presence": "pɹˈɛzᵊns",
   "presenile": "pɹˌiːsˈiːnIl",
-  "present": "pɹˈɛzᵊnt",
+  "present": {
+    "DEFAULT": "pɹˈɛzᵊnt",
+    "VERB": "pɹɪzˈɛnt"
+  },
   "present's": "pɹˈɛzᵊnts",
   "present-day": "pɹˌɛzᵊntdˈA",
   "presentability": "pɹɪzɛntəbˈɪlɪti",
@@ -473611,7 +475157,10 @@
   "presentism": "pɹˈɛzᵊntɪzəm",
   "presently": "pɹˈɛzᵊntli",
   "presentment": "pɹɪzˈɛntmᵊnt",
-  "presents": "pɹˈɛzᵊnts",
+  "presents": {
+    "DEFAULT": "pɹˈɛzᵊnts",
+    "VERB": "pɹɪzˈɛnts"
+  },
   "preservable": "pɹɪzˈɜːvəbᵊl",
   "preservation": "pɹˌɛzəvˈAʃᵊn",
   "preservationist": "pɹˌɛzəvˈAʃənɪst",
@@ -473939,7 +475488,10 @@
   "procedure": "pɹəsˈiːʤə",
   "proceed": "pɹəsˈiːd",
   "proceedings": "pɹəsˈiːdɪŋz",
-  "proceeds": "pɹˈQsiːdz",
+  "proceeds": {
+    "DEFAULT": "pɹˈQsiːdz",
+    "VERB": "pɹəsˈiːdz"
+  },
   "process": "pɹˈQsɛs",
   "procession": "pɹəsˈɛʃᵊn",
   "processional": "pɹəsˈɛʃənᵊl",
@@ -473999,7 +475551,10 @@
   "prodrome": "pɹˈQdɹQm",
   "prodromic": "pɹQdɹˈɒmɪk",
   "prodrug": "pɹˈQdɹʌɡ",
-  "produce": "pɹədjˈuːs",
+  "produce": {
+    "DEFAULT": "pɹədjˈuːs",
+    "NOUN": "pɹˈɒdjuːs"
+  },
   "produce's": "pɹˈɒdjuːsɪz",
   "produced": "pɹədjˈuːst",
   "producer": "pɹədjˈuːsə",
@@ -474102,10 +475657,16 @@
   "programmed": "pɹˈQɡɹamd",
   "programmer": "pɹˈQɡɹamə",
   "programming": "pɹˈQɡɹamɪŋ",
-  "progress": "pɹˈQɡɹɛs",
+  "progress": {
+    "DEFAULT": "pɹˈQɡɹɛs",
+    "VERB": "pɹQɡɹˈɛs"
+  },
   "progress's": "pɹˈQɡɹɛsɪz",
   "progressed": "pɹQɡɹˈɛst",
-  "progresses": "pɹˈQɡɹɛsɪz",
+  "progresses": {
+    "DEFAULT": "pɹˈQɡɹɛsɪz",
+    "VERB": "pɹQɡɹˈɛsɪz"
+  },
   "progressing": "pɹQɡɹˈɛsɪŋ",
   "progression": "pɹəɡɹˈɛʃᵊn",
   "progressionist": "pɹəɡɹˈɛʃənɪst",
@@ -474123,7 +475684,10 @@
   "prohibitor": "pɹQhˈɪbɪtə",
   "prohibitory": "pɹQhˈɪbɪtəɹi",
   "proinsulin": "pɹQˈɪnsjʊlɪn",
-  "project": "pɹˈɒʤɛkt",
+  "project": {
+    "DEFAULT": "pɹˈɒʤɛkt",
+    "VERB": "pɹəʤˈɛkt"
+  },
   "project's": "pɹˈɒʤɛkts",
   "project-manage": "pɹˌɒʤɛktmˈanɪʤ",
   "projected": "pɹəʤˈɛktɪd",
@@ -474134,7 +475698,10 @@
   "projective": "pɹəʤˈɛktɪv",
   "projectivity": "pɹˌɒʤɛktˈɪvɪti",
   "projector": "pɹəʤˈɛktə",
-  "projects": "pɹˈɒʤɛkts",
+  "projects": {
+    "DEFAULT": "pɹˈɒʤɛkts",
+    "VERB": "pɹəʤˈɛkts"
+  },
   "prokaryote": "pɹQkˈaɹɪQt",
   "prokaryotic": "pɹQkaɹɪˈɒtɪk",
   "prolactin": "pɹQlˈaktɪn",
@@ -474385,14 +475952,20 @@
   "prosopographical": "pɹˌQsəpəɡɹˈafɪkᵊl",
   "prosopography": "pɹˌɒsQpˈɒɡɹəfi",
   "prosopopoeia": "pɹˌɒsəpəpˈiːə",
-  "prospect": "pɹˈɒspɛkt",
+  "prospect": {
+    "DEFAULT": "pɹˈɒspɛkt",
+    "VERB": "pɹəspˈɛkt"
+  },
   "prospect's": "pɹˈɒspɛkts",
   "prospected": "pɹəspˈɛktɪd",
   "prospecting": "pɹəspˈɛktɪŋ",
   "prospective": "pɹəspˈɛktɪv",
   "prospectively": "pɹəspˈɛktɪvli",
   "prospector": "pɹəspˈɛktə",
-  "prospects": "pɹˈɒspɛkts",
+  "prospects": {
+    "DEFAULT": "pɹˈɒspɛkts",
+    "VERB": "pɹəspˈɛkts"
+  },
   "prospectus": "pɹəspˈɛktəs",
   "prosper": "pɹˈɒspə",
   "prosperity": "pɹɒspˈɛɹɪti",
@@ -474413,7 +475986,10 @@
   "prostitute": "pɹˈɒstɪtjuːt",
   "prostitution": "pɹˌɒstɪtjˈuːʃᵊn",
   "prostitutor": "pɹˈɒstɪtjuːtə",
-  "prostrate": "pɹɒstɹˈAt",
+  "prostrate": {
+    "ADJ": "pɹˈɒstɹAt",
+    "DEFAULT": "pɹɒstɹˈAt"
+  },
   "prostration": "pɹɒstɹˈAʃᵊn",
   "prostyle": "pɹˈQstIl",
   "prosumer": "pɹQsjˈuːmə",
@@ -475038,12 +476614,18 @@
   "purple": "pˈɜːpᵊl",
   "purplish": "pˈɜːpəlɪʃ",
   "purply": "pˈɜːpəli",
-  "purport": "pəpˈɔːt",
+  "purport": {
+    "DEFAULT": "pəpˈɔːt",
+    "NOUN": "pˈɜːpɔːt"
+  },
   "purport's": "pˈɜːpɔːts",
   "purported": "pəpˈɔːtɪd",
   "purportedly": "pəpˈɔːtɪdli",
   "purporting": "pəpˈɔːtɪŋ",
-  "purports": "pəpˈɔːts",
+  "purports": {
+    "DEFAULT": "pəpˈɔːts",
+    "NOUN": "pˈɜːpɔːts"
+  },
   "purpose": "pˈɜːpəs",
   "purpose-built": "pˌɜːpəsbˈɪlt",
   "purposeful": "pˈɜːpəsfʊl",
@@ -475103,7 +476685,10 @@
   "pussyfoot": "pˈʊsɪfʊt",
   "pussyfooter": "pˈʊsɪfˌʊtə",
   "pustular": "pˈʌstjʊlə",
-  "pustulate": "pˈʌstjʊlAt",
+  "pustulate": {
+    "ADJ": "pˈʌstjʊlət",
+    "DEFAULT": "pˈʌstjʊlAt"
+  },
   "pustulating": "pˈʌstjʊlAtɪŋ",
   "pustulation": "pˌʌstjʊlˈAʃᵊn",
   "pustule": "pˈʌstjuːl",
@@ -475263,10 +476848,16 @@
   "quadraphony": "kwɒdɹˈɒfəni",
   "quadraplex": "kwˈɒdɹəplɛks",
   "quadrat": "kwˈɒdɹət",
-  "quadrate": "kwˈɒdɹət",
+  "quadrate": {
+    "DEFAULT": "kwˈɒdɹət",
+    "VERB": "kwɒdɹˈAt"
+  },
   "quadrate's": "kwˈɒdɹəts",
   "quadrated": "kwɒdɹˈAtɪd",
-  "quadrates": "kwˈɒdɹəts",
+  "quadrates": {
+    "DEFAULT": "kwˈɒdɹəts",
+    "VERB": "kwɒdɹˈAts"
+  },
   "quadrati": "kwɒdɹˈAtI",
   "quadratic": "kwɒdɹˈatɪk",
   "quadrating": "kwɒdɹˈAtɪŋ",
@@ -475297,7 +476888,10 @@
   "quadrupedalism": "kwˌɒdɹʊpˈiːdəlɪzəm",
   "quadruple": "kwˈɒdɹʊpᵊl",
   "quadruplet": "kwˈɒdɹʊplɪt",
-  "quadruplicate": "kwɒdɹˈuːplɪkAt",
+  "quadruplicate": {
+    "ADJ": "kwɒdɹˈuːplɪkət",
+    "DEFAULT": "kwɒdɹˈuːplɪkAt"
+  },
   "quadruplication": "kwɒdɹˌuːplɪkˈAʃᵊn",
   "quadruplicity": "kwˌɒdɹʊplˈɪsɪti",
   "quadruply": "kwˈɒdɹʊpli",
@@ -475558,7 +477152,10 @@
   "quintillion": "kwɪntˈɪljən",
   "quintuple": "kwˈɪntjʊpᵊl",
   "quintuplet": "kwˈɪntjʊplɪt",
-  "quintuplicate": "kwɪntjˈuːplɪkAt",
+  "quintuplicate": {
+    "ADJ": "kwɪntjˈuːplɪkət",
+    "DEFAULT": "kwɪntjˈuːplɪkAt"
+  },
   "quinzhee": "kwˈɪnzi",
   "quipster": "kwˈɪpstə",
   "quipu": "kˈiːpuː",
@@ -475685,7 +477282,10 @@
   "radiance": "ɹˈAdɪəns",
   "radiant": "ɹˈAdɪənt",
   "radiantly": "ɹˈAdɪəntli",
-  "radiate": "ɹˈAdɪAt",
+  "radiate": {
+    "ADJ": "ɹˈAdɪət",
+    "DEFAULT": "ɹˈAdɪAt"
+  },
   "radiated": "ɹˈAdɪAtɪd",
   "radiation": "ɹˌAdɪˈAʃᵊn",
   "radiational": "ɹˌAdɪˈAʃənᵊl",
@@ -475780,7 +477380,10 @@
   "rager": "ɹˈAʤə",
   "ragfish": "ɹˈaɡfɪʃ",
   "ragga": "ɹˈaɡə",
-  "ragged": "ɹˈaɡɪd",
+  "ragged": {
+    "DEFAULT": "ɹˈaɡɪd",
+    "VERB": "ɹˈaɡd"
+  },
   "raggedly": "ɹˈaɡɪdli",
   "raggedness": "ɹˈaɡɪdnɪs",
   "raggedy": "ɹˈaɡɪdi",
@@ -475880,11 +477483,17 @@
   "rammies": "ɹˈamɪz",
   "rammy": "ɹˈami",
   "ramose": "ɹˈamQs",
-  "rampage": "ɹˈampAʤ",
+  "rampage": {
+    "DEFAULT": "ɹˈampAʤ",
+    "VERB": "ɹampˈAʤ"
+  },
   "rampage's": "ɹˈampAʤɪz",
   "rampaged": "ɹampˈAʤd",
   "rampageous": "ɹampˈAʤəs",
-  "rampages": "ɹˈampAʤɪz",
+  "rampages": {
+    "DEFAULT": "ɹˈampAʤɪz",
+    "VERB": "ɹampˈAʤɪz"
+  },
   "rampaging": "ɹampˈAʤɪŋ",
   "rampancy": "ɹˈampᵊnsi",
   "rampant": "ɹˈampᵊnt",
@@ -476132,11 +477741,17 @@
   "re-capped": "ɹˌiːkˈapt",
   "re-capping": "ɹˌiːkˈapɪŋ",
   "re-caps": "ɹˌiːkˈaps",
-  "re-count": "ɹˌiːkˈWnt",
+  "re-count": {
+    "DEFAULT": "ɹˌiːkˈWnt",
+    "NOUN": "ɹˈiːkWnt"
+  },
   "re-count's": "ɹˈiːkWnts",
   "re-counted": "ɹˌiːkˈWntɪd",
   "re-counting": "ɹˌiːkˈWntɪŋ",
-  "re-counts": "ɹˌiːkˈWnts",
+  "re-counts": {
+    "DEFAULT": "ɹˌiːkˈWnts",
+    "NOUN": "ɹˈiːkWnts"
+  },
   "re-cover": "ɹˌiːkˈʌvə",
   "re-dress": "ɹˌiːdɹˈɛs",
   "re-echo": "ɹˌiːˈɛkQ",
@@ -476341,7 +477956,10 @@
   "rebbe": "ɹˈɛbə",
   "rebbetzin": "ɹˈɛbɪtsɪn",
   "rebec": "ɹˈiːbɛk",
-  "rebel": "ɹˈɛbᵊl",
+  "rebel": {
+    "DEFAULT": "ɹˈɛbᵊl",
+    "VERB": "ɹɪbˈɛl"
+  },
   "rebel's": "ɹˈɛbᵊlz",
   "rebelled": "ɹɪbˈɛld",
   "rebelling": "ɹɪbˈɛlɪŋ",
@@ -476349,34 +477967,61 @@
   "rebellious": "ɹɪbˈɛljəs",
   "rebelliously": "ɹɪbˈɛljəsli",
   "rebelliousness": "ɹɪbˈɛljəsnəs",
-  "rebels": "ɹˈɛbᵊlz",
+  "rebels": {
+    "DEFAULT": "ɹˈɛbᵊlz",
+    "VERB": "ɹɪbˈɛlz"
+  },
   "rebetika": "ɹɪbˈɛtɪkə",
-  "rebid": "ɹˌiːbˈɪd",
+  "rebid": {
+    "DEFAULT": "ɹˌiːbˈɪd",
+    "NOUN": "ɹˈiːbɪd"
+  },
   "rebid's": "ɹˈiːbɪdz",
   "rebidding": "ɹˌiːbˈɪdɪŋ",
-  "rebids": "ɹˌiːbˈɪdz",
+  "rebids": {
+    "DEFAULT": "ɹˌiːbˈɪdz",
+    "NOUN": "ɹˈiːbɪdz"
+  },
   "rebind": "ɹɪbˈInd",
   "rebirth": "ɹˌiːbˈɜːθ",
   "rebirthing": "ɹˌiːbˈɜːθɪŋ",
   "reblog": "ɹiːblˈɒɡ",
   "reboard": "ɹiːbˈɔːd",
-  "reboot": "ɹˌiːbˈuːt",
+  "reboot": {
+    "DEFAULT": "ɹˌiːbˈuːt",
+    "NOUN": "ɹˈiːbuːt"
+  },
   "reboot's": "ɹˈiːbuːts",
   "rebooted": "ɹˌiːbˈuːtɪd",
   "rebooting": "ɹˌiːbˈuːtɪŋ",
-  "reboots": "ɹˌiːbˈuːts",
-  "rebore": "ɹˌiːbˈɔː",
+  "reboots": {
+    "DEFAULT": "ɹˌiːbˈuːts",
+    "NOUN": "ɹˈiːbuːts"
+  },
+  "rebore": {
+    "DEFAULT": "ɹˌiːbˈɔː",
+    "NOUN": "ɹˈiːbˌɔː"
+  },
   "rebore's": "ɹˈiːbˌɔːz",
   "rebored": "ɹˌiːbˈɔːd",
-  "rebores": "ɹˌiːbˈɔːz",
+  "rebores": {
+    "DEFAULT": "ɹˌiːbˈɔːz",
+    "NOUN": "ɹˈiːbˌɔːz"
+  },
   "reboring": "ɹˌiːbˈɔːɹɪŋ",
   "reborn": "ɹˌiːbˈɔːn",
-  "rebound": "ɹˈiːbWnd",
+  "rebound": {
+    "DEFAULT": "ɹˈiːbWnd",
+    "VERB": "ɹiːbˈWnd"
+  },
   "rebound's": "ɹˈiːbWndz",
   "rebounded": "ɹiːbˈWndɪd",
   "rebounder": "ɹɪbˈWndə",
   "rebounding": "ɹiːbˈWndɪŋ",
-  "rebounds": "ɹˈiːbWndz",
+  "rebounds": {
+    "DEFAULT": "ɹˈiːbWndz",
+    "VERB": "ɹiːbˈWndz"
+  },
   "rebozo": "ɹɪbˈQzQ",
   "rebrand": "ɹˌiːbɹˈand",
   "rebreathe": "ɹiːbɹˈiːð",
@@ -476399,12 +478044,18 @@
   "recalculation": "ɹˌiːkalkjʊlˈAʃᵊn",
   "recalescence": "ɹˌiːkəlˈɛsᵊns",
   "recalibrate": "ɹˌiːkˈalɪbɹAt",
-  "recall": "ɹɪkˈɔːl",
+  "recall": {
+    "DEFAULT": "ɹɪkˈɔːl",
+    "NOUN": "ɹˈiːkɔːl"
+  },
   "recall's": "ɹˈiːkɔːlz",
   "recallable": "ɹɪkˈɔːləbᵊl",
   "recalled": "ɹɪkˈɔːld",
   "recalling": "ɹɪkˈɔːlɪŋ",
-  "recalls": "ɹɪkˈɔːlz",
+  "recalls": {
+    "DEFAULT": "ɹɪkˈɔːlz",
+    "NOUN": "ɹˈiːkɔːlz"
+  },
   "recant": "ɹɪkˈant",
   "recantation": "ɹˌiːkantˈAʃᵊn",
   "recanter": "ɹɪkˈantə",
@@ -476450,12 +478101,18 @@
   "recessionary": "ɹɪsˈɛʃənəɹi",
   "recessionista": "ɹɪsˌɛʃᵊnˈiːstə",
   "recessive": "ɹɪsˈɛsɪv",
-  "recharge": "ɹˌiːʧˈɑːʤ",
+  "recharge": {
+    "DEFAULT": "ɹˌiːʧˈɑːʤ",
+    "NOUN": "ɹˈiːʧˌɑːʤ"
+  },
   "recharge's": "ɹˈiːʧˌɑːʤɪz",
   "rechargeable": "ɹˌiːʧˈɑːʤəbᵊl",
   "recharged": "ɹˌiːʧˈɑːʤd",
   "recharger": "ɹˌiːʧˈɑːʤə",
-  "recharges": "ɹˌiːʧˈɑːʤɪz",
+  "recharges": {
+    "DEFAULT": "ɹˌiːʧˈɑːʤɪz",
+    "NOUN": "ɹˈiːʧˌɑːʤɪz"
+  },
   "recharging": "ɹˌiːʧˈɑːʤɪŋ",
   "recheck": "ɹˈiːʧɛk",
   "rechristen": "ɹˌiːkɹˈɪsᵊn",
@@ -476517,11 +478174,17 @@
   "recognizant": "ɹɪkˈɒɡnɪzᵊnt",
   "recognize": "ɹˈɛkəɡnIz",
   "recognized": "ɹˈɛkəɡnIzd",
-  "recoil": "ɹɪkˈYl",
+  "recoil": {
+    "DEFAULT": "ɹɪkˈYl",
+    "NOUN": "ɹˈiːkYl"
+  },
   "recoil's": "ɹˈiːkYlz",
   "recoiled": "ɹɪkˈYld",
   "recoiling": "ɹɪkˈYlɪŋ",
-  "recoils": "ɹɪkˈYlz",
+  "recoils": {
+    "DEFAULT": "ɹɪkˈYlz",
+    "NOUN": "ɹˈiːkYlz"
+  },
   "recollect": "ɹˌɛkəlˈɛkt",
   "recollection": "ɹˌɛkəlˈɛkʃᵊn",
   "recolonization": "ɹiːkɒlənIzˈAʃᵊn",
@@ -476586,7 +478249,10 @@
   "reconversion": "ɹˌiːkənvˈɜːʃᵊn",
   "reconvert": "ɹˌiːkənvˈɜːt",
   "reconvict": "ɹˌiːkənvˈɪkt",
-  "record": "ɹˈɛkɔːd",
+  "record": {
+    "DEFAULT": "ɹˈɛkɔːd",
+    "VERB": "ɹɪkˈɔːd"
+  },
   "record's": "ɹˈɛkɔːdz",
   "record-breaker": "ɹˈɛkɔːdbɹAkə",
   "recordable": "ɹɪkˈɔːdəbᵊl",
@@ -476595,7 +478261,10 @@
   "recordership": "ɹɪkˈɔːdəʃɪp",
   "recording": "ɹɪkˈɔːdɪŋ",
   "recordist": "ɹɪkˈɔːdɪst",
-  "records": "ɹˈɛkɔːdz",
+  "records": {
+    "DEFAULT": "ɹˈɛkɔːdz",
+    "VERB": "ɹɪkˈɔːdz"
+  },
   "recork": "ɹˌiːkˈɔːk",
   "recount": "ɹɪkˈWnt",
   "recount's": "ɹɪkˈWnts",
@@ -476725,23 +478394,35 @@
   "redface": "ɹˈɛdfAs",
   "redfish": "ɹˈɛdfɪʃ",
   "redhead": "ɹˈɛdhɛd",
-  "redial": "ɹˌiːdˈIᵊl",
+  "redial": {
+    "DEFAULT": "ɹˌiːdˈIᵊl",
+    "NOUN": "ɹˈiːdˌIᵊl"
+  },
   "redial's": "ɹˈiːdˌIᵊlz",
   "redialed": "ɹˌiːdˈIᵊld",
   "redialing": "ɹˌiːdˈIᵊlɪŋ",
-  "redials": "ɹˌiːdˈIᵊlz",
+  "redials": {
+    "DEFAULT": "ɹˌiːdˈIᵊlz",
+    "NOUN": "ɹˈiːdˌIᵊlz"
+  },
   "redid": "ɹˌiːdˈɪd",
   "rediffusion": "ɹˌiːdɪfjˈuːʒᵊn",
   "redingote": "ɹˈɛdɪŋɡQt",
   "redintegrate": "ɹɪdˈɪntɪɡɹAt",
   "redintegration": "ɹɪdˌɪntɪɡɹˈAʃᵊn",
   "redintegrative": "ɹɛdɪntɪɡɹˈʌtɪv",
-  "redirect": "ɹˌiːdɪɹˈɛkt",
+  "redirect": {
+    "DEFAULT": "ɹˌiːdɪɹˈɛkt",
+    "NOUN": "ɹˈiːdɪɹɛkt"
+  },
   "redirect's": "ɹˈiːdɪɹɛkts",
   "redirected": "ɹˌiːdɪɹˈɛktɪd",
   "redirecting": "ɹˌiːdɪɹˈɛktɪŋ",
   "redirection": "ɹˌiːdɪɹˈɛkʃᵊn",
-  "redirects": "ɹˌiːdɪɹˈɛkts",
+  "redirects": {
+    "DEFAULT": "ɹˌiːdɪɹˈɛkts",
+    "NOUN": "ɹˈiːdɪɹɛkts"
+  },
   "rediscount": "ɹiːdˈɪskWnt",
   "rediscover": "ɹˌiːdɪskˈʌvə",
   "rediscovery": "ɹˌiːdɪskˈʌvəɹi",
@@ -476773,11 +478454,17 @@
   "redound": "ɹɪdˈWnd",
   "redox": "ɹˈiːdɒks",
   "redpoll": "ɹˈɛdpQl",
-  "redraft": "ɹˌiːdɹˈɑːft",
+  "redraft": {
+    "DEFAULT": "ɹˌiːdɹˈɑːft",
+    "NOUN": "ɹˈiːdɹɑːft"
+  },
   "redraft's": "ɹˈiːdɹɑːfts",
   "redrafted": "ɹˌiːdɹˈɑːftɪd",
   "redrafting": "ɹˌiːdɹˈɑːftɪŋ",
-  "redrafts": "ɹˌiːdɹˈɑːfts",
+  "redrafts": {
+    "DEFAULT": "ɹˌiːdɹˈɑːfts",
+    "NOUN": "ɹˈiːdɹɑːfts"
+  },
   "redraw": "ɹˌiːdɹˈɔː",
   "redress": "ɹɪdɹˈɛs",
   "redressal": "ɹɪdɹˈɛsᵊl",
@@ -476841,12 +478528,18 @@
   "referred": "ɹɪfˈɜːd",
   "referrer": "ɹɪfˈɜːɹə",
   "reffo": "ɹˈɛfQ",
-  "refill": "ɹˌiːfˈɪl",
+  "refill": {
+    "DEFAULT": "ɹˌiːfˈɪl",
+    "NOUN": "ɹˈiːfɪl"
+  },
   "refill's": "ɹˈiːfɪlz",
   "refillable": "ɹˌiːfˈɪləbᵊl",
   "refilled": "ɹˌiːfˈɪld",
   "refilling": "ɹˌiːfˈɪlɪŋ",
-  "refills": "ɹˌiːfˈɪlz",
+  "refills": {
+    "DEFAULT": "ɹˌiːfˈɪlz",
+    "NOUN": "ɹˈiːfɪlz"
+  },
   "refinance": "ɹˌiːfˈInans",
   "refine": "ɹɪfˈIn",
   "refined": "ɹɪfˈInd",
@@ -476855,9 +478548,15 @@
   "refinery": "ɹɪfˈInəɹi",
   "refining": "ɹɪfˈInɪŋ",
   "refinish": "ɹˌiːfˈɪnɪʃ",
-  "refit": "ɹˌiːfˈɪt",
+  "refit": {
+    "DEFAULT": "ɹˌiːfˈɪt",
+    "NOUN": "ɹˈiːfɪt"
+  },
   "refit's": "ɹˈiːfɪts",
-  "refits": "ɹˌiːfˈɪts",
+  "refits": {
+    "DEFAULT": "ɹˌiːfˈɪts",
+    "NOUN": "ɹˈiːfɪts"
+  },
   "refitted": "ɹˌiːfˈɪtɪd",
   "refitting": "ɹˌiːfˈɪtɪŋ",
   "refix": "ɹˌiːfˈɪks",
@@ -476922,11 +478621,17 @@
   "refrangibility": "ɹɪfɹˌanʤɪbˈɪlɪti",
   "refrangible": "ɹɪfɹˈanʤɪbᵊl",
   "refreeze": "ɹˌiːfɹˈiːz",
-  "refresh": "ɹɪfɹˈɛʃ",
+  "refresh": {
+    "DEFAULT": "ɹɪfɹˈɛʃ",
+    "NOUN": "ɹˈiːfɹɛʃ"
+  },
   "refresh's": "ɹˈiːfɹɛʃɪz",
   "refreshed": "ɹɪfɹˈɛʃt",
   "refresher": "ɹɪfɹˈɛʃə",
-  "refreshes": "ɹɪfɹˈɛʃɪz",
+  "refreshes": {
+    "DEFAULT": "ɹɪfɹˈɛʃɪz",
+    "NOUN": "ɹˈiːfɹɛʃɪz"
+  },
   "refreshing": "ɹɪfɹˈɛʃɪŋ",
   "refreshingly": "ɹɪfɹˈɛʃɪŋli",
   "refreshment": "ɹɪfɹˈɛʃmᵊnt",
@@ -476944,18 +478649,27 @@
   "refugium": "ɹɪfjˈuːʤɪəm",
   "refulgence": "ɹɪfˈʌlʤᵊns",
   "refulgent": "ɹɪfˈʌlʤᵊnt",
-  "refund": "ɹiːfˈʌnd",
+  "refund": {
+    "DEFAULT": "ɹiːfˈʌnd",
+    "NOUN": "ɹˈiːfʌnd"
+  },
   "refund's": "ɹˈiːfʌndz",
   "refundable": "ɹiːfˈʌndəbᵊl",
   "refunded": "ɹiːfˈʌndɪd",
   "refunding": "ɹiːfˈʌndɪŋ",
-  "refunds": "ɹiːfˈʌndz",
+  "refunds": {
+    "DEFAULT": "ɹiːfˈʌndz",
+    "NOUN": "ɹˈiːfʌndz"
+  },
   "refurb": "ɹˈiːfəːb",
   "refurbish": "ɹiːfˈɜːbɪʃ",
   "refurbishment": "ɹiːfˈɜːbɪʃmᵊnt",
   "refurnish": "ɹiːfˈɜːnɪʃ",
   "refusal": "ɹɪfjˈuːzᵊl",
-  "refuse": "ɹɪfjˈuːz",
+  "refuse": {
+    "DEFAULT": "ɹɪfjˈuːz",
+    "NOUN": "ɹˈɛfjuːs"
+  },
   "refuse's": "ɹˈɛfjuːsɪz",
   "refused": "ɹɪfjˈuːzd",
   "refusenik": "ɹɪfjˈuːznɪk",
@@ -476987,7 +478701,10 @@
   "regelate": "ɹˌiːʤɪlˈAt",
   "regency": "ɹˈiːʤᵊnsi",
   "regender": "ɹˌiːʤˈɛndə",
-  "regenerate": "ɹɪʤˈɛnəɹAt",
+  "regenerate": {
+    "ADJ": "ɹɪʤˈɛnəɹət",
+    "DEFAULT": "ɹɪʤˈɛnəɹAt"
+  },
   "regenerated": "ɹɪʤˈɛnəɹAtɪd",
   "regeneration": "ɹɪʤˌɛnəɹˈAʃᵊn",
   "regenerative": "ɹɪʤˈɛnəɹətɪv",
@@ -476999,22 +478716,34 @@
   "reggaeton": "ɹɛɡAtˈɒn",
   "regicidal": "ɹˌɛʤɪsˈIdᵊl",
   "regicide": "ɹˈɛʤɪsId",
-  "regift": "ɹiːɡˈɪft",
+  "regift": {
+    "DEFAULT": "ɹiːɡˈɪft",
+    "NOUN": "ɹˈiːɡɪft"
+  },
   "regift's": "ɹˈiːɡɪfts",
   "regifted": "ɹiːɡˈɪftɪd",
   "regifting": "ɹiːɡˈɪftɪŋ",
-  "regifts": "ɹiːɡˈɪfts",
+  "regifts": {
+    "DEFAULT": "ɹiːɡˈɪfts",
+    "NOUN": "ɹˈiːɡɪfts"
+  },
   "regild": "ɹˌiːɡˈɪld",
   "regime": "ɹAʒˈiːm",
   "regimen": "ɹˈɛʤɪmən",
-  "regiment": "ɹˈɛʤɪmᵊnt",
+  "regiment": {
+    "DEFAULT": "ɹˈɛʤɪmᵊnt",
+    "VERB": "ɹˈɛʤɪmɛnt"
+  },
   "regiment's": "ɹˈɛʤɪmᵊnts",
   "regimental": "ɹˌɛʤɪmˈɛntᵊl",
   "regimentals": "ɹɛʤɪmˈɛntᵊlz",
   "regimentation": "ɹˌɛʤɪmɛntˈAʃᵊn",
   "regimented": "ɹˈɛʤɪmɛntɪd",
   "regimenting": "ɹˈɛʤɪmɛntɪŋ",
-  "regiments": "ɹˈɛʤɪmᵊnts",
+  "regiments": {
+    "DEFAULT": "ɹˈɛʤɪmᵊnts",
+    "VERB": "ɹˈɛʤɪmɛnts"
+  },
   "region": "ɹˈiːʤᵊn",
   "regional": "ɹˈiːʤənᵊl",
   "regionalism": "ɹˈiːʤənəlɪzəm",
@@ -477039,10 +478768,16 @@
   "regorge": "ɹiːɡˈɔːʤ",
   "regrade": "ɹˌiːɡɹˈAd",
   "regrading": "ɹiːɡɹˈAdɪŋ",
-  "regress": "ɹɪɡɹˈɛs",
+  "regress": {
+    "DEFAULT": "ɹɪɡɹˈɛs",
+    "NOUN": "ɹˈiːɡɹɛs"
+  },
   "regress's": "ɹˈiːɡɹɛsɪz",
   "regressed": "ɹɪɡɹˈɛst",
-  "regresses": "ɹɪɡɹˈɛsɪz",
+  "regresses": {
+    "DEFAULT": "ɹɪɡɹˈɛsɪz",
+    "NOUN": "ɹˈiːɡɹɛsɪz"
+  },
   "regressing": "ɹɪɡɹˈɛsɪŋ",
   "regression": "ɹɪɡɹˈɛʃᵊn",
   "regressive": "ɹɪɡɹˈɛsɪv",
@@ -477083,14 +478818,26 @@
   "rehabilitation": "ɹˌiːhəbˌɪlɪtˈAʃᵊn",
   "rehabilitative": "ɹiːhəbˈɪlɪtətɪv",
   "rehandle": "ɹˌiːhˈandᵊl",
-  "rehang": "ɹiːhˈaŋ",
+  "rehang": {
+    "DEFAULT": "ɹiːhˈaŋ",
+    "NOUN": "ɹˈiːhaŋ"
+  },
   "rehang's": "ɹˈiːhaŋz",
   "rehanging": "ɹiːhˈaŋɪŋ",
-  "rehangs": "ɹiːhˈaŋz",
-  "rehash": "ɹiːhˈaʃ",
+  "rehangs": {
+    "DEFAULT": "ɹiːhˈaŋz",
+    "NOUN": "ɹˈiːhaŋz"
+  },
+  "rehash": {
+    "DEFAULT": "ɹiːhˈaʃ",
+    "NOUN": "ɹˈiːhaʃ"
+  },
   "rehash's": "ɹˈiːhaʃɪz",
   "rehashed": "ɹiːhˈaʃt",
-  "rehashes": "ɹiːhˈaʃɪz",
+  "rehashes": {
+    "DEFAULT": "ɹiːhˈaʃɪz",
+    "NOUN": "ɹˈiːhaʃɪz"
+  },
   "rehashing": "ɹiːhˈaʃɪŋ",
   "rehear": "ɹˌiːhˈɪə",
   "reheard": "ɹiːhˈɜːd",
@@ -477098,12 +478845,18 @@
   "rehearsal": "ɹɪhˈɜːsᵊl",
   "rehearse": "ɹɪhˈɜːs",
   "rehearser": "ɹɪhˈɜːsə",
-  "reheat": "ɹˌiːhˈiːt",
+  "reheat": {
+    "DEFAULT": "ɹˌiːhˈiːt",
+    "NOUN": "ɹˈiːhiːt"
+  },
   "reheat's": "ɹˈiːhiːts",
   "reheated": "ɹˌiːhˈiːtɪd",
   "reheater": "ɹiːhˈiːtə",
   "reheating": "ɹˌiːhˈiːtɪŋ",
-  "reheats": "ɹˌiːhˈiːts",
+  "reheats": {
+    "DEFAULT": "ɹˌiːhˈiːts",
+    "NOUN": "ɹˈiːhiːts"
+  },
   "reheel": "ɹˌiːhˈiːl",
   "rehire": "ɹˌiːhˈIə",
   "rehoboam": "ɹˌiːhəbˈQəm",
@@ -477127,7 +478880,10 @@
   "reimportation": "ɹˌiːɪmpɔːtˈAʃᵊn",
   "reimpose": "ɹˌiːɪmpˈQz",
   "reimposition": "ɹˌiːɪmpəzˈɪʃᵊn",
-  "reincarnate": "ɹˌiːɪnkɑːnˈAt",
+  "reincarnate": {
+    "ADJ": "ɹˌiːɪnkˈɑːnət",
+    "DEFAULT": "ɹˌiːɪnkɑːnˈAt"
+  },
   "reincarnated": "ɹˌiːɪnkˈɑːnAtɪd",
   "reincarnation": "ɹˌiːɪnkɑːnˈAʃᵊn",
   "reincorporate": "ɹˌiːɪnkˈɔːpəɹAt",
@@ -477174,7 +478930,10 @@
   "reiteration": "ɹˌiːˌɪtəɹˈAʃᵊn",
   "reiterative": "ɹˌiːˈɪtəɹətɪv",
   "reive": "ɹˈiːv",
-  "reject": "ɹɪʤˈɛkt",
+  "reject": {
+    "DEFAULT": "ɹɪʤˈɛkt",
+    "NOUN": "ɹˈiːʤɛkt"
+  },
   "reject's": "ɹˈiːʤɛkts",
   "rejectable": "ɹɪʤˈɛktəbᵊl",
   "rejected": "ɹɪʤˈɛktɪd",
@@ -477182,7 +478941,10 @@
   "rejection": "ɹɪʤˈɛkʃᵊn",
   "rejectionist": "ɹɪʤˈɛkʃənɪst",
   "rejective": "ɹɪʤˈɛktɪv",
-  "rejects": "ɹɪʤˈɛkts",
+  "rejects": {
+    "DEFAULT": "ɹɪʤˈɛkts",
+    "NOUN": "ɹˈiːʤɛkts"
+  },
   "rejig": "ɹˌiːʤˈɪɡ",
   "rejigger": "ɹˌiːʤˈɪɡə",
   "rejoice": "ɹɪʤˈYs",
@@ -477199,10 +478961,16 @@
   "rekey": "ɹˌiːkˈiː",
   "rekindle": "ɹˌiːkˈɪndᵊl",
   "relabel": "ɹiːlˈAbᵊl",
-  "relapse": "ɹɪlˈaps",
+  "relapse": {
+    "DEFAULT": "ɹɪlˈaps",
+    "NOUN": "ɹˈiːlaps"
+  },
   "relapse's": "ɹˈiːlapsɪz",
   "relapsed": "ɹɪlˈapst",
-  "relapses": "ɹɪlˈapsɪz",
+  "relapses": {
+    "DEFAULT": "ɹɪlˈapsɪz",
+    "NOUN": "ɹˈiːlapsɪz"
+  },
   "relapsing": "ɹɪlˈapsɪŋ",
   "relatable": "ɹɪlˈAtəbᵊl",
   "relate": "ɹɪlˈAt",
@@ -477222,10 +478990,16 @@
   "relativization": "ɹˌɛlətɪvIzˈAʃᵊn",
   "relativize": "ɹˈɛlətɪvIz",
   "relator": "ɹɪlˈAtə",
-  "relaunch": "ɹˌiːlˈɔːnʧ",
+  "relaunch": {
+    "DEFAULT": "ɹˌiːlˈɔːnʧ",
+    "NOUN": "ɹˈiːlɔːnʧ"
+  },
   "relaunch's": "ɹˈiːlɔːnʧɪz",
   "relaunched": "ɹˌiːlˈɔːnʧt",
-  "relaunches": "ɹˌiːlˈɔːnʧɪz",
+  "relaunches": {
+    "DEFAULT": "ɹˌiːlˈɔːnʧɪz",
+    "NOUN": "ɹˈiːlɔːnʧɪz"
+  },
   "relaunching": "ɹˌiːlˈɔːnʧɪŋ",
   "relax": "ɹɪlˈaks",
   "relaxant": "ɹɪlˈaksnt",
@@ -477234,11 +479008,17 @@
   "relaxer": "ɹɪlˈaksə",
   "relaxin": "ɹɪlˈaksɪn",
   "relaxing": "ɹɪlˈaksɪŋ",
-  "relay": "ɹˈiːlA",
+  "relay": {
+    "DEFAULT": "ɹˈiːlA",
+    "VERB": "ɹɪlˈA"
+  },
   "relay's": "ɹˈiːlAz",
   "relayed": "ɹɪlˈAd",
   "relaying": "ɹɪlˈAɪŋ",
-  "relays": "ɹˈiːlAz",
+  "relays": {
+    "DEFAULT": "ɹˈiːlAz",
+    "VERB": "ɹɪlˈAz"
+  },
   "relearn": "ɹˌiːlˈɜːn",
   "release": "ɹɪlˈiːs",
   "releasee": "ɹɪlˌiːsˈiː",
@@ -477250,9 +479030,15 @@
   "relentless": "ɹɪlˈɛntləs",
   "relentlessly": "ɹɪlˈɛntləsli",
   "relentlessness": "ɹɪlˈɛntləsnəs",
-  "relet": "ɹˌiːlˈɛt",
+  "relet": {
+    "DEFAULT": "ɹˌiːlˈɛt",
+    "NOUN": "ɹˈiːlˌɛt"
+  },
   "relet's": "ɹˈiːlˌɛts",
-  "relets": "ɹˌiːlˈɛts",
+  "relets": {
+    "DEFAULT": "ɹˌiːlˈɛts",
+    "NOUN": "ɹˈiːlˌɛts"
+  },
   "reletting": "ɹˌiːlˈɛtɪŋ",
   "relevance": "ɹˈɛlɪvᵊns",
   "relevant": "ɹˈɛlɪvᵊnt",
@@ -477310,9 +479096,15 @@
   "remainder": "ɹɪmˈAndə",
   "remaining": "ɹɪmˈAnɪŋ",
   "remains": "ɹɪmˈAnz",
-  "remake": "ɹˌiːmˈAk",
+  "remake": {
+    "DEFAULT": "ɹˌiːmˈAk",
+    "NOUN": "ɹˈiːmAk"
+  },
   "remake's": "ɹˈiːmAks",
-  "remakes": "ɹˌiːmˈAks",
+  "remakes": {
+    "DEFAULT": "ɹˌiːmˈAks",
+    "NOUN": "ɹˈiːmAks"
+  },
   "remaking": "ɹˌiːmˈAkɪŋ",
   "reman": "ɹˌiːmˈan",
   "remand": "ɹɪmˈɑːnd",
@@ -477353,9 +479145,15 @@
   "remissible": "ɹɪmˈɪsɪbᵊl",
   "remission": "ɹɪmˈɪʃᵊn",
   "remissness": "ɹɪmˈɪsnɪs",
-  "remit": "ɹɪmˈɪt",
+  "remit": {
+    "DEFAULT": "ɹɪmˈɪt",
+    "NOUN": "ɹˈiːmɪt"
+  },
   "remit's": "ɹˈiːmɪts",
-  "remits": "ɹɪmˈɪts",
+  "remits": {
+    "DEFAULT": "ɹɪmˈɪts",
+    "NOUN": "ɹˈiːmɪts"
+  },
   "remittable": "ɹɪmˈɪtəbᵊl",
   "remittal": "ɹɪmˈɪtᵊl",
   "remittance": "ɹɪmˈɪtᵊns",
@@ -477374,11 +479172,17 @@
   "remodeler": "ɹiːmˈɒdələ",
   "remodification": "ɹiːmɒdɪfɪkˈAʃᵊn",
   "remodify": "ɹˌiːmˈɒdɪfI",
-  "remold": "ɹəmˈQld",
+  "remold": {
+    "DEFAULT": "ɹəmˈQld",
+    "NOUN": "ɹˈiːmˌQld"
+  },
   "remold's": "ɹˈiːmˌQldz",
   "remolded": "ɹəmˈQldɪd",
   "remolding": "ɹəmˈQldɪŋ",
-  "remolds": "ɹəmˈQldz",
+  "remolds": {
+    "DEFAULT": "ɹəmˈQldz",
+    "NOUN": "ɹˈiːmˌQldz"
+  },
   "remonetization": "ɹiːmʌnɪtIzˈAʃᵊn",
   "remonetize": "ɹˌiːmˈʌnɪtIz",
   "remonstrance": "ɹɪmˈɒnstɹᵊns",
@@ -477401,16 +479205,28 @@
   "remoteness": "ɹɪmˈQtnəs",
   "remotest": "ɹɪmˈQtɪst",
   "remoulade": "ɹˌAmʊlˈɑːd",
-  "remould": "ɹəmˈQld",
+  "remould": {
+    "DEFAULT": "ɹəmˈQld",
+    "NOUN": "ɹˈiːmˌQld"
+  },
   "remould's": "ɹˈiːmˌQldz",
   "remoulded": "ɹəmˈQldɪd",
   "remoulding": "ɹəmˈQldɪŋ",
-  "remoulds": "ɹəmˈQldz",
-  "remount": "ɹˌiːmˈWnt",
+  "remoulds": {
+    "DEFAULT": "ɹəmˈQldz",
+    "NOUN": "ɹˈiːmˌQldz"
+  },
+  "remount": {
+    "DEFAULT": "ɹˌiːmˈWnt",
+    "NOUN": "ɹˈiːmWnt"
+  },
   "remount's": "ɹˈiːmWnts",
   "remounted": "ɹˌiːmˈWntɪd",
   "remounting": "ɹˌiːmˈWntɪŋ",
-  "remounts": "ɹˌiːmˈWnts",
+  "remounts": {
+    "DEFAULT": "ɹˌiːmˈWnts",
+    "NOUN": "ɹˈiːmWnts"
+  },
   "removability": "ɹɪmˌuːvəbˈɪlɪti",
   "removable": "ɹɪmˈuːvəbᵊl",
   "removal": "ɹɪmˈuːvᵊl",
@@ -477481,10 +479297,16 @@
   "rents": "ɹˈɛnts",
   "renumber": "ɹˌiːnˈʌmbə",
   "renunciant": "ɹɪnˈʌnsɪənt",
-  "renunciate": "ɹɪnˈʌnsɪAt",
+  "renunciate": {
+    "DEFAULT": "ɹɪnˈʌnsɪAt",
+    "NOUN": "ɹɪnˈʌnsɪət"
+  },
   "renunciate's": "ɹɪnˈʌnsɪəts",
   "renunciated": "ɹɪnˈʌnsɪAtɪd",
-  "renunciates": "ɹɪnˈʌnsɪAts",
+  "renunciates": {
+    "DEFAULT": "ɹɪnˈʌnsɪAts",
+    "NOUN": "ɹɪnˈʌnsɪəts"
+  },
   "renunciating": "ɹɪnˈʌnsɪAtɪŋ",
   "renunciation": "ɹɪnˌʌnsɪˈAʃᵊn",
   "renunciative": "ɹɪnˈʌnsɪətɪv",
@@ -477570,13 +479392,19 @@
   "replan": "ɹˌiːplˈan",
   "replant": "ɹˌiːplˈɑːnt",
   "replaster": "ɹˌiːplˈɑːstə",
-  "replay": "ɹˌiːplˈA",
+  "replay": {
+    "DEFAULT": "ɹˌiːplˈA",
+    "NOUN": "ɹˈiːplA"
+  },
   "replay's": "ɹˈiːplAz",
   "replayability": "ɹiːplˌAəbˈɪlɪti",
   "replayable": "ɹiːplˈAəbᵊl",
   "replayed": "ɹˌiːplˈAd",
   "replaying": "ɹˌiːplˈAɪŋ",
-  "replays": "ɹˌiːplˈAz",
+  "replays": {
+    "DEFAULT": "ɹˌiːplˈAz",
+    "NOUN": "ɹˈiːplAz"
+  },
   "replenish": "ɹɪplˈɛnɪʃ",
   "replenishment": "ɹɪplˈɛnɪʃmᵊnt",
   "replete": "ɹɪplˈiːt",
@@ -477588,10 +479416,16 @@
   "replicable": "ɹˈɛplɪkəbᵊl",
   "replicant": "ɹˈɛplɪkᵊnt",
   "replicase": "ɹˈɛplɪkAz",
-  "replicate": "ɹˈɛplɪkət",
+  "replicate": {
+    "DEFAULT": "ɹˈɛplɪkət",
+    "VERB": "ɹˈɛplɪkAt"
+  },
   "replicate's": "ɹˈɛplɪkəts",
   "replicated": "ɹˈɛplɪkAtɪd",
-  "replicates": "ɹˈɛplɪkəts",
+  "replicates": {
+    "DEFAULT": "ɹˈɛplɪkəts",
+    "VERB": "ɹˈɛplɪkAts"
+  },
   "replicating": "ɹˈɛplɪkAtɪŋ",
   "replication": "ɹˌɛplɪkˈAʃᵊn",
   "replicative": "ɹˈɛplɪkətɪv",
@@ -477620,11 +479454,17 @@
   "repossess": "ɹˌiːpəzˈɛs",
   "repossession": "ɹˌiːpəzˈɛʃᵊn",
   "repossessor": "ɹˌiːpəzˈɛsə",
-  "repost": "ɹˌiːpˈQst",
+  "repost": {
+    "DEFAULT": "ɹˌiːpˈQst",
+    "NOUN": "ɹˈiːpQst"
+  },
   "repost's": "ɹˈiːpQsts",
   "reposted": "ɹˌiːpˈQstɪd",
   "reposting": "ɹˌiːpˈQstɪŋ",
-  "reposts": "ɹˌiːpˈQsts",
+  "reposts": {
+    "DEFAULT": "ɹˌiːpˈQsts",
+    "NOUN": "ɹˈiːpQsts"
+  },
   "repot": "ɹˌiːpˈɒt",
   "reprehend": "ɹˌɛpɹɪhˈɛnd",
   "reprehensibility": "ɹˌɛpɹɪhɛnsɪbˈɪlɪti",
@@ -477651,11 +479491,17 @@
   "reprice": "ɹˌiːpɹˈIs",
   "reprieve": "ɹɪpɹˈiːv",
   "reprimand": "ɹˈɛpɹɪmɑːnd",
-  "reprint": "ɹˌiːpɹˈɪnt",
+  "reprint": {
+    "DEFAULT": "ɹˌiːpɹˈɪnt",
+    "NOUN": "ɹˈiːpɹɪnt"
+  },
   "reprint's": "ɹˈiːpɹɪnts",
   "reprinted": "ɹˌiːpɹˈɪntɪd",
   "reprinting": "ɹˌiːpɹˈɪntɪŋ",
-  "reprints": "ɹˌiːpɹˈɪnts",
+  "reprints": {
+    "DEFAULT": "ɹˌiːpɹˈɪnts",
+    "NOUN": "ɹˈiːpɹɪnts"
+  },
   "reprisal": "ɹɪpɹˈIzᵊl",
   "reprise": "ɹɪpɹˈiːz",
   "repro": "ɹˈiːpɹQ",
@@ -477736,23 +479582,44 @@
   "reran": "ɹiːɹˈan",
   "rerate": "ɹˌiːɹˈAt",
   "rerating": "ɹiːɹˈAtɪŋ",
-  "reread": "ɹiːɹˈiːd",
+  "reread": {
+    "DEFAULT": "ɹiːɹˈiːd",
+    "NOUN": "ɹˈiːɹiːd",
+    "VBD": "ɹiːɹˈɛd",
+    "VBN": "ɹiːɹˈɛd",
+    "VBP": "ɹiːɹˈɛd"
+  },
   "reread's": "ɹˈiːɹiːdz",
   "rereading": "ɹiːɹˈiːdɪŋ",
-  "rereads": "ɹiːɹˈiːdz",
+  "rereads": {
+    "DEFAULT": "ɹiːɹˈiːdz",
+    "NOUN": "ɹˈiːɹiːdz"
+  },
   "rerecord": "ɹiːɹɪkˈɔːd",
   "reredos": "ɹˈɪədɒs",
-  "rerelease": "ɹiːɹɪlˈiːs",
+  "rerelease": {
+    "DEFAULT": "ɹiːɹɪlˈiːs",
+    "NOUN": "ɹˈiːɹɪliːs"
+  },
   "rerelease's": "ɹˈiːɹɪliːsɪz",
   "rereleased": "ɹiːɹɪlˈiːst",
-  "rereleases": "ɹiːɹɪlˈiːsɪz",
+  "rereleases": {
+    "DEFAULT": "ɹiːɹɪlˈiːsɪz",
+    "NOUN": "ɹˈiːɹɪliːsɪz"
+  },
   "rereleasing": "ɹiːɹɪlˈiːsɪŋ",
   "reroof": "ɹiːɹˈuːf",
   "reroute": "ɹiːɹˈuːt",
-  "rerun": "ɹiːɹˈʌn",
+  "rerun": {
+    "DEFAULT": "ɹiːɹˈʌn",
+    "NOUN": "ɹˈiːɹʌn"
+  },
   "rerun's": "ɹˈiːɹʌnz",
   "rerunning": "ɹiːɹˈʌnɪŋ",
-  "reruns": "ɹiːɹˈʌnz",
+  "reruns": {
+    "DEFAULT": "ɹiːɹˈʌnz",
+    "NOUN": "ɹˈiːɹʌnz"
+  },
   "resale": "ɹˈiːsAl",
   "resaleable": "ɹˌiːsˈAləbᵊl",
   "resat": "ɹˌiːsˈat",
@@ -477806,10 +479673,16 @@
   "reshoring": "ɹˈiːʃɔːɹɪŋ",
   "reshow": "ɹiːʃˈQ",
   "reshown": "ɹˈiːʃQn",
-  "reshuffle": "ɹˌiːʃˈʌfᵊl",
+  "reshuffle": {
+    "DEFAULT": "ɹˌiːʃˈʌfᵊl",
+    "NOUN": "ɹˈiːʃʌfᵊl"
+  },
   "reshuffle's": "ɹˈiːʃʌfᵊlz",
   "reshuffled": "ɹˌiːʃˈʌfᵊld",
-  "reshuffles": "ɹˌiːʃˈʌfᵊlz",
+  "reshuffles": {
+    "DEFAULT": "ɹˌiːʃˈʌfᵊlz",
+    "NOUN": "ɹˈiːʃʌfᵊlz"
+  },
   "reshuffling": "ɹˌiːʃˈʌfᵊlɪŋ",
   "reside": "ɹɪzˈId",
   "residence": "ɹˈɛzɪdᵊns",
@@ -477846,10 +479719,16 @@
   "resistivity": "ɹˌiːzɪstˈɪvɪti",
   "resistless": "ɹɪzˈɪstlɪs",
   "resistor": "ɹɪzˈɪstə",
-  "resit": "ɹˌiːsˈɪt",
+  "resit": {
+    "DEFAULT": "ɹˌiːsˈɪt",
+    "NOUN": "ɹˈiːsɪt"
+  },
   "resit's": "ɹˈiːsɪts",
   "resite": "ɹiːsˈIt",
-  "resits": "ɹˌiːsˈɪts",
+  "resits": {
+    "DEFAULT": "ɹˌiːsˈɪts",
+    "NOUN": "ɹˈiːsɪts"
+  },
   "resitting": "ɹˌiːsˈɪtɪŋ",
   "resize": "ɹˌiːsˈIz",
   "reskill": "ɹˌiːskˈɪl",
@@ -477888,11 +479767,17 @@
   "resourcefulness": "ɹɪzˈɔːsfʊlnəs",
   "resourceless": "ɹɪzˈɔːsləs",
   "resourcelessness": "ɹɪzˈɔːsləsnəs",
-  "respawn": "ɹiːspˈɔːn",
+  "respawn": {
+    "DEFAULT": "ɹiːspˈɔːn",
+    "NOUN": "ɹˈiːspɔːn"
+  },
   "respawn's": "ɹˈiːspɔːnz",
   "respawned": "ɹiːspˈɔːnd",
   "respawning": "ɹiːspˈɔːnɪŋ",
-  "respawns": "ɹiːspˈɔːnz",
+  "respawns": {
+    "DEFAULT": "ɹiːspˈɔːnz",
+    "NOUN": "ɹˈiːspɔːnz"
+  },
   "respecify": "ɹˌiːspˈɛsɪfI",
   "respect": "ɹɪspˈɛkt",
   "respectability": "ɹɪspˌɛktəbˈɪlɪti",
@@ -477933,17 +479818,29 @@
   "responsorial": "ɹɪspɒnsˈɔːɹɪəl",
   "responsory": "ɹɪspˈɒnsəɹi",
   "responsum": "ɹɪspˈɒnsəm",
-  "respray": "ɹˌiːspɹˈA",
+  "respray": {
+    "DEFAULT": "ɹˌiːspɹˈA",
+    "NOUN": "ɹˈiːspɹA"
+  },
   "respray's": "ɹˈiːspɹAz",
   "resprayed": "ɹˌiːspɹˈAd",
   "respraying": "ɹˌiːspɹˈAɪŋ",
-  "resprays": "ɹˌiːspɹˈAz",
+  "resprays": {
+    "DEFAULT": "ɹˌiːspɹˈAz",
+    "NOUN": "ɹˈiːspɹAz"
+  },
   "restage": "ɹiːstˈAʤ",
-  "restart": "ɹˌiːstˈɑːt",
+  "restart": {
+    "DEFAULT": "ɹˌiːstˈɑːt",
+    "NOUN": "ɹˈiːstɑːt"
+  },
   "restart's": "ɹˈiːstɑːts",
   "restarted": "ɹˌiːstˈɑːtɪd",
   "restarting": "ɹˌiːstˈɑːtɪŋ",
-  "restarts": "ɹˌiːstˈɑːts",
+  "restarts": {
+    "DEFAULT": "ɹˌiːstˈɑːts",
+    "NOUN": "ɹˈiːstɑːts"
+  },
   "restate": "ɹˌiːstˈAt",
   "restatement": "ɹˌiːstˈAtmᵊnt",
   "restaurant": "ɹˈɛstəɹɒnt",
@@ -477985,10 +479882,16 @@
   "restroom": "ɹˈɛstɹuːm",
   "restructure": "ɹˌiːstɹˈʌkʧə",
   "restudy": "ɹˌiːstˈʌdi",
-  "restyle": "ɹˌiːstˈIl",
+  "restyle": {
+    "DEFAULT": "ɹˌiːstˈIl",
+    "NOUN": "ɹˈiːstIl"
+  },
   "restyle's": "ɹˈiːstIlz",
   "restyled": "ɹˌiːstˈIld",
-  "restyles": "ɹˌiːstˈIlz",
+  "restyles": {
+    "DEFAULT": "ɹˌiːstˈIlz",
+    "NOUN": "ɹˈiːstIlz"
+  },
   "restyling": "ɹˌiːstˈIlɪŋ",
   "resubmission": "ɹˌiːsəbmˈɪʃᵊn",
   "resubmit": "ɹˌiːsəbmˈɪt",
@@ -478024,15 +479927,24 @@
   "retainability": "ɹɪtAnəbˈɪlɪti",
   "retainer": "ɹɪtˈAnə",
   "retaining": "ɹɪtˈAnɪŋ",
-  "retake": "ɹiːtˈAk",
+  "retake": {
+    "DEFAULT": "ɹiːtˈAk",
+    "NOUN": "ɹˈiːtAk"
+  },
   "retake's": "ɹˈiːtAks",
-  "retakes": "ɹiːtˈAks",
+  "retakes": {
+    "DEFAULT": "ɹiːtˈAks",
+    "NOUN": "ɹˈiːtAks"
+  },
   "retaking": "ɹiːtˈAkɪŋ",
   "retaliate": "ɹɪtˈalɪAt",
   "retaliation": "ɹɪtˌalɪˈAʃᵊn",
   "retaliative": "ɹɪtˈaljətɪv",
   "retaliatory": "ɹɪtˈalɪətəɹi",
-  "retard": "ɹɪtˈɑːd",
+  "retard": {
+    "DEFAULT": "ɹɪtˈɑːd",
+    "NOUN": "ɹˈiːtɑːd"
+  },
   "retard's": "ɹˈiːtɑːdz",
   "retardant": "ɹɪtˈɑːdᵊnt",
   "retardataire": "ɹɪtˌɑːdətˈɛː",
@@ -478042,7 +479954,10 @@
   "retarder": "ɹɪtˈɑːdə",
   "retarding": "ɹɪtˈɑːdɪŋ",
   "retardment": "ɹɪtˈɑːdmᵊnt",
-  "retards": "ɹɪtˈɑːdz",
+  "retards": {
+    "DEFAULT": "ɹɪtˈɑːdz",
+    "NOUN": "ɹˈiːtɑːdz"
+  },
   "retch": "ɹˈɛʧ",
   "retcon": "ɹˈɛtkɒn",
   "reteach": "ɹˌiːtˈiːʧ",
@@ -478051,17 +479966,29 @@
   "retentive": "ɹɪtˈɛntɪv",
   "retentiveness": "ɹɪtˈɛntɪvnɪs",
   "retentivity": "ɹˌiːtɛntˈɪvɪti",
-  "retest": "ɹiːtˈɛst",
+  "retest": {
+    "DEFAULT": "ɹiːtˈɛst",
+    "NOUN": "ɹˈiːtɛst"
+  },
   "retest's": "ɹˈiːtɛsts",
   "retested": "ɹiːtˈɛstɪd",
   "retesting": "ɹiːtˈɛstɪŋ",
-  "retests": "ɹiːtˈɛsts",
+  "retests": {
+    "DEFAULT": "ɹiːtˈɛsts",
+    "NOUN": "ɹˈiːtɛsts"
+  },
   "retexture": "ɹˌiːtˈɛksʧə",
   "rethatch": "ɹˌiːθˈaʧ",
-  "rethink": "ɹˌiːθˈɪŋk",
+  "rethink": {
+    "DEFAULT": "ɹˌiːθˈɪŋk",
+    "NOUN": "ɹˈiːθɪŋk"
+  },
   "rethink's": "ɹˈiːθɪŋks",
   "rethinking": "ɹˌiːθˈɪŋkɪŋ",
-  "rethinks": "ɹˌiːθˈɪŋks",
+  "rethinks": {
+    "DEFAULT": "ɹˌiːθˈɪŋks",
+    "NOUN": "ɹˈiːθɪŋks"
+  },
   "rethought": "ɹˌiːθˈɔːt",
   "retia": "ɹˈiːtɪə",
   "retiarii": "ɹˌɛtɪˈɑːɹɪI",
@@ -478072,7 +479999,10 @@
   "reticle": "ɹˈɛtɪkᵊl",
   "reticula": "ɹɪtˈɪkjʊlə",
   "reticular": "ɹɪtˈɪkjʊlə",
-  "reticulate": "ɹɪtˈɪkjʊlAt",
+  "reticulate": {
+    "ADJ": "ɹɪtˈɪkjʊlət",
+    "DEFAULT": "ɹɪtˈɪkjʊlAt"
+  },
   "reticulated": "ɹɪtˈɪkjʊlAtɪd",
   "reticulately": "ɹɪtˈɪkjʊlətli",
   "reticulation": "ɹɪtˌɪkjʊlˈAʃᵊn",
@@ -478123,11 +480053,17 @@
   "retranslation": "ɹˌiːtɹanslˈAʃᵊn",
   "retransmission": "ɹˌiːtɹanzmˈɪʃᵊn",
   "retransmit": "ɹˌiːtɹanzmˈɪt",
-  "retread": "ɹˌiːtɹˈɛd",
+  "retread": {
+    "DEFAULT": "ɹˌiːtɹˈɛd",
+    "NOUN": "ɹˈiːtɹɛd"
+  },
   "retread's": "ɹˈiːtɹɛdz",
   "retreaded": "ɹˌiːtɹˈɛdɪd",
   "retreading": "ɹˌiːtɹˈɛdɪŋ",
-  "retreads": "ɹˌiːtɹˈɛdz",
+  "retreads": {
+    "DEFAULT": "ɹˌiːtɹˈɛdz",
+    "NOUN": "ɹˈiːtɹɛdz"
+  },
   "retreat": "ɹɪtɹˈiːt",
   "retreating": "ɹɪtɹˈiːtɪŋ",
   "retrench": "ɹɪtɹˈɛnʧ",
@@ -478200,10 +480136,16 @@
   "reupholster": "ɹˌiːʌphˈQlstə",
   "reuptake": "ɹiːˈʌptAk",
   "reusable": "ɹˌiːjˈuːzəbᵊl",
-  "reuse": "ɹˌiːjˈuːz",
+  "reuse": {
+    "DEFAULT": "ɹˌiːjˈuːz",
+    "NOUN": "ɹˌiːjˈuːs"
+  },
   "reuse's": "ɹˌiːjˈuːsɪz",
   "reused": "ɹˌiːjˈuːzd",
-  "reuses": "ɹˌiːjˈuːzɪz",
+  "reuses": {
+    "DEFAULT": "ɹˌiːjˈuːzɪz",
+    "NOUN": "ɹˌiːjˈuːsɪz"
+  },
   "reusing": "ɹˌiːjˈuːzɪŋ",
   "reutilization": "ɹiːjuːtɪlIzˈAʃᵊn",
   "reutilize": "ɹˌiːjˈuːtɪlIz",
@@ -478211,11 +480153,17 @@
   "revaccination": "ɹiːvaksɪnˈAʃᵊn",
   "revaluation": "ɹˌiːvaljʊˈAʃᵊn",
   "revalue": "ɹˌiːvˈaljuː",
-  "revamp": "ɹˌiːvˈamp",
+  "revamp": {
+    "DEFAULT": "ɹˌiːvˈamp",
+    "NOUN": "ɹˈiːvamp"
+  },
   "revamp's": "ɹˈiːvamps",
   "revamped": "ɹˌiːvˈampt",
   "revamping": "ɹˌiːvˈampɪŋ",
-  "revamps": "ɹˌiːvˈamps",
+  "revamps": {
+    "DEFAULT": "ɹˌiːvˈamps",
+    "NOUN": "ɹˈiːvamps"
+  },
   "revanche": "ɹɪvˈanʧ",
   "revanchism": "ɹɪvˈanʧɪzəm",
   "revanchist": "ɹɪvˈanʧɪst",
@@ -478269,14 +480217,20 @@
   "reversion": "ɹɪvˈɜːʃᵊn",
   "reversionary": "ɹɪvˈɜːʃənəɹi",
   "reversioner": "ɹɪvˈɜːʃənə",
-  "revert": "ɹɪvˈɜːt",
+  "revert": {
+    "DEFAULT": "ɹɪvˈɜːt",
+    "NOUN": "ɹˈiːvəːt"
+  },
   "revert's": "ɹˈiːvəːts",
   "revertant": "ɹɪvˈɜːtᵊnt",
   "reverted": "ɹɪvˈɜːtɪd",
   "reverter": "ɹɪvˈɜːtə",
   "revertible": "ɹɪvˈɜːtɪbᵊl",
   "reverting": "ɹɪvˈɜːtɪŋ",
-  "reverts": "ɹɪvˈɜːts",
+  "reverts": {
+    "DEFAULT": "ɹɪvˈɜːts",
+    "NOUN": "ɹˈiːvəːts"
+  },
   "revet": "ɹɪvˈɛt",
   "revetment": "ɹɪvˈɛtmᵊnt",
   "review": "ɹɪvjˈuː",
@@ -478332,18 +480286,30 @@
   "rewarding": "ɹɪwˈɔːdɪŋ",
   "rewarewa": "ɹˈAwəɹAwə",
   "rewash": "ɹˌiːwˈɒʃ",
-  "rewatch": "ɹiːwˈɒʧ",
+  "rewatch": {
+    "DEFAULT": "ɹiːwˈɒʧ",
+    "NOUN": "ɹˈiːwɒʧ"
+  },
   "rewatch's": "ɹˈiːwɒʧɪz",
   "rewatched": "ɹiːwˈɒʧt",
-  "rewatches": "ɹiːwˈɒʧɪz",
+  "rewatches": {
+    "DEFAULT": "ɹiːwˈɒʧɪz",
+    "NOUN": "ɹˈiːwɒʧɪz"
+  },
   "rewatching": "ɹiːwˈɒʧɪŋ",
   "reweigh": "ɹˌiːwˈA",
   "rewild": "ɹˌiːwˈIld",
   "rewilding": "ɹˌiːwˈIldɪŋ",
-  "rewind": "ɹˌiːwˈInd",
+  "rewind": {
+    "DEFAULT": "ɹˌiːwˈInd",
+    "NOUN": "ɹˈiːwInd"
+  },
   "rewind's": "ɹˈiːwIndz",
   "rewinding": "ɹˌiːwˈIndɪŋ",
-  "rewinds": "ɹˌiːwˈIndz",
+  "rewinds": {
+    "DEFAULT": "ɹˌiːwˈIndz",
+    "NOUN": "ɹˈiːwIndz"
+  },
   "rewire": "ɹˌiːwˈIə",
   "reword": "ɹˌiːwˈɜːd",
   "rework": "ɹˌiːwˈɜːk",
@@ -478351,9 +480317,15 @@
   "rewound": "ɹˌiːwˈWnd",
   "rewrap": "ɹˌiːɹˈap",
   "rewritable": "ɹiːɹˈItəbᵊl",
-  "rewrite": "ɹˌiːɹˈIt",
+  "rewrite": {
+    "DEFAULT": "ɹˌiːɹˈIt",
+    "NOUN": "ɹˈiːɹIt"
+  },
   "rewrite's": "ɹˈiːɹIts",
-  "rewrites": "ɹˌiːɹˈIts",
+  "rewrites": {
+    "DEFAULT": "ɹˌiːɹˈIts",
+    "NOUN": "ɹˈiːɹIts"
+  },
   "rewriting": "ɹˌiːɹˈItɪŋ",
   "rewrote": "ɹˌiːɹˈQt",
   "rezone": "ɹˌiːzˈQn",
@@ -479798,10 +481770,16 @@
   "satsang": "sˈatsaŋ",
   "satsuma": "satsˈuːmə",
   "saturable": "sˈaʧəɹəbᵊl",
-  "saturate": "sˈaʧəɹət",
+  "saturate": {
+    "DEFAULT": "sˈaʧəɹət",
+    "VERB": "sˈaʧʊɹAt"
+  },
   "saturate's": "sˈaʧəɹəts",
   "saturated": "sˈaʧʊɹAtɪd",
-  "saturates": "sˈaʧəɹəts",
+  "saturates": {
+    "DEFAULT": "sˈaʧəɹəts",
+    "VERB": "sˈaʧʊɹAts"
+  },
   "saturating": "sˈaʧʊɹAtɪŋ",
   "saturation": "sˌaʧəɹˈAʃᵊn",
   "saturnalian": "sˌatənˈAlɪən",
@@ -480757,7 +482735,10 @@
   "seersucker": "sˈɪəsˌʌkə",
   "seethe": "sˈiːð",
   "seething": "sˈiːðɪŋ",
-  "segment": "sˈɛɡmᵊnt",
+  "segment": {
+    "DEFAULT": "sˈɛɡmᵊnt",
+    "VERB": "sɛɡmˈɛnt"
+  },
   "segment's": "sˈɛɡmᵊnts",
   "segmental": "sɛɡmˈɛntᵊl",
   "segmentalization": "sɛɡmˌɛntəlIzˈAʃᵊn",
@@ -480765,12 +482746,21 @@
   "segmentation": "sˌɛɡmᵊntˈAʃᵊn",
   "segmented": "sɛɡmˈɛntɪd",
   "segmenting": "sɛɡmˈɛntɪŋ",
-  "segments": "sˈɛɡmᵊnts",
+  "segments": {
+    "DEFAULT": "sˈɛɡmᵊnts",
+    "VERB": "sɛɡmˈɛnts"
+  },
   "segregable": "sˈɛɡɹɪɡəbᵊl",
-  "segregate": "sˈɛɡɹɪɡAt",
+  "segregate": {
+    "DEFAULT": "sˈɛɡɹɪɡAt",
+    "NOUN": "sˈɛɡɹɪɡət"
+  },
   "segregate's": "sˈɛɡɹɪɡəts",
   "segregated": "sˈɛɡɹɪɡAtɪd",
-  "segregates": "sˈɛɡɹɪɡAts",
+  "segregates": {
+    "DEFAULT": "sˈɛɡɹɪɡAts",
+    "NOUN": "sˈɛɡɹɪɡəts"
+  },
   "segregating": "sˈɛɡɹɪɡAtɪŋ",
   "segregation": "sˌɛɡɹɪɡˈAʃᵊn",
   "segregationist": "sˌɛɡɹɪɡˈAʃənɪst",
@@ -481334,11 +483324,17 @@
   "separable": "sˈɛpəɹəbᵊl",
   "separableness": "sˈɛpəɹəblnəs",
   "separably": "sˈɛpəɹəbli",
-  "separate": "sˈɛpəɹət",
+  "separate": {
+    "DEFAULT": "sˈɛpəɹət",
+    "VERB": "sˈɛpəɹAt"
+  },
   "separate's": "sˈɛpəɹəts",
   "separated": "sˈɛpəɹAtɪd",
   "separately": "sˈɛpəɹətli",
-  "separates": "sˈɛpəɹəts",
+  "separates": {
+    "DEFAULT": "sˈɛpəɹəts",
+    "VERB": "sˈɛpəɹAts"
+  },
   "separating": "sˈɛpəɹAtɪŋ",
   "separation": "sˌɛpəɹˈAʃᵊn",
   "separatism": "sˈɛpəɹətɪzəm",
@@ -481441,7 +483437,10 @@
   "serialization": "sˌɪəɹɪəlIzˈAʃᵊn",
   "serialize": "sˈɪəɹɪəlIz",
   "serially": "sˈɪəɹɪəli",
-  "seriate": "sˈɪəɹɪAt",
+  "seriate": {
+    "ADJ": "sˈɪəɹɪət",
+    "DEFAULT": "sˈɪəɹɪAt"
+  },
   "seriatim": "sˌɪəɹɪˈAtɪm",
   "seriation": "sɪəɹɪˈAʃᵊn",
   "sericite": "sˈɛɹɪsIt",
@@ -482701,7 +484700,10 @@
   "sittella": "sɪtˈɛlə",
   "sitter": "sˈɪtə",
   "sitting": "sˈɪtɪŋ",
-  "situate": "sˈɪtjʊAt",
+  "situate": {
+    "ADJ": "sˈɪtjʊət",
+    "DEFAULT": "sˈɪtjʊAt"
+  },
   "situation": "sˌɪtjʊˈAʃᵊn",
   "situational": "sˌɪtjʊˈAʃənᵊl",
   "situationally": "sɪʧʊˈAʃᵊnᵊli",
@@ -483895,10 +485897,16 @@
   "sophistic": "səfˈɪstɪk",
   "sophistical": "səfˈɪstɪkᵊl",
   "sophistically": "səfˈɪstɪkᵊli",
-  "sophisticate": "səfˈɪstɪkət",
+  "sophisticate": {
+    "DEFAULT": "səfˈɪstɪkət",
+    "VERB": "səfˈɪstɪkAt"
+  },
   "sophisticate's": "səfˈɪstɪkəts",
   "sophisticated": "səfˈɪstɪkAtɪd",
-  "sophisticates": "səfˈɪstɪkəts",
+  "sophisticates": {
+    "DEFAULT": "səfˈɪstɪkəts",
+    "VERB": "səfˈɪstɪkAts"
+  },
   "sophisticating": "səfˈɪstɪkAtɪŋ",
   "sophistication": "səfˌɪstɪkˈAʃᵊn",
   "sophistry": "sˈɒfɪstɹi",
@@ -486187,12 +488195,18 @@
   "subconsciousness": "sˌʌbkˈɒnʃəsnəs",
   "subcontinent": "sˌʌbkˈɒntɪnənt",
   "subcontinental": "sʌbkɒntɪnˈɛntᵊl",
-  "subcontract": "sˌʌbkəntɹˈakt",
+  "subcontract": {
+    "DEFAULT": "sˌʌbkəntɹˈakt",
+    "NOUN": "sˌʌbkˈɒntɹakt"
+  },
   "subcontract's": "sˌʌbkˈɒntɹakts",
   "subcontracted": "sˌʌbkəntɹˈaktɪd",
   "subcontracting": "sˌʌbkəntɹˈaktɪŋ",
   "subcontractor": "sˈʌbkəntɹˌaktə",
-  "subcontracts": "sˌʌbkəntɹˈakts",
+  "subcontracts": {
+    "DEFAULT": "sˌʌbkəntɹˈakts",
+    "NOUN": "sˌʌbkˈɒntɹakts"
+  },
   "subcontrary": "sˌʌbkˈɒntɹəɹi",
   "subcortical": "sˌʌbkˈɔːtɪkᵊl",
   "subcostal": "sˌʌbkˈɒstᵊl",
@@ -486237,7 +488251,10 @@
   "subheading": "sˈʌbhɛdɪŋ",
   "subhuman": "sˌʌbhjˈuːmən",
   "subjacent": "səbʤˈAsᵊnt",
-  "subject": "sˈʌbʤɛkt",
+  "subject": {
+    "DEFAULT": "sˈʌbʤɛkt",
+    "VERB": "səbʤˈɛkt"
+  },
   "subject's": "sˈʌbʤɛkts",
   "subjected": "səbʤˈɛktɪd",
   "subjecting": "səbʤˈɛktɪŋ",
@@ -486249,7 +488266,10 @@
   "subjectivist": "səbʤˈɛktɪvɪst",
   "subjectivity": "sˌʌbʤɛktˈɪvɪti",
   "subjectless": "sˈʌbʤɪktləs",
-  "subjects": "sˈʌbʤɛkts",
+  "subjects": {
+    "DEFAULT": "sˈʌbʤɛkts",
+    "VERB": "səbʤˈɛkts"
+  },
   "subjoin": "səbʤˈYn",
   "subjugable": "sˈʌbʤʊɡəbᵊl",
   "subjugate": "sˈʌbʤʊɡAt",
@@ -486261,15 +488281,27 @@
   "sublanguage": "sˈʌblˌaŋɡwɪʤ",
   "sublate": "sˌʌblˈAt",
   "sublateral": "sʌblˈatəɹəl",
-  "sublease": "sˈʌbliːs",
+  "sublease": {
+    "DEFAULT": "sˈʌbliːs",
+    "VERB": "sˌʌblˈiːs"
+  },
   "sublease's": "sˈʌbliːsɪz",
   "subleased": "sˌʌblˈiːst",
-  "subleases": "sˈʌbliːsɪz",
+  "subleases": {
+    "DEFAULT": "sˈʌbliːsɪz",
+    "VERB": "sˌʌblˈiːsɪz"
+  },
   "subleasing": "sˌʌblˈiːsɪŋ",
-  "sublet": "sˌʌblˈɛt",
+  "sublet": {
+    "DEFAULT": "sˌʌblˈɛt",
+    "NOUN": "sˈʌblɛt"
+  },
   "sublet's": "sˈʌblɛts",
   "sublethal": "sˌʌblˈiːθl",
-  "sublets": "sˌʌblˈɛts",
+  "sublets": {
+    "DEFAULT": "sˌʌblˈɛts",
+    "NOUN": "sˈʌblɛts"
+  },
   "subletting": "sˌʌblˈɛtɪŋ",
   "sublimate": "sˈʌblɪmAt",
   "sublimation": "sˌʌblɪmˈAʃᵊn",
@@ -486320,11 +488352,17 @@
   "suborbital": "sˌʌbˈɔːbɪtᵊl",
   "suborder": "sˈʌbˌɔːdə",
   "subordinary": "sˌʌbˈɔːdɪnəɹi",
-  "subordinate": "səbˈɔːdɪnət",
+  "subordinate": {
+    "DEFAULT": "səbˈɔːdɪnət",
+    "VERB": "səbˈɔːdɪnAt"
+  },
   "subordinate's": "səbˈɔːdɪnəts",
   "subordinated": "səbˈɔːdɪnAtɪd",
   "subordinately": "səbˈɔːdɪnətli",
-  "subordinates": "səbˈɔːdɪnəts",
+  "subordinates": {
+    "DEFAULT": "səbˈɔːdɪnəts",
+    "VERB": "səbˈɔːdɪnAts"
+  },
   "subordinating": "səbˈɔːdɪnAtɪŋ",
   "subordination": "səbˌɔːdɪnˈAʃᵊn",
   "subordinative": "səbˈɔːdɪnətɪv",
@@ -486976,7 +489014,10 @@
   "supplanter": "səplˈɑːntə",
   "supple": "sˈʌpᵊl",
   "supplejack": "sˈʌplʤak",
-  "supplement": "sˈʌplɪmᵊnt",
+  "supplement": {
+    "DEFAULT": "sˈʌplɪmᵊnt",
+    "VERB": "sˈʌplɪmɛnt"
+  },
   "supplement's": "sˈʌplɪmᵊnts",
   "supplemental": "sˌʌplɪmˈɛntᵊl",
   "supplementally": "sʌplɪmˈɛntᵊli",
@@ -486984,7 +489025,10 @@
   "supplementation": "sˌʌplɪmɛntˈAʃᵊn",
   "supplemented": "sˈʌplɪmɛntɪd",
   "supplementing": "sˈʌplɪmɛntɪŋ",
-  "supplements": "sˈʌplɪmᵊnts",
+  "supplements": {
+    "DEFAULT": "sˈʌplɪmᵊnts",
+    "VERB": "sˈʌplɪmɛnts"
+  },
   "suppleness": "sˈʌplnəs",
   "suppletion": "səplˈiːʃᵊn",
   "suppletive": "səplˈiːtɪv",
@@ -487126,12 +489170,18 @@
   "surtout": "sˈɜːtuː",
   "surveil": "səvˈAl",
   "surveillance": "səvˈAləns",
-  "survey": "sˈɜːvA",
+  "survey": {
+    "DEFAULT": "sˈɜːvA",
+    "VERB": "səvˈA"
+  },
   "survey's": "sˈɜːvAz",
   "surveyed": "səvˈAd",
   "surveying": "səvˈAɪŋ",
   "surveyor": "səvˈAə",
-  "surveys": "sˈɜːvAz",
+  "surveys": {
+    "DEFAULT": "sˈɜːvAz",
+    "VERB": "səvˈAz"
+  },
   "survivability": "səvˌIvəbˈɪlɪti",
   "survivable": "səvˈIvəbᵊl",
   "survival": "səvˈIvᵊl",
@@ -487146,11 +489196,17 @@
   "susceptive": "səsˈɛptɪv",
   "susceptivity": "sʌsɛptˈɪvɪti",
   "sushi": "sˈuːʃi",
-  "suspect": "sˈʌspɛkt",
+  "suspect": {
+    "DEFAULT": "sˈʌspɛkt",
+    "VERB": "səspˈɛkt"
+  },
   "suspect's": "sˈʌspɛkts",
   "suspected": "səspˈɛktɪd",
   "suspecting": "səspˈɛktɪŋ",
-  "suspects": "sˈʌspɛkts",
+  "suspects": {
+    "DEFAULT": "sˈʌspɛkts",
+    "VERB": "səspˈɛkts"
+  },
   "suspend": "səspˈɛnd",
   "suspended": "səspˈɛndɪd",
   "suspenders": "səspˈɛndəz",
@@ -487537,10 +489593,16 @@
   "syndic": "sˈɪndɪk",
   "syndicalism": "sˈɪndɪkəlɪzəm",
   "syndicalist": "sˈɪndɪkəlɪst",
-  "syndicate": "sˈɪndɪkAt",
+  "syndicate": {
+    "DEFAULT": "sˈɪndɪkAt",
+    "NOUN": "sˈɪndɪkət"
+  },
   "syndicate's": "sˈɪndɪkəts",
   "syndicated": "sˈɪndɪkAtɪd",
-  "syndicates": "sˈɪndɪkAts",
+  "syndicates": {
+    "DEFAULT": "sˈɪndɪkAts",
+    "NOUN": "sˈɪndɪkəts"
+  },
   "syndicating": "sˈɪndɪkAtɪŋ",
   "syndication": "sˌɪndɪkˈAʃᵊn",
   "syndiotactic": "sˌɪndIQtˈaktɪk",
@@ -488205,7 +490267,10 @@
   "tearfully": "tˈɪəfʊli",
   "tearing": "tˈɛːɹɪŋ",
   "tearless": "tˈɪəlɪs",
-  "tears": "tˈɪəz",
+  "tears": {
+    "DEFAULT": "tˈɪəz",
+    "VERB": "tˈɛːz"
+  },
   "teary": "tˈɪəɹi",
   "tease": "tˈiːz",
   "teasel": "tˈiːzᵊl",
@@ -488960,8 +491025,12 @@
   "therapize": "θˈɛɹəpIz",
   "therapsid": "θɛɹˈapsɪd",
   "therapy": "θˈɛɹəpi",
-  "there": "ðɛː",
-  "there's": "ðɛːz",
+  "there": {
+    "DEFAULT": "ðɛː"
+  },
+  "there's": {
+    "DEFAULT": "ðɛːz"
+  },
   "thereabouts": "ðˌɛːɹəbˈWts",
   "thereafter": "ðɛːɹˈɑːftə",
   "thereanent": "ðɛːɹənˈɛnt",
@@ -489053,7 +491122,9 @@
   "theropod": "θˈɪəɹəpɒd",
   "thesauri": "θɪsˈɔːɹI",
   "thesaurus": "θɪsˈɔːɹəs",
-  "these": "ðiːz",
+  "these": {
+    "DEFAULT": "ðiːz"
+  },
   "theses": "θˈiːsiːz",
   "thesis": "θˈiːsɪs",
   "thesp": "θˈɛsp",
@@ -489110,7 +491181,9 @@
   "thimbleful": "θˈɪmblfʊl",
   "thimblerig": "θˈɪmbəlɹɪɡ",
   "thin-skinned": "θˌɪnskˈɪnd",
-  "thine": "ðIn",
+  "thine": {
+    "DEFAULT": "ðIn"
+  },
   "thing": "θˈɪŋ",
   "thingamabob": "θˈɪŋəmɪbɒb",
   "thingamajig": "θˈɪŋəmɪʤɪɡ",
@@ -489196,7 +491269,9 @@
   "thoroughpin": "θˈʌɹəpɪn",
   "thorow-wax": "θˈʌɹəwaks",
   "thorp": "θˈɔːp",
-  "those": "ðQz",
+  "those": {
+    "DEFAULT": "ðQz"
+  },
   "though": "ðˌQ",
   "thought": "θˈɔːt",
   "thought-provoking": "θˈɔːtpɹəvQkɪŋ",
@@ -489312,7 +491387,9 @@
   "throng": "θɹˈɒŋ",
   "throstle": "θɹˈɒsᵊl",
   "throttle": "θɹˈɒtᵊl",
-  "through": "θɹuː",
+  "through": {
+    "DEFAULT": "θɹuː"
+  },
   "throughfall": "θɹˈuːfɔːl",
   "throughflow": "θɹˈuːflQ",
   "throughother": "θɹˈuːˌʌðə",
@@ -489949,7 +492026,10 @@
   "toreutics": "təɹˈuːtɪks",
   "toric": "tˈɒɹɪk",
   "torii": "tˈɔːɹɪiː",
-  "torment": "tˈɔːmɛnt",
+  "torment": {
+    "DEFAULT": "tˈɔːmɛnt",
+    "VERB": "tɔːmˈɛnt"
+  },
   "torment's": "tˈɔːmɛnts",
   "tormented": "tɔːmˈɛntɪd",
   "tormentedly": "tɔːmˈɛntɪdli",
@@ -489957,7 +492037,10 @@
   "tormenting": "tɔːmˈɛntɪŋ",
   "tormentingly": "tɔːmˈɛntɪŋli",
   "tormentor": "tɔːmˈɛntə",
-  "torments": "tˈɔːmɛnts",
+  "torments": {
+    "DEFAULT": "tˈɔːmɛnts",
+    "VERB": "tɔːmˈɛnts"
+  },
   "tornadic": "tɔːnˈadɪk",
   "tornado": "tɔːnˈAdQ",
   "toroid": "tˈɒɹYd",
@@ -490360,7 +492443,10 @@
   "transept": "tɹˈɑːnsɛpt",
   "transfect": "tɹanzfˈɛkt",
   "transfeminine": "tɹanzfˈɛmɪnɪn",
-  "transfer": "tɹˈɑːnsfəː",
+  "transfer": {
+    "DEFAULT": "tɹˈɑːnsfəː",
+    "VERB": "tɹɑːnsfˈɜː"
+  },
   "transfer's": "tɹˈɑːnsfəːz",
   "transferability": "tɹansfˌɜːɹəbˈɪlɪti",
   "transferable": "tɹɑːnsfˈɜːɹəbᵊl",
@@ -490372,14 +492458,20 @@
   "transferred": "tɹɑːnsfˈɜːd",
   "transferrin": "tɹansfˈɛɹɪn",
   "transferring": "tɹɑːnsfˈɜːɹɪŋ",
-  "transfers": "tɹˈɑːnsfəːz",
+  "transfers": {
+    "DEFAULT": "tɹˈɑːnsfəːz",
+    "VERB": "tɹɑːnsfˈɜːz"
+  },
   "transferware": "tɹˈansfəːwɛː",
   "transfiguration": "tɹˌansfɪɡəɹˈAʃᵊn",
   "transfigure": "tɹˌansfˈɪɡə",
   "transfinite": "tɹansfˈInIt",
   "transfix": "tɹansfˈɪks",
   "transfixion": "tɹansfˈɪkʃᵊn",
-  "transform": "tɹɑːnsfˈɔːm",
+  "transform": {
+    "DEFAULT": "tɹɑːnsfˈɔːm",
+    "NOUN": "tɹˈɑːnsfɔːm"
+  },
   "transform's": "tɹˈɑːnsfɔːmz",
   "transformable": "tɹansfˈɔːməbᵊl",
   "transformation": "tɹˌansfəmˈAʃᵊn",
@@ -490388,7 +492480,10 @@
   "transformed": "tɹɑːnsfˈɔːmd",
   "transformer": "tɹansfˈɔːmə",
   "transforming": "tɹɑːnsfˈɔːmɪŋ",
-  "transforms": "tɹɑːnsfˈɔːmz",
+  "transforms": {
+    "DEFAULT": "tɹɑːnsfˈɔːmz",
+    "NOUN": "tɹˈɑːnsfɔːmz"
+  },
   "transfuse": "tɹansfjˈuːz",
   "transfusion": "tɹˌansfjˈuːʒᵊn",
   "transgender": "tɹanzʤˈɛndə",
@@ -490484,17 +492579,26 @@
   "transpierce": "tɹɑːnspˈɪəs",
   "transpiration": "tɹɑːnspɪɹˈAʃᵊn",
   "transpire": "tɹɑːnspˈIə",
-  "transplant": "tɹɑːnsplˈɑːnt",
+  "transplant": {
+    "DEFAULT": "tɹɑːnsplˈɑːnt",
+    "NOUN": "tɹˈɑːnsplɑːnt"
+  },
   "transplant's": "tɹˈɑːnsplɑːnts",
   "transplantable": "tɹɑːnsplˈɑːntəbᵊl",
   "transplantation": "tɹɑːnsplɑːntˈAʃᵊn",
   "transplanted": "tɹɑːnsplˈɑːntɪd",
   "transplanter": "tɹɑːnsplˈɑːntə",
   "transplanting": "tɹɑːnsplˈɑːntɪŋ",
-  "transplants": "tɹɑːnsplˈɑːnts",
+  "transplants": {
+    "DEFAULT": "tɹɑːnsplˈɑːnts",
+    "NOUN": "tɹˈɑːnsplɑːnts"
+  },
   "transponder": "tɹɑːnspˈɒndə",
   "transpontine": "tɹɑːnspˈɒntIn",
-  "transport": "tɹˈɑːnspɔːt",
+  "transport": {
+    "DEFAULT": "tɹˈɑːnspɔːt",
+    "VERB": "tɹɑːnspˈɔːt"
+  },
   "transport's": "tɹˈɑːnspɔːts",
   "transportability": "tɹˌɑːnspɔːtəbˈɪlɪti",
   "transportable": "tɹɑːnspˈɔːtəbᵊl",
@@ -490502,7 +492606,10 @@
   "transported": "tɹɑːnspˈɔːtɪŋ",
   "transporter": "tɹɑːnspˈɔːtə",
   "transporting": "tɹɑːnspˈɔːtɪŋ",
-  "transports": "tɹˈɑːnspɔːts",
+  "transports": {
+    "DEFAULT": "tɹˈɑːnspɔːts",
+    "VERB": "tɹɑːnspˈɔːts"
+  },
   "transposable": "tɹɑːnspˈQzəbᵊl",
   "transposal": "tɹɑːnspˈQzᵊl",
   "transpose": "tɹɑːnspˈQz",
@@ -490817,7 +492924,10 @@
   "triforia": "tɹIfˈɔːɹɪə",
   "triforium": "tɹIfˈɔːɹɪəm",
   "triform": "tɹˈIfɔːm",
-  "trifurcate": "tɹˈIfəkAt",
+  "trifurcate": {
+    "ADJ": "tɹIfˈɜːkət",
+    "DEFAULT": "tɹˈIfəkAt"
+  },
   "trigamous": "tɹˈɪɡəməs",
   "trigemini": "tɹIʤˈɛmɪnI",
   "trigeminus": "tɹIʤˈɛmɪnəs",
@@ -490899,10 +493009,16 @@
   "triple-X": "tɹˌɪpᵊlˈɛks",
   "triplet": "tɹˈɪplɪt",
   "triplex": "tɹˈɪplɛks",
-  "triplicate": "tɹˈɪplɪkət",
+  "triplicate": {
+    "DEFAULT": "tɹˈɪplɪkət",
+    "VERB": "tɹˈɪplɪkAt"
+  },
   "triplicate's": "tɹˈɪplɪkəts",
   "triplicated": "tɹˈɪplɪkAtɪd",
-  "triplicates": "tɹˈɪplɪkəts",
+  "triplicates": {
+    "DEFAULT": "tɹˈɪplɪkəts",
+    "VERB": "tɹˈɪplɪkAts"
+  },
   "triplicating": "tɹˈɪplɪkAtɪŋ",
   "triplication": "tɹˌɪplɪkˈAʃᵊn",
   "triplicity": "tɹɪplˈɪsɪti",
@@ -491105,7 +493221,10 @@
   "trumpetfish": "tɹˈʌmpɪtfˌɪʃ",
   "trumpeting": "tɹˈʌmpɪtɪŋ",
   "truncal": "tɹˈʌŋkᵊl",
-  "truncate": "tɹˈʌŋkAt",
+  "truncate": {
+    "ADJ": "tɹʌŋkˈAt",
+    "DEFAULT": "tɹˈʌŋkAt"
+  },
   "truncated": "tɹʌŋkˈAtɪd",
   "truncately": "tɹˈʌŋkAtli",
   "truncation": "tɹʌŋkˈAʃᵊn",
@@ -491650,7 +493769,10 @@
   "ultrafiltration": "ˌʌltɹəfɪltɹˈAʃᵊn",
   "ultraism": "ˈʌltɹəɪzəm",
   "ultraist": "ˈʌltɹəɪst",
-  "ultralight": "ˈʌltɹəlIt",
+  "ultralight": {
+    "ADJ": "ʌltɹəlˈIt",
+    "DEFAULT": "ˈʌltɹəlIt"
+  },
   "ultramafic": "ˌʌltɹəmˈafɪk",
   "ultramarathon": "ˈʌltɹəmaɹəθᵊn",
   "ultramarathoner": "ˈʌltɹəmaɹəθᵊnəɹ",
@@ -492297,11 +494419,17 @@
   "underappreciated": "ˌʌndəɹəpɹˈiːʃɪAtɪd",
   "underarm": "ˈʌndəɹɑːm",
   "underbelly": "ˈʌndəbˌɛli",
-  "underbid": "ˌʌndəbˈɪd",
+  "underbid": {
+    "DEFAULT": "ˌʌndəbˈɪd",
+    "NOUN": "ˈʌndəbɪd"
+  },
   "underbid's": "ˈʌndəbɪdz",
   "underbidder": "ˈʌndəbˌɪdə",
   "underbidding": "ˌʌndəbˈɪdɪŋ",
-  "underbids": "ˌʌndəbˈɪdz",
+  "underbids": {
+    "DEFAULT": "ˌʌndəbˈɪdz",
+    "NOUN": "ˈʌndəbɪdz"
+  },
   "underbite": "ˈʌndəbIt",
   "underbody": "ˈʌndəbˌɒdi",
   "underboob": "ˈʌndəbuːb",
@@ -492314,10 +494442,16 @@
   "undercarriage": "ˈʌndəkˌaɹɪʤ",
   "undercart": "ˈʌndəkɑːt",
   "undercast": "ˈʌndəkɑːst",
-  "undercharge": "ˌʌndəʧˈɑːʤ",
+  "undercharge": {
+    "DEFAULT": "ˌʌndəʧˈɑːʤ",
+    "NOUN": "ˈʌndəʧɑːʤ"
+  },
   "undercharge's": "ˈʌndəʧɑːʤɪz",
   "undercharged": "ˌʌndəʧˈɑːʤd",
-  "undercharges": "ˌʌndəʧˈɑːʤɪz",
+  "undercharges": {
+    "DEFAULT": "ˌʌndəʧˈɑːʤɪz",
+    "NOUN": "ˈʌndəʧɑːʤɪz"
+  },
   "undercharging": "ˌʌndəʧˈɑːʤɪŋ",
   "underclass": "ˈʌndəklɑːs",
   "undercliff": "ˈʌndəklɪf",
@@ -492328,18 +494462,30 @@
   "underconsumption": "ˌʌndəkənsˈʌmpʃᵊn",
   "undercook": "ˌʌndəkˈʊk",
   "undercool": "ˈʌndəkuːl",
-  "undercount": "ʌndəkˈWnt",
+  "undercount": {
+    "DEFAULT": "ʌndəkˈWnt",
+    "NOUN": "ˈʌndəkʌʊnt"
+  },
   "undercount's": "ˈʌndəkʌʊnts",
   "undercounted": "ʌndəkˈWntɪd",
   "undercounting": "ʌndəkˈWntɪŋ",
-  "undercounts": "ʌndəkˈWnts",
+  "undercounts": {
+    "DEFAULT": "ʌndəkˈWnts",
+    "NOUN": "ˈʌndəkʌʊnts"
+  },
   "undercover": "ˌʌndəkˈʌvə",
   "undercrackers": "ˈʌndəkɹˌakəz",
   "undercroft": "ˈʌndəkɹɒft",
   "undercurrent": "ˈʌndəkˌʌɹənt",
-  "undercut": "ˌʌndəkˈʌt",
+  "undercut": {
+    "DEFAULT": "ˌʌndəkˈʌt",
+    "NOUN": "ˈʌndəkʌt"
+  },
   "undercut's": "ˈʌndəkʌts",
-  "undercuts": "ˌʌndəkˈʌts",
+  "undercuts": {
+    "DEFAULT": "ˌʌndəkˈʌts",
+    "NOUN": "ˈʌndəkʌts"
+  },
   "undercutting": "ˌʌndəkˈʌtɪŋ",
   "underdaks": "ˈʌndədaks",
   "underdamp": "ˌʌndədˈamp",
@@ -492356,10 +494502,16 @@
   "underemphasize": "ˌʌndəɹˈɛmfəsIz",
   "underemployed": "ˌʌndəɹɪmplˈYd",
   "underemployment": "ˌʌndəɹɪmplˈYmᵊnt",
-  "underestimate": "ʌndəɹˈɛstɪmAt",
+  "underestimate": {
+    "DEFAULT": "ʌndəɹˈɛstɪmAt",
+    "NOUN": "ʌndəɹˈɛstɪmət"
+  },
   "underestimate's": "ʌndəɹˈɛstɪməts",
   "underestimated": "ʌndəɹˈɛstɪmAtɪd",
-  "underestimates": "ʌndəɹˈɛstɪmAts",
+  "underestimates": {
+    "DEFAULT": "ʌndəɹˈɛstɪmAts",
+    "NOUN": "ʌndəɹˈɛstɪməts"
+  },
   "underestimating": "ʌndəɹˈɛstɪmAtɪŋ",
   "underestimation": "ˌʌndəɹˌɛstɪmˈAʃᵊn",
   "underexplored": "ˌʌndəɹɪksplˈɔːd",
@@ -492385,7 +494537,10 @@
   "undergone": "ʌndəɡˈɒn",
   "undergrad": "ˈʌndəɡɹad",
   "undergraduate": "ˌʌndəɡɹˈaʤʊət",
-  "underground": "ˈʌndəɡɹWnd",
+  "underground": {
+    "ADV": "ˌʌndəɡɹˈWnd",
+    "DEFAULT": "ˈʌndəɡɹWnd"
+  },
   "undergrowth": "ˈʌndəɡɹQθ",
   "underhand": "ˌʌndəhˈand",
   "underhanded": "ˌʌndəhˈandɪd",
@@ -492398,20 +494553,32 @@
   "underinvest": "ʌndəɹɪnvˈɛst",
   "underinvestment": "ˌʌndəɹɪnvˈɛstmᵊnt",
   "underlaid": "ˌʌndəlˈAd",
-  "underlay": "ˌʌndəlˈA",
+  "underlay": {
+    "DEFAULT": "ˌʌndəlˈA",
+    "NOUN": "ˈʌndəlA"
+  },
   "underlay's": "ˈʌndəlAz",
   "underlaying": "ˌʌndəlˈAɪŋ",
-  "underlays": "ˌʌndəlˈAz",
+  "underlays": {
+    "DEFAULT": "ˌʌndəlˈAz",
+    "NOUN": "ˈʌndəlAz"
+  },
   "underlease": "ˌʌndəlˈiːs",
   "underlet": "ˌʌndəlˈɛt",
   "underlever": "ˈʌndəliːvə",
   "underlie": "ˌʌndəlˈI",
   "underlife": "ˈʌndəlIf",
-  "underline": "ˌʌndəlˈIn",
+  "underline": {
+    "DEFAULT": "ˌʌndəlˈIn",
+    "NOUN": "ˈʌndəlIn"
+  },
   "underline's": "ˈʌndəlInz",
   "underlined": "ˌʌndəlˈInd",
   "underlinen": "ˈʌndəlˌɪnɪn",
-  "underlines": "ˌʌndəlˈInz",
+  "underlines": {
+    "DEFAULT": "ˌʌndəlˈInz",
+    "NOUN": "ˈʌndəlInz"
+  },
   "underling": "ˈʌndəlɪŋ",
   "underlining": "ˌʌndəlˈInɪŋ",
   "underlip": "ˈʌndəlɪp",
@@ -492459,10 +494626,16 @@
   "underrate": "ˌʌndəɹˈAt",
   "underrated": "ˌʌndəɹˈAtɪd",
   "undersaturated": "ˌʌndəsˈaʧʊɹAtɪd",
-  "underscore": "ˈʌndəskɔː",
+  "underscore": {
+    "DEFAULT": "ˈʌndəskɔː",
+    "VERB": "ˌʌndəskˈɔː"
+  },
   "underscore's": "ˈʌndəskɔːz",
   "underscored": "ˌʌndəskˈɔːd",
-  "underscores": "ˈʌndəskɔːz",
+  "underscores": {
+    "DEFAULT": "ˈʌndəskɔːz",
+    "VERB": "ˌʌndəskˈɔːz"
+  },
   "underscoring": "ˌʌndəskˈɔːɹɪŋ",
   "underscrub": "ˈʌndəskɹˌʌb",
   "undersea": "ˌʌndəsˈiː",
@@ -492470,17 +494643,29 @@
   "undersecretary": "ˌʌndəsˈɛkɹɪtɛɹi",
   "undersell": "ˌʌndəsˈɛl",
   "underserved": "ʌndəsˈɜːvd",
-  "underset": "ˌʌndəsˈɛt",
+  "underset": {
+    "DEFAULT": "ˌʌndəsˈɛt",
+    "NOUN": "ˈʌndəsɛt"
+  },
   "underset's": "ˈʌndəsɛts",
-  "undersets": "ˌʌndəsˈɛts",
+  "undersets": {
+    "DEFAULT": "ˌʌndəsˈɛts",
+    "NOUN": "ˈʌndəsɛts"
+  },
   "undersetting": "ˌʌndəsˈɛtɪŋ",
   "undersexed": "ʌndəsˈɛkst",
   "undersheriff": "ˈʌndəʃˌɛɹɪf",
   "undershirt": "ˈʌndəʃəːt",
-  "undershoot": "ˌʌndəʃˈuːt",
+  "undershoot": {
+    "DEFAULT": "ˌʌndəʃˈuːt",
+    "NOUN": "ˈʌndəʃuːt"
+  },
   "undershoot's": "ˈʌndəʃuːts",
   "undershooting": "ˌʌndəʃˈuːtɪŋ",
-  "undershoots": "ˌʌndəʃˈuːts",
+  "undershoots": {
+    "DEFAULT": "ˌʌndəʃˈuːts",
+    "NOUN": "ˈʌndəʃuːts"
+  },
   "undershorts": "ˈʌndəʃɔːts",
   "undershot": "ˌʌndəʃˈɒt",
   "undershrub": "ˈʌndəʃɹʌb",
@@ -492493,10 +494678,16 @@
   "undersoil": "ˈʌndəsYl",
   "undersold": "ˌʌndəsˈQld",
   "undersow": "ˌʌndəsˈQ",
-  "underspend": "ˌʌndəspˈɛnd",
+  "underspend": {
+    "DEFAULT": "ˌʌndəspˈɛnd",
+    "NOUN": "ˈʌndəspɛnd"
+  },
   "underspend's": "ˈʌndəspɛndz",
   "underspending": "ˌʌndəspˈɛndɪŋ",
-  "underspends": "ˌʌndəspˈɛndz",
+  "underspends": {
+    "DEFAULT": "ˌʌndəspˈɛndz",
+    "NOUN": "ˈʌndəspɛndz"
+  },
   "underspent": "ˌʌndəspˈɛnt",
   "understaff": "ʌndəstˈɑːf",
   "understaffed": "ˌʌndəstˈɑːft",
@@ -492525,7 +494716,10 @@
   "underswell": "ˈʌndəswɛl",
   "undertake": "ˌʌndətˈAk",
   "undertaker": "ˈʌndətAkə",
-  "undertaking": "ˈʌndətAkɪŋ",
+  "undertaking": {
+    "DEFAULT": "ˈʌndətAkɪŋ",
+    "VERB": "ˌʌndətˈAkɪŋ"
+  },
   "undertaking's": "ˈʌndətAkɪŋz",
   "undertakings": "ˈʌndətAkɪŋz",
   "undertenancy": "ˈʌndətˌɛnənsi",
@@ -492540,10 +494734,16 @@
   "undertrained": "ˌʌndətɹˈAnd",
   "undertrial": "ˈʌndətɹIəl",
   "undertrick": "ˈʌndətɹɪk",
-  "underuse": "ʌndəjˈuːz",
+  "underuse": {
+    "DEFAULT": "ʌndəjˈuːz",
+    "NOUN": "ʌndəjˈuːs"
+  },
   "underuse's": "ʌndəjˈuːsɪz",
   "underused": "ʌndəjˈuːzd",
-  "underuses": "ʌndəjˈuːzɪz",
+  "underuses": {
+    "DEFAULT": "ʌndəjˈuːzɪz",
+    "NOUN": "ʌndəjˈuːsɪz"
+  },
   "underusing": "ʌndəjˈuːzɪŋ",
   "underutilization": "ˌʌndəjuːtɪlIzˈAʃᵊn",
   "underutilize": "ʌndəjˈuːtɪlIz",
@@ -492652,7 +494852,10 @@
   "undrunk": "ʌndɹˈʌŋk",
   "undue": "ʌndjˈuː",
   "undulant": "ˈʌndjʊlənt",
-  "undulate": "ˈʌndjʊlAt",
+  "undulate": {
+    "ADJ": "ˈʌndjʊlət",
+    "DEFAULT": "ˈʌndjʊlAt"
+  },
   "undulating": "ˈʌndjʊlAtɪŋ",
   "undulation": "ˌʌndjʊlˈAʃᵊn",
   "undulatory": "ˈʌndjʊlətəɹi",
@@ -493253,7 +495456,10 @@
   "unlay": "ʌnlˈA",
   "unleaded": "ʌnlˈɛdɪd",
   "unlearn": "ʌnlˈɜːn",
-  "unlearned": "ʌnlˈɜːnd",
+  "unlearned": {
+    "ADJ": "ʌnlˈɜːnɪd",
+    "DEFAULT": "ʌnlˈɜːnd"
+  },
   "unlearnedly": "ʌnlˈɜːnɪdli",
   "unlearnt": "ʌnlˈɜːnt",
   "unleash": "ʌnlˈiːʃ",
@@ -493465,10 +495671,16 @@
   "unpaved": "ʌnpˈAvd",
   "unpeeled": "ʌnpˈiːld",
   "unpeg": "ʌnpˈɛɡ",
-  "unpeople": "ʌnpˈiːpᵊl",
+  "unpeople": {
+    "DEFAULT": "ʌnpˈiːpᵊl",
+    "NOUN": "ˈʌnpiːpᵊl"
+  },
   "unpeople's": "ˈʌnpiːpᵊlz",
   "unpeopled": "ʌnpˈiːpᵊld",
-  "unpeoples": "ʌnpˈiːpᵊlz",
+  "unpeoples": {
+    "DEFAULT": "ʌnpˈiːpᵊlz",
+    "NOUN": "ˈʌnpiːpᵊlz"
+  },
   "unpeopling": "ʌnpˈiːpᵊlɪŋ",
   "unperceived": "ʌnpəsˈiːvd",
   "unperceptive": "ʌnpəsˈɛptɪv",
@@ -493971,10 +496183,16 @@
   "unstep": "ʌnstˈɛp",
   "unsterile": "ʌnstˈɛɹIl",
   "unsterilized": "ʌnstˈɛɹɪlIzd",
-  "unstick": "ʌnstˈɪk",
+  "unstick": {
+    "DEFAULT": "ʌnstˈɪk",
+    "NOUN": "ˈʌnstɪk"
+  },
   "unstick's": "ˈʌnstɪks",
   "unsticking": "ʌnstˈɪkɪŋ",
-  "unsticks": "ʌnstˈɪks",
+  "unsticks": {
+    "DEFAULT": "ʌnstˈɪks",
+    "NOUN": "ˈʌnstɪks"
+  },
   "unstimulated": "ʌnstˈɪmjʊlAtɪd",
   "unstimulating": "ʌnstˈɪmjʊlAtɪŋ",
   "unstinted": "ʌnstˈɪntɪd",
@@ -494296,10 +496514,16 @@
   "upcountry": "ˌʌpkˈʌntɹi",
   "upcycle": "ˈʌpsIkᵊl",
   "upcycled": "ˈʌpsIkld",
-  "update": "ˈʌpdAt",
+  "update": {
+    "DEFAULT": "ˈʌpdAt",
+    "VERB": "ˌʌpdˈAt"
+  },
   "update's": "ˈʌpdAts",
   "updated": "ˌʌpdˈAtɪd",
-  "updates": "ˈʌpdAts",
+  "updates": {
+    "DEFAULT": "ˈʌpdAts",
+    "VERB": "ˌʌpdˈAts"
+  },
   "updating": "ˌʌpdˈAtɪŋ",
   "updation": "ˌʌpdˈAʃᵊn",
   "updoming": "ˈʌpdQmɪŋ",
@@ -494312,19 +496536,28 @@
   "upfront": "ˌʌpfɹˈʌnt",
   "upful": "ˈʌpfʊl",
   "upgradation": "ˌʌpɡɹədˈAʃᵊn",
-  "upgrade": "ˌʌpɡɹˈAd",
+  "upgrade": {
+    "DEFAULT": "ˌʌpɡɹˈAd",
+    "NOUN": "ˈʌpɡɹAd"
+  },
   "upgrade's": "ˈʌpɡɹAdz",
   "upgradeability": "ʌpɡɹˌAdəbˈɪlɪti",
   "upgradeable": "ˌʌpɡɹˈAdəbᵊl",
   "upgraded": "ˌʌpɡɹˈAdɪd",
-  "upgrades": "ˌʌpɡɹˈAdz",
+  "upgrades": {
+    "DEFAULT": "ˌʌpɡɹˈAdz",
+    "NOUN": "ˈʌpɡɹAdz"
+  },
   "upgrading": "ˌʌpɡɹˈAdɪŋ",
   "upgrowth": "ˈʌpɡɹQθ",
   "uphaul": "ˈʌphɔːl",
   "upheaval": "ʌphˈiːvᵊl",
   "upheave": "ˌʌphˈiːv",
   "upheld": "ʌphˈɛld",
-  "uphill": "ˈʌphɪl",
+  "uphill": {
+    "ADV": "ˌʌphˈɪl",
+    "DEFAULT": "ˈʌphɪl"
+  },
   "uphold": "ʌphˈQld",
   "upholder": "ʌphˈQldə",
   "upholster": "ʌphˈQlstə",
@@ -494333,19 +496566,31 @@
   "upholstery": "ʌphˈQlstəɹi",
   "upkeep": "ˈʌpkiːp",
   "upland": "ˈʌplənd",
-  "uplift": "ˌʌplˈɪft",
+  "uplift": {
+    "DEFAULT": "ˌʌplˈɪft",
+    "NOUN": "ˈʌplɪft"
+  },
   "uplift's": "ˈʌplɪfts",
   "uplifted": "ˌʌplˈɪftɪd",
   "uplifter": "ʌplˈɪftə",
   "uplifting": "ˌʌplˈɪftɪŋ",
-  "uplifts": "ˌʌplˈɪfts",
+  "uplifts": {
+    "DEFAULT": "ˌʌplˈɪfts",
+    "NOUN": "ˈʌplɪfts"
+  },
   "uplink": "ˈʌplɪŋk",
   "uplist": "ˈʌplɪst",
-  "upload": "ˌʌplˈQd",
+  "upload": {
+    "DEFAULT": "ˌʌplˈQd",
+    "NOUN": "ˈʌplQd"
+  },
   "upload's": "ˈʌplQdz",
   "uploaded": "ˌʌplˈQdɪd",
   "uploading": "ˌʌplˈQdɪŋ",
-  "uploads": "ˌʌplˈQdz",
+  "uploads": {
+    "DEFAULT": "ˌʌplˈQdz",
+    "NOUN": "ˈʌplQdz"
+  },
   "upmarket": "ˌʌpmˈɑːkɪt",
   "upmost": "ˈʌpmQst",
   "upper": "ˈʌpə",
@@ -494377,11 +496622,20 @@
   "upscaled": "ˌʌpskˈAld",
   "upscaling": "ˈʌpskAlɪŋ",
   "upsell": "ˈʌpsɛl",
-  "upset": "ˌʌpsˈɛt",
+  "upset": {
+    "DEFAULT": "ˌʌpsˈɛt",
+    "NOUN": "ˈʌpsɛt"
+  },
   "upset's": "ˈʌpsɛts",
-  "upsets": "ˌʌpsˈɛts",
+  "upsets": {
+    "DEFAULT": "ˌʌpsˈɛts",
+    "NOUN": "ˈʌpsɛts"
+  },
   "upsetter": "ʌpsˈɛtə",
-  "upsetting": "ʌpsˈɛtɪŋ",
+  "upsetting": {
+    "DEFAULT": "ʌpsˈɛtɪŋ",
+    "VERB": "ˈʌpsɛtɪŋ"
+  },
   "upsettingly": "ˌʌpsˈɛtɪŋli",
   "upshift": "ˈʌpʃɪft",
   "upshot": "ˈʌpʃɒt",
@@ -494418,15 +496672,24 @@
   "uptick": "ˈʌptɪk",
   "uptight": "ˌʌptˈIt",
   "uptime": "ˈʌptIm",
-  "uptown": "ʌptˈWn",
+  "uptown": {
+    "DEFAULT": "ʌptˈWn",
+    "NOUN": "ˈʌptWn"
+  },
   "uptown's": "ˈʌptWnz",
   "uptowns": "ˈʌptWnz",
   "uptrend": "ˈʌptɹɛnd",
-  "upturn": "ˈʌptəːn",
+  "upturn": {
+    "DEFAULT": "ˈʌptəːn",
+    "VERB": "ˌʌptˈɜːn"
+  },
   "upturn's": "ˈʌptəːnz",
   "upturned": "ˌʌptˈɜːnd",
   "upturning": "ˌʌptˈɜːnɪŋ",
-  "upturns": "ˈʌptəːnz",
+  "upturns": {
+    "DEFAULT": "ˈʌptəːnz",
+    "VERB": "ˌʌptˈɜːnz"
+  },
   "upvote": "ˈʌpvQt",
   "upward": "ˈʌpwəd",
   "upwardly": "ˈʌpwədli",
@@ -495923,11 +498186,17 @@
   "wardroom": "wˈɔːdɹuːm",
   "wardship": "wˈɔːdʃɪp",
   "warehou": "wˈɒɹəhW",
-  "warehouse": "wˈɛːhWs",
+  "warehouse": {
+    "DEFAULT": "wˈɛːhWs",
+    "VERB": "wˈɛːhWz"
+  },
   "warehouse's": "wˈɛːhWsɪz",
   "warehoused": "wˈɛːhWzd",
   "warehouseman": "wˈɛːhWsmən",
-  "warehouses": "wˈɛːhWsɪz",
+  "warehouses": {
+    "DEFAULT": "wˈɛːhWsɪz",
+    "VERB": "wˈɛːhWzɪz"
+  },
   "warehousing": "wˈɛːhWzɪŋ",
   "warfare": "wˈɔːfɛː",
   "warfarin": "wˈɔːfəɹɪn",
@@ -496781,7 +499050,10 @@
   "windpipe": "wˈɪndpIp",
   "windproof": "wˈɪndpɹuːf",
   "windrow": "wˈɪndɹQ",
-  "winds": "wˈɪndz",
+  "winds": {
+    "DEFAULT": "wˈɪndz",
+    "VERB": "wˈIndz"
+  },
   "windsail": "wˈɪndsAl",
   "windscreen": "wˈɪndskɹiːn",
   "windshield": "wˈɪndʃiːld",
@@ -496989,7 +499261,9 @@
   "womenswear": "wˈɪmɪnzwɛː",
   "womxn": "wˈʊmən",
   "womyn": "wˈɪmɪn",
-  "won't": "wQnt",
+  "won't": {
+    "DEFAULT": "wQnt"
+  },
   "wonder": "wˈʌndə",
   "wonderful": "wˈʌndəfʊl",
   "wonderfully": "wˈʌndəfʊli",
@@ -497206,11 +499480,20 @@
   "worthwhile": "wˌɜːθwˈIl",
   "worthy": "wˈɜːði",
   "wotcha": "wˈɒʧə",
-  "would": "wʊd",
+  "would": {
+    "DEFAULT": "wʊd"
+  },
   "would-be": "wˈʊdbiː",
   "wouldn't": "wˈʊdᵊnt",
-  "wouldst": "wʊdst",
-  "wound": "wˈuːnd",
+  "wouldst": {
+    "DEFAULT": "wʊdst"
+  },
+  "wound": {
+    "DEFAULT": "wˈuːnd",
+    "VBD": "wˈWnd",
+    "VBN": "wˈWnd",
+    "VBP": "wˈWnd"
+  },
   "wound's": "wˈuːndz",
   "wounded": "wˈuːndɪd",
   "wounding": "wˈuːndɪŋ",

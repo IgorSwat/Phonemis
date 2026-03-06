@@ -8,6 +8,11 @@
 
 namespace phonemis::phonemizer {
 
+struct DictEntry {
+  std::u32string default_phonemes;
+  std::unordered_map<std::string, std::u32string> pos_variants;
+};
+
 // Lexicon class
 // Provides phonemization of extracted tokens.
 // Wrapps a dictionary lookup for given word with additional pre/post-processing.
@@ -19,20 +24,22 @@ public:
   bool is_known(const std::string& word) const;
 
   // Simple getter, just accessing the dictionary straight away
-  std::u32string get(const std::string& word) { return dict_.at(word); }
+  std::u32string get(const std::string& word) { return dict_.at(word).default_phonemes; }
 
   // Returns the phonemization for given word, or "" if the phonemization failed
   std::u32string get(const std::string& word,
                      const tagger::Tag& tag,
                      std::optional<float> base_stress = std::nullopt,
-                     std::optional<bool> vowel_next = std::nullopt);
+                     std::optional<bool> vowel_next = std::nullopt,
+                     bool future_to = false);
 
 private:
   // Helper functions - extract phonemes without stressing
   std::u32string get_word(const std::string& word,
                           const tagger::Tag& tag,
                           std::optional<float> stress,
-                          std::optional<bool> vowel_next) const;
+                          std::optional<bool> vowel_next,
+                          bool future_to = false) const;
 
   // Helper functions - word+suffix phonemization
   // Phonemizes word ending with popular english suffixes, example: -ed, -s, -ing.
@@ -50,19 +57,21 @@ private:
   // Returns an empty phoneme string if failed to extract phonemes.
   std::u32string lookup(const std::string& word,
                         const tagger::Tag& tag,
-                        std::optional<float> stress) const;
+                        std::optional<float> stress,
+                        const std::string& pos_tag = "") const;
   std::u32string lookup_nnp(const std::string& word) const;
   std::u32string lookup_special(const std::string& word,
                                 const tagger::Tag& tag,
                                 std::optional<float> stress,
-                                std::optional<bool> vowel_next) const;
+                                std::optional<bool> vowel_next,
+                                bool future_to = false) const;
 
   // Resolved language
   Lang language_;
 
-  // Lookup dictionary: text -> phonemes
+  // Lookup dictionary: text -> phonemes (with optional POS variants)
   // Provide quick and direct phonemization for popular words.
-  std::unordered_map<std::string, std::u32string> dict_ = {};
+  std::unordered_map<std::string, DictEntry> dict_ = {};
 };
 
 } // namespace phonemis::phonemizer
