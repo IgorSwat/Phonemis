@@ -13,3 +13,16 @@ include_directories(phonemis/include)
 
 # Build static library
 add_library(phonemis STATIC ${SOURCE_FILES})
+
+# Build test executables
+add_executable(test_everything test/test_everything.cpp)
+target_link_libraries(test_everything phonemis)
+
+add_executable(test_preprocessor test/test_preprocessor.cpp)
+target_link_libraries(test_preprocessor phonemis)
+
+add_executable(test_tokenizer test/test_tokenizer.cpp)
+target_link_libraries(test_tokenizer phonemis)
+
+add_executable(test_pipeline test/test_pipeline.cpp)
+target_link_libraries(test_pipeline phonemis)
