@@ -23,6 +23,8 @@ private:
   // Helper functions - rule-based fallback methods
   std::u32string fallback(const std::string& word,
                           const tagger::Tag& tag) const;
+  std::u32string fallback_dp(const std::string& lword,
+                             const tagger::Tag& tag) const;
 
   // Lexicon component
   std::unique_ptr<Lexicon> lexicon_ = nullptr;
