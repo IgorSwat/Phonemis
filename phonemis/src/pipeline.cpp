@@ -66,9 +66,14 @@ std::u32string Pipeline::process(const std::string& text) {
       const auto& word = token.text;
       const auto& tag = token.tag.value();
 
-      // Lookahead for "to" within next 2 tokens (for "used to" etc.)
+      // Lookahead for "to" within next 2 non-punctuation tokens
+      // (for "used to" etc.). Skip punctuation so that "used, to..."
+      // does not false-positive.
       bool future_to = false;
-      for (size_t j = i + 1; j < std::min(i + 3, tokens.size()); j++) {
+      for (size_t j = i + 1, seen = 0; j < tokens.size() && seen < 2; j++) {
+        if (tokens[j].text.size() == 1 && kPunctations.contains(tokens[j].text[0]))
+          continue;
+        seen++;
         if (tokens[j].text == "to") { future_to = true; break; }
       }
 

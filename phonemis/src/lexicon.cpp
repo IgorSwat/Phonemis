@@ -67,7 +67,7 @@ Lexicon::Lexicon(Lang language, const std::string& dict_filepath)
 
 bool Lexicon::is_known(const std::string& word) const {
   return dict_.contains(word) || dict_.contains(string_utils::to_lower(word)) ||
-         word.size() == 1 && (std::isalpha(word[0]) || constants::alphabet::kSymbols.contains(word[0]));
+         (word.size() == 1 && (std::isalpha(word[0]) || constants::alphabet::kSymbols.contains(word[0])));
 }
 
 std::u32string Lexicon::get(const std::string& word,
@@ -292,7 +292,7 @@ std::u32string Lexicon::lookup(const std::string& word,
   // Since proper noun names could be very unique and not present
   // in the dict, we try to manually resolve them.
   // Note that we also treat unknown words like NNPs.
-  if (phonemes.empty() || is_nnp && !has_primary_stress) {
+  if (phonemes.empty() || (is_nnp && !has_primary_stress)) {
     auto phonemes_nnp = lookup_nnp(word);
     if (!phonemes_nnp.empty()) return phonemes_nnp;
     else return phonemes;
