@@ -52,15 +52,11 @@
   "ay": "ˈI",
   "az": "ˈæz",
   "ba": "bˈɑ",
-  "be": {
-    "DEFAULT": "bi"
-  },
+  "be": "bi",
   "bi": "bˈI",
   "bo": "bˈO",
   "bu": "bˈu",
-  "by": {
-    "DEFAULT": "bI"
-  },
+  "by": "bI",
   "ca": "kˈɑ",
   "ce": "sˈi",
   "ci": "sˌiˈI",
@@ -166,9 +162,7 @@
   "mi": "mˈi",
   "mo": "mˈO",
   "mu": "mjˈu",
-  "my": {
-    "DEFAULT": "mI"
-  },
+  "my": "mI",
   "na": "nˈʌ",
   "ne": "nˈi",
   "ni": "nˈI",
@@ -279,9 +273,7 @@
   "yb": "ˈɪb",
   "yc": "ˈɪk",
   "yd": "wˌIdˈi",
-  "ye": {
-    "DEFAULT": "ji"
-  },
+  "ye": "ji",
   "yf": "ˈɪf",
   "yg": "ˈɪɡ",
   "yh": "ˈɪ",
@@ -1277,9 +1269,7 @@
   "cak": "kˈæk",
   "cal": "kˈæl",
   "cam": "kˈæm",
-  "can": {
-    "DEFAULT": "kæn"
-  },
+  "can": "kæn",
   "cao": "kˈW",
   "cap": "kˈæp",
   "caq": "kˈæk",
@@ -2833,9 +2823,7 @@
   "geq": "ʤˈɛk",
   "ger": "ʤˈɜɹ",
   "ges": "ʤˈɛs",
-  "get": {
-    "DEFAULT": "ɡɛt"
-  },
+  "get": "ɡɛt",
   "geu": "ʤˈu",
   "gev": "ʤˈɛv",
   "gew": "ʤjˈu",
@@ -2935,9 +2923,7 @@
   "goq": "ɡˈɑk",
   "gor": "ɡˈɔɹ",
   "gos": "ɡˌOz",
-  "got": {
-    "DEFAULT": "ɡɑt"
-  },
+  "got": "ɡɑt",
   "gou": "ɡˈu",
   "gov": "ɡˈɑv",
   "gow": "ɡˈW",
@@ -3053,9 +3039,7 @@
   "haa": "hˈɑ",
   "hab": "hˈæb",
   "hac": "hˈæk",
-  "had": {
-    "DEFAULT": "hæd"
-  },
+  "had": "hæd",
   "hae": "hˈA",
   "haf": "hˈæf",
   "hag": "hˈæɡ",
@@ -3070,9 +3054,7 @@
   "hap": "hˈæp",
   "haq": "hˈæk",
   "har": "hˈɑɹ",
-  "has": {
-    "DEFAULT": "hæz"
-  },
+  "has": "hæz",
   "hat": "hˈæt",
   "hau": "hˈW",
   "hav": "hˈæv",
@@ -3115,9 +3097,7 @@
   "heo": "hˈiO",
   "hep": "hˈɛp",
   "heq": "hˈɛk",
-  "her": {
-    "DEFAULT": "hɜɹ"
-  },
+  "her": "hɜɹ",
   "hes": "hiz",
   "het": "hˈɛt",
   "heu": "hjˈu",
@@ -3162,9 +3142,7 @@
   "hip": "hˈɪp",
   "hiq": "hˈɪk",
   "hir": "hˈɪɹ",
-  "his": {
-    "DEFAULT": "hɪz"
-  },
+  "his": "hɪz",
   "hit": "hˈɪt",
   "hiu": "hˈɪu",
   "hiv": "ˌAʧˌIvˈi",
@@ -9077,9 +9055,7 @@
   "yeo": "jˈO",
   "yep": "jˈɛp",
   "yeq": "jˈɛk",
-  "yer": {
-    "DEFAULT": "jɜɹ"
-  },
+  "yer": "jɜɹ",
   "yes": "jˈɛs",
   "yet": "jˈɛt",
   "yeu": "jjˈu",
@@ -29116,9 +29092,7 @@
   "beek": "bˈik",
   "beel": "bˈil",
   "beem": "bˈim",
-  "been": {
-    "DEFAULT": "bɪn"
-  },
+  "been": "bɪn",
   "beeo": "bˈiO",
   "beep": "bˈip",
   "beeq": "bˈik",
@@ -52217,9 +52191,7 @@
   "dote": "dˈOt",
   "dotf": "dˈɑtf",
   "dotg": "dˈɑtɡ",
-  "doth": {
-    "DEFAULT": "dʌθ"
-  },
+  "doth": "dʌθ",
   "doti": "dˈOTi",
   "dotj": "dˈɑtʤ",
   "dotk": "dˈɑtk",
@@ -88791,9 +88763,7 @@
   "gonb": "ɡˈɑnb",
   "gonc": "ɡˈɑŋk",
   "gond": "ɡˈɑnd",
-  "gone": {
-    "DEFAULT": "ɡɔn"
-  },
+  "gone": "ɡɔn",
   "gonf": "ɡˈɑnf",
   "gong": "ɡˈɔŋ",
   "gonh": "ɡˈɑn",
@@ -93513,9 +93483,7 @@
   "havb": "hˈævb",
   "havc": "hˈævk",
   "havd": "hˈævd",
-  "have": {
-    "DEFAULT": "hæv"
-  },
+  "have": "hæv",
   "havf": "hˈævf",
   "havg": "hˈævɡ",
   "havh": "hˈæv",
@@ -94929,9 +94897,7 @@
   "herp": "hˈɜɹp",
   "herq": "hˈɜɹk",
   "herr": "hˈɛɹ",
-  "hers": {
-    "DEFAULT": "hɜɹz"
-  },
+  "hers": "hɜɹz",
   "hert": "hˈɜɹt",
   "heru": "hˈɛɹu",
   "herv": "hˈɜɹv",
@@ -226680,9 +226646,7 @@
   "theb": "θˈɛb",
   "thec": "θˈɛk",
   "thed": "ðid",
-  "thee": {
-    "DEFAULT": "ði"
-  },
+  "thee": "ði",
   "thef": "θˈɛf",
   "theg": "θˈɛɡ",
   "theh": "θˈA",
@@ -226740,9 +226704,7 @@
   "thip": "θˈɪp",
   "thiq": "θˈɪk",
   "thir": "θˈɜɹ",
-  "this": {
-    "DEFAULT": "ðɪs"
-  },
+  "this": "ðɪs",
   "thit": "θˈɪt",
   "thiu": "θˈɪu",
   "thiv": "θˈɪv",
@@ -263943,9 +263905,7 @@
   "wili": "wˈɪli",
   "wilj": "wˈɪlʤ",
   "wilk": "wˈɪlk",
-  "will": {
-    "DEFAULT": "wɪl"
-  },
+  "will": "wɪl",
   "wilm": "wˈɪlm",
   "wiln": "wˈɪln",
   "wilo": "wˈIlO",
@@ -398508,53 +398468,33 @@
   "A-shirt": "ˈAʃˌɜɹt",
   "A-side": "ˈAsˌId",
   "A-team": "ˈAtˌim",
-  "AA": {
-    "DEFAULT": "ˈɑˌɑ"
-  },
-  "ABS": {
-    "DEFAULT": "ˈæbz"
-  },
+  "AA": "ˈɑˌɑ",
+  "ABS": "ˈæbz",
   "ABTA": "ˈæbtə",
   "ACAS": "ˈAkˌæs",
   "ACAT": "ˈAkˌæt",
   "ACOSS": "ˈAkˌɑs",
-  "ACT": {
-    "DEFAULT": "ˈækt"
-  },
-  "AD": {
-    "DEFAULT": "ˈæd"
-  },
+  "ACT": "ˈækt",
+  "AD": "ˈæd",
   "ADA-accessible": "ˌAdˌiˌAəksˈɛsəbᵊl",
   "ADA-compliant": "ˌAdˌiˌAkəmplˈIənt",
   "ADAS": "ˈAdˌæs",
-  "ADD": {
-    "DEFAULT": "ˈæd"
-  },
-  "AG": {
-    "DEFAULT": "ˈæɡ"
-  },
-  "AH": {
-    "DEFAULT": "ˈɑ"
-  },
+  "ADD": "ˈæd",
+  "AG": "ˈæɡ",
+  "AH": "ˈɑ",
   "AI": "ˈAˌI",
-  "AID": {
-    "DEFAULT": "ˈAd"
-  },
+  "AID": "ˈAd",
   "AIDS": "ˈAdz",
   "AIM": "ˈAm",
   "AJ": "ˈAʤˌA",
-  "AM": {
-    "DEFAULT": "æm"
-  },
+  "AM": "æm",
   "AMAT": "ˈAmˌæt",
   "AMRAAM": "ˈæmɹˌæm",
   "ANSI": "ˈænsi",
   "APEC": "ˈApˌɛk",
   "APRA": "ˈæpɹə",
   "ARC": "ˈɑɹk",
-  "AS": {
-    "DEFAULT": "æz"
-  },
+  "AS": "æz",
   "ASAP": "ˈAsæp",
   "ASAT": "ˈAsˌæt",
   "ASBO": "ˈæzbO",
@@ -399265,17 +399205,13 @@
   "B-movie": "bˈimˌuvi",
   "B-side": "bˈisˌId",
   "B-tree": "bˈitɹˌi",
-  "BA": {
-    "DEFAULT": "bˈɑ"
-  },
+  "BA": "bˈɑ",
   "BAFTA": "bˈæftə",
   "BAMF": "bˈæmf",
   "BASIC": "bˈAsɪk",
   "BBQ": "bˈɑɹbəkjˌu",
   "BCAT": "bˈikˌæt",
-  "BE": {
-    "DEFAULT": "bi"
-  },
+  "BE": "bi",
   "BEd": "biˈɛd",
   "BILF": "bˈɪlf",
   "BIOS": "bˈIɑs",
@@ -399285,9 +399221,7 @@
   "BLitt": "bˌilˈɪt",
   "BMAT": "bˈimˌæt",
   "BMus": "bˌimˈʌz",
-  "BO": {
-    "DEFAULT": "bˈO"
-  },
+  "BO": "bˈO",
   "BOGO": "bˈOɡO",
   "BOGOF": "bˈɔɡɔf",
   "BRICS": "bɹˈɪks",
@@ -399871,9 +399805,7 @@
   "CAM": "kˈæm",
   "CAMRA": "kˈæmɹə",
   "CANDU": "kˈændˌu",
-  "CAP": {
-    "DEFAULT": "kˈæp"
-  },
+  "CAP": "kˈæp",
   "CARE": "kˈɛɹ",
   "CARICOM": "kˈɛɹəkˌɑm",
   "CAT": "kˈæt",
@@ -399882,25 +399814,19 @@
   "CENTCOM": "sˈɛntkˌɑm",
   "CERN": "sˈɜɹn",
   "CINC": "sˌiɪnsˈi",
-  "CIS": {
-    "DEFAULT": "sˈɪs"
-  },
+  "CIS": "sˈɪs",
   "CITES": "sˈIɾiz",
   "CJ": "sˈiʤˌA",
   "CMAT": "sˈimˌæt",
   "COBE": "kˈObi",
   "COBOL": "kˈObˌɑl",
   "COBRA": "kˈObɹə",
-  "COD": {
-    "DEFAULT": "kˈɑd"
-  },
+  "COD": "kˈɑd",
   "CODA": "kˈOdə",
   "COM": "kˈɑm",
   "COMINT": "kˈɑmˌɪnt",
   "CONUS": "kˈOnəs",
-  "COO": {
-    "DEFAULT": "kˈu"
-  },
+  "COO": "kˈu",
   "CORE": "kˈɔɹ",
   "COSPAR": "kˈOspˌɑɹ",
   "COVID": "kˈOvˌɪd",
@@ -400577,12 +400503,8 @@
   "D's": "dˈiz",
   "D-Day": "dˈidˌA",
   "D-mark": "dˈimɑɹk",
-  "DA": {
-    "DEFAULT": "də"
-  },
-  "DAB": {
-    "DEFAULT": "dˈæb"
-  },
+  "DA": "də",
+  "DAB": "dˈæb",
   "DAFTA": "dˈæftə",
   "DARPA": "dˈɑɹpə",
   "DAT": "dˈæt",
@@ -400591,24 +400513,18 @@
   "DDoS": "dˈidˌɔs",
   "DEFCON": "dˈɛfkˌɑn",
   "DEFRA": "dˈɛfɹə",
-  "DEW": {
-    "DEFAULT": "dˈu"
-  },
+  "DEW": "dˈu",
   "DILF": "dˈɪlf",
   "DIN": "dˈɪn",
   "DINO": "dˈInO",
-  "DIP": {
-    "DEFAULT": "dˈɪp"
-  },
+  "DIP": "dˈɪp",
   "DIYer": "dˌiIwˈIəɹ",
   "DJ": "dˈiʤˌA",
   "DLitt": "dˌilˈɪt",
   "DMAT": "dˈimˌæt",
   "DMus": "dˌimˈʌz",
   "DNase": "dˌiˈɛnˌAs",
-  "DOE": {
-    "DEFAULT": "dˈO"
-  },
+  "DOE": "dˈO",
   "DOS": "dˈɔs",
   "DPhil": "difˈɪl",
   "DRAM": "dˈiɹˌæm",
@@ -400941,9 +400857,7 @@
   "EFTPOS": "ˈɛftpˌɑs",
   "EGOT": "ˈiɡɑt",
   "EJ": "ˈiʤˌA",
-  "ELF": {
-    "DEFAULT": "ˈɛlf"
-  },
+  "ELF": "ˈɛlf",
   "ELINT": "ˈɛlˌɪnt",
   "ELISA": "ɪlˈIzə",
   "EMAT": "ˈimˌæt",
@@ -400951,20 +400865,12 @@
   "ENSA": "ˈɛnsə",
   "EPOS": "ˈipˌɑs",
   "EPROM": "ˈipɹˌɑm",
-  "ER": {
-    "DEFAULT": "ˈɜɹ"
-  },
+  "ER": "ˈɜɹ",
   "ESAT": "ˈisˌæt",
   "ESOL": "ˈisˌɑl",
-  "EST": {
-    "DEFAULT": "ˈɛst"
-  },
-  "ETA": {
-    "DEFAULT": "ˈAɾə"
-  },
-  "ETC": {
-    "DEFAULT": "ɛtsˈɛɾəɹə"
-  },
+  "EST": "ˈɛst",
+  "ETA": "ˈAɾə",
+  "ETC": "ɛtsˈɛɾəɹə",
   "EULA": "jˈulə",
   "EURIBOR": "jˈʊɹɪbɔɹ",
   "Eagan": "ˈiɡən",
@@ -401449,9 +401355,7 @@
   "GATT": "ɡˈæt",
   "GCAT": "ʤˈikˌæt",
   "GERD": "ɡˈɜɹd",
-  "GI": {
-    "DEFAULT": "ɡˈi"
-  },
+  "GI": "ɡˈi",
   "GIF": "ɡˈɪf",
   "GIFT": "ɡˈɪft",
   "GIGO": "ɡˈIɡˌO",
@@ -401795,12 +401699,8 @@
   "H-bomb": "ˈAʧbˌɑm",
   "HAFTA": "hˈæftə",
   "HCAT": "ˈAʧkˌæt",
-  "HE": {
-    "DEFAULT": "hi"
-  },
-  "HI": {
-    "DEFAULT": "hˈI"
-  },
+  "HE": "hi",
+  "HI": "hˈI",
   "HIIT": "hˈɪt",
   "HILF": "hˈɪlf",
   "HIP": "hˈɪp",
@@ -401808,13 +401708,9 @@
   "HIV-negative": "AʧIvˌinˈɛɡəɾɪv",
   "HIV-positive": "ˌAʧˌIvˌipˈɑzəɾɪv",
   "HJ": "ˈAʧʤˌA",
-  "HM": {
-    "DEFAULT": "hm"
-  },
+  "HM": "hm",
   "HMAT": "ˈAʧmˌæt",
-  "HMM": {
-    "DEFAULT": "hmm"
-  },
+  "HMM": "hmm",
   "HODL": "hˈɑdᵊl",
   "HSAT": "ˈAʧsˌæt",
   "HTOL": "ˈAʧtˌɔl",
@@ -402240,9 +402136,7 @@
   "IBAN": "ˈIbæn",
   "ICAT": "ˈIkˌæt",
   "ICE": "ˈIs",
-  "ID": {
-    "DEFAULT": "ˈɪd"
-  },
+  "ID": "ˈɪd",
   "IELTS": "ˈIɛlts",
   "IJ": "ˈIʤˌA",
   "IJssel": "ˈIsəl",
@@ -402251,23 +402145,15 @@
   "IMAT": "ˈImˌæt",
   "IMAX": "ˈImˌæks",
   "IMP": "ˈɪmp",
-  "IN": {
-    "DEFAULT": "ɪn"
-  },
+  "IN": "ɪn",
   "INSET": "ˈɪnsˌɛt",
   "IRAS": "ˈIɹˌæs",
-  "IS": {
-    "DEFAULT": "ɪz"
-  },
+  "IS": "ɪz",
   "ISAT": "ˈIsˌæt",
   "ISIL": "ˈIsɪl",
   "ISIS": "ˈIsɪs",
-  "ISO": {
-    "DEFAULT": "ˈIsO"
-  },
-  "IT": {
-    "DEFAULT": "ɪt"
-  },
+  "ISO": "ˈIsO",
+  "IT": "ɪt",
   "ITAR-Tass": "ˌitˌɑɹtˈæs",
   "IUPAC": "ˌIjˈupˌæk",
   "Iapetus": "Iəpˈɛɾəs",
@@ -403009,25 +402895,17 @@
   "L's": "ˈɛlz",
   "L-dopa": "ˌɛldˈOpə",
   "L-word": "ˈɛlwˌɜɹd",
-  "LA": {
-    "DEFAULT": "lˌɑ"
-  },
+  "LA": "lˌɑ",
   "LAFTA": "lˈæftə",
   "LAN": "lˈæn",
   "LARP": "lˈɑɹp",
   "LASIK": "lˈAsɪk",
   "LCAT": "ˈɛlkˌæt",
-  "LEA": {
-    "DEFAULT": "lˈi"
-  },
-  "LED": {
-    "DEFAULT": "lˈɛd"
-  },
+  "LEA": "lˈi",
+  "LED": "lˈɛd",
   "LEED": "lˈid",
   "LEM": "lˈɛm",
-  "LI": {
-    "DEFAULT": "lˈi"
-  },
+  "LI": "lˈi",
   "LIBOR": "lˈIbɔɹ",
   "LIFO": "lˈIfˌO",
   "LILF": "lˈɪlf",
@@ -403406,9 +403284,7 @@
   "Lysol": "lˈIsˌɔl",
   "M": "ˈɛm",
   "M's": "ˈɛmz",
-  "MA": {
-    "DEFAULT": "mˈɑ"
-  },
+  "MA": "mˈɑ",
   "MACHO": "mˈɑʧO",
   "MADD": "mˈæd",
   "MAFF": "mˈæf",
@@ -403417,14 +403293,10 @@
   "MASH": "mˈæʃ",
   "MC'ing": "ˌɛmsˈiɪŋ",
   "MCAT": "ˈɛmkˌæt",
-  "ME": {
-    "DEFAULT": "mˌi"
-  },
+  "ME": "mˌi",
   "MERS": "mˈɜɹz",
   "MEd": "ˌɛmˈɛd",
-  "MI": {
-    "DEFAULT": "mˈi"
-  },
+  "MI": "mˈi",
   "MIDI": "mˈɪdi",
   "MILF": "mˈɪlf",
   "MIME": "mˈIm",
@@ -403433,26 +403305,16 @@
   "MIRV": "mˈɜɹv",
   "MJ": "ˈɛmʤˌA",
   "MLitt": "ɛmlˈɪt",
-  "MM": {
-    "DEFAULT": "m"
-  },
+  "MM": "m",
   "MMAT": "ˈɛmmˌæt",
-  "MO": {
-    "DEFAULT": "mˈO"
-  },
+  "MO": "mˈO",
   "MOAB": "mˈOæb",
-  "MOD": {
-    "DEFAULT": "mˈɑd"
-  },
+  "MOD": "mˈɑd",
   "MOOC": "mˈuk",
-  "MOR": {
-    "DEFAULT": "mˈɔɹ"
-  },
+  "MOR": "mˈɔɹ",
   "MORI": "mˈɔɹi",
   "MOSFET": "mˈɑsfɛt",
-  "MOT": {
-    "DEFAULT": "mˈO"
-  },
+  "MOT": "mˈO",
   "MOX": "mˈɑks",
   "MPEG": "ˈɛmpˌɛɡ",
   "MPhil": "ˌɛmfˈɪl",
@@ -404491,33 +404353,21 @@
   "O-ring": "ˈOɹˌɪŋ",
   "OAPEC": "ˌOˈApɛk",
   "OCAT": "ˈOkˌæt",
-  "OD": {
-    "DEFAULT": "ˈɑd"
-  },
-  "OFT": {
-    "DEFAULT": "ˈɔft"
-  },
+  "OD": "ˈɑd",
+  "OFT": "ˈɔft",
   "OGPU": "ˈɑɡpˌu",
-  "OH": {
-    "DEFAULT": "ˈO"
-  },
+  "OH": "ˈO",
   "OJ": "ˈOʤˌA",
   "OK": "ˌOkˈA",
   "OLE": "ˌOlˈA",
   "OLED": "ˈOlˌɛd",
   "OMAT": "ˈOmˌæt",
   "OPEC": "ˈOpɛk",
-  "OR": {
-    "DEFAULT": "ɔɹ"
-  },
-  "OS": {
-    "DEFAULT": "ˈɑs"
-  },
+  "OR": "ɔɹ",
+  "OS": "ˈɑs",
   "OSAT": "ˈOsˌæt",
   "OSHA": "ˈOʃə",
-  "OU": {
-    "DEFAULT": "ˈO"
-  },
+  "OU": "ˈO",
   "Oahu": "Owˈɑhu",
   "Oakland": "ˈOklənd",
   "Oaxaca": "wɑhˈɑkə",
@@ -404724,9 +404574,7 @@
   "P": "pˈi",
   "P's": "pˈiz",
   "P-Celtic": "pˈikˌɛltɪk",
-  "PA": {
-    "DEFAULT": "pˈɑ"
-  },
+  "PA": "pˈɑ",
   "PAC": "pˈæk",
   "PACE": "pˈAs",
   "PAFTA": "pˈæftə",
@@ -404747,9 +404595,7 @@
   "POP": "pˈɑp",
   "POSSLQ": "pˈɑsᵊlkjˌu",
   "POTUS": "pˈOɾəs",
-  "POW": {
-    "DEFAULT": "pˈW"
-  },
+  "POW": "pˈW",
   "PROM": "pɹˈɑm",
   "PSAT": "pˈisˌæt",
   "PUFA": "pˈufə",
@@ -405369,18 +405215,14 @@
   "RAID": "ɹˈAd",
   "RAM": "ɹˈæm",
   "RCAT": "ˈɑɹkˌæt",
-  "RE": {
-    "DEFAULT": "ɹˌA"
-  },
+  "RE": "ɹˌA",
   "REM": "ɹˈɛm",
   "REME": "ɹˈimi",
   "RICE": "ɹˈIs",
   "RICO": "ɹˈikO",
   "RILF": "ɹˈɪlf",
   "RINO": "ɹˈInO",
-  "RIP": {
-    "DEFAULT": "ɹˈɪp"
-  },
+  "RIP": "ɹˈɪp",
   "RISC": "ɹˈɪsk",
   "RJ": "ˈɑɹʤˌA",
   "RMAT": "ˈɑɹmˌæt",
@@ -405635,29 +405477,21 @@
   "SAM": "sˈæm",
   "SAR": "sˈɑɹ",
   "SARS": "sˈɑɹz",
-  "SAT": {
-    "DEFAULT": "sˈæt"
-  },
+  "SAT": "sˈæt",
   "SAVAK": "sˈævˌæk",
   "SCBU": "skəbˈu",
   "SCOTUS": "skˈOɾəs",
   "SCSI": "skˈʌzi",
   "SEAL": "sˈiᵊl",
   "SEATO": "sˈiɾO",
-  "SEC": {
-    "DEFAULT": "sˈɛk"
-  },
+  "SEC": "sˈɛk",
   "SECAM": "sˈikˌæm",
   "SEM": "sˈɛm",
   "SERPS": "sˈɜɹps",
   "SETI": "sˈɛɾi",
   "SHAPE": "ʃˈAp",
-  "SI": {
-    "DEFAULT": "sˈi"
-  },
-  "SIB": {
-    "DEFAULT": "sˈɪb"
-  },
+  "SI": "sˈi",
+  "SIB": "sˈɪb",
   "SIDS": "sˈɪdz",
   "SIFI": "sˈɪfi",
   "SIG": "sˈɪɡ",
@@ -405671,9 +405505,7 @@
   "SMERSH": "smˈɜɹʃ",
   "SNAP": "snˈæp",
   "SNOBOL": "snˈObˌɔl",
-  "SOB": {
-    "DEFAULT": "sˈɑb"
-  },
+  "SOB": "sˈɑb",
   "SOCA": "sˈOkə",
   "SOFAR": "sˈOfˌɑɹ",
   "SOHCAHTOA": "sˌOkətˈOə",
@@ -406497,9 +406329,7 @@
   "T-storm": "tˈistɔɹm",
   "T-top": "tˈitɑp",
   "T-zone": "tˈizOn",
-  "TA": {
-    "DEFAULT": "tˈɑ"
-  },
+  "TA": "tˈɑ",
   "TAB": "tˈæb",
   "TAFE": "tˈAf",
   "TAFTA": "tˈæftə",
@@ -407331,9 +407161,7 @@
   "WATS": "wˈɑts",
   "WAVES": "wˈAvz",
   "WCAT": "dˈʌbᵊljukˌæt",
-  "WHO": {
-    "DEFAULT": "hˌu"
-  },
+  "WHO": "hˌu",
   "WIC": "wˈɪk",
   "WILF": "wˈɪlf",
   "WIMP": "wˈɪmp",
@@ -422050,15 +421878,9 @@
   "couching": "kˈWʧɪŋ",
   "cougar": "kˈuɡəɹ",
   "cough": "kˈɔf",
-  "could": {
-    "DEFAULT": "kʊd"
-  },
-  "could've": {
-    "DEFAULT": "kʊdəv"
-  },
-  "couldn't": {
-    "DEFAULT": "kˌʊdᵊnt"
-  },
+  "could": "kʊd",
+  "could've": "kʊdəv",
+  "couldn't": "kˌʊdᵊnt",
   "couldst": "kˈʊdst",
   "coulee": "kˈuli",
   "coulibiac": "kulˈibjɑk",
@@ -477662,12 +477484,8 @@
   "therapize": "θˈɛɹəpˌIz",
   "therapsid": "θəɹˈæpsɪd",
   "therapy": "θˈɛɹəpi",
-  "there": {
-    "DEFAULT": "ðɛɹ"
-  },
-  "there's": {
-    "DEFAULT": "ðɛɹz"
-  },
+  "there": "ðɛɹ",
+  "there's": "ðɛɹz",
   "thereabouts": "ðˈɛɹəbˌWts",
   "thereafter": "ðɛɹˈæftəɹ",
   "thereat": "ðɛɹˈæt",
@@ -477761,9 +477579,7 @@
   "thesauri": "θəsˈɔɹˌI",
   "thesaurus": "θəsˈɔɹəs",
   "thesauruses": "θəsˈɔɹəsᵻz",
-  "these": {
-    "DEFAULT": "ðiz"
-  },
+  "these": "ðiz",
   "theses": "θˈisˌiz",
   "thesis": "θˈisɪs",
   "thesp": "θˈɛsp",
@@ -477822,9 +477638,7 @@
   "thimerosal": "θImˈɛɹəsəl",
   "thin-film": "θˈɪnfˌɪlm",
   "thin-skinned": "θˌɪnskˈɪnd",
-  "thine": {
-    "DEFAULT": "ðIn"
-  },
+  "thine": "ðIn",
   "thing": "θˈɪŋ",
   "thingamabob": "θˈɪŋəməbˌɑb",
   "thingamajig": "θˈɪŋəməʤˌɪɡ",
@@ -477903,9 +477717,7 @@
   "thoroughness": "θˈɜɹənəs",
   "thoroughpin": "θˈɜɹəpˌɪn",
   "thorp": "θˈɔɹp",
-  "those": {
-    "DEFAULT": "ðOz"
-  },
+  "those": "ðOz",
   "though": "ðˌO",
   "thought": "θˈɔt",
   "thoughtcrime": "θˈɔtkɹˌIm",
@@ -478021,9 +477833,7 @@
   "throttle": "θɹˈɑɾᵊl",
   "throttlehold": "θɹˈɑɾᵊlhˌOld",
   "throttler": "θɹˈɑɾᵊləɹ",
-  "through": {
-    "DEFAULT": "θɹu"
-  },
+  "through": "θɹu",
   "through-composed": "θɹˌukəmpˈOzd",
   "throughout": "θɹuˈWt",
   "throughput": "θɹˈupˌʊt",
@@ -486069,9 +485879,7 @@
   "womenswear": "wˈɪmənzwˌɛɹ",
   "womxn": "wˈʊmən",
   "womyn": "wˈɪmən",
-  "won't": {
-    "DEFAULT": "wOnt"
-  },
+  "won't": "wOnt",
   "wonder": "wˈʌndəɹ",
   "wonderer": "wˈʌndəɹəɹ",
   "wonderful": "wˈʌndəɹfᵊl",
@@ -486296,14 +486104,10 @@
   "worthwhile": "wˌɜɹθhwˈIl",
   "worthwhileness": "wˌɜɹθhwˈIlnɪs",
   "worthy": "wˈɜɹði",
-  "would": {
-    "DEFAULT": "wʊd"
-  },
+  "would": "wʊd",
   "would-be": "wˈʊdbˌi",
   "wouldn't": "wˈʊdᵊnt",
-  "wouldst": {
-    "DEFAULT": "wʊdst"
-  },
+  "wouldst": "wʊdst",
   "wound": {
     "DEFAULT": "wˈund",
     "VBD": "wˈWnd",
