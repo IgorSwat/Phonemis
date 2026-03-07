@@ -236,8 +236,14 @@ std::u32string Lexicon::stem_ing(const std::string& word,
   
   // Adjust phonemization according to selected language rules.
   // https://en.wiktionary.org/wiki/-ing
-  if (language_ == Lang::EN_GB && (phonemes.back() == U'ə' || phonemes.back() == U'ː'))
-    return U""; // TODO: fix this
+  // In GB English, stems ending in schwa or length mark need the schwa
+  // dropped before adding -ɪŋ (e.g. "enter" /ˈɛntə/ → "entering" /ˈɛntəɹɪŋ/).
+  // For stems ending in ː (e.g. "explore" /ɪkˈsplɔː/), append ɹɪŋ as
+  // linking-r bridges the long vowel to the suffix.
+  if (language_ == Lang::EN_GB && phonemes.back() == U'ː')
+    return phonemes + U"ɹɪŋ";
+  if (language_ == Lang::EN_GB && phonemes.back() == U'ə')
+    return phonemes + U"ɹɪŋ";
   if (phonemes.size() > 1 && phonemes.back() == U't' &&
       constants::language::kUSTaus.find(phonemes[phonemes.size() - 2]) != std::u32string::npos)
     return phonemes.substr(0, phonemes.size() - 1) + U"ɾɪŋ";
@@ -361,15 +367,15 @@ Lexicon::lookup_special(const std::string& word,
   else if (word == "an" || word == "An" || word == "AN")
     return word == "AN" && string_utils::starts_with(tag, "NN") ? lookup_nnp(word) : U"ɐn";
   else if (is_single_char && word[0] == 'I' && tag == "PRP")
-    return std::u32string(1, constants::stress::kSecondary) + U"I";
+    return std::u32string(1, constants::stress::kPrimary) + U"I";
   else if ((word == "by" || word == "By" || word == "BY") && tag.parent_tag() == "ADV")
     return U"bˈI";
-  else if (word == "to" || word == "To" || word == "TO" && (tag == "TO" || tag == "IN"))
+  else if ((word == "to" || word == "To" || word == "TO") && (tag == "TO" || tag == "IN"))
     return !vowel_next.has_value() ? dict_.at("to").default_phonemes :
            vowel_next.value() ? U"tʊ" : U"tə";
-  else if (word == "in" || word == "In" || word == "IN" && tag != "NNP")
+  else if ((word == "in" || word == "In" || word == "IN") && tag != "NNP")
     return (!vowel_next.has_value() || tag != "IN" ? std::u32string(1, constants::stress::kPrimary) : U"") + U"ɪn";
-  else if (word == "the" || word == "The" || word == "THE" && tag == "DT")
+  else if ((word == "the" || word == "The" || word == "THE") && tag == "DT")
     return vowel_next.has_value() && vowel_next.value() ? U"ði" : U"ðə";
   else if (std::regex_match(word, std::regex(R"(vs\.?$)", std::regex_constants::icase)))
     return lookup("versus", {""}, {});
