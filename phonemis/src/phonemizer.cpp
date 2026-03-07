@@ -8,6 +8,15 @@ namespace phonemis::phonemizer {
 
 using namespace utilities;
 
+// Reduce trailing GOAT diphthong to schwa (compound vowel reduction).
+// O = US /oʊ/, Q = GB /əʊ/ — both consistently reduce at morpheme boundaries.
+static void reduce_trailing_goat(std::u32string& phonemes) {
+  if (phonemes.empty()) return;
+  char32_t last = phonemes.back();
+  if (last == U'O' || last == U'Q')
+    phonemes.back() = U'ə';
+}
+
 Phonemizer::Phonemizer(Lang language, const std::string& lexicon_filepath) {
   if (!lexicon_filepath.empty())
     lexicon_ = std::make_unique<Lexicon>(language, lexicon_filepath);
@@ -46,12 +55,12 @@ Phonemizer::fallback(const std::string& word,
   // phonemizing the prefix through the DP. This handles proper nouns built
   // from compound elements, e.g. "Holloway" = "hollo" + "way",
   // "Galloway" = "gallo" + "way", "Stanfield" = "stan" + "field".
-  int32_t max_suffix = std::min(length - 2, (int32_t)constants::kMaxSyllabeLength);
+  int32_t max_suffix = std::min(length - 2, static_cast<int32_t>(constants::kMaxSyllabeLength));
   for (int32_t suffix_len = max_suffix; suffix_len >= 3; suffix_len--) {
     auto suffix = lword.substr(length - suffix_len);
     auto prefix = lword.substr(0, length - suffix_len);
 
-    if ((int32_t)prefix.size() < 2) continue;
+    if (static_cast<int32_t>(prefix.size()) < 2) continue;
     if (!lexicon_->is_known(suffix)) continue;
 
     auto suffix_phonemes = lexicon_->get(suffix);
@@ -61,14 +70,9 @@ Phonemizer::fallback(const std::string& word,
     auto prefix_phonemes = fallback_dp(prefix, tag);
     if (prefix_phonemes.empty()) continue;
 
-    // Reduce trailing GOAT diphthong of the prefix (compound vowel reduction).
-    // In English compounds the /oʊ/ (US) or /əʊ/ (GB) at a morpheme boundary
-    // consistently reduces to schwa: hollow→Holloway, gallow→Galloway, etc.
-    if (!prefix_phonemes.empty()) {
-      char32_t last = prefix_phonemes.back();
-      if (last == U'O' || last == U'Q')
-        prefix_phonemes.back() = U'ə';
-    }
+    // Compound vowel reduction at the morpheme boundary:
+    // hollow→Holloway, gallow→Galloway, etc.
+    reduce_trailing_goat(prefix_phonemes);
 
     // Demote suffix primary stress to secondary
     auto ps = suffix_phonemes.find(constants::stress::kPrimary);
@@ -142,13 +146,9 @@ Phonemizer::fallback_dp(const std::string& lword,
           phonemes[primary_stress_pos] = constants::stress::kSecondary;
 
         // Reduce trailing GOAT diphthong in non-final syllables.
-        // In compound/multi-syllable words, unstressed /oʊ/ and /əʊ/ reduce
-        // to schwa (e.g. "hollo" in "holloway" → /hɑlə/ not /hɑloʊ/).
-        if (i < length - 1 && !phonemes.empty()) {
-          char32_t last = phonemes.back();
-          if (last == U'O' || last == U'Q')
-            phonemes.back() = U'ə';
-        }
+        // e.g. "hollo" in "holloway" → /hɑlə/ not /hɑloʊ/
+        if (i < length - 1)
+          reduce_trailing_goat(phonemes);
 
         // Apply penalty for using syllabes starting with vowels
         if (i > d &&
