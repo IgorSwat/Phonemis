@@ -236,14 +236,18 @@ std::u32string Lexicon::stem_ing(const std::string& word,
   
   // Adjust phonemization according to selected language rules.
   // https://en.wiktionary.org/wiki/-ing
-  // In GB English, stems ending in schwa or length mark need the schwa
-  // dropped before adding -ɪŋ (e.g. "enter" /ˈɛntə/ → "entering" /ˈɛntəɹɪŋ/).
-  // For stems ending in ː (e.g. "explore" /ɪkˈsplɔː/), append ɹɪŋ as
-  // linking-r bridges the long vowel to the suffix.
-  if (language_ == Lang::EN_GB && phonemes.back() == U'ː')
-    return phonemes + U"ɹɪŋ";
+  // In GB English, stems ending in schwa get linking-r before -ɪŋ
+  // (e.g. "enter" /ˈɛntə/ → "entering" /ˈɛntəɹɪŋ/).
   if (language_ == Lang::EN_GB && phonemes.back() == U'ə')
     return phonemes + U"ɹɪŋ";
+  // For stems ending in ː, linking-r only applies after historically rhotic
+  // vowels (ɔː, ɑː, ɜː). Not after iː or uː (e.g. "seeing" = /siːɪŋ/).
+  if (language_ == Lang::EN_GB && phonemes.back() == U'ː' && phonemes.size() >= 2) {
+    char32_t vowel = phonemes[phonemes.size() - 2];
+    if (vowel == U'ɔ' || vowel == U'ɑ' || vowel == U'ɜ')
+      return phonemes + U"ɹɪŋ";
+    return phonemes + U"ɪŋ";
+  }
   if (phonemes.size() > 1 && phonemes.back() == U't' &&
       constants::language::kUSTaus.find(phonemes[phonemes.size() - 2]) != std::u32string::npos)
     return phonemes.substr(0, phonemes.size() - 1) + U"ɾɪŋ";
