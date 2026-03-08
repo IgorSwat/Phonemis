@@ -24,7 +24,10 @@ public:
   bool is_known(const std::string& word) const;
 
   // Simple getter, just accessing the dictionary straight away
-  std::u32string get(const std::string& word) { return dict_.at(word).default_phonemes; }
+  std::u32string get(const std::string& word) {
+    auto it = dict_.find(word);
+    return it != dict_.end() ? it->second.default_phonemes : U"";
+  }
 
   // Returns the phonemization for given word, or "" if the phonemization failed
   std::u32string get(const std::string& word,

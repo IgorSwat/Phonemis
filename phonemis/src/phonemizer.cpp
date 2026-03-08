@@ -45,6 +45,9 @@ Phonemizer::phonemize(const std::string& word,
 std::u32string
 Phonemizer::fallback(const std::string& word,
                      const tagger::Tag& tag) const {
+  if (!lexicon_)
+    return U"";
+
   auto lword = string_utils::to_lower(word);
   int32_t length = lword.size();
 
