@@ -148,11 +148,6 @@ Phonemizer::fallback_dp(const std::string& lword,
         if (i > d && primary_stress_pos != std::u32string::npos)
           phonemes[primary_stress_pos] = constants::stress::kSecondary;
 
-        // Reduce trailing GOAT diphthong in non-final syllables.
-        // e.g. "hollo" in "holloway" → /hɑlə/ not /hɑloʊ/
-        if (i < length - 1)
-          reduce_trailing_goat(phonemes);
-
         // Apply penalty for using syllabes starting with vowels
         if (i > d &&
             constants::alphabet::kVowels.find(syllabe.front()) != std::string::npos)

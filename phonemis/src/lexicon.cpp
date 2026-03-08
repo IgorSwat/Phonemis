@@ -395,9 +395,21 @@ Lexicon::lookup_special(const std::string& word,
       ? apply_stress(used_entry.default_phonemes, stress.value())
       : used_entry.default_phonemes;
   }
+  else if (string_utils::to_lower(word) == "supposed") {
+    const auto& supposed_entry = dict_.at("supposed");
+    if ((tag == "VBD" || tag == "JJ") && future_to) {
+      auto phonemes = supposed_entry.pos_variants.count("VBD")
+        ? supposed_entry.pos_variants.at("VBD")
+        : supposed_entry.default_phonemes;
+      return stress.has_value() ? apply_stress(phonemes, stress.value()) : phonemes;
+    }
+    return stress.has_value()
+      ? apply_stress(supposed_entry.default_phonemes, stress.value())
+      : supposed_entry.default_phonemes;
+  }
   else if (string_utils::to_lower(word) == "src")
     return dict_.at("source").default_phonemes;
-  
+
   // If the word is not a special case, return no phonemes
   return U"";
 }

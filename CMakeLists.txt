@@ -26,3 +26,6 @@ target_link_libraries(test_tokenizer phonemis)
 
 add_executable(test_pipeline test/test_pipeline.cpp)
 target_link_libraries(test_pipeline phonemis)
+
+add_executable(test_pr2_regressions test/test_pr2_regressions.cpp)
+target_link_libraries(test_pr2_regressions phonemis)

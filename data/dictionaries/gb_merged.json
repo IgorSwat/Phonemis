@@ -14049,7 +14049,10 @@
   "agea": "ˈAʤiə",
   "ageb": "ˈAʤɛb",
   "agec": "ˈAʤɛk",
-  "aged": "ˈAʤd",
+  "aged": {
+    "DEFAULT": "ˈAʤd",
+    "ADJ": "ˈAʤɪd"
+  },
   "agee": "ˈaʤiː",
   "agef": "ˈAʤɛf",
   "ageg": "ˈAʤɛɡ",
@@ -430729,7 +430732,10 @@
   "blepharospasm": "blˈɛfəɹQspˌazəm",
   "blesbok": "blˈɛsbɒk",
   "bless": "blˈɛs",
-  "blessed": "blˈɛst",
+  "blessed": {
+    "DEFAULT": "blˈɛst",
+    "ADJ": "blˈɛsɪd"
+  },
   "blessedly": "blˈɛsɪdli",
   "blessedness": "blˈɛsɪdnɪs",
   "blessing": "blˈɛsɪŋ",
@@ -488877,7 +488883,10 @@
   "supportiveness": "səpˈɔːtɪvnɪs",
   "supposable": "səpˈQzəbᵊl",
   "suppose": "səpˈQz",
-  "supposed": "səpˈQzd",
+  "supposed": {
+    "DEFAULT": "səpˈQzd",
+    "VBD": "səpˈQst"
+  },
   "supposedly": "səpˈQzɪdli",
   "supposition": "sˌʌpəzˈɪʃᵊn",
   "suppositional": "sˌʌpəzˈɪʃənᵊl",

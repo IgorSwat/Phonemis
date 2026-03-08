@@ -14049,7 +14049,10 @@
   "agea": "ˈAʤiə",
   "ageb": "ˈAʤɛb",
   "agec": "ˈAʤɛk",
-  "aged": "ˈAʤd",
+  "aged": {
+    "DEFAULT": "ˈAʤd",
+    "ADJ": "ˈAʤɪd"
+  },
   "agee": "ˈæʤi",
   "agef": "ˈAʤɛf",
   "ageg": "ˈAʤɛɡ",
@@ -140741,7 +140744,10 @@
   "leaa": "lˈiə",
   "leab": "lˈib",
   "leac": "lˈik",
-  "lead": "lˈid",
+  "lead": {
+    "DEFAULT": "lˈid",
+    "NOUN": "lˈɛd"
+  },
   "leae": "lˈi",
   "leaf": "lˈif",
   "leag": "lˈiɡ",
@@ -206205,7 +206211,7 @@
     "DEFAULT": "ɹˈid",
     "VBD": "ɹˈɛd",
     "VBN": "ɹˈɛd",
-    "VBP": "ɹˈɛd"
+    "VBP": "ɹˈid"
   },
   "reae": "ɹˈi",
   "reaf": "ɹˈif",
@@ -411283,7 +411289,7 @@
   "aspirate's": "ˈæspəɹəts",
   "aspirated": "ˈæspəɹˌAɾᵻd",
   "aspirates": {
-    "DEFAULT": "ˈæspəɹˌAs",
+    "DEFAULT": "ˈæspəɹˌAts",
     "NOUN": "ˈæspəɹəts"
   },
   "aspirating": "ˈæspəɹˌAɾɪŋ",
@@ -414151,7 +414157,10 @@
   "blepharospasm": "blˈɛfəɹəspˌæzəm",
   "blesbok": "blˈɛsbˌɑk",
   "bless": "blˈɛs",
-  "blessed": "blˈɛst",
+  "blessed": {
+    "DEFAULT": "blˈɛst",
+    "ADJ": "blˈɛsɪd"
+  },
   "blessedly": "blˈɛsədli",
   "blessedness": "blˈɛsədnəs",
   "blessing": "blˈɛsɪŋ",
@@ -431107,7 +431116,10 @@
   "exponentially": "ˌɛkspənˈɛnʧəli",
   "exponentiate": "ˌɛkspənˈɛnʃiˌAt",
   "exponentiation": "ˌɛkspənˌɛnʧiˈAʃən",
-  "export": "ˈɛkspˌɔɹt",
+  "export": {
+    "DEFAULT": "ˈɛkspˌɔɹt",
+    "VERB": "ɪkspˈɔɹt"
+  },
   "exportability": "ɪkspˌɔɹɾəbˈɪləɾi",
   "exportable": "ɪkspˈɔɹɾəbəl",
   "exportation": "ˌɛkspˌɔɹtˈAʃən",
@@ -433509,7 +433521,7 @@
   "forethought": "fˈɔɹθˌɔt",
   "foretoken": {
     "DEFAULT": "fˈɔɹtˌOkən",
-    "NOUN": "fɔɹtˈOkən"
+    "VERB": "fɔɹtˈOkən"
   },
   "foretoken's": "fɔɹtˈOkənz",
   "foretokened": "fˈɔɹtˌOkənd",
@@ -461410,7 +461422,10 @@
   "proteolytic": "pɹˌOɾiəlˈɪɾɪk",
   "proteome": "pɹˈOɾiˌOm",
   "proteomics": "pɹˌOɾiˈɑmɪks",
-  "protest": "pɹˈOtˌɛst",
+  "protest": {
+    "DEFAULT": "pɹˈOtˌɛst",
+    "VERB": "pɹəˈtɛst"
+  },
   "protest's": "pɹˈOtˌɛsts",
   "protestation": "pɹˌɑɾəstˈAʃən",
   "protested": "pɹˈOtˌɛstᵻd",
@@ -475356,7 +475371,10 @@
   "supportiveness": "səpˈɔɹɾɪvnəs",
   "supposable": "səpˈOzəbəl",
   "suppose": "səpˈOz",
-  "supposed": "səpˈOzd",
+  "supposed": {
+    "DEFAULT": "səpˈOzd",
+    "VBD": "səpˈOst"
+  },
   "supposedly": "səpˈOzədli",
   "supposition": "sˌʌpəzˈɪʃən",
   "suppositional": "sˌʌpəzˈɪʃᵊnəl",
