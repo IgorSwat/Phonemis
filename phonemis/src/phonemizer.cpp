@@ -1,6 +1,6 @@
 #include <phonemis/phonemizer/phonemizer.h>
 #include <phonemis/phonemizer/constants.h>
-#include <phonemis/utilities/string_utils.h>
+#include <phonemis/utilities/strings.h>
 #include <vector>
 #include <iostream>
 
@@ -36,7 +36,7 @@ Phonemizer::phonemize(const std::string& word,
   if (lexicon_ != nullptr)
     phonemes = lexicon_->get(word, tag, base_stress, vowel_next, future_to);
 
-  if (phonemes.empty() && string_utils::is_alpha(word))
+  if (phonemes.empty() && strings::is_alpha(word))
     phonemes = fallback(word, tag);
 
   return phonemes;
@@ -48,7 +48,7 @@ Phonemizer::fallback(const std::string& word,
   if (!lexicon_)
     return U"";
 
-  auto lword = string_utils::to_lower(word);
+  auto lword = strings::to_lower(word);
   int32_t length = lword.size();
 
   if (lword.empty())
@@ -121,7 +121,7 @@ Phonemizer::fallback_dp(const std::string& lword,
       auto syllabe = lword.substr(i - d, d + 1);
 
       // A syllabe must contain at least one vowel (or be degenerated to a single consonant)
-      auto hasVowel = !string_utils::filter(syllabe, [](char c) -> bool {
+      auto hasVowel = !strings::filter(syllabe, [](char c) -> bool {
         return constants::alphabet::kVowels.find(c) != std::string::npos;
       }).empty();
       if (syllabe.size() > 1 && !hasVowel)

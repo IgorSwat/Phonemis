@@ -2,7 +2,8 @@
 #include <phonemis/preprocessor/constants.h>
 #include <phonemis/preprocessor/num2word.h>
 #include <phonemis/phonemizer/constants.h>
-#include <phonemis/utilities/string_utils.h>
+#include <phonemis/utilities/conversions.h>
+#include <phonemis/utilities/strings.h>
 #include <algorithm>
 #include <cctype>
 #include <cmath>
@@ -18,7 +19,7 @@ using unicode::constants::kForeignToLatin;
 // Text characters normalization
 std::string normalize_unicode(const std::string& text) {
 	// Start by converting to u32 format to easily iterate character by character
-	auto u32text = string_utils::utf8_to_u32string(text);
+	auto u32text = conversions::utf8_to_u32(text);
 
 	// Iterate character by character, replacing incompatible characters with latin-only phrases
 	std::string converted;
@@ -97,7 +98,7 @@ std::string verbalize_numbers(const std::string& text) {
 
 		// 1. Check currency
 		for (const auto& [symbol, words] : alphabet::kCurrencies) {
-			std::string utf8_symbol = utilities::string_utils::char32_to_utf8(symbol);
+			std::string utf8_symbol = conversions::char32_to_utf8(symbol);
 			if (text.substr(p_dist, utf8_symbol.size()) == utf8_symbol) {
 				currency_found = true;
 				currency_word = words.first;

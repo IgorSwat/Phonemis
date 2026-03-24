@@ -1,6 +1,7 @@
 #include <phonemis/pipeline.h>
 #include <phonemis/phonemizer/lexicon.h>
-#include <phonemis/utilities/string_utils.h>
+#include <phonemis/utilities/conversions.h>
+#include <phonemis/utilities/strings.h>
 #include <iostream>
 #include <string>
 
@@ -11,7 +12,7 @@ static int pass_count = 0;
 static int fail_count = 0;
 
 static std::string to_utf8(const std::u32string& s) {
-  return string_utils::u32string_to_utf8(s);
+  return conversions::u32_to_utf8(s);
 }
 
 // Check that string contains expected substring.

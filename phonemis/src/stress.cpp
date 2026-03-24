@@ -1,5 +1,5 @@
 #include <phonemis/phonemizer/stress.h>
-#include <phonemis/utilities/string_utils.h>
+#include <phonemis/utilities/strings.h>
 #include <vector>
 
 namespace phonemis::phonemizer {
@@ -18,12 +18,12 @@ std::u32string apply_stress(const std::u32string& phonemes, float stress) {
   );
 
   if (stress < -1.F) {
-    string_utils::replace__(result, constants::stress::kPrimary, {});
-    string_utils::replace__(result, constants::stress::kSecondary, {});
+    strings::replace__(result, constants::stress::kPrimary, {});
+    strings::replace__(result, constants::stress::kSecondary, {});
   }
   else if (stress == -1.F || (stress == 0.F || stress == 0.5F) && has_primary) {
-    string_utils::replace__(result, constants::stress::kSecondary, {});
-    string_utils::replace__(result, constants::stress::kPrimary,
+    strings::replace__(result, constants::stress::kSecondary, {});
+    strings::replace__(result, constants::stress::kPrimary,
                                   {constants::stress::kSecondary});    
   }
   else if ((stress == 0.F || stress == 0.5F || stress == 1.F ) &&
@@ -31,7 +31,7 @@ std::u32string apply_stress(const std::u32string& phonemes, float stress) {
     return restress(std::u32string(1, constants::stress::kSecondary) + result);
   }
   else if (stress >= 1.F && !has_primary && has_secondary) {
-    string_utils::replace__(result, constants::stress::kSecondary,
+    strings::replace__(result, constants::stress::kSecondary,
                                   {constants::stress::kPrimary});  
   }
   else if (stress > 1.F && !has_primary && !has_secondary && has_vowel) {

@@ -6,9 +6,11 @@
 #include <phonemis/preprocessor/tools.h>
 #include <phonemis/tokenizer/tokenize.h>
 #include <phonemis/tagger/tagger.h>
-#include <phonemis/utilities/string_utils.h>
+#include <phonemis/utilities/strings.h>
+#include <phonemis/utilities/conversions.h>
 
 using namespace phonemis;
+using namespace phonemis::utilities;
 
 int main() {
 
@@ -45,7 +47,7 @@ int main() {
   std::cout << "\nPhonemizing...\n\n";
   for (const auto& token : tokens) {
     auto phonemes = lexicon->get(token.text, token.tag.value());
-    std::cout << "Word: " << token.text << ", phonemes: " << utilities::string_utils::u32string_to_utf8(phonemes) << "\n";
+    std::cout << "Word: " << token.text << ", phonemes: " << conversions::u32_to_utf8(phonemes) << "\n";
   }
 
   return 0;

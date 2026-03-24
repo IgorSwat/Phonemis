@@ -5,12 +5,15 @@
 #include <string>
 #include "../../third-party/json.hpp"
 
-namespace phonemis::utilities::io_utils {
+namespace phonemis::utilities::io {
 
-// JSON file parsing
-// A decorator for external nlohmann::json parser.
-// Note that it loads an entire JSON to the memory, so its not recommended
-// for very large JSON files.
+/**
+ * JSON file parsing - a decorator for external nlohmann::json parser.
+ * @param fp The file path to the JSON file.
+ * @return The parsed nlohmann::json object.
+ * @throws std::invalid_argument If the file is not found or the JSON format is invalid.
+ * @throws std::runtime_error If the file fails to open.
+ */
 inline nlohmann::json load_json(const std::string& fp) {
   std::filesystem::path file_path(fp);
 	if (!std::filesystem::exists(file_path) || !std::filesystem::is_regular_file(file_path)) {

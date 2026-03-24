@@ -1,5 +1,5 @@
 #include <phonemis/tagger/tagger.h>
-#include <phonemis/utilities/io_utils.h>
+#include <phonemis/utilities/io.h>
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
@@ -9,7 +9,7 @@ namespace phonemis::tagger {
 
 Tagger::Tagger(const std::string& hmm_data_path) {
 	// Load the input JSON file
-	nlohmann::json json_obj = utilities::io_utils::load_json(hmm_data_path);
+	nlohmann::json json_obj = utilities::io::load_json(hmm_data_path);
 
 	// Validate required top-level fields
 	if (!json_obj.contains("start_prob") || !json_obj.contains("emission") || !json_obj.contains("transition")) {

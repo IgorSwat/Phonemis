@@ -1,5 +1,5 @@
 #include <phonemis/pipeline.h>
-#include <phonemis/utilities/string_utils.h>
+#include <phonemis/utilities/conversions.h>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -19,7 +19,7 @@ int main() {
   const std::string text = "Damian cloud is a real beast! He is the 66th of the raiders!";
   auto phonemes = us_pipeline.process(text);
   std::cout << "Text: " << text << "\n";
-  std::cout << "Phonemes: " << string_utils::u32string_to_utf8(phonemes) << "\n\n";
+  std::cout << "Phonemes: " << conversions::u32_to_utf8(phonemes) << "\n\n";
 
   // Compound word fallback tests
   std::vector<std::string> compound_tests = {
@@ -29,13 +29,13 @@ int main() {
   std::cout << "=== Compound word fallback (US) ===\n";
   for (const auto& word : compound_tests) {
     auto p = us_pipeline.process(word);
-    std::cout << word << ": " << string_utils::u32string_to_utf8(p) << "\n";
+    std::cout << word << ": " << conversions::u32_to_utf8(p) << "\n";
   }
 
   std::cout << "\n=== Compound word fallback (GB) ===\n";
   for (const auto& word : compound_tests) {
     auto p = gb_pipeline.process(word);
-    std::cout << word << ": " << string_utils::u32string_to_utf8(p) << "\n";
+    std::cout << word << ": " << conversions::u32_to_utf8(p) << "\n";
   }
 
   return 0;

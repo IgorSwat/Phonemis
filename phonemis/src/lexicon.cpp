@@ -1,8 +1,9 @@
 #include <phonemis/phonemizer/lexicon.h>
 #include <phonemis/phonemizer/constants.h>
 #include <phonemis/phonemizer/stress.h>
-#include <phonemis/utilities/io_utils.h>
-#include <phonemis/utilities/string_utils.h>
+#include <phonemis/utilities/io.h>
+#include <phonemis/utilities/strings.h>
+#include <phonemis/utilities/conversions.h>
 #include <filesystem>
 #include <fstream>
 #include <numeric>
@@ -28,7 +29,7 @@ static std::string get_parent_tag(const std::string& tag) {
 Lexicon::Lexicon(Lang language, const std::string& dict_filepath)
   : language_(language) {
   // Load the input JSON file
-	auto json_obj = io_utils::load_json(dict_filepath);
+	auto json_obj = io::load_json(dict_filepath);
 
   // Dictionary entries can be either plain strings or objects with POS variants
   for (auto& item : json_obj.items()) {
@@ -37,12 +38,12 @@ Lexicon::Lexicon(Lang language, const std::string& dict_filepath)
 
     DictEntry entry;
     if (phonemes.is_string()) {
-      auto ps = string_utils::utf8_to_u32string(phonemes.get<std::string>());
+      auto ps = conversions::utf8_to_u32(phonemes.get<std::string>());
       entry = DictEntry{ps, {}};
     } else if (phonemes.is_object()) {
       for (auto& [pos, val] : phonemes.items()) {
         if (val.is_null() || pos == "None") continue;
-        auto ps = string_utils::utf8_to_u32string(val.get<std::string>());
+        auto ps = conversions::utf8_to_u32(val.get<std::string>());
         if (pos == "DEFAULT") entry.default_phonemes = ps;
         else entry.pos_variants[pos] = ps;
       }
@@ -56,17 +57,17 @@ Lexicon::Lexicon(Lang language, const std::string& dict_filepath)
 
     // In order to make the vocab less case-sensitive, we expand it with
     // additional entries: lowered and capitalized one if needed.
-    auto text_lowered = string_utils::to_lower(text);
-    auto text_capitalized = string_utils::capitalize(text);
+    auto text_lowered = strings::to_lower(text);
+    auto text_capitalized = strings::capitalize(text);
     if (text.size() >= 2 && text == text_lowered && text != text_capitalized)
       dict_[text_capitalized] = entry;
-    else if (text.size() >= 2 && text == string_utils::capitalize(text_lowered))
+    else if (text.size() >= 2 && text == strings::capitalize(text_lowered))
       dict_[text_lowered] = entry;
   }
 }
 
 bool Lexicon::is_known(const std::string& word) const {
-  return dict_.contains(word) || dict_.contains(string_utils::to_lower(word)) ||
+  return dict_.contains(word) || dict_.contains(strings::to_lower(word)) ||
          (word.size() == 1 && (std::isalpha(word[0]) || constants::alphabet::kSymbols.contains(word[0])));
 }
 
@@ -75,8 +76,8 @@ std::u32string Lexicon::get(const std::string& word,
                             std::optional<float> base_stress,
                             std::optional<bool> vowel_next,
                             bool future_to) {
-  std::optional<float> stress = word == string_utils::to_lower(word) ? std::nullopt :
-                                word == string_utils::to_upper(word) ?
+  std::optional<float> stress = word == strings::to_lower(word) ? std::nullopt :
+                                word == strings::to_upper(word) ?
                                   std::make_optional(2.F) : std::make_optional(0.5F);
 
   // Phonemize
@@ -102,22 +103,22 @@ std::u32string Lexicon::get_word(const std::string& word,
   
   // TODO: add unicode normalization
   std::string used_word = word;
-  std::string lower = string_utils::to_lower(word);
+  std::string lower = strings::to_lower(word);
   if (word.size() > 1 &&
-      string_utils::is_alpha(string_utils::filter(word, [](char c) -> bool { return c != '\''; })) &&
+      strings::is_alpha(strings::filter(word, [](char c) -> bool { return c != '\''; })) &&
       word != lower &&
       (tag != "NNP" || word.size() > 7) &&
       !dict_.contains(word) &&
-      (word == string_utils::to_upper(word) || word.substr(1) == string_utils::to_lower(word.substr(1))) &&
+      (word == strings::to_upper(word) || word.substr(1) == strings::to_lower(word.substr(1))) &&
       (dict_.contains(lower) || stem_s(word, tag, stress) != U"" ||
         stem_ed(word, tag, stress) != U"" || stem_ing(word, tag, stress) != U""))
     used_word = lower;
   
   if (is_known(used_word))
     return lookup(word, tag, stress);
-  if (string_utils::ends_with(used_word, "s'") && is_known(used_word.substr(0, used_word.size() - 2) + "'s"))
+  if (strings::ends_with(used_word, "s'") && is_known(used_word.substr(0, used_word.size() - 2) + "'s"))
     return lookup(used_word.substr(0, used_word.size() - 2) + "'s", tag, stress);
-  if (string_utils::ends_with(used_word, "'") && is_known(used_word.substr(0, used_word.size() - 1)))
+  if (strings::ends_with(used_word, "'") && is_known(used_word.substr(0, used_word.size() - 1)))
     return lookup(used_word.substr(0, used_word.size() - 1), tag, stress);
   
   for (auto stem_f : {&Lexicon::stem_s, &Lexicon::stem_ed}) {
@@ -144,13 +145,13 @@ std::u32string Lexicon::stem_s(const std::string& word,
 
   if (word.size() < 3 || word.back() != 's')
     return U"";
-  else if (!string_utils::ends_with(word, "ss") && is_known(word.substr(0, word.size() - 1)))
+  else if (!strings::ends_with(word, "ss") && is_known(word.substr(0, word.size() - 1)))
     stem = word.substr(0, word.size() - 1);
-  else if ((string_utils::ends_with(word, "'s") || 
-            word.size() > 4 && string_utils::ends_with(word, "es") && !string_utils::ends_with(word, "ies")) &&
+  else if ((strings::ends_with(word, "'s") || 
+            word.size() > 4 && strings::ends_with(word, "es") && !strings::ends_with(word, "ies")) &&
             is_known(word.substr(0, word.size() - 2)))
     stem = word.substr(0, word.size() - 2);
-  else if (word.size() > 4 && string_utils::ends_with(word, "ies") &&
+  else if (word.size() > 4 && strings::ends_with(word, "ies") &&
            is_known(word.substr(0, word.size() - 3) + "y"))
     stem = word.substr(0, word.size() - 3) + "y";
   else
@@ -180,10 +181,10 @@ std::u32string Lexicon::stem_ed(const std::string& word,
 
   if (word.size() < 4 || word.back() != 'd')
     return U"";
-  else if (!string_utils::ends_with(word, "dd") && is_known(word.substr(0, word.size() - 1)))
+  else if (!strings::ends_with(word, "dd") && is_known(word.substr(0, word.size() - 1)))
     stem = word.substr(0, word.size() - 1);
-  else if (word.size() > 4 && string_utils::ends_with(word, "ed") &&
-           !string_utils::ends_with(word, "eed") && is_known(word.substr(0, word.size() - 2)))
+  else if (word.size() > 4 && strings::ends_with(word, "ed") &&
+           !strings::ends_with(word, "eed") && is_known(word.substr(0, word.size() - 2)))
     stem = word.substr(0, word.size() - 2);
   else
     return U"";
@@ -217,7 +218,7 @@ std::u32string Lexicon::stem_ing(const std::string& word,
 
   static const std::regex ing_pattern("([bcdgklmnprstvxz])\\1ing$|cking$");
 
-  if (word.size() < 5 || !string_utils::ends_with(word, "ing"))
+  if (word.size() < 5 || !strings::ends_with(word, "ing"))
     return U"";
   else if (word.size() > 5 && is_known(word.substr(0, word.size() - 3)))
     stem = word.substr(0, word.size() - 3);
@@ -263,8 +264,8 @@ std::u32string Lexicon::lookup(const std::string& word,
   const DictEntry* entry = nullptr;
   if (dict_.contains(word))
     entry = &dict_.at(word);
-  else if (dict_.contains(string_utils::to_lower(word)))
-    entry = &dict_.at(string_utils::to_lower(word));
+  else if (dict_.contains(strings::to_lower(word)))
+    entry = &dict_.at(strings::to_lower(word));
 
   std::u32string phonemes = U"";
   if (entry) {
@@ -303,7 +304,7 @@ std::u32string Lexicon::lookup(const std::string& word,
 
 std::u32string Lexicon::lookup_nnp(const std::string& word) const {
   // First, filter all non-alpha characters
-  std::string word_alpha = string_utils::filter(word, [](char c) -> bool { return std::isalpha(c); });
+  std::string word_alpha = strings::filter(word, [](char c) -> bool { return std::isalpha(c); });
   size_t no_alphas = word_alpha.size();
 
   // To handle a most likely unique word, we try to phonemize it letter by letter
@@ -342,9 +343,9 @@ Lexicon::lookup_special(const std::string& word,
   bool is_add_symbol = is_single_char && constants::alphabet::kAddSymbols.contains(word[0]);
   bool is_other_symbol = is_single_char && constants::alphabet::kSymbols.contains(word[0]);
 
-  std::string word_stripped = string_utils::strip(word, std::make_optional('.'));
-  std::string word_without_dots = string_utils::filter(word, [](char c) -> bool { return c != '.'; });
-  std::vector<std::string> word_splitted = string_utils::split(word_stripped, '.');
+  std::string word_stripped = strings::strip(word, std::make_optional('.'));
+  std::string word_without_dots = strings::filter(word, [](char c) -> bool { return c != '.'; });
+  std::vector<std::string> word_splitted = strings::split(word_stripped, '.');
   size_t max_subword_size = 
     std::accumulate(word_splitted.begin(), word_splitted.end(), 0LL, 
       [](size_t m, const auto& str) { return std::max(m, str.size()); });
@@ -355,13 +356,13 @@ Lexicon::lookup_special(const std::string& word,
   else if (is_other_symbol)
     return lookup(constants::alphabet::kSymbols.at(word[0]), {""}, {});
   else if (word_stripped.find('.') != std::string::npos &&
-           string_utils::is_alpha(word_without_dots) && 
+           strings::is_alpha(word_without_dots) && 
            max_subword_size < 3)
     return lookup_nnp(word);
   else if (is_single_char && (word[0] == 'a' || word[0] == 'A'))
     return tag == "DT" ? U"ɐ" : U"ˈA";
   else if (word == "am" || word == "Am" || word == "AM") {
-    if (string_utils::starts_with(tag, "NN"))
+    if (strings::starts_with(tag, "NN"))
       return lookup_nnp(word);
     if (!vowel_next.has_value() || word != "am" || stress.has_value() && stress.value() > 0)
       return dict_.at("am").default_phonemes;
@@ -369,7 +370,7 @@ Lexicon::lookup_special(const std::string& word,
       return U"ɐm";
   }
   else if (word == "an" || word == "An" || word == "AN")
-    return word == "AN" && string_utils::starts_with(tag, "NN") ? lookup_nnp(word) : U"ɐn";
+    return word == "AN" && strings::starts_with(tag, "NN") ? lookup_nnp(word) : U"ɐn";
   else if (is_single_char && word[0] == 'I' && tag == "PRP")
     return std::u32string(1, constants::stress::kPrimary) + U"I";
   else if ((word == "by" || word == "By" || word == "BY") && tag.parent_tag() == "ADV")
@@ -395,7 +396,7 @@ Lexicon::lookup_special(const std::string& word,
       ? apply_stress(used_entry.default_phonemes, stress.value())
       : used_entry.default_phonemes;
   }
-  else if (string_utils::to_lower(word) == "supposed") {
+  else if (strings::to_lower(word) == "supposed") {
     const auto& supposed_entry = dict_.at("supposed");
     if ((tag == "VBD" || tag == "JJ") && future_to) {
       auto phonemes = supposed_entry.pos_variants.count("VBD")
@@ -407,7 +408,7 @@ Lexicon::lookup_special(const std::string& word,
       ? apply_stress(supposed_entry.default_phonemes, stress.value())
       : supposed_entry.default_phonemes;
   }
-  else if (string_utils::to_lower(word) == "src")
+  else if (strings::to_lower(word) == "src")
     return dict_.at("source").default_phonemes;
 
   // If the word is not a special case, return no phonemes

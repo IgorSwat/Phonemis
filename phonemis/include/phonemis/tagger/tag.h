@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../utilities/string_utils.h"
+#include "../utilities/strings.h"
 #include <string>
 
 namespace phonemis::tagger {
@@ -21,13 +21,13 @@ public:
   // Extra logic
   Tag parent_tag() const {
     auto this_tag = static_cast<const std::string&>(*this);
-    if (this_tag == "VERB" || string_utils::starts_with(this_tag, "VB"))
+    if (this_tag == "VERB" || strings::starts_with(this_tag, "VB"))
       return {"VERB"};
-    if (this_tag == "NOUN" || string_utils::starts_with(this_tag, "NN"))
+    if (this_tag == "NOUN" || strings::starts_with(this_tag, "NN"))
       return {"NOUN"};
-    if (string_utils::starts_with(this_tag, "ADV") || string_utils::starts_with(this_tag, "RB"))
+    if (strings::starts_with(this_tag, "ADV") || strings::starts_with(this_tag, "RB"))
       return {"ADV"};
-    if (string_utils::starts_with(this_tag, "ADJ") || string_utils::starts_with(this_tag, "JJ"))
+    if (strings::starts_with(this_tag, "ADJ") || strings::starts_with(this_tag, "JJ"))
       return {"ADJ"};
     return (*this);
   }

@@ -1,6 +1,7 @@
 #include <phonemis/pipeline.h>
 #include <phonemis/phonemizer/constants.h>
-#include <phonemis/utilities/string_utils.h>
+#include <phonemis/utilities/strings.h>
+#include <phonemis/utilities/conversions.h>
 
 namespace phonemis {
 
@@ -90,7 +91,7 @@ std::u32string Pipeline::process(const std::string& text) {
         phonemized_sentence += std::u32string(1, word[0]);
       
       if (!token.whitespace.empty())
-        phonemized_sentence += string_utils::utf8_to_u32string(token.whitespace);
+        phonemized_sentence += conversions::utf8_to_u32(token.whitespace);
 
       // Check if the latest phonemization contains any vowels
       // This will affect the following phonemization (of the next token).
