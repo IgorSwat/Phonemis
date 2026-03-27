@@ -5,7 +5,7 @@
 #include <string>
 
 /**
- * String conversions.
+ * Type conversions
  * 
  * We use two different formats to represent strings: UTF-8 and UTF-32.
  * UTF-8 is the standard encoding for storage and transport, but UTF-32

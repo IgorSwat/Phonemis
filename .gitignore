@@ -16,3 +16,6 @@ __pycache__
 # Local test/playground files
 scripts/phonemization_playground.py
 scripts/test_dynamic_algo.py
+
+# TMP
+phonemis-old

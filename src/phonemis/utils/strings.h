@@ -16,9 +16,9 @@
  */
 namespace phonemis::utilities::strings {
 
-/**
- * ----- Predicates -----
- */
+// ----------------------
+// ----- Predicates -----
+// ----------------------
 
 /**
  * Checks if given string contains only alphabetical characters.
@@ -55,9 +55,10 @@ inline bool starts_with(const StringT& str, std::string_view prefix) {
 				 str.substr(0, prefix.size()) == prefix;
 }
 
-/**
- * ----- Lower/Upper case transformations -----
- */
+
+// --------------------------------------------
+// ----- Lower/Upper case transformations -----
+// --------------------------------------------
 
 /**
  * Capitalization (first letter only).
@@ -101,9 +102,10 @@ inline void to_upper__(StringT& str) {
 								 [](auto c) { return std::toupper(c); });
 }
 
-/**
- * ----- Character-wise transformations -----
- */
+
+// ------------------------------------------
+// ----- Character-wise transformations -----
+// ------------------------------------------
 
 /**
  * Filters a given string and omits all the characters which
@@ -148,9 +150,10 @@ inline StringT strip(const StringT& str, std::optional<CharT> c = std::nullopt) 
 	return lbound != str.end() ? StringT(lbound, std::prev(rbound.base())) : StringT();
 }
 
-/**
- * ----- Splitting -----
- */
+
+// ------------------
+// ----- Splits -----
+// ------------------
 
 /**
  * Splits the string by the given character.
@@ -174,9 +177,10 @@ inline std::vector<StringT> split(const StringT& str, CharT bpoint) {
 	return result;
 }
 
-/**
- * ----- Immutable operations -----
- */
+
+// --------------------------------
+// ----- Immutable operations -----
+// --------------------------------
 
 // Generates non-mutating wrapper `name(...)` that calls `name__(...)`
 // Used to create a non-inplace versions of the above functions.

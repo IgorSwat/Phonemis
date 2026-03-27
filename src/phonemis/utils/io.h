@@ -5,6 +5,11 @@
 #include <string>
 #include "../../third-party/json.hpp"
 
+/**
+ * Input/Output utilities
+ * 
+ * A set of utilities to handle filesystem interactions.
+ */
 namespace phonemis::utilities::io {
 
 /**
