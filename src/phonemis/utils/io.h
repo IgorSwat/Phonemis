@@ -10,7 +10,7 @@
  * 
  * A set of utilities to handle filesystem interactions.
  */
-namespace phonemis::utilities::io {
+namespace phonemis::utils::io {
 
 /**
  * JSON file parsing - a decorator for external nlohmann::json parser.

@@ -6,9 +6,9 @@ namespace phonemis::test {
 using namespace preprocessor::num2word;
 
 // A dumb class to simplify the testing procedure.
-class TestNum2Word : public Num2Word {
+class TestNum2Word : public Num2WordLayer {
 public:
-    using Num2Word::Num2Word;
+    using Num2WordLayer::Num2WordLayer;
 
     std::string convert(const StringifiedNumber& number) const override {
         switch (number.conversionMode) {
@@ -24,7 +24,7 @@ public:
     }
 };
 
-REGISTER_TEST(num2word_basic_transform_test)
+REGISTER_TEST(num2word_base_basic_transform_test)
 {
     TestNum2Word layer;
 
@@ -41,7 +41,7 @@ REGISTER_TEST(num2word_basic_transform_test)
     return true;
 }
 
-REGISTER_TEST(num2word_ordinal_dot_test)
+REGISTER_TEST(num2word_base_ordinal_dot_test)
 {
     Config config;
     config.allowGeneralOrdNotation = true;
@@ -67,7 +67,7 @@ REGISTER_TEST(num2word_ordinal_dot_test)
     return true;
 }
 
-REGISTER_TEST(num2word_date_test)
+REGISTER_TEST(num2word_base_date_test)
 {
     TestNum2Word layer;
 
@@ -77,7 +77,7 @@ REGISTER_TEST(num2word_date_test)
 
     return true;
 }
-REGISTER_TEST(num2word_complex_sequence_test)
+REGISTER_TEST(num2word_base_complex_sequence_test)
 {
     TestNum2Word layer;
     Config config;

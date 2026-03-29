@@ -19,15 +19,15 @@ namespace {
 static const std::regex combined_regex(
     R"((\b\d{1,4}[.-]\d{1,2}[.-]\d{1,4}\b)|)"          // 1: DATE
     R"((\b\d+/\d+\b)|)"                                // 2: FRACTION
-    R"((\b\d+\.\d+\b)|)"                              // 3: FLOAT
-    R"((\b\d+\.)|)"                                   // 4: DOT_ORDINAL
-    R"((\b\d+[a-zA-Z]+\b)|)"                          // 5: POT_ORDINAL
-    R"((\b\d+\b))",                                   // 6: INTEGER
+    R"((\b\d+\.\d+\b)|)"                               // 3: FLOAT
+    R"((\b\d+\.)|)"                                    // 4: DOT_ORDINAL
+    R"((\b\d+[a-zA-Z]+\b)|)"                           // 5: POT_ORDINAL
+    R"((\b\d+\b))",                                    // 6: INTEGER
     std::regex::optimize
 );
 } // namespace
 
-std::string Num2Word::transform(std::string_view input) const {
+std::string Num2WordLayer::transform(std::string_view input) const {
   std::string result;
   result.reserve(input.size() + 32);
 
@@ -64,7 +64,7 @@ std::string Num2Word::transform(std::string_view input) const {
     } else if (m[5].matched) {
       mode = Mode::POTENTIALY_ORDINAL;
     } else if (m[6].matched) {
-      mode = Mode::CARDINAL; // Integer
+      mode = Mode::CARDINAL;  // Integer
     }
 
     result.append(input.substr(last_pos, pos - last_pos));

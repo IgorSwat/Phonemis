@@ -14,7 +14,7 @@
  * 
  * TODO: Replace with manual conversions to get rid of 'deprecated' warnings.
  */
-namespace phonemis::utilities::conversions {
+namespace phonemis::utils::conversions {
 
 /**
  * Converts a single UTF-32 character to a UTF-8 string.

@@ -14,7 +14,7 @@
  * 
  * NOTE: Inline (mutable) versions of each operation is marked with trailing __.
  */
-namespace phonemis::utilities::strings {
+namespace phonemis::utils::strings {
 
 // ----------------------
 // ----- Predicates -----
@@ -28,7 +28,7 @@ namespace phonemis::utilities::strings {
 template <typename StringT>
 inline bool is_alpha(const StringT& str) {
 	return std::all_of(str.cbegin(), str.cend(), 
-										 [](char c) -> bool { return std::isalpha(c); });
+										 [](auto c) -> bool { return std::isalpha(c); });
 }
 
 /**
@@ -38,7 +38,7 @@ inline bool is_alpha(const StringT& str) {
  * @return True if str ends with suffix.
  */
 template <typename StringT>
-inline bool ends_with(const StringT& str, std::string_view suffix) {
+inline bool ends_with(const StringT& str, const StringT& suffix) {
 	return str.size() >= suffix.size() &&
 				 str.substr(str.size() - suffix.size()) == suffix;
 }
@@ -50,7 +50,7 @@ inline bool ends_with(const StringT& str, std::string_view suffix) {
  * @return True if str starts with prefix.
  */
 template <typename StringT>
-inline bool starts_with(const StringT& str, std::string_view prefix) {
+inline bool starts_with(const StringT& str, const StringT& prefix) {
 	return str.size() >= prefix.size() &&
 				 str.substr(0, prefix.size()) == prefix;
 }
