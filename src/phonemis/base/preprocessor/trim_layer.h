@@ -16,7 +16,7 @@ public:
   TrimLayer() = default;
   ~TrimLayer() override = default;
 
-  std::string transform(std::string_view input) const override;
+  std::u32string transform(std::u32string_view input) const override;
 };
 
 } // namespace phonemis::preprocessor

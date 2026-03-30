@@ -12,7 +12,7 @@ class Preprocessor {
 public:
   Preprocessor() = default;
 
-  std::string process(std::string_view input) const;
+  std::u32string process(std::u32string_view input) const;
 
 protected:
   // Preprocessing layers - each layer performs some sort of

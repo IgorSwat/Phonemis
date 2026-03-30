@@ -13,6 +13,7 @@ enum class Mode {
   ORDINAL,
 
   FRACTION,
+  CURRENCY,
 
   MONTH,
   YEAR,
@@ -21,7 +22,7 @@ enum class Mode {
 
 // Conversion input - text representation + mode
 struct StringifiedNumber {
-  std::string_view text;
+  std::u32string_view text;
   Mode conversionMode = Mode::CARDINAL;
 };
 

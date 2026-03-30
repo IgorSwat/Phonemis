@@ -28,6 +28,8 @@ if(BUILD_TESTS)
     
     # Set include path for the library sources
     target_include_directories(phonemis_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+    target_compile_options(phonemis_test PRIVATE -Wno-deprecated-declarations)
 else()
     # Build static library
     add_library(phonemis STATIC ${SOURCE_FILES})

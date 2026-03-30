@@ -1,5 +1,7 @@
 #pragma once
 
+#include "unicode.h"
+
 #include <algorithm>
 #include <string>
 #include <string_view>
@@ -27,8 +29,11 @@ namespace phonemis::utils::strings {
  */
 template <typename StringT>
 inline bool is_alpha(const StringT& str) {
+	using std::isalpha;
+	using unicode::isalpha;
+
 	return std::all_of(str.cbegin(), str.cend(), 
-										 [](auto c) -> bool { return std::isalpha(c); });
+										 [](auto c) -> bool { return isalpha(c); });
 }
 
 /**
@@ -67,8 +72,11 @@ inline bool starts_with(const StringT& str, const StringT& prefix) {
  */
 template <typename StringT>
 inline void capitalize__(StringT& str) {
+	using std::toupper;
+	using unicode::toupper;
+
 	if (!str.empty())
-		str[0] = std::toupper(str[0]);
+		str[0] = toupper(str[0]);
 }
 
 /**
@@ -78,8 +86,11 @@ inline void capitalize__(StringT& str) {
  */
 template <typename StringT>
 inline void lowerize__(StringT& str) {
+	using std::tolower;
+	using unicode::tolower;
+
 	if (!str.empty())
-		str[0] = std::tolower(str[0]);
+		str[0] = tolower(str[0]);
 }
 
 /**
@@ -88,8 +99,11 @@ inline void lowerize__(StringT& str) {
  */
 template <typename StringT>
 inline void to_lower__(StringT& str) {
+	using std::tolower;
+	using unicode::tolower;
+
 	std::transform(str.cbegin(), str.cend(), str.begin(), 
-								 [](auto c) { return std::tolower(c); });
+								 [](auto c) { return tolower(c); });
 }
 
 /**
@@ -98,8 +112,11 @@ inline void to_lower__(StringT& str) {
  */
 template <typename StringT>
 inline void to_upper__(StringT& str) {
+	using std::toupper;
+	using unicode::toupper;
+
 	std::transform(str.cbegin(), str.cend(), str.begin(),
-								 [](auto c) { return std::toupper(c); });
+								 [](auto c) { return toupper(c); });
 }
 
 
@@ -142,10 +159,13 @@ inline void replace__(StringT& str, CharT a, std::optional<CharT> b) {
  */
 template <typename StringT, typename CharT>
 inline StringT strip(const StringT& str, std::optional<CharT> c = std::nullopt) {
+	using std::isspace;
+	using unicode::isspace;
+
 	auto lbound = std::find_if(str.cbegin(), str.cend(), 
-														 [&c](CharT a) -> bool { return c.has_value() ? a != c : !std::isspace(a); });
+														 [&c](CharT a) -> bool { return c.has_value() ? a != c : !isspace(a); });
 	auto rbound = std::find_if(str.crbegin(), str.crend(),
-														 [&c](CharT a) -> bool { return c.has_value() ? a != c : !std::isspace(a); });
+														 [&c](CharT a) -> bool { return c.has_value() ? a != c : !isspace(a); });
 	
 	return lbound != str.end() ? StringT(lbound, std::prev(rbound.base())) : StringT();
 }
@@ -198,5 +218,5 @@ MAKE_NON_INPLACE(to_upper)
 MAKE_NON_INPLACE(filter)
 MAKE_NON_INPLACE(replace)
 
-
 } // namespace phonemis::utilities::strings 
+

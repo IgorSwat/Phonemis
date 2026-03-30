@@ -1,4 +1,5 @@
 #include "trim_layer.h"
+#include <phonemis/utils/unicode.h>
 
 #include <algorithm>
 #include <cctype>
@@ -6,21 +7,21 @@
 
 namespace phonemis::preprocessor {
 
-std::string TrimLayer::transform(std::string_view input) const {
+std::u32string TrimLayer::transform(std::u32string_view input) const {
   if (input.empty()) {
-    return "";
+    return U"";
   }
 
-  std::string result;
+  std::u32string result;
   result.reserve(input.size());
 
   // A hack to omit the leading whitespaces
   bool last_was_space = true;
 
   for (auto it = input.begin(); it != input.end(); ++it) {
-    bool isSpace = std::isspace(static_cast<unsigned char>(*it));
+    bool isSpace = std::isspace(*it);
     if (isSpace && !last_was_space) {
-      result += ' ';
+      result += U' ';
       last_was_space = true;
     } else if (!isSpace) {
       result += *it;
@@ -29,7 +30,7 @@ std::string TrimLayer::transform(std::string_view input) const {
   }
 
   // Remove trailing space if it exists
-  if (!result.empty() && std::isspace(static_cast<unsigned char>(result.back()))) {
+  if (!result.empty() && std::isspace(result.back())) {
     result.pop_back();
   }
 

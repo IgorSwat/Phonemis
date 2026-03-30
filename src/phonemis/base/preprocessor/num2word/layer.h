@@ -17,10 +17,10 @@ public:
     explicit Num2WordLayer(const Config& config) : config_(config) {}
 
     // Utilizes template method pattern with abstract convertion (`convert()`) mechanism
-    std::string transform(std::string_view input) const override;
+    std::u32string transform(std::u32string_view input) const override;
 
     // Needs to be implemented by language-specyfic layers.
-    virtual std::string convert(const StringifiedNumber& number) const = 0;
+    virtual std::u32string convert(const StringifiedNumber& number) const = 0;
 private:
     Config config_;
 };

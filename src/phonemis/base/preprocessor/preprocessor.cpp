@@ -2,8 +2,8 @@
 
 namespace phonemis::preprocessor {
 
-std::string Preprocessor::process(std::string_view input) const {
-  std::string result(input);
+std::u32string Preprocessor::process(std::u32string_view input) const {
+  std::u32string result(input);
 
   for (const auto& layer : layers_) {
     result = layer->transform(result);

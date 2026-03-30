@@ -1,16 +1,19 @@
 #pragma once
 
+#include "conversions.h"
+#include <third-party/json.hpp>
+
 #include <filesystem>
 #include <fstream>
 #include <string>
-#include "../../third-party/json.hpp"
 
 /**
  * Input/Output utilities
  * 
  * A set of utilities to handle filesystem interactions.
  */
-namespace phonemis::utils::io {
+namespace phonemis {
+namespace utils::io {
 
 /**
  * JSON file parsing - a decorator for external nlohmann::json parser.
@@ -39,6 +42,19 @@ inline nlohmann::json load_json(const std::string& fp) {
 	}
 
   return json_obj;
+}
+
+}	// utils::io
+
+/**
+ * Custom IO overloads for u32string
+ */
+inline std::ostream& operator<<(std::ostream& os, const std::u32string& u32) {
+  return os << phonemis::utils::conversions::u32_to_utf8(u32);
+}
+
+inline std::ostream& operator<<(std::ostream& os, const char32_t* u32) {
+  return os << phonemis::utils::conversions::u32_to_utf8(u32);
 }
 
 } // phonemis::utilities::io
