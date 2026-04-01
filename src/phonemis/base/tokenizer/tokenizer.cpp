@@ -73,7 +73,7 @@ void Tokenizer::processPhrase(std::u32string_view word,
       }
 
       // Push separator as its own token (single-char view)
-      tokenVec.push_back(Token{std::u32string_view(word.data() + i, 1)});
+      tokenVec.push_back(Token{std::u32string(word.data() + i, 1)});
     } else {
       currw_offset = (currw_len == 0) ? i : currw_offset;
       ++currw_len;
@@ -95,7 +95,7 @@ void Tokenizer::processChunk(std::u32string_view chunk,
 	// further divisions.
   // Note that the lookup is not case sensitive.
 	if (isException(strings::to_lower(chunk))) {
-		tokenVec.push_back({chunk});
+		tokenVec.push_back({std::u32string(chunk)});
 		return;
 	}
 
@@ -112,7 +112,7 @@ void Tokenizer::processChunk(std::u32string_view chunk,
 
 	// If no special character found, it's a simple token (an entire word)
 	if (special_pos == std::string::npos) {
-		tokenVec.push_back({chunk});
+		tokenVec.push_back({std::u32string(chunk)});
 		return;
 	}
 
@@ -133,7 +133,7 @@ void Tokenizer::processChunk(std::u32string_view chunk,
 				// Be careful for dots, as they are theoretically both soft and hard characters
 				size_t next_dot = chunk.find(U'.');
 				if (next_dot == std::u32string_view::npos)
-					tokenVec.push_back({chunk});
+					tokenVec.push_back({std::u32string(chunk)});
 				else {
 					processChunk(chunk.substr(0, next_dot), tokenVec);
 					processChunk(chunk.substr(next_dot), tokenVec);
@@ -147,7 +147,7 @@ void Tokenizer::processChunk(std::u32string_view chunk,
 				processChunk(chunk.substr(0, special_pos + 1), tokenVec);
 				processChunk(right, tokenVec);
 			} else {
-				tokenVec.push_back({chunk});
+				tokenVec.push_back({std::u32string(chunk)});
 			}
 			break;
 
@@ -155,18 +155,18 @@ void Tokenizer::processChunk(std::u32string_view chunk,
 			// xyz:abc -> xyz:abc (unless abc empty -> xyz, :)
 			if (!right.empty()) {
 				// Treat as one word (join from both sides)
-				tokenVec.push_back({chunk});
+				tokenVec.push_back({std::u32string(chunk)});
 			} else {
 				// xyz: -> xyz, :
 				processChunk(left, tokenVec);
-				tokenVec.push_back({special_str});
+				tokenVec.push_back({std::u32string(special_str)});
 			}
 			break;
 
 		case split::Rule::TOTAL_DIVIDE:
 			// xyz.abc -> xyz, ., abc
 			if (!left.empty()) processChunk(left, tokenVec);
-			tokenVec.push_back({special_str});
+			tokenVec.push_back({std::u32string(special_str)});
 			if (!right.empty()) processChunk(right, tokenVec);
 			break;
 	}

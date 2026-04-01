@@ -18,7 +18,7 @@ public:
 	 * @param input input text to be tokenized.
 	 * @returns a token vector for given input text.
 	 */
-	std::vector<Token> tokenize(std::u32string_view input) const;
+	virtual std::vector<Token> tokenize(std::u32string_view input) const;
 
 private:
 	/**

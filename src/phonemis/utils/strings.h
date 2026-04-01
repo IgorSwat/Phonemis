@@ -43,8 +43,8 @@ inline bool is_alpha(const StringT& str) {
  * @param suffix The suffix to look for.
  * @return True if str ends with suffix.
  */
-template <typename StringT>
-inline bool ends_with(const StringT& str, const StringT& suffix) {
+template <typename StringT1, typename StringT2>
+inline bool ends_with(const StringT1& str, const StringT2& suffix) {
 	return str.size() >= suffix.size() &&
 				 str.substr(str.size() - suffix.size()) == suffix;
 }
@@ -55,8 +55,8 @@ inline bool ends_with(const StringT& str, const StringT& suffix) {
  * @param prefix The prefix to look for.
  * @return True if str starts with prefix.
  */
-template <typename StringT>
-inline bool starts_with(const StringT& str, const StringT& prefix) {
+template <typename StringT1, typename StringT2>
+inline bool starts_with(const StringT1& str, const StringT2& prefix) {
 	return str.size() >= prefix.size() &&
 				 str.substr(0, prefix.size()) == prefix;
 }
