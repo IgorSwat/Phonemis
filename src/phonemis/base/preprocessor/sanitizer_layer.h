@@ -27,15 +27,11 @@ public:
     REJECT
   };
 
-  SanitizerLayer() = default;
+  SanitizerLayer(const std::unordered_set<char32_t>* filter = nullptr,
+                 const std::unordered_map<char32_t, char32_t>* mapper = nullptr,
+                 Mode mode = Mode::KEEP);
 
   std::u32string transform(std::u32string_view input) const override;
-
-  // Sanitizer's mode controllers
-  void setupFilter(const std::unordered_set<char32_t>* filter, Mode mode);
-  void resetFilter();
-  void setupMapper(const std::unordered_map<char32_t, char32_t>* mapper);
-  void resetMapper();
 
 private:
   const std::unordered_set<char32_t>* filter_ = nullptr;

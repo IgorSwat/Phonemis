@@ -7,6 +7,11 @@ namespace phonemis::preprocessor {
 
 using namespace utils;
 
+SanitizerLayer::SanitizerLayer(const std::unordered_set<char32_t>* filter,
+                               const std::unordered_map<char32_t, char32_t>* mapper,
+                               Mode mode)
+  : filter_(filter), mapper_(mapper), mode_(mode) {}
+
 std::u32string SanitizerLayer::transform(std::u32string_view input) const {
   std::u32string out;
   out.reserve(input.size());
@@ -31,22 +36,7 @@ std::u32string SanitizerLayer::transform(std::u32string_view input) const {
   return out;
 }
 
-void SanitizerLayer::setupFilter(const std::unordered_set<char32_t>* filter, Mode mode) {
-  filter_ = filter;
-  mode_ = mode;
-}
 
-void SanitizerLayer::resetFilter() {
-  filter_ = nullptr;
-}
-
-void SanitizerLayer::setupMapper(const std::unordered_map<char32_t, char32_t>* mapper) {
-  mapper_ = mapper;
-}
-
-void SanitizerLayer::resetMapper() {
-  mapper_ = nullptr;
-}
 
 } // namespace phonemis::preprocessor
 

@@ -14,47 +14,40 @@ static const std::unordered_map<char32_t, char32_t> TEST_MAPPER = {{U'a', U'A'},
 
 REGISTER_TEST(sanitizer_filter_modes_test)
 {
-    SanitizerLayer layer;
-
     // KEEP mode
-    layer.setupFilter(&TEST_KEEP_FILTER, SanitizerLayer::Mode::KEEP);
-    ASSERT_EQUALS(U"abba ba", layer.transform(U"abcba cba"));
-    ASSERT_EQUALS(U"a1a", layer.transform(U"a123a"));
+    SanitizerLayer layer_keep(&TEST_KEEP_FILTER, nullptr, SanitizerLayer::Mode::KEEP);
+    ASSERT_EQUALS(U"abba ba", layer_keep.transform(U"abcba cba"));
+    ASSERT_EQUALS(U"a1a", layer_keep.transform(U"a123a"));
 
     // REJECT mode
-    layer.setupFilter(&TEST_REJECT_FILTER, SanitizerLayer::Mode::REJECT);
-    ASSERT_EQUALS(U"abc", layer.transform(U"axbyc"));
-    ASSERT_EQUALS(U"hello", layer.transform(U"hello"));
+    SanitizerLayer layer_reject(&TEST_REJECT_FILTER, nullptr, SanitizerLayer::Mode::REJECT);
+    ASSERT_EQUALS(U"abc", layer_reject.transform(U"axbyc"));
+    ASSERT_EQUALS(U"hello", layer_reject.transform(U"hello"));
 
     // KEEP_ALPHABETICAL mode
-    layer.setupFilter(&TEST_KEEP_FILTER, SanitizerLayer::Mode::KEEP_ALPHABETICAL);
+    SanitizerLayer layer_keep_alpha(&TEST_KEEP_FILTER, nullptr, SanitizerLayer::Mode::KEEP_ALPHABETICAL);
     // 'c' is alphabetical and not in filter -> omitted
     // '1', '!', ' ' are not alphabetical -> passed
-    ASSERT_EQUALS(U"ab 123! ab", layer.transform(U"abc 123! abc"));
+    ASSERT_EQUALS(U"ab 123! ab", layer_keep_alpha.transform(U"abc 123! abc"));
 
     return true;
 }
 
 REGISTER_TEST(sanitizer_mapping_test)
 {
-    SanitizerLayer layer;
+    SanitizerLayer layer_map(nullptr, &TEST_MAPPER);
 
-    layer.setupMapper(&TEST_MAPPER);
-
-    ASSERT_EQUALS(U"Abc!", layer.transform(U"abc1"));
+    ASSERT_EQUALS(U"Abc!", layer_map.transform(U"abc1"));
 
     return true;
 }
 
 REGISTER_TEST(sanitizer_filter_and_mapping_combined_test)
 {
-    SanitizerLayer layer;
-    
-    layer.setupFilter(&TEST_KEEP_FILTER, SanitizerLayer::Mode::KEEP);
-    layer.setupMapper(&TEST_MAPPER);
+    SanitizerLayer layer_combined(&TEST_KEEP_FILTER, &TEST_MAPPER, SanitizerLayer::Mode::KEEP);
 
     // 'c' is filtered out. '1' is kept by filter then mapped to '!'
-    ASSERT_EQUALS(U"Ab!", layer.transform(U"abc1"));
+    ASSERT_EQUALS(U"Ab!", layer_combined.transform(U"abc1"));
 
     return true;
 }

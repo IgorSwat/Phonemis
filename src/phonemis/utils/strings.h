@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <string>
 #include <string_view>
+#include <type_traits>
 #include <vector>
 
 /**
@@ -202,12 +203,26 @@ inline std::vector<StringT> split(const StringT& str, CharT bpoint) {
 // ----- Immutable operations -----
 // --------------------------------
 
+// We define a custom mapping, which will allow to bind string_views directly
+// with their corresponding storage classes.
+// By default, we bind the type to the itself (for standard strings).
+template <typename T>
+struct string_storage {
+    using type = T;
+};
+
+// Specializations for the view types
+template <> struct string_storage<std::string_view>    { using type = std::string; };
+template <> struct string_storage<std::u16string_view> { using type = std::u16string; };
+template <> struct string_storage<std::u32string_view> { using type = std::u32string; };
+
 // Generates non-mutating wrapper `name(...)` that calls `name__(...)`
 // Used to create a non-inplace versions of the above functions.
 #define MAKE_NON_INPLACE(name)                                      \
 template<typename StringT, typename... Args>                        \
-inline StringT name(const StringT& str, Args&&... args) {           \
-    StringT tmp = str;                                              \
+inline auto name(const StringT& str, Args&&... args) {           \
+    using StorageT = string_storage<std::decay_t<StringT>>::type;           \
+    StorageT tmp{str.begin(), str.end()};                                          \
     name##__(tmp, std::forward<Args>(args)...);                     \
     return tmp;                                                     \
 }
