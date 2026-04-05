@@ -76,8 +76,9 @@ inline void capitalize__(StringT& str) {
 	using std::toupper;
 	using unicode::toupper;
 
-	if (!str.empty())
+	if (!str.empty()) {
 		str[0] = toupper(str[0]);
+	}
 }
 
 /**
@@ -90,8 +91,9 @@ inline void lowerize__(StringT& str) {
 	using std::tolower;
 	using unicode::tolower;
 
-	if (!str.empty())
+	if (!str.empty()) {
 		str[0] = tolower(str[0]);
+	}
 }
 
 /**

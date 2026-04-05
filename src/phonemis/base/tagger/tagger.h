@@ -19,7 +19,7 @@ public:
   // Performs in-place tagging on given token vector.
   void tag(std::span<Token> tokens) const;
 
-  // A template method to implement by derived classes.
+  // A template method to be implemented by derived classes.
   virtual void tagSentence(std::span<Token> sentence) const = 0;
 };
 

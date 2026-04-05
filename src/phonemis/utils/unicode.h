@@ -18,7 +18,7 @@ constexpr inline bool is_ascii(char32_t c) {
 }
 
 constexpr inline bool isalnum(char32_t c) {
-  return isalpha(c) || std::isdigit(c);
+  return isalpha(c) || isdigit(c);
 }
 
 constexpr inline bool isalpha(char32_t c) {
