@@ -3,8 +3,7 @@
 #include "conversions.h"
 #include <third-party/json.hpp>
 
-#include <filesystem>
-#include <fstream>
+#include <iostream>
 #include <string>
 
 /**
@@ -22,27 +21,7 @@ namespace utils::io {
  * @throws std::invalid_argument If the file is not found or the JSON format is invalid.
  * @throws std::runtime_error If the file fails to open.
  */
-inline nlohmann::json load_json(const std::string& fp) {
-  std::filesystem::path file_path(fp);
-	if (!std::filesystem::exists(file_path) || !std::filesystem::is_regular_file(file_path)) {
-		throw std::invalid_argument("File not found: " + fp);
-	}
-
-	// JSON parsing
-	std::ifstream file_stream(fp);
-	if (!file_stream.is_open()) {
-		throw std::runtime_error("Failed to open file: " + fp);
-	}
-
-	nlohmann::json json_obj;
-	try {
-		file_stream >> json_obj;
-	} catch (const nlohmann::json::parse_error& e) {
-		throw std::invalid_argument(std::string("Invalid JSON format: ") + e.what());
-	}
-
-  return json_obj;
-}
+nlohmann::json load_json(const std::string& fp);
 
 }	// utils::io
 
