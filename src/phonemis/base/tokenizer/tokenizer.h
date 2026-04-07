@@ -11,6 +11,7 @@ class Tokenizer {
 public:
   Tokenizer(const split::Rules* split_rules = nullptr, 
             const split::Exceptions* split_exceptions = nullptr);
+	virtual ~Tokenizer() = default;
 
 	/**
 	 * Tokenizes to full words with regard to given special-char splitting rules.

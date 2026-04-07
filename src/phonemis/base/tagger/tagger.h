@@ -15,6 +15,7 @@ using tokenizer::Token;
 class Tagger {
 public:
   Tagger() = default;
+  virtual ~Tagger() = default;
 
   // Performs in-place tagging on given token vector.
   void tag(std::span<Token> tokens) const;

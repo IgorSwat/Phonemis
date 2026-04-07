@@ -20,7 +20,7 @@ template <typename LookupContext>
 class LexiconPhonemizer : public Phonemizer {
 public:
   LexiconPhonemizer(const std::string& lexicon_filepath) {
-    auto json_obj = io::load_json(lexicon_filepath);
+    auto json_obj = utils::io::load_json(lexicon_filepath);
 
     // We assume the lexicon has a strict string -> string structure.
     for (auto& item : json_obj.items()) {
