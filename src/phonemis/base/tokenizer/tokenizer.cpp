@@ -6,9 +6,9 @@ namespace phonemis::tokenizer {
 
 using namespace utils;
 
-Tokenizer::Tokenizer(const split::Rules* splitRules,
-					           const split::Exceptions* splitExceptions)
-	: rules_(splitRules), exceptions_(splitExceptions) {}
+Tokenizer::Tokenizer(const split::Rules* split_rules,
+					           const split::Exceptions* split_exceptions)
+	: rules_(split_rules), exceptions_(split_exceptions) {}
 
 std::vector<Token>
 Tokenizer::tokenize(std::u32string_view input) const {
@@ -56,7 +56,7 @@ Tokenizer::tokenize(std::u32string_view input) const {
 }
 
 void Tokenizer::processPhrase(std::u32string_view word, 
-                              std::vector<Token>& tokenVec) const {
+                              std::vector<Token>& token_vec) const {
   // Similarly to tokenize() implementation, we represent string view with
   // offset and length. We avoid copying by producing subviews into `word`.
   size_t currw_offset = 0, currw_len = 0;
@@ -68,12 +68,12 @@ void Tokenizer::processPhrase(std::u32string_view word,
     // with the separator being a separate token.
     if (isHardSeparator(c)) {
       if (currw_len > 0) {
-        processChunk(std::u32string_view(word.data() + currw_offset, currw_len), tokenVec);
+        processChunk(std::u32string_view(word.data() + currw_offset, currw_len), token_vec);
         currw_len = 0;
       }
 
       // Push separator as its own token (single-char view)
-      tokenVec.push_back(Token{std::u32string(word.data() + i, 1)});
+      token_vec.push_back(Token{std::u32string(word.data() + i, 1)});
     } else {
       currw_offset = (currw_len == 0) ? i : currw_offset;
       ++currw_len;
@@ -81,7 +81,7 @@ void Tokenizer::processPhrase(std::u32string_view word,
   }
 
   if (currw_len > 0) {
-    processChunk(std::u32string_view(word.data() + currw_offset, currw_len), tokenVec);
+    processChunk(std::u32string_view(word.data() + currw_offset, currw_len), token_vec);
   }
 }
 

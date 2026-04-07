@@ -9,8 +9,8 @@ namespace phonemis::tokenizer {
 
 class Tokenizer {
 public:
-  Tokenizer(const split::Rules* splitRules = nullptr, 
-            const split::Exceptions* splitExceptions = nullptr);
+  Tokenizer(const split::Rules* split_rules = nullptr, 
+            const split::Exceptions* split_exceptions = nullptr);
 
 	/**
 	 * Tokenizes to full words with regard to given special-char splitting rules.
@@ -30,7 +30,7 @@ private:
 	 * @param phrase a phrase - input substring to be processed.
 	 * @param tokenVec a token vector to add results to.
 	 */
-	void processPhrase(std::u32string_view phrase, std::vector<Token>& tokenVec) const;
+	void processPhrase(std::u32string_view phrase, std::vector<Token>& token_vec) const;
 
 	/**
 	 * Processes a single separable chunk which contains no hared separators.
@@ -38,7 +38,7 @@ private:
 	 * @param chunk a chunk - input substring with no hard seperators to be processed.
 	 * @param tokenVec a token vector to add results to.
 	 */
-	void processChunk(std::u32string_view chunk, std::vector<Token>& tokenVec) const;
+	void processChunk(std::u32string_view chunk, std::vector<Token>& token_vec) const;
 
 	/**
 	 * Helper function to obtain a rule for given special character.

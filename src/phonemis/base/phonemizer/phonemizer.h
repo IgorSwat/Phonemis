@@ -34,7 +34,7 @@ public:
 
   // Template methods to be implemented by derived classes.
   virtual std::optional<std::u32string> phonemize(const Token& token) const = 0;  // Returns std::nullopt if not able to phonemize the token.
-  virtual void updateContext(std::span<const Token> tokens, size_t nextTokenID) = 0;  // Called before each token gets phonemized.
+  virtual void update_context(std::span<const Token> tokens, size_t next_token_id) = 0;  // Called before each token gets phonemized.
 };
 
 } // namespace phonemis::phonemizer

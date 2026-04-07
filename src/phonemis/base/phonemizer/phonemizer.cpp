@@ -12,7 +12,7 @@ std::u32string Phonemizer::phonemize(std::span<const Token> tokens) {
     const auto& token = tokens[i];
 
     // Update context before processing next token
-    updateContext(tokens, i);
+    update_context(tokens, i);
 
     auto phonemes = phonemize(token);
 

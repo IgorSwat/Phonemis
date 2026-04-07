@@ -4,6 +4,6 @@
 
 namespace phonemis::phonemizer {
 
-using Phoneme = char32_t;
+using Phone = char32_t;
 
 } // namespace phonemis::phonemizer

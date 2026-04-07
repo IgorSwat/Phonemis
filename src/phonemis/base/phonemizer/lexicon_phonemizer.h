@@ -19,8 +19,8 @@ namespace phonemis::phonemizer {
 template <typename LookupContext>
 class LexiconPhonemizer : public Phonemizer {
 public:
-  LexiconPhonemizer(const std::string& lexiconFilepath) {
-    auto json_obj = io::load_json(lexiconFilepath);
+  LexiconPhonemizer(const std::string& lexicon_filepath) {
+    auto json_obj = io::load_json(lexicon_filepath);
 
     // We assume the lexicon has a strict string -> string structure.
     for (auto& item : json_obj.items()) {
