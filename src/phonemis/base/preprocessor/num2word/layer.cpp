@@ -1,9 +1,11 @@
 #include "layer.h"
 #include "../constants.h"
 #include <phonemis/utils/unicode.h>
+#include <phonemis/utils/conversions.h>
 
-#include <cctype>
-#include <string_view>
+#include <algorithm>
+#include <optional>
+#include <iostream>
 
 namespace phonemis::preprocessor::num2word {
 
@@ -115,7 +117,7 @@ std::u32string Num2WordLayer::transform(std::u32string_view input) const {
     // Apply translation if a valid numeric chunk was found
     if (len > 0) {
       result.append(input.substr(last_pos, start - last_pos)); // Append preceding text
-      result.append(convert({input.substr(start, len), mode})); // Append converted number
+      result.append(verbalize({input.substr(start, len), mode})); // Append converted number
       last_pos = start + len;
       i = start + len - 1; // Fast-forward iterator to end of replaced segment
     }
@@ -123,6 +125,93 @@ std::u32string Num2WordLayer::transform(std::u32string_view input) const {
 
   result.append(input.substr(last_pos));
   return result;
+}
+
+std::u32string Num2WordLayer::verbalize(const StringifiedNumber& number) const {
+  switch (number.conversionMode) {
+    case Mode::CARDINAL: {
+      if (number.text.find(U'.') != std::u32string_view::npos) {
+        auto val = as_float(number.text);
+        if (!val) return U"";
+        return to_cardinal_float(*val);
+      } else {
+        auto val = as_int(number.text);
+        if (!val) return U"";
+        return to_cardinal_int(*val);
+      }
+    }
+    case Mode::POTENTIALY_ORDINAL: {
+      size_t i = 0;
+      while (i < number.text.size() && std::isdigit(number.text[i])) i++;
+      std::u32string_view num_part = number.text.substr(0, i);
+      std::u32string_view suffix = number.text.substr(i);
+      auto val = as_int(num_part);
+      if (!val) return U"";
+      if (is_ordinal_suffix(suffix)) {
+        return to_ordinal_int(*val, suffix);
+      } else {
+        return to_ordinal_int(*val) + std::u32string(suffix);
+      }
+    }
+    case Mode::ORDINAL: {
+      std::u32string_view num_part = number.text.substr(0, number.text.size() - 1);
+      auto val = as_int(num_part);
+      if (!val) return U"";
+      return to_ordinal_int(*val);
+    }
+    case Mode::FRACTION: {
+      size_t pos = number.text.find(U'/');
+      auto num = as_int(number.text.substr(0, pos));
+      auto den = as_int(number.text.substr(pos + 1));
+      if (!num || !den) return U"";
+      return to_cardinal_int(*num) + U" " + to_ordinal_int(*den);
+    }
+    case Mode::CURRENCY: {
+      char32_t currency = number.text.back();
+      std::u32string_view num_part = number.text.substr(0, number.text.size() - 1);
+      if (num_part.find(U'.') != std::u32string_view::npos) {
+        auto val = as_float(num_part);
+        if (!val) return U"";
+        return to_cardinal_float(*val) + U" " + to_currency(currency, *val);
+      } else {
+        auto val = as_int(num_part);
+        if (!val) return U"";
+        return to_cardinal_int(*val) + U" " + to_currency(currency, *val);
+      }
+    }
+    case Mode::DATE: {
+      char32_t sep = (number.text.find(U'.') != std::u32string_view::npos) ? U'.' : U'-';
+      size_t first_sep = number.text.find(sep);
+      size_t second_sep = number.text.find(sep, first_sep + 1);
+      
+      auto d = as_int(number.text.substr(0, first_sep));
+      auto m = as_int(number.text.substr(first_sep + 1, second_sep - first_sep - 1));
+      auto y = as_int(number.text.substr(second_sep + 1));
+      
+      if (!d || !m || !y) return U"";
+      return to_ordinal_int(*d) + U" " + to_month(*m) + U" " + to_year(*y);
+    }
+    default:
+      return std::u32string(number.text);
+  }
+}
+
+std::optional<int32_t> Num2WordLayer::as_int(std::u32string_view s) const {
+  try {
+    return std::stoi(utils::conversions::u32_to_utf8(s));
+  } catch (const std::exception& e) {
+    std::cerr << "Error converting to int: " << e.what() << std::endl;
+    return std::nullopt;
+  }
+}
+
+std::optional<float> Num2WordLayer::as_float(std::u32string_view s) const {
+  try {
+    return std::stof(utils::conversions::u32_to_utf8(s));
+  } catch (const std::exception& e) {
+    std::cerr << "Error converting to float: " << e.what() << std::endl;
+    return std::nullopt;
+  }
 }
 
 } // namespace phonemis::preprocessor::num2word

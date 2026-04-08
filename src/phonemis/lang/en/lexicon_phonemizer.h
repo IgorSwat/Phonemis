@@ -16,7 +16,7 @@ using tagger::Tag;
  * This is a word-level context which helps in lookups & postprocessing.
  */
 struct LocalContext {
-  std::optional<const Tag&> tag = std::nullopt;
+  std::optional<Tag> tag = std::nullopt;
   std::optional<float> stress = std::nullopt;
 };
 

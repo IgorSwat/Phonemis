@@ -11,18 +11,17 @@ class TestNum2Word : public Num2WordLayer {
 public:
     using Num2WordLayer::Num2WordLayer;
 
-    std::u32string convert(const StringifiedNumber& number) const override {
-        switch (number.conversionMode) {
-            case Mode::CARDINAL: return U"[CARDINAL]";
-            case Mode::POTENTIALY_ORDINAL: return U"[POTENTIALY_ORDINAL]";
-            case Mode::ORDINAL: return U"[ORDINAL]";
-            case Mode::FRACTION: return U"[FRACTION]";
-            case Mode::CURRENCY: return U"[CURRENCY]";
-            case Mode::MONTH: return U"[MONTH]";
-            case Mode::YEAR: return U"[YEAR]";
-            case Mode::DATE: return U"[DATE]";
-            default: return U"[UNKNOWN]";
-        }
+    std::u32string to_cardinal_int(int32_t number) const override { return U"[CARDINAL]"; }
+    std::u32string to_cardinal_float(float number) const override { return U"[CARDINAL]"; }
+    std::u32string to_ordinal_int(int32_t number, std::u32string_view suffix = U"") const override {
+        if (!suffix.empty() || is_ordinal_suffix(suffix)) return U"[POTENTIALY_ORDINAL]";
+        return U"[ORDINAL]";
+    }
+    std::u32string to_currency(char32_t currency, std::variant<int32_t, float> number) const override { return U"[CURRENCY]"; }
+    std::u32string to_month(uint32_t month) const override { return U"[MONTH]"; }
+    std::u32string to_year(uint32_t year) const override { return U"[YEAR]"; }
+    bool is_ordinal_suffix(std::u32string_view suffix) const override {
+        return suffix == U"st" || suffix == U"nd" || suffix == U"rd" || suffix == U"th";
     }
 };
 
@@ -35,14 +34,14 @@ REGISTER_TEST(num2word_base_basic_transform_test)
     ASSERT_EQUALS(U"[CARDINAL]", layer.transform(U"123.45"));
 
     // Fractions
-    ASSERT_EQUALS(U"[FRACTION]", layer.transform(U"1/2"));
+    ASSERT_EQUALS(U"[CARDINAL] [ORDINAL]", layer.transform(U"1/2"));
 
     // Currency
-    ASSERT_EQUALS(U"[CURRENCY]", layer.transform(U"50$"));
-    ASSERT_EQUALS(U"The price is [CURRENCY].", layer.transform(U"The price is 99€."));
+    ASSERT_EQUALS(U"[CARDINAL] [CURRENCY]", layer.transform(U"50$"));
+    ASSERT_EQUALS(U"The price is [CARDINAL] [CURRENCY].", layer.transform(U"The price is 99€."));
 
     // Mixed text
-    ASSERT_EQUALS(U"Value: [CARDINAL], Ratio: [FRACTION].", layer.transform(U"Value: 42, Ratio: 1/3."));
+    ASSERT_EQUALS(U"Value: [CARDINAL], Ratio: [CARDINAL] [ORDINAL].", layer.transform(U"Value: 42, Ratio: 1/3."));
 
     return true;
 }
@@ -77,9 +76,9 @@ REGISTER_TEST(num2word_base_date_test)
 {
     TestNum2Word layer;
 
-    ASSERT_EQUALS(U"[DATE]", layer.transform(U"2026-03-27"));
-    ASSERT_EQUALS(U"[DATE]", layer.transform(U"27.03.2026"));
-    ASSERT_EQUALS(U"Today is [DATE].", layer.transform(U"Today is 27-03-2026."));
+    ASSERT_EQUALS(U"[ORDINAL] [MONTH] [YEAR]", layer.transform(U"2026-03-27"));
+    ASSERT_EQUALS(U"[ORDINAL] [MONTH] [YEAR]", layer.transform(U"27.03.2026"));
+    ASSERT_EQUALS(U"Today is [ORDINAL] [MONTH] [YEAR].", layer.transform(U"Today is 27-03-2026."));
 
     return true;
 }
@@ -94,7 +93,7 @@ REGISTER_TEST(num2word_base_complex_sequence_test)
     std::u32string input = U"On 2026-03-27, the 1st runner finished 1/2 of the race. "
                             "He was 1. in line, while the 2nd followed at 12.5 seconds.";
     
-    std::u32string expected = U"On [DATE], the [POTENTIALY_ORDINAL] runner finished [FRACTION] of the race. "
+    std::u32string expected = U"On [ORDINAL] [MONTH] [YEAR], the [POTENTIALY_ORDINAL] runner finished [CARDINAL] [ORDINAL] of the race. "
                                "He was [ORDINAL] in line, while the [POTENTIALY_ORDINAL] followed at [CARDINAL] seconds.";
 
     ASSERT_EQUALS(expected, layer_with_ord.transform(input));

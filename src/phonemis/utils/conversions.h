@@ -3,6 +3,7 @@
 #include <codecvt>
 #include <functional>
 #include <string>
+#include <string_view>
 
 /**
  * Type conversions
@@ -19,7 +20,7 @@ namespace phonemis::utils::conversions {
  * @param utf8 The UTF-8 string to convert.
  * @return A UTF-32 encoded string.
  */
-inline std::u32string utf8_to_u32(const std::string& utf8) {
+inline std::u32string utf8_to_u32(std::string_view utf8) {
 	// std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> convert;
 	// return convert.from_bytes(utf8);
 
@@ -77,7 +78,7 @@ inline std::u32string utf8_to_u32(const std::string& utf8) {
  * @param u32 The UTF-32 string to convert.
  * @return A UTF-8 encoded string.
  */
-inline std::string u32_to_utf8(const std::u32string& u32) {
+inline std::string u32_to_utf8(std::u32string_view u32) {
 	std::string result;
 	result.reserve(u32.size());
 
