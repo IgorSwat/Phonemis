@@ -23,7 +23,7 @@ public:
 
     // Required methods - needs to be implemented by language-specyfic layers.
     virtual std::u32string to_cardinal_int(int32_t number) const = 0;
-    virtual std::u32string to_cardinal_float(float number) const = 0;
+    virtual std::u32string to_cardinal_float(float number, std::u32string_view repr) const = 0;
     virtual std::u32string to_ordinal_int(int32_t number, std::u32string_view suffix = U"") const = 0;
     virtual std::u32string to_currency(char32_t currency, std::variant<int32_t, float> number) const = 0;
     virtual std::u32string to_month(uint32_t month) const = 0;

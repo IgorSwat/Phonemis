@@ -12,7 +12,7 @@ public:
     using Num2WordLayer::Num2WordLayer;
 
     std::u32string to_cardinal_int(int32_t number) const override { return U"[CARDINAL]"; }
-    std::u32string to_cardinal_float(float number) const override { return U"[CARDINAL]"; }
+    std::u32string to_cardinal_float(float number, std::u32string_view repr) const override { return U"[CARDINAL]"; }
     std::u32string to_ordinal_int(int32_t number, std::u32string_view suffix = U"") const override {
         if (!suffix.empty() || is_ordinal_suffix(suffix)) return U"[POTENTIALY_ORDINAL]";
         return U"[ORDINAL]";

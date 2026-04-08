@@ -133,7 +133,7 @@ std::u32string Num2WordLayer::verbalize(const StringifiedNumber& number) const {
       if (number.text.find(U'.') != std::u32string_view::npos) {
         auto val = as_float(number.text);
         if (!val) return U"";
-        return to_cardinal_float(*val);
+        return to_cardinal_float(*val, number.text);
       } else {
         auto val = as_int(number.text);
         if (!val) return U"";
@@ -172,7 +172,7 @@ std::u32string Num2WordLayer::verbalize(const StringifiedNumber& number) const {
       if (num_part.find(U'.') != std::u32string_view::npos) {
         auto val = as_float(num_part);
         if (!val) return U"";
-        return to_cardinal_float(*val) + U" " + to_currency(currency, *val);
+        return to_cardinal_float(*val, num_part) + U" " + to_currency(currency, *val);
       } else {
         auto val = as_int(num_part);
         if (!val) return U"";
@@ -183,13 +183,28 @@ std::u32string Num2WordLayer::verbalize(const StringifiedNumber& number) const {
       char32_t sep = (number.text.find(U'.') != std::u32string_view::npos) ? U'.' : U'-';
       size_t first_sep = number.text.find(sep);
       size_t second_sep = number.text.find(sep, first_sep + 1);
-      
-      auto d = as_int(number.text.substr(0, first_sep));
-      auto m = as_int(number.text.substr(first_sep + 1, second_sep - first_sep - 1));
-      auto y = as_int(number.text.substr(second_sep + 1));
-      
-      if (!d || !m || !y) return U"";
-      return to_ordinal_int(*d) + U" " + to_month(*m) + U" " + to_year(*y);
+
+      std::u32string_view p1 = number.text.substr(0, first_sep);
+      std::u32string_view p2 = number.text.substr(first_sep + 1, second_sep - first_sep - 1);
+      std::u32string_view p3 = number.text.substr(second_sep + 1);
+
+      auto val1 = as_int(p1);
+      auto val2 = as_int(p2);
+      auto val3 = as_int(p3);
+
+      if (!val1 || !val2 || !val3) return U"";
+
+      // ISO format: YYYY-MM-DD
+      if (p1.size() == 4) {
+        return to_ordinal_int(*val3) + U" " + to_month(*val2) + U" " + to_year(*val1);
+      }
+      // Common format: DD.MM.YYYY (or similar)
+      return to_ordinal_int(*val1) + U" " + to_month(*val2) + U" " + to_year(*val3);
+    }
+    case Mode::MONTH: {
+      auto m = as_int(number.text);
+      if (!m) return U"";
+      return (*m >= 1 && *m <= 12) ? to_month(*m) : to_cardinal_int(*m);
     }
     default:
       return std::u32string(number.text);
