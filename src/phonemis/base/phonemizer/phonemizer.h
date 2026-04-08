@@ -18,7 +18,7 @@ using tokenizer::Token;
  */
 class Phonemizer {
 public:
-  Phonemizer() = default;
+  virtual ~Phonemizer() = default;
 
   /**
    * This is the main API method. It performs a sequential, token-by-token phonemization.

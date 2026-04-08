@@ -28,9 +28,11 @@ struct GlobalContext {
   bool future_to = false;
 };
 
-class LexiconPhonemizer : public phonemizer::LexiconPhonemizer<LocalContext> {
+class LexiconPhonemizer : public phonemizer::LexiconPhonemizer {
 public:
   LexiconPhonemizer(Lang lang, const std::string& lexicon_filepath);
+
+  using Base = phonemizer::LexiconPhonemizer;
 
 private:
   // Configuration fields - set up during initialization.

@@ -3,6 +3,6 @@
 namespace phonemis::en {
 
 LexiconPhonemizer::LexiconPhonemizer(Lang lang, const std::string& lexicon_filepath)
-  : phonemizer::LexiconPhonemizer<LocalContext>(lexicon_filepath), british_(lang == Lang::EN_GB) {}
+  : phonemizer::LexiconPhonemizer(lexicon_filepath), british_(lang == Lang::EN_GB) {}
 
 } // namespace phonemis::en
