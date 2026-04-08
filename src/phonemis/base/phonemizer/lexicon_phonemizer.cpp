@@ -45,6 +45,7 @@ std::optional<std::u32string> LexiconPhonemizer::phonemize(const Token& token) c
   if (result.empty()) {
     return std::nullopt;
   }
+  
   return result;
 }
 

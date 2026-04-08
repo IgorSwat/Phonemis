@@ -32,13 +32,14 @@ class LexiconPhonemizer : public phonemizer::LexiconPhonemizer {
 public:
   LexiconPhonemizer(Lang lang, const std::string& lexicon_filepath);
 
+  // A shortcut for base class calls
   using Base = phonemizer::LexiconPhonemizer;
 
 private:
   // Configuration fields - set up during initialization.
   bool british_;
 
-  GlobalContext gcontext_;
+  GlobalContext global_context_;
 };
 
 

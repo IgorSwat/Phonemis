@@ -140,18 +140,23 @@ inline void filter__(StringT& str, Pred pred) {
 
 /**
  * Replaces all the occurrences of a character `a` with a character `b`.
- * If `b` is not specified, then it removes all occurrences of `a` without replacement - 
- * the same as if `b` was set to an empty character.
  * @param str The string to modify in-place.
  * @param a The character to find.
- * @param b The character to replace with (optional).
+ * @param b The character to replace with.
  */
 template <typename StringT, typename CharT>
-inline void replace__(StringT& str, CharT a, std::optional<CharT> b) {
-	if (b.has_value())
-		std::replace(str.begin(), str.end(), a, b.value());
-	else
-		str.erase(std::remove(str.begin(), str.end(), a), str.end());
+inline void replace__(StringT& str, CharT a, CharT b) {
+	std::replace(str.begin(), str.end(), a, b);
+}
+
+/**
+ * Removes all occurrences of a character `a` from the string.
+ * @param str The string to modify in-place.
+ * @param a The character to remove.
+ */
+template <typename StringT, typename CharT>
+inline void remove__(StringT& str, CharT a) {
+	str.erase(std::remove(str.begin(), str.end(), a), str.end());
 }
 
 /**
@@ -234,6 +239,7 @@ MAKE_NON_INPLACE(to_lower)
 MAKE_NON_INPLACE(to_upper)
 MAKE_NON_INPLACE(filter)
 MAKE_NON_INPLACE(replace)
+MAKE_NON_INPLACE(remove)
 
 } // namespace phonemis::utilities::strings 
 
