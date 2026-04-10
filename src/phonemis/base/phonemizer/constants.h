@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_set>
 
 namespace phonemis::phonemizer::constants {
 
@@ -18,5 +19,18 @@ namespace stress {
 } // namespace stress
 
 } // namespace ipa
+
+// Punctation character constants
+namespace puncts {
+
+inline const std::unordered_set<char32_t> kPunctations = {
+  U';', U':', U',', U'.', U'!', U'?', U'-', U'"', U'\''
+};
+
+inline const std::unordered_set<char32_t> kNonQuotePunctations = {
+  U';', U':', U',', U'.', U'!', U'?', U'-', U'\''
+};
+
+} // namespace puncts
 
 } // namespace phonemis::phonemizer::constants

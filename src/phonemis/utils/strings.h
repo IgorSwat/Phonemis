@@ -43,10 +43,11 @@ inline bool is_alpha(const StringT& str) {
  * @param suffix The suffix to look for.
  * @return True if str ends with suffix.
  */
-template <typename StringT1, typename StringT2>
-inline bool ends_with(const StringT1& str, const StringT2& suffix) {
-	return str.size() >= suffix.size() &&
-				 str.substr(str.size() - suffix.size()) == suffix;
+template <typename StringT1, typename SuffixT>
+inline bool ends_with(const StringT1& str, const SuffixT& suffix) {
+	std::basic_string_view suffix_view{suffix};
+	return str.size() >= suffix_view.size() &&
+				 str.substr(str.size() - suffix_view.size()) == suffix_view;
 }
 
 /**
@@ -55,10 +56,11 @@ inline bool ends_with(const StringT1& str, const StringT2& suffix) {
  * @param prefix The prefix to look for.
  * @return True if str starts with prefix.
  */
-template <typename StringT1, typename StringT2>
-inline bool starts_with(const StringT1& str, const StringT2& prefix) {
-	return str.size() >= prefix.size() &&
-				 str.substr(0, prefix.size()) == prefix;
+template <typename StringT1, typename PrefixT>
+inline bool starts_with(const StringT1& str, const PrefixT& prefix) {
+	std::basic_string_view prefix_view{prefix};
+	return str.size() >= prefix_view.size() &&
+				 str.substr(0, prefix_view.size()) == prefix_view;
 }
 
 

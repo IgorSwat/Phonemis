@@ -49,10 +49,10 @@ std::optional<std::u32string> LexiconPhonemizer::phonemize(const Token& token) c
   return result;
 }
 
-void LexiconPhonemizer::update_context(std::span<const Token> /*tokens*/, size_t /*next_token_id*/) {
+void LexiconPhonemizer::update_context(size_t /*curr_token_id*/, std::span<const Token> /*tokens*/) {
 }
 
-std::u32string LexiconPhonemizer::lookup(std::string_view word, std::string_view context) const {
+std::u32string LexiconPhonemizer::lookup(const std::string& word, std::string_view context) const {
 	std::string key;
   key.reserve(word.size() + 1 + context.size());
 
@@ -66,7 +66,20 @@ std::u32string LexiconPhonemizer::lookup(std::string_view word, std::string_view
   if (it == dict_.end())
     return U"";
 
-return conversions::utf8_to_u32(it->second);
+  return conversions::utf8_to_u32(it->second);
+}
+
+std::u32string LexiconPhonemizer::lookup(const std::u32string& word, std::string_view context) const {
+  return lookup(conversions::u32_to_utf8(word), context);
+}
+
+bool LexiconPhonemizer::is_known(const std::string& word) const {
+  return dict_.contains(word);
+}
+
+bool LexiconPhonemizer::is_known(const std::u32string& word, bool try_lowercase) const {
+  return is_known(conversions::u32_to_utf8(word)) ||
+         (try_lowercase && is_known(conversions::u32_to_utf8(strings::to_lower(word))));
 }
 
 } // namespace phonemis::phonemizer

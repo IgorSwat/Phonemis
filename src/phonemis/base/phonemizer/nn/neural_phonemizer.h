@@ -26,7 +26,7 @@ public:
                    const std::string& phone_mapping_path);
 
   std::optional<std::u32string> phonemize(const tokenizer::Token& token) const override;
-  void update_context(std::span<const tokenizer::Token> tokens, size_t next_token_id) override {}
+  void update_context(size_t next_token_id, std::span<const tokenizer::Token> tokens) override {}
 
 private:
   // Removes BLANK_TOKEN (id=0) from the token vector.

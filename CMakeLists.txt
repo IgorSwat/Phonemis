@@ -29,6 +29,9 @@ if(BUILD_TESTS)
     # Set include path for the library sources
     target_include_directories(phonemis_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
+    # Define the project root macro for tests
+    target_compile_definitions(phonemis_test PRIVATE PHONEMIS_PROJECT_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
+
     target_compile_options(phonemis_test PRIVATE -Wno-deprecated-declarations)
 else()
     # Build static library
