@@ -27,7 +27,7 @@ std::u32string Num2Word::to_cardinal_int(int32_t value) const {
   if (value < 100) {
     int32_t tens = value / 10;
     int32_t units = value % 10;
-    return num2word::kCardinals.at(tens * 10) + U"-" + num2word::kCardinals.at(units);
+    return num2word::kCardinals.at(tens * 10) + U" " + num2word::kCardinals.at(units);
   }
 
   // Handle large numbers by iterating through the large scales map (hundred, thousand, etc.)

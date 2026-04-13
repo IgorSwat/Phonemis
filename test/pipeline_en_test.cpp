@@ -12,7 +12,7 @@ static Pipeline g_pipeline(Config{
     .phonemizer = {.lexicon_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/english/us_small.json"}
 });
 
-REGISTER_TEST(pipeline_en_us_integration_simple_test) {
+REGISTER_TEST(pipeline_en_us_integration_test) {
   // Test case with a few sentences, some number, and common English words.
   std::string input = "Hello world! I have 2 cats and they are used to be here.";
   
@@ -25,6 +25,47 @@ REGISTER_TEST(pipeline_en_us_integration_simple_test) {
 
   ASSERT_EQUALS(U"həlˈO wˈɜɹld! ˌI hæv tˈu kˈæts ænd ðA ɑɹ jˈust tə bi hˈɪɹ.", result);
 
+  return true;
+}
+
+REGISTER_TEST(pipeline_en_us_contraction_test) {
+  // Increase complexity: Contractions and multiple numbers
+  std::string input = "He's 25 years old. It's 10:30 PM.";
+  std::u32string result = g_pipeline.process(input);
+
+  // Expected: "He's" split to "He" + "'s", "25" to "twenty-five", "10:30" to "ten thirty"
+  ASSERT_EQUALS(U"hˌiz twˈɛnti fˈIv jˈɪɹz ˈOld. ˌɪts tˈɛn:θˈɜɹɾi pˌiˈɛm.", result);
+  return true;
+}
+
+REGISTER_TEST(pipeline_en_us_special_suffixes_test) {
+  // Increase complexity: morphological suffixes (-s, -ed, -ing)
+  std::string input = "She looked at the running dogs.";
+  std::u32string result = g_pipeline.process(input);
+
+  // Checks stem lookups (look+ed, run+ing, dog+s)
+  ASSERT_EQUALS(U"ʃˌi lˈʊkt æt ðə ɹˈʌnɪŋ dˈɔɡz.", result);
+  return true;
+}
+
+REGISTER_TEST(pipeline_en_us_ambiguity_test) {
+  std::string input = "I read the new book. I have read the old book.";
+  std::u32string result = g_pipeline.process(input);
+
+  // Sentence 1: "read" (VBP/VBD) -> ɹˈid or ɹˈɛd (HMM context)
+  // Sentence 2: "read" (VBN) -> ɹˈɛd
+  // This test validates that the tagger affects the phonemizer lookup.
+  ASSERT_EQUALS(U"ˌI ɹˈid ðə nˈu bˈʊk. ˌI hæv ɹˈɛd ði ˈOld bˈʊk.", result);
+  return true;
+}
+
+REGISTER_TEST(pipeline_en_us_acronym_test) {
+  // Complex case: Mixed case, acronyms, and punctuation
+  std::string input = "The FBI and CIA are in the USA.";
+  std::u32string result = g_pipeline.process(input);
+
+  // Validates NNP lookup logic and vowel-next context for "the"
+  ASSERT_EQUALS(U"ði ˌɛfbˌiˈI ænd sˌiˌIˈA ɑɹ ɪn ðə jˌuˌɛsˈA.", result);
   return true;
 }
 

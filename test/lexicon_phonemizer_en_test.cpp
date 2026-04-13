@@ -137,7 +137,7 @@ REGISTER_TEST(lexicon_phonemizer_en_phonemize_sentence_3_test)
     {U"artist", false, true, std::make_optional("NN")},
     {U"vs.", false, true, std::make_optional("IN")},
     {U"the", false, true, std::make_optional("DT")},
-    {U"FBI", false, false, std::make_optional("NNP")},
+    {U"government", false, false, std::make_optional("NNP")},
     {U".", false, false, std::make_optional(".")}
   };
   std::u32string result = g_phonemizer.phonemize(std::span<const Token>(tokens));
