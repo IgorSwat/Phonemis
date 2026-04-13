@@ -26,7 +26,7 @@ void apply(std::u32string& phonemes, float stress) {
     strings::remove__(phonemes, kPrimary);
     strings::remove__(phonemes, kSecondary);
   }
-  else if (stress == -1.F || ((stress == 0.F || stress == 0.5F) && has_primary)) {
+  else if (stress == -1.F || ((stress == 0.F || stress == -0.5F) && has_primary)) {
     // Reduced: primary -> secondary; remove existing secondary
     strings::remove__(phonemes, kSecondary);
     strings::replace__(phonemes, kPrimary, kSecondary);
