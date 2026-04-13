@@ -1,5 +1,6 @@
 #pragma once
 
+#include "config.h"
 #include "phonemizer.h"
 
 #include <string>
@@ -18,7 +19,7 @@ public:
   using Base = phonemizer::Phonemizer;
   using Base::phonemize;
 
-  LexiconPhonemizer(const std::string& lexicon_filepath);
+  explicit LexiconPhonemizer(const Config& config);
 
   // Base class overrides
   std::optional<std::u32string> phonemize(const Token& token) const override;

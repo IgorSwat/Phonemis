@@ -30,8 +30,8 @@ std::string get_parent_tag(const std::string& tag) {
 }
 } // namespace
 
-LexiconPhonemizer::LexiconPhonemizer(Lang lang, const std::string& lexicon_filepath)
-  : phonemizer::LexiconPhonemizer(lexicon_filepath), british_(lang == Lang::EN_GB) {}
+LexiconPhonemizer::LexiconPhonemizer(const phonemizer::Config& config)
+    : phonemizer::LexiconPhonemizer(config), british_(config.lang == Lang::EN_GB) {}
 
 std::optional<std::u32string> LexiconPhonemizer::phonemize(const Token& token) const {
   // Set stress level.

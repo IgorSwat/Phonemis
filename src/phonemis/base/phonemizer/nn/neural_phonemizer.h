@@ -2,6 +2,7 @@
 
 #include "tokenizer.h"
 #include "../phonemizer.h"
+#include "../config.h"
 
 #include <vector>
 #include <cstdint>
@@ -15,15 +16,7 @@ namespace phonemis::phonemizer::nn {
 
 class NeuralPhonemizer : public Phonemizer {
 public:
-  explicit NeuralPhonemizer(const std::string& model_path);
-
-  NeuralPhonemizer(const std::string& model_path,
-                   const std::unordered_map<char32_t, int64_t>& grapheme_mapping,
-                   const std::unordered_map<char32_t, int64_t>& phone_mapping);
-
-  NeuralPhonemizer(const std::string& model_path,
-                   const std::string& grapheme_mapping_path,
-                   const std::string& phone_mapping_path);
+  explicit NeuralPhonemizer(const Config& config);
 
   std::optional<std::u32string> phonemize(const tokenizer::Token& token) const override;
   void update_context(size_t next_token_id, std::span<const tokenizer::Token> tokens) override {}

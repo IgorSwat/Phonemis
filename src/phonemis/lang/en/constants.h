@@ -1,6 +1,7 @@
 #pragma once
 
-#include <array>
+#include <phonemis/base/tokenizer/types.h>
+
 #include <cstdint>
 #include <map>
 #include <string>
@@ -42,6 +43,28 @@ namespace num2word {
 		U"July", U"August", U"September", U"October", U"November", U"December"
   };
 } // namespace num2word
+
+namespace tokenizer {
+  using ::phonemis::tokenizer::split::Rule;
+  using ::phonemis::tokenizer::split::Exceptions;
+
+  inline const std::unordered_map<char32_t, Rule> kSpecialCharacters = {
+    {U'\'', Rule::JOIN_LEFT},
+    {U'-', Rule::TOTAL_DIVIDE},
+    {U'.', Rule::TOTAL_DIVIDE},
+    {U':', Rule::TOTAL_DIVIDE}
+  };
+
+  // String literal pointers are valid for the lifetime of the program,
+  // so u32string_view elements are safe here.
+  inline const Exceptions kExceptions = {
+    // Contractions
+    U"'bout", U"'d", U"'em", U"'ll", U"'m", U"'re", U"'s", U"'ve",
+    U"can't", U"goin'", U"let's", U"ma'am", U"n't",
+    U"nothin'", U"o'clock", U"o'er", U"somethin'", U"what's",
+    U"y'know", U"y'all",
+  };
+} // namespace tokenizer
 
 namespace alphabet {
 	inline const std::u32string kVowels = U"aeiouy";  // Written vowels

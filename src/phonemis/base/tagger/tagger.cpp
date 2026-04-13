@@ -7,24 +7,26 @@
 namespace phonemis::tagger {
 
 void Tagger::tag(std::span<Token> tokens) const {
-  auto sentence_start = tokens.begin();
+  auto start_idx = 0;
 
-  while (sentence_start != tokens.end()) {
-    // And of a sentence is marked by a special, EOS character with a space following afterwards.
-    auto sentence_end = std::find_if(sentence_start, tokens.end(), [](const Token& token) {
+  while (start_idx < tokens.size()) {
+    // 1. Identify sentence boundaries (End-Of-Sentence character with trailing whitespace)
+    auto it = std::find_if(tokens.begin() + start_idx, tokens.end(), [](const Token& token) {
       return token.whitespace && token.text.size() == 1 &&
              constants::kEosCharacters.contains(token.text[0]);
     });
 
-    auto next_sentence_start = (sentence_end == tokens.end()) ? 
-                                tokens.end() : std::next(sentence_end);
-    auto sentence_size = static_cast<size_t>(std::distance(sentence_start, next_sentence_start));
+    // 2. Determine span size (including the punctuation token)
+    size_t end_idx = (it == tokens.end()) 
+        ? tokens.size() 
+        : static_cast<size_t>(std::distance(tokens.begin(), it) + 1);
+    
+    size_t sentence_len = end_idx - start_idx;
 
-    std::span<Token> sentence = tokens.subspan(static_cast<size_t>(std::distance(tokens.begin(), sentence_start)), sentence_size);
+    // 3. Process the sentence span
+    tag_sentence(tokens.subspan(start_idx, sentence_len));
 
-    tagSentence(sentence);
-
-    sentence_start = next_sentence_start;
+    start_idx = end_idx;
   }
 }
 

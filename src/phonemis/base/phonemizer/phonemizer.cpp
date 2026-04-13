@@ -9,31 +9,36 @@ std::u32string Phonemizer::phonemize(std::span<const Token> tokens) {
   using namespace phonemis::phonemizer::constants;
   
   std::u32string result;
-  result.reserve(5 * tokens.size());
+  result.reserve(tokens.size() * 5); // Heuristic allocation
 
   for (size_t i = 0; i < tokens.size(); ++i) {
     const auto& token = tokens[i];
 
-    // Update context before processing current token
+    // 1. Context Update
     update_context(i, tokens);
 
+    // 2. Core Phonemization
     auto phonemes = phonemize(token);
-
-    if (phonemes.has_value()) {
+    if (phonemes) {
       result += *phonemes;
     }
 
-    // Handle reimaining punctation characters which tend to not have it's own phonemization,
-    // but affect the local phonemes from surrounding characters.
-    bool is_single_char = token.text.size() == 1;
-    bool is_punctation = is_single_char && puncts::kPunctations.contains(token.text[0]);
-    bool is_dot_or_hyphen = is_punctation && (token.text[0] == U'.' || token.text[0] == U'-');
-    bool is_last_token = i == tokens.size() - 1;
-    if (!phonemes.has_value() && (!is_dot_or_hyphen || !token.whitespace || is_last_token)) {
-      result += std::u32string(1, token.text[0]);
+    // 3. Fallback/Punctuation Logic
+    // Handles punctuation that doesn't have explicit phonemes but must be preserved.
+    // Logic: If not phonemized, append raw character if it's punctuation,
+    // unless it's a non-trailing dot/hyphen with whitespace (abbreviation/word-break case).
+    if (!phonemes.has_value() && !token.text.empty()) {
+      char32_t first_char = token.text[0];
+      bool is_punct = (token.text.size() == 1) && puncts::kPunctations.contains(first_char);
+      bool is_soft_punct = (first_char == U'.' || first_char == U'-');
+      bool is_last = (i == tokens.size() - 1);
+
+      if (is_punct && (!is_soft_punct || !token.whitespace || is_last)) {
+        result += first_char;
+      }
     }
 
-    // Add trailing whitespace if present.
+    // 4. Whitespace handling
     if (token.whitespace) {
       result += U' ';
     }

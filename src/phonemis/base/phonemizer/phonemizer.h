@@ -11,30 +11,29 @@ namespace phonemis::phonemizer {
 using tokenizer::Token;
 
 /**
- * A common interface for all different phonemizers.
- * 
- * Note that phonemization in general is a sequential task consisting of
-* multiple steps - subphonemizations of consecutive tokens.
+ * Interface for phonemization pipeline.
+ * Processes tokens sequentially, supporting context-aware transitions.
  */
 class Phonemizer {
 public:
   virtual ~Phonemizer() = default;
 
   /**
-   * This is the main API method. It performs a sequential, token-by-token phonemization.
-   * 
-   * Before each token gets processed, there is a possibility of updating the 
-   * phonemizer's context (if implemented). This way we can handle complex relationships between words,
-   * which are difficult to express only by Token's optional fields.
-   * 
-   * @param tokens tokenized input to be phonemized.
-   * @returns a single string with all the obtained phonemes.
+   * Main entry point: converts a sequence of tokens into a phoneme string.
+   * @param tokens Sequence of tokens to process.
+   * @return A consolidated phoneme string in UTF-32.
    */
   std::u32string phonemize(std::span<const Token> tokens);
 
-  // Template methods to be implemented by derived classes.
-  virtual std::optional<std::u32string> phonemize(const Token& token) const = 0;  // Returns std::nullopt if not able to phonemize the token.
-  virtual void update_context(size_t curr_token_id, std::span<const Token> tokens) = 0; // Called before each token gets phonemized.
+  /**
+   * Phonemize a single token. Returns nullopt if no mapping exists.
+   */
+  virtual std::optional<std::u32string> phonemize(const Token& token) const = 0;
+
+  /**
+   * Updates internal state before phonemizing the current token (idx).
+   */
+  virtual void update_context(size_t idx, std::span<const Token> tokens) = 0;
 };
 
 } // namespace phonemis::phonemizer

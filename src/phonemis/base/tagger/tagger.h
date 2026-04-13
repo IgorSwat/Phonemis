@@ -9,19 +9,25 @@ namespace phonemis::tagger {
 
 using tokenizer::Token;
 
-// By tagger we mean a part-of-speech tagger by default.
-// Since there could be many different ways of tagging, we use an interface
-// which should be implemented by all kinds of taggers.
+/**
+ * Interface for token tagging (e.g., PoS, lemmatization).
+ * Implementations add metadata to tokens within a sentence context.
+ */
 class Tagger {
 public:
-  Tagger() = default;
   virtual ~Tagger() = default;
 
-  // Performs in-place tagging on given token vector.
+  /**
+   * Orchestrates tagging of a token stream by splitting it into sentences.
+   * @param tokens The full token stream to be processed in-place.
+   */
   void tag(std::span<Token> tokens) const;
 
-  // A template method to be implemented by derived classes.
-  virtual void tagSentence(std::span<Token> sentence) const = 0;
+  /**
+   * To be implemented by derived classes: applies tags to a single sentence.
+   * @param sentence A span of tokens representing one logical sentence.
+   */
+  virtual void tag_sentence(std::span<Token> sentence) const = 0;
 };
 
 } // namespace phonemis::tagger

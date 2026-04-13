@@ -11,7 +11,7 @@ namespace phonemis {
 // language-specific pipeline implementations.
 class Pipeline : public IPipeline {
 public:
-  Pipeline(const Config& config);
+  explicit Pipeline(const Config& config);
 
   /**
    * Phonemizes given text.
@@ -21,6 +21,11 @@ public:
   std::u32string process(std::string_view text) override;
 
 private:
+  /**
+   * Factory method to create a language-specific pipeline.
+   */
+  static std::unique_ptr<IPipeline> create_pipeline(const Config& config);
+
   std::unique_ptr<IPipeline> impl_;
 };
 

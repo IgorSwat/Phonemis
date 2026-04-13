@@ -10,8 +10,12 @@ namespace phonemis::phonemizer {
 
 using namespace utils;
 
-LexiconPhonemizer::LexiconPhonemizer(const std::string& lexicon_filepath) {
-	auto json_obj = utils::io::load_json(lexicon_filepath);
+LexiconPhonemizer::LexiconPhonemizer(const Config& config) {
+	if (!config.lexicon_filepath.has_value()) {
+		throw std::runtime_error("LexiconPhonemizer: lexicon_filepath must be provided in the configuration.");
+	}
+
+	auto json_obj = utils::io::load_json(config.lexicon_filepath.value());
 
 	// We assume the lexicon has a strict string -> string structure.
 	for (auto& item : json_obj.items()) {

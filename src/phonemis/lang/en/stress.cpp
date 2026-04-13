@@ -12,7 +12,7 @@ using namespace phonemis::phonemizer::constants::ipa::stress;
 using namespace phonemis::utils;
 
 void apply(std::u32string& phonemes, float stress) {
-  // Pre-scan: determine what stress markers and vowels are present
+  // 1. Pre-scan for existing features
   bool has_primary = phonemes.find(kPrimary) != std::u32string::npos;
   bool has_secondary = phonemes.find(kSecondary) != std::u32string::npos;
   bool has_vowel = std::any_of(
@@ -20,56 +20,57 @@ void apply(std::u32string& phonemes, float stress) {
     [](auto c) -> bool { return kVowels.find(c) != std::u32string::npos; }
   );
 
+  // 2. Apply stress transformation
   if (stress < -1.F) {
-    // Fully unstressed: strip all stress markers
+    // Unstressed: strip all markers
     strings::remove__(phonemes, kPrimary);
     strings::remove__(phonemes, kSecondary);
   }
   else if (stress == -1.F || ((stress == 0.F || stress == 0.5F) && has_primary)) {
-    // Reduced stress: downgrade primary → secondary (drop any existing secondary first)
+    // Reduced: primary -> secondary; remove existing secondary
     strings::remove__(phonemes, kSecondary);
     strings::replace__(phonemes, kPrimary, kSecondary);
   }
   else if ((stress == 0.F || stress == 0.5F || stress == 1.F) &&
            !has_primary && !has_secondary && has_vowel) {
-    // No existing marker but vowel present: add secondary stress, then move it before vowel
+    // Missing stress: Add secondary and align to first vowel
     phonemes.insert(0, 1, kSecondary);
     restress(phonemes);
   }
   else if (stress >= 1.F && !has_primary && has_secondary) {
-    // Promote existing secondary → primary
+    // Emphasized: secondary -> primary
     strings::replace__(phonemes, kSecondary, kPrimary);
   }
   else if (stress > 1.F && !has_primary && !has_secondary && has_vowel) {
-    // Forced primary: no marker present — insert primary, then move it before vowel
+    // Forced: Add primary and align to first vowel
     phonemes.insert(0, 1, kPrimary);
     restress(phonemes);
   }
 }
 
 void restress(std::u32string& phonemes) {
-  // Pair each character with a fractional sort key (initially its integer index)
+  // Use Fractional Sorting to move markers before vowels without complex manual shifts
   std::vector<std::pair<float, char32_t>> indexed_positions;
   indexed_positions.reserve(phonemes.size());
   for (size_t i = 0; i < phonemes.size(); i++)
     indexed_positions.emplace_back(static_cast<float>(i), phonemes[i]);
 
-  // For each stress marker, find the next vowel and assign a key just before it
   for (size_t i = 0; i < indexed_positions.size(); i++) {
     char32_t ch = indexed_positions[i].second;
     if (ch == kPrimary || ch == kSecondary) {
+      // Find following vowel
       size_t j = i + 1;
       for (; j < indexed_positions.size(); ++j) {
         if (kVowels.find(indexed_positions[j].second) != std::u32string::npos) break;
       }
+      // Assign sort key to place marker immediately before the vowel
       if (j < indexed_positions.size()) {
-        indexed_positions[i].first = static_cast<float>(j) - 0.5F; // place before vowel
+        indexed_positions[i].first = static_cast<float>(j) - 0.5F;
       }
-      // If no following vowel exists, the marker keeps its current position
     }
   }
 
-  // Reconstruct the string in sorted order
+  // Finalize positions
   std::sort(indexed_positions.begin(), indexed_positions.end(),
             [](const auto& a, const auto& b) { return a.first < b.first; });
 

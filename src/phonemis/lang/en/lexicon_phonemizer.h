@@ -27,7 +27,7 @@ public:
   using Base = phonemizer::LexiconPhonemizer;
   using Base::phonemize;
 
-  LexiconPhonemizer(Lang lang, const std::string& lexicon_filepath);
+  explicit LexiconPhonemizer(const phonemizer::Config& config);
 
   std::optional<std::u32string> phonemize(const Token& token) const override;
   void update_context(size_t curr_token_id, std::span<const Token> tokens) override;

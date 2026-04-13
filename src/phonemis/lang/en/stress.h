@@ -4,22 +4,27 @@
 
 namespace phonemis::en::stress {
 
-// Applies stress to a phonemized string based on a continuous stress level.
-//
-// The `stress` parameter encodes the desired stress level:
-//   < -1  — unstressed: remove all stress markers
-//   = -1  — reduced: downgrade primary (ˈ) to secondary (ˌ), drop existing secondary
-//   0–1   — normal: add secondary stress if none present; downgrade primary if present
-//   >= 1  — emphasized: promote secondary (ˌ) to primary (ˈ); add primary if none present
-//   > 1   — forced primary: insert primary stress even when no markers exist
-//
-// When a stress marker is inserted at position 0, `restress` is called to move
-// it directly before the nearest vowel.
+/**
+ * Adjusts stress markers (ˈ, ˌ) based on a target stress level.
+ * 
+ * Stress levels:
+ * < -1  : Remove all stress markers.
+ * = -1  : Reduced (primary becomes secondary, secondary is dropped).
+ * 0..1  : Normal (add secondary if missing; downgrade primary).
+ * >= 1  : Emphasized (promote secondary to primary).
+ * > 1   : Forced primary (insert primary if none exist).
+ * 
+ * @param phonemes The UTF-32 phoneme string to modify in-place.
+ * @param stress   The target stress intensity.
+ */
 void apply(std::u32string& phonemes, float stress);
 
-// Repositions each stress marker (ˈ, ˌ) so that it immediately precedes
-// the nearest following vowel. If no following vowel exists, the marker
-// stays in place. The relative order of all other phonemes is preserved.
+/**
+ * Repositions stress markers so they immediately precede the nearest vowel.
+ * If no vowel follows a marker, it remains in its original position.
+ * 
+ * @param phonemes The UTF-32 phoneme string to modify in-place.
+ */
 void restress(std::u32string& phonemes);
 
 } // namespace phonemis::en::stress

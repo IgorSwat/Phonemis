@@ -1,6 +1,7 @@
 #pragma once
 
 #include "tagger.h"
+#include "config.h"
 
 #include <span>
 #include <string>
@@ -11,27 +12,31 @@ namespace phonemis::tagger {
 
 using tokenizer::Token;
 
-// A HMM (Hidden Markov Model) tagger represents a family of taggers, which
-// utilize precalculated HMM statistic tables to guess the tag for a given word in a sequence.
-// Utilizes Viterbi algorithm.
+/**
+ * HMM (Hidden Markov Model) Tagger implementation.
+ * Uses the Viterbi algorithm to determine the most likely sequence of tags (hidden states)
+ * based on observed words and precomputed probability tables.
+ */
 class HMMTagger : public Tagger {
 public:
-  // The input data file should be a .json file with a specific HMM structure
-  // (see the implementation in hmm_tagger.cpp).
-  explicit HMMTagger(const std::string& hmm_data_path);
+  explicit HMMTagger(const Config& config);
 
-  void tagSentence(std::span<Token> sentence) const override;
+  /**
+   * Applies the Viterbi algorithm to assign tags to a sentence.
+   * @param sentence Span of tokens to tag in-place.
+   */
+  void tag_sentence(std::span<Token> sentence) const override;
 
 private:
-  // Set of possible tags (states)
+  // Set of all possible tags extracted from the model
   std::unordered_set<Tag> tags_;
 
-  // Probability maps - loaded from the input json file.
-  std::unordered_map<Tag, double> start_probs_ = {};
-  std::unordered_map<Tag, std::unordered_map<std::string, double>>
-    emission_probs_ = {}; // utf-8 instead of u32 to save memory
-  std::unordered_map<Tag, std::unordered_map<Tag, double>>
-    transition_probs_ = {};
+  // Probability tables
+  std::unordered_map<Tag, double> start_probs_;
+  // Tag -> Word -> Probability (UTF-8 word keys to save memory)
+  std::unordered_map<Tag, std::unordered_map<std::string, double>> emission_probs_;
+  // PrevTag -> NextTag -> Probability
+  std::unordered_map<Tag, std::unordered_map<Tag, double>> transition_probs_;
 };
 
 } // namespace phonemis::tagger

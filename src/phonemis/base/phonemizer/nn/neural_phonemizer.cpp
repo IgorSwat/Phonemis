@@ -1,6 +1,7 @@
 #include "constants.h"
 #include "neural_phonemizer.h"
 #include <phonemis/base/tokenizer/token.h>
+#include <phonemis/utils/strings.h>
 
 #include <algorithm>
 #include <iterator>
@@ -16,31 +17,20 @@ using executorch::extension::make_tensor_ptr;
 
 namespace phonemis::phonemizer::nn {
 
-NeuralPhonemizer::NeuralPhonemizer(const std::string& model_path)
-#ifdef ET_ON
-    : module_(std::make_unique<Module>(model_path, Module::LoadMode::MmapUseMlockIgnoreErrors))
-#endif
-{}
+NeuralPhonemizer::NeuralPhonemizer(const Config& config) {
+  if (!config.nn_model_filepath.has_value()) {
+    throw std::runtime_error("NeuralPhonemizer: nn_model_filepath must be provided in the configuration.");
+  }
 
-NeuralPhonemizer::NeuralPhonemizer(const std::string& model_path,
-                                   const std::unordered_map<char32_t, int64_t>& grapheme_mapping,
-                                   const std::unordered_map<char32_t, int64_t>& phone_mapping)
-    : grapheme_tokenizer_(grapheme_mapping)
-    , phone_tokenizer_(phone_mapping)
 #ifdef ET_ON
-    , module_(std::make_unique<Module>(model_path, Module::LoadMode::MmapUseMlockIgnoreErrors))
+  module_ = std::make_unique<Module>(config.nn_model_filepath.value(), Module::LoadMode::MmapUseMlockIgnoreErrors);
 #endif
-{}
 
-NeuralPhonemizer::NeuralPhonemizer(const std::string& model_path,
-                                   const std::string& grapheme_mapping_path,
-                                   const std::string& phone_mapping_path)
-    : grapheme_tokenizer_(grapheme_mapping_path)
-    , phone_tokenizer_(phone_mapping_path)
-#ifdef ET_ON
-    , module_(std::make_unique<Module>(model_path, Module::LoadMode::MmapUseMlockIgnoreErrors))
-#endif
-{}
+  if (config.nn_grapheme_mapping && config.nn_phone_mapping) {
+    grapheme_tokenizer_ = Tokenizer(*config.nn_grapheme_mapping);
+    phone_tokenizer_ = Tokenizer(*config.nn_phone_mapping);
+  }
+}
 
 std::optional<std::u32string> NeuralPhonemizer::phonemize(const tokenizer::Token& token) const {
 #ifdef ET_ON
@@ -69,7 +59,7 @@ std::optional<std::u32string> NeuralPhonemizer::phonemize(const tokenizer::Token
   }
 
   // Step 2: Tokenize the text if length is within limits
-  std::vector<int64_t> input_tokens = grapheme_tokenizer_.tokenize(text);
+  std::vector<int64_t> input_tokens = grapheme_tokenizer_.tokenize(strings::to_lower(text));
 
   // Step 3: Infer the model
   const std::vector<int32_t> input_shape = {static_cast<int32_t>(input_tokens.size())};

@@ -12,7 +12,7 @@ using namespace tagger;
 // (e.g., first token gets Tag(1), second gets Tag(2), etc.).
 class DumbTagger : public Tagger {
 public:
-  void tagSentence(std::span<Token> sentence) const override {
+  void tag_sentence(std::span<Token> sentence) const override {
     for (size_t i = 0; i < sentence.size(); ++i) {
       sentence[i].tag = static_cast<Tag>(std::to_string(i + 1));
     }
