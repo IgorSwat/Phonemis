@@ -4,12 +4,12 @@
 #include "../phonemizer.h"
 #include "../config.h"
 
-#include <vector>
 #include <cstdint>
+#include <memory>
+#include <vector>
 
 #ifdef ET_ON
 #include <executorch/extension/module/module.h>
-#include <memory>
 #endif
 
 namespace phonemis::phonemizer::nn {

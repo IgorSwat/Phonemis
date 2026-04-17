@@ -1,4 +1,5 @@
 #include "pipeline.h"
+#include <phonemis/lang/en/pipeline.h>
 
 #include <stdexcept>
 
@@ -12,9 +13,7 @@ std::unique_ptr<IPipeline> Pipeline::create_pipeline(const Config& config) {
   switch (config.lang) {
   case Lang::EN_US:
   case Lang::EN_GB:
-    // TODO: Initialize English-specific pipeline implementation
-    // return std::make_unique<EnglishPipeline>(config);
-    return nullptr;
+    return std::make_unique<en::Pipeline>(config);
   default:
     throw std::invalid_argument("Unsupported language profile");
   }

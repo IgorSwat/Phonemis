@@ -33,7 +33,7 @@ std::u32string Phonemizer::phonemize(std::span<const Token> tokens) {
       bool is_soft_punct = (first_char == U'.' || first_char == U'-');
       bool is_last = (i == tokens.size() - 1);
 
-      if (is_punct && (!is_soft_punct || !token.whitespace || is_last)) {
+      if (is_punct && (!is_soft_punct || token.whitespace || is_last)) {
         result += first_char;
       }
     }

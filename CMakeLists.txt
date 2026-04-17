@@ -10,8 +10,13 @@ file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/phonemis/*.cpp
 )
 
-# Include directories
+# List of source files for library (excluding main.cpp to avoid duplicate symbols in tests)
+list(FILTER SOURCE_FILES EXCLUDE REGEX "main\\.cpp$")
+
+# Create the main executoable (always built)
+set(MAIN_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/src/phonemis/main.cpp)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+add_executable(phonemis ${MAIN_SOURCE} ${SOURCE_FILES})
 
 # Option to build tests
 option(BUILD_TESTS "Build tests" OFF)

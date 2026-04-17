@@ -17,7 +17,9 @@ using executorch::extension::make_tensor_ptr;
 
 namespace phonemis::phonemizer::nn {
 
-NeuralPhonemizer::NeuralPhonemizer(const Config& config) {
+NeuralPhonemizer::NeuralPhonemizer(const Config& config)
+  : grapheme_tokenizer_(config.nn_grapheme_mapping ? Tokenizer(*config.nn_grapheme_mapping) : Tokenizer(constants::DEFAULT_CHAR_TO_TOKEN)),
+    phone_tokenizer_(config.nn_phone_mapping ? Tokenizer(*config.nn_phone_mapping) : Tokenizer(constants::DEFAULT_PHONEME_TO_TOKEN)) {
   if (!config.nn_model_filepath.has_value()) {
     throw std::runtime_error("NeuralPhonemizer: nn_model_filepath must be provided in the configuration.");
   }
@@ -25,16 +27,15 @@ NeuralPhonemizer::NeuralPhonemizer(const Config& config) {
 #ifdef ET_ON
   module_ = std::make_unique<Module>(config.nn_model_filepath.value(), Module::LoadMode::MmapUseMlockIgnoreErrors);
 #endif
-
-  if (config.nn_grapheme_mapping && config.nn_phone_mapping) {
-    grapheme_tokenizer_ = Tokenizer(*config.nn_grapheme_mapping);
-    phone_tokenizer_ = Tokenizer(*config.nn_phone_mapping);
-  }
 }
 
 std::optional<std::u32string> NeuralPhonemizer::phonemize(const tokenizer::Token& token) const {
 #ifdef ET_ON
   std::u32string_view text = token.text;
+
+  if (text.empty()) {
+    return std::make_optional(U"");
+  }
 
   // Step 1: Check if text length exceeds MAX_SEQ_LEN
   // It is possible to apply a little bit more sophisticated split heuristic here,
@@ -59,38 +60,40 @@ std::optional<std::u32string> NeuralPhonemizer::phonemize(const tokenizer::Token
   }
 
   // Step 2: Tokenize the text if length is within limits
-  std::vector<int64_t> input_tokens = grapheme_tokenizer_.tokenize(strings::to_lower(text));
+  std::vector<int64_t> input_tokens = grapheme_tokenizer_.tokenize(utils::strings::to_lower(text));
+
+  // If there are no valid input tokens, do not even proceed with the phonemization.
+  if (input_tokens.empty() || std::all_of(input_tokens.begin(), input_tokens.end(), [](int64_t t) { return t == constants::PAD_TOKEN; })) {
+    return std::nullopt;
+  }
 
   // Step 3: Infer the model
-  const std::vector<int32_t> input_shape = {static_cast<int32_t>(input_tokens.size())};
+  const std::vector<int32_t> input_shape = {1, static_cast<int32_t>(input_tokens.size())};
   auto input_tensor = make_tensor_ptr(
-      executorch::aten::ScalarType::Long,
       input_shape,
-      input_tokens.data());
+      input_tokens.data(),
+      executorch::aten::ScalarType::Long
+  );
 
   auto result = module_->forward(input_tensor);
   if (!result.ok()) {
     return std::nullopt;
   }
 
-  // The output is a 2D tensor of shape [2*seq_len, num_classes].
-  // Apply argmax over the last dimension to get token ids.
-  const auto& output_evalue = result->at(0);
-  const auto& logits = output_evalue.toTensor();
+  // The expected shape of the output tensor is [1, 2 * seq_len, no_classes].
+  const auto& logits = result->at(0).toTensor();
+  const float* logits_data = logits.const_data_ptr<float>();
 
-  const int64_t* logits_data = logits.const_data_ptr<int64_t>();
-  const auto sizes = logits.sizes();
-  const int64_t num_steps = sizes[0];
-  const int64_t num_classes = sizes[1];
+  size_t no_steps = logits.sizes()[1], no_classes = logits.sizes()[2];
 
-  std::vector<int64_t> output_tokens(num_steps);
-  for (int64_t i = 0; i < num_steps; ++i) {
-    const int64_t* row = logits_data + i * num_classes;
-    output_tokens[i] = static_cast<int64_t>(
-        std::max_element(row, row + num_classes) - row);
+  // Perform an argmax over the class dimension to obtain exact phonemes.
+  std::vector<int64_t> output_tokens(no_steps);
+  for (int64_t i = 0; i < no_steps; ++i) {
+    const float* row = logits_data + i * no_classes;
+    output_tokens[i] = static_cast<int64_t>(std::max_element(row, row + no_classes) - row);
   }
 
-  // Step 4: Postprocessing
+  // Step 4: CTC-specific postprocessing.
   output_tokens = remove_duplicates(output_tokens);
   output_tokens = remove_blanks(output_tokens);
 
