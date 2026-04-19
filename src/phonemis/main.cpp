@@ -7,20 +7,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
-
-phonemis::Lang parse_lang(const std::string& lang_str) {
-    static const std::map<std::string, phonemis::Lang> lang_map = {
-        {"en-us", phonemis::Lang::EN_US},
-        {"en-gb", phonemis::Lang::EN_GB}
-    };
-
-    auto it = lang_map.find(lang_str);
-    if (it != lang_map.end()) {
-        return it->second;
-    }
-    return phonemis::Lang::DEFAULT;
-}
 
 void print_usage(const char* prog_name) {
     std::cout << "Usage: " << prog_name << " [options] <text>\n"
@@ -48,9 +34,12 @@ int main(int argc, char* argv[]) {
         } else if (arg == "--model" && i + 1 < argc) {
             config.phonemizer.nn_model_filepath = argv[++i];
         } else if (arg == "--tagger" && i + 1 < argc) {
-            config.tagger.data_filepath = argv[++i];
+            config.tagger = {
+                .data_filepath = argv[++i],
+            };
         } else if (arg == "--lang" && i + 1 < argc) {
-            config.lang = parse_lang(argv[++i]);
+            config.lang = argv[++i];
+            config.phonemizer.lang = config.lang;
         } else if (i == argc - 1) {
             text_to_process = arg;
         } else {

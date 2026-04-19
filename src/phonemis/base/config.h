@@ -12,18 +12,17 @@ namespace phonemis {
 // A general and complete configuration for any type of pipeline within the library.
 struct Config {
   /**
-   * Language profile for phonemization (e.g., @ref Lang::EN_US for American English).
-   * @details Defaults to @ref Lang::DEFAULT.
+   * Language profile for phonemization (e.g., @ref 'en-us' for American English).
    */
-  Lang lang = Lang::DEFAULT;
+  Lang lang;
 
   /**
-   * Tagger subconfiguration.
+   * Tagger subconfiguration - optional (unused by some languages).
    */
-  tagger::Config tagger;
+  std::optional<tagger::Config> tagger;
 
   /**
-   * Phonemizer subconfiguration.
+   * Phonemizer subconfiguration - required.
    */
   phonemizer::Config phonemizer;
 };

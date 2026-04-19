@@ -7,7 +7,7 @@
 namespace phonemis::tagger {
 
 void Tagger::tag(std::span<Token> tokens) const {
-  auto start_idx = 0;
+  size_t start_idx = 0;
 
   while (start_idx < tokens.size()) {
     // 1. Identify sentence boundaries (End-Of-Sentence character with trailing whitespace)

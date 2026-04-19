@@ -6,16 +6,16 @@
 
 namespace phonemis::utils::io {
 
-nlohmann::json load_json(const std::string& fp) {
+nlohmann::json load_json(std::string_view fp) {
   std::filesystem::path file_path(fp);
 	if (!std::filesystem::exists(file_path) || !std::filesystem::is_regular_file(file_path)) {
-		throw std::invalid_argument("File not found: " + fp);
+		throw std::invalid_argument("File not found: " + std::string(fp));
 	}
 
 	// JSON parsing
-	std::ifstream file_stream(fp);
+	std::ifstream file_stream(file_path);
 	if (!file_stream.is_open()) {
-		throw std::runtime_error("Failed to open file: " + fp);
+		throw std::runtime_error("Failed to open file: " + std::string(fp));
 	}
 
 	nlohmann::json json_obj;

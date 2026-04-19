@@ -1,10 +1,9 @@
 #pragma once
 
 #include "conversions.h"
-#include "unicode_tables.h"
+#include "unicode_table.h"
 
 #include <limits>
-#include <iostream>
 #include <string>
 
 /**
@@ -22,8 +21,7 @@ constexpr inline bool isalnum(char32_t c) {
 }
 
 constexpr inline bool isalpha(char32_t c) {
-  return is_ascii(c) && std::isalpha(static_cast<unsigned char>(c)) ||
-         kAlphaLowerToUpper.contains(c) || kAlphaUpperToLower.contains(c);
+  return (c < kLutSize) ? kUnicodeLut[c].is_alpha : false;
 }
 
 constexpr inline bool isdigit(char32_t c) {
@@ -35,21 +33,19 @@ constexpr inline bool isspace(char32_t c) {
 }
 
 constexpr inline bool islower(char32_t c) {
-  return is_ascii(c) ? std::islower(static_cast<unsigned char>(c)) : kAlphaLowerToUpper.contains(c);
+  return isalpha(c) && kUnicodeLut[c].upper != c;
 }
 
 constexpr inline bool isupper(char32_t c) {
-  return is_ascii(c) ? std::isupper(static_cast<unsigned char>(c)) : kAlphaUpperToLower.contains(c);
+  return isalpha(c) && kUnicodeLut[c].lower != c;
 }
 
 constexpr inline char32_t tolower(char32_t c) {
-  return is_ascii(c) ? std::tolower(static_cast<unsigned char>(c)) :
-         unicode::kAlphaUpperToLower.contains(c) ? unicode::kAlphaUpperToLower.at(c) : c;
+  return (c < kLutSize) ? kUnicodeLut[c].lower : c;
 }
 
 constexpr inline char32_t toupper(char32_t c) {
-  return is_ascii(c) ? std::toupper(static_cast<unsigned char>(c)) :
-         unicode::kAlphaLowerToUpper.contains(c) ? unicode::kAlphaLowerToUpper.at(c) : c;
+  return (c < kLutSize) ? kUnicodeLut[c].upper : c;
 }
 
 } // namespace phonemis::utils::unicode

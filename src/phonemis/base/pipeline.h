@@ -17,6 +17,8 @@ public:
    * Phonemizes given text.
    * @param text an input text (utf-8) to be processed.
    * @returns phonemization (u32) of given input text.
+   * @note This method is not thread-safe. Concurrent calls on the same
+   * instance should be avoided.
    */
   std::u32string process(std::string_view text) override;
 

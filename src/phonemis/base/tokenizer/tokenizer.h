@@ -31,7 +31,7 @@ private:
 	 * @param phrase a phrase - input substring to be processed.
 	 * @param tokenVec a token vector to add results to.
 	 */
-	void processPhrase(std::u32string_view phrase, std::vector<Token>& token_vec) const;
+	void process_phrase(std::u32string_view phrase, std::vector<Token>& token_vec) const;
 
 	/**
 	 * Processes a single separable chunk which contains no hared separators.
@@ -39,7 +39,7 @@ private:
 	 * @param chunk a chunk - input substring with no hard seperators to be processed.
 	 * @param tokenVec a token vector to add results to.
 	 */
-	void processChunk(std::u32string_view chunk, std::vector<Token>& token_vec) const;
+	void process_chunk(std::u32string_view chunk, std::vector<Token>& token_vec) const;
 
 	/**
 	 * Helper function to obtain a rule for given special character.
@@ -48,24 +48,24 @@ private:
 	 * @param c a (special) character to find a rule for.
 	 * @returns a rule for given character.
 	 */
-	split::Rule getRule(char32_t c) const;
+	split::Rule get_rule(char32_t c) const;
 
 	/**
 	 * Returns true if given character has defined splitting rule.
 	 */
-	bool isSoftSeparator(char32_t c) const;
+	bool is_soft_separator(char32_t c) const;
 
 	/**
 	 * Returns true if given character is a special character without
 	 * splitting rule defined.
 	 * This type of character always splits the two adjacent phrases.
 	 */
-	bool isHardSeparator(char32_t c) const;
+	bool is_hard_separator(char32_t c) const;
 
 	/**
 	 * Returns true if given word exists in exception set and should not be splitted furthermore.
 	 */
-	bool isException(std::u32string_view word) const;
+	bool is_exception(const std::u32string& word) const;
 
 	const split::Rules* rules_ = nullptr;
 	const split::Exceptions* exceptions_ = nullptr;

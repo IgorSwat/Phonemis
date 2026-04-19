@@ -9,7 +9,7 @@ namespace phonemis::preprocessor::num2word {
 enum class Mode {
   CARDINAL = 0,
 
-  POTENTIALY_ORDINAL,
+  POTENTIALLY_ORDINAL,
   ORDINAL,
 
   FRACTION,

@@ -16,7 +16,7 @@ list(FILTER SOURCE_FILES EXCLUDE REGEX "main\\.cpp$")
 # Create the main executoable (always built)
 set(MAIN_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/src/phonemis/main.cpp)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
-add_executable(phonemis ${MAIN_SOURCE} ${SOURCE_FILES})
+add_executable(phonemis_runner ${MAIN_SOURCE} ${SOURCE_FILES})
 
 # Option to build tests
 option(BUILD_TESTS "Build tests" OFF)

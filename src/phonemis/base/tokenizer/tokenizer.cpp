@@ -14,7 +14,7 @@ std::vector<Token>
 Tokenizer::tokenize(std::u32string_view input) const {
   // A resulting list of tokens
 	std::vector<Token> tokens;
-  tokens.reserve(input.size() / 5);  // Reserve space to reduce reallocations
+  tokens.reserve(input.size() / 5);
 
   // A dynamic buffer to collect characters to be processed.
   // Since we try to avoid copying strings, we represent the buffer as a view
@@ -30,10 +30,10 @@ Tokenizer::tokenize(std::u32string_view input) const {
 
       // If we have a pending word, process it
 			if (currw_len > 0) {  // equivalent to !curr_word.empty()
-				processPhrase(std::u32string_view(input.data() + currw_offset, currw_len), tokens);
+				process_phrase(std::u32string_view(input.data() + currw_offset, currw_len), tokens);
 				currw_len = 0;  // resets the current word view
 
-				// The right-most token always gets the trailing white space flag
+				// The right-most token always gets the trailing white space flag, except for the last token in the sequence
 				tokens.back().whitespace = true;
 			}
     } else {
@@ -44,7 +44,7 @@ Tokenizer::tokenize(std::u32string_view input) const {
 
   // Process last remaining word
   if (currw_len > 0) {
-    processPhrase(std::u32string_view(input.data() + currw_offset, currw_len), tokens);
+    process_phrase(std::u32string_view(input.data() + currw_offset, currw_len), tokens);
   }
 
   // Add a mark for the first token in the sequence
@@ -55,8 +55,8 @@ Tokenizer::tokenize(std::u32string_view input) const {
   return tokens;
 }
 
-void Tokenizer::processPhrase(std::u32string_view word, 
-                              std::vector<Token>& token_vec) const {
+void Tokenizer::process_phrase(std::u32string_view word, 
+                               std::vector<Token>& token_vec) const {
   // Similarly to tokenize() implementation, we represent string view with
   // offset and length. We avoid copying by producing subviews into `word`.
   size_t currw_offset = 0, currw_len = 0;
@@ -66,9 +66,9 @@ void Tokenizer::processPhrase(std::u32string_view word,
 
     // Hard seperator basically means the subphrases needs to be separated anyway,
     // with the separator being a separate token.
-    if (isHardSeparator(c)) {
+    if (is_hard_separator(c)) {
       if (currw_len > 0) {
-        processChunk(std::u32string_view(word.data() + currw_offset, currw_len), token_vec);
+        process_chunk(std::u32string_view(word.data() + currw_offset, currw_len), token_vec);
         currw_len = 0;
       }
 
@@ -81,12 +81,12 @@ void Tokenizer::processPhrase(std::u32string_view word,
   }
 
   if (currw_len > 0) {
-    processChunk(std::u32string_view(word.data() + currw_offset, currw_len), token_vec);
+    process_chunk(std::u32string_view(word.data() + currw_offset, currw_len), token_vec);
   }
 }
 
-void Tokenizer::processChunk(std::u32string_view chunk, 
-                             std::vector<Token>& tokenVec) const {
+void Tokenizer::process_chunk(std::u32string_view chunk, 
+                              std::vector<Token>& token_vec) const {
   // Edge case - an empty chunk/word ("")
 	if (chunk.empty()) return;
 
@@ -94,25 +94,24 @@ void Tokenizer::processChunk(std::u32string_view chunk,
 	// If an entire chunk is a special word/phrase, we should return it without
 	// further divisions.
   // Note that the lookup is not case sensitive.
-	if (isException(strings::to_lower(chunk))) {
-		tokenVec.push_back({std::u32string(chunk)});
+	if (exceptions_ && is_exception(strings::to_lower(chunk))) {
+		token_vec.push_back({std::u32string(chunk)});
 		return;
 	}
 
 	// Find first special character
-	size_t special_pos = std::string::npos;
-	split::Rule rule = split::DEFAULT_RULE;
-
+	size_t special_pos = std::u32string_view::npos;
+	split::Rule rule = split::Rule::TOTAL_DIVIDE;
 	auto it = std::find_if(chunk.begin(), chunk.end(), 
 												 [](char32_t c) { return !unicode::isalnum(c); });
 	if (it != chunk.end()) {
 		special_pos = std::distance(chunk.begin(), it);
-		rule = getRule(*it);
+		rule = get_rule(*it);
 	}
 
 	// If no special character found, it's a simple token (an entire word)
-	if (special_pos == std::string::npos) {
-		tokenVec.push_back({std::u32string(chunk)});
+	if (special_pos == std::u32string_view::npos) {
+		token_vec.push_back({std::u32string(chunk)});
 		return;
 	}
 
@@ -123,31 +122,31 @@ void Tokenizer::processChunk(std::u32string_view chunk,
 	std::u32string_view special_str(chunk.data() + special_pos, 1);
 
 	switch (rule) {
-		case split::Rule::JOIN_LEFT:
+		case split::Rule::KEEP_WITH_RIGHT:
 			// xyz'abc -> xyz, 'abc (if xyz not empty)
 			// if xyz empty -> 'abc
 			if (!left.empty()) {
-				processChunk(left, tokenVec);
-				processChunk(chunk.substr(special_pos), tokenVec);
+				process_chunk(left, token_vec);
+				process_chunk(chunk.substr(special_pos), token_vec);
 			} else {
 				// Be careful for dots, as they are theoretically both soft and hard characters
 				size_t next_dot = chunk.find(U'.');
 				if (next_dot == std::u32string_view::npos)
-					tokenVec.push_back({std::u32string(chunk)});
+					token_vec.push_back({std::u32string(chunk)});
 				else {
-					processChunk(chunk.substr(0, next_dot), tokenVec);
-					processChunk(chunk.substr(next_dot), tokenVec);
+					process_chunk(chunk.substr(0, next_dot), token_vec);
+					process_chunk(chunk.substr(next_dot), token_vec);
 				}
 			}
 			break;
 
-		case split::Rule::JOIN_RIGHT:
+		case split::Rule::KEEP_WITH_LEFT:
 			// xyz-abc -> xyz-, abc (unless abc empty)
 			if (!right.empty()) {
-				processChunk(chunk.substr(0, special_pos + 1), tokenVec);
-				processChunk(right, tokenVec);
+				process_chunk(chunk.substr(0, special_pos + 1), token_vec);
+				process_chunk(right, token_vec);
 			} else {
-				tokenVec.push_back({std::u32string(chunk)});
+				token_vec.push_back({std::u32string(chunk)});
 			}
 			break;
 
@@ -155,37 +154,37 @@ void Tokenizer::processChunk(std::u32string_view chunk,
 			// xyz:abc -> xyz:abc (unless abc empty -> xyz, :)
 			if (!right.empty()) {
 				// Treat as one word (join from both sides)
-				tokenVec.push_back({std::u32string(chunk)});
+				token_vec.push_back({std::u32string(chunk)});
 			} else {
 				// xyz: -> xyz, :
-				processChunk(left, tokenVec);
-				tokenVec.push_back({std::u32string(special_str)});
+				process_chunk(left, token_vec);
+				token_vec.push_back({std::u32string(special_str)});
 			}
 			break;
 
 		case split::Rule::TOTAL_DIVIDE:
 			// xyz.abc -> xyz, ., abc
-			if (!left.empty()) processChunk(left, tokenVec);
-			tokenVec.push_back({std::u32string(special_str)});
-			if (!right.empty()) processChunk(right, tokenVec);
+			if (!left.empty()) process_chunk(left, token_vec);
+			token_vec.push_back({std::u32string(special_str)});
+			if (!right.empty()) process_chunk(right, token_vec);
 			break;
 	}
 }
 
-split::Rule Tokenizer::getRule(char32_t c) const {
+split::Rule Tokenizer::get_rule(char32_t c) const {
   return rules_ && rules_->contains(c) ?
-         rules_->at(c) : split::DEFAULT_RULE;
+         rules_->at(c) : split::Rule::TOTAL_DIVIDE;
 }
 
-bool Tokenizer::isSoftSeparator(char32_t c) const {
+bool Tokenizer::is_soft_separator(char32_t c) const {
   return rules_ && rules_->contains(c);
 }
 
-bool Tokenizer::isHardSeparator(char32_t c) const {
-  return !unicode::isalnum(c) && !isSoftSeparator(c);
+bool Tokenizer::is_hard_separator(char32_t c) const {
+  return !unicode::isalnum(c) && !unicode::isspace(c) && !is_soft_separator(c);
 }
 
-bool Tokenizer::isException(std::u32string_view word) const {
+bool Tokenizer::is_exception(const std::u32string& word) const {
   return exceptions_ && exceptions_->contains(word);
 }
 

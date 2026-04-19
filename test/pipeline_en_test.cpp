@@ -7,9 +7,13 @@ namespace phonemis::test {
 using namespace en;
 
 static Pipeline g_pipeline(Config{
-    .lang = Lang::EN_US,
-    .tagger = {.data_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/english/hmm.json"},
-    .phonemizer = {.lexicon_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/english/us_small.json"}
+    .lang = "en-us",
+    .tagger = tagger::Config{
+      .data_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/english/hmm.json"
+    },
+    .phonemizer = phonemizer::Config{
+      .lexicon_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/english/us_small.json"
+    }
 });
 
 REGISTER_TEST(pipeline_en_us_integration_test) {

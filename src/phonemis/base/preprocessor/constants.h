@@ -1,10 +1,10 @@
 #pragma once
 
-#include <unordered_set>
+#include <array>
 
 namespace phonemis::preprocessor::constants {
 
-static const std::unordered_set<char32_t> kCurrencies = {
+inline constexpr std::array<char32_t, 3> kCurrencies = {
   U'$', U'€', U'£', 
 };
 

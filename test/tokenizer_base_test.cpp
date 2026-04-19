@@ -20,10 +20,10 @@ bool tokensEqual(const std::vector<Token>& actual, const std::vector<std::u32str
 
 REGISTER_TEST(tokenizer_base_basic_tokenization_test)
 {
-    // Create rules: hyphen uses TOTAL_DIVIDE (default), apostrophe uses JOIN_RIGHT
+    // Create rules: hyphen uses TOTAL_DIVIDE (default), apostrophe uses KEEP_WITH_LEFT
     Rules rules = {
         {U'-', Rule::TOTAL_DIVIDE},   // "well-being" -> "well" + "-" + "being"
-        {U'\'', Rule::JOIN_LEFT}     // "don't" -> "don" + "'t"
+        {U'\'', Rule::KEEP_WITH_RIGHT}     // "don't" -> "don" + "'t"
     };
 
     Tokenizer tokenizer(&rules, nullptr);
@@ -163,7 +163,7 @@ REGISTER_TEST(tokenizer_base_complex_rules_test)
     // Complex rules: different separators with different behaviors
     Rules rules = {
         {U'-', Rule::TOTAL_DIVIDE},   // hyphen: split and remove
-        {U'\'', Rule::JOIN_LEFT},     // apostrophe: attach at the beginning of the right-side phrase
+        {U'\'', Rule::KEEP_WITH_RIGHT},     // apostrophe: attach at the beginning of the right-side phrase
         {U':', Rule::TOTAL_JOIN}      // colon: keep together
     };
 
@@ -195,7 +195,7 @@ REGISTER_TEST(tokenizer_base_complex_rules_test)
 REGISTER_TEST(tokenizer_base_edge_cases_test)
 {
     Rules rules = {
-        {U'-', Rule::JOIN_RIGHT}
+        {U'-', Rule::KEEP_WITH_LEFT}
     };
 
     Tokenizer tokenizer(&rules, nullptr);

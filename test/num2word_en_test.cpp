@@ -19,7 +19,9 @@ REGISTER_TEST(num2word_en_basic_transform_test)
     ASSERT_EQUALS(U"three tenth", layer.transform(U"3/10"));  // TODO: change after fixing the num2word
 
     // Currency
+    ASSERT_EQUALS(U"one dollar", layer.transform(U"1$"));
     ASSERT_EQUALS(U"fifty dollars", layer.transform(U"50$"));
+    ASSERT_EQUALS(U"one euro", layer.transform(U"1.00€"));
     ASSERT_EQUALS(U"The price is ninety nine euros.", layer.transform(U"The price is 99€."));
 
     return true;
@@ -53,7 +55,7 @@ REGISTER_TEST(num2word_en_date_test)
 REGISTER_TEST(num2word_en_complex_test)
 {
     preprocessor::num2word::Config config;
-    config.allowGeneralOrdNotation = true;
+    config.allow_general_ord_notation = true;
     Num2Word layer(config);
 
     std::u32string input = U"On 2026-03-27, the 1st runner finished 1/2 of the race. "

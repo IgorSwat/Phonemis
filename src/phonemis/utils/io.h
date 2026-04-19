@@ -21,7 +21,7 @@ namespace utils::io {
  * @throws std::invalid_argument If the file is not found or the JSON format is invalid.
  * @throws std::runtime_error If the file fails to open.
  */
-nlohmann::json load_json(const std::string& fp);
+nlohmann::json load_json(std::string_view fp);
 
 }	// utils::io
 
@@ -36,4 +36,4 @@ inline std::ostream& operator<<(std::ostream& os, const char32_t* u32) {
   return os << phonemis::utils::conversions::u32_to_utf8(u32);
 }
 
-} // phonemis::utilities::io
+} // phonemis

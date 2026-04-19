@@ -31,18 +31,20 @@ std::string get_parent_tag(const std::string& tag) {
 } // namespace
 
 LexiconPhonemizer::LexiconPhonemizer(const phonemizer::Config& config)
-    : phonemizer::LexiconPhonemizer(config), british_(config.lang == Lang::EN_GB) {}
+    : phonemizer::LexiconPhonemizer(config), british_(config.lang == "en-gb") {}
 
 std::optional<std::u32string> LexiconPhonemizer::phonemize(const Token& token) const {
   // Set stress level.
   // Words with upper case characters are stressed more.
-  std::optional<float> stress = token.text == strings::to_lower(token.text) ?
-                                std::nullopt : std::make_optional(0.5F);
+  std::optional<stress::Level> stress = strings::is_all_lower(token.text) ?
+                                        std::nullopt : std::make_optional(stress::Level::EMPHASIZED);
+
+  const std::string& tag = token.tag.value_or("");
 
   // Start with lookup_special(), as it is the most concrete and some of the
   // special words might require different phonemizations than present in the lexicon.
   std::u32string phonemes = lookup_special(
-    token.text, token.tag.value_or(""), stress,
+    token.text, tag, stress,
     global_context_.vowel_next, global_context_.future_to
   );
   if (!phonemes.empty()) {
@@ -50,32 +52,31 @@ std::optional<std::u32string> LexiconPhonemizer::phonemize(const Token& token) c
   }
 
   // NNP words (acronyms, initialysms) are sort of out of the main pipeline, so they go next.
-  std::u32string text_uppercase = strings::to_upper(token.text);
-  if (text_uppercase == token.text) {
+  if (strings::is_all_upper(token.text)) {
     phonemes = lookup_nnp(token.text);
     return !phonemes.empty() ? std::make_optional(phonemes) : std::nullopt;
   }
 
   // Standard (generic) lookup
   if (is_known(token.text))
-    return lookup_and_restress(token.text, token.tag.value_or(""), stress);
+    return lookup_and_restress(token.text, tag, stress);
   if (strings::ends_with(token.text, U"s'") && is_known(token.text.substr(0, token.text.size() - 2) + U"'s"))
-    return lookup_and_restress(token.text.substr(0, token.text.size() - 2) + U"'s", token.tag.value_or(""), stress);
+    return lookup_and_restress(token.text.substr(0, token.text.size() - 2) + U"'s", tag, stress);
   if (strings::ends_with(token.text, U"'") && is_known(token.text.substr(0, token.text.size() - 1)))
-    return lookup_and_restress(token.text.substr(0, token.text.size() - 1), token.tag.value_or(""), stress);
+    return lookup_and_restress(token.text.substr(0, token.text.size() - 1), tag, stress);
 
   // If the generic lookup failed, try to divide the word for a well known stem and suffix.
-  phonemes = lookup_stem_s(token.text, token.tag.value_or(""), stress);
+  phonemes = lookup_stem_s(token.text, tag, stress);
   if (!phonemes.empty()) {
     return std::make_optional(phonemes);
   }
 
-  phonemes = lookup_stem_ed(token.text, token.tag.value_or(""), stress);
+  phonemes = lookup_stem_ed(token.text, tag, stress);
   if (!phonemes.empty()) {
     return std::make_optional(phonemes);
   }
 
-  phonemes = lookup_stem_ing(token.text, token.tag.value_or(""), 0.5F);
+  phonemes = lookup_stem_ing(token.text, tag, stress::Level::EMPHASIZED);
   if (!phonemes.empty()) {
     return std::make_optional(phonemes);
   }
@@ -91,10 +92,10 @@ void LexiconPhonemizer::update_context(size_t curr_token_id, std::span<const Tok
   if (curr_token_id + 1 < tokens.size()) {
     const auto& next_token = tokens[curr_token_id + 1];
     if (!next_token.text.empty()) {
-      char32_t first_char = strings::to_lower(next_token.text)[0];
-      if (constants::alphabet::kVowels.find(first_char) != std::u32string::npos) {
+      char32_t first_char = unicode::tolower(next_token.text[0]);
+      if (constants::alphabet::kVowels.contains(first_char)) {
         global_context_.vowel_next = {true};
-      } else if (constants::alphabet::kConsosants.find(first_char) != std::u32string::npos) {
+      } else if (constants::alphabet::kConsonants.contains(first_char)) {
         global_context_.vowel_next = {false};
       } else {
         global_context_.vowel_next = std::nullopt;
@@ -106,7 +107,7 @@ void LexiconPhonemizer::update_context(size_t curr_token_id, std::span<const Tok
   // Start from the next token and check the 2 nearest, non-punctation words.
   global_context_.future_to = false;
   for (size_t j = curr_token_id + 1, seen = 0; j < tokens.size() && seen < 2; j++) {
-    if (tokens[j].text.size() == 1 && puncts::kPunctations.contains(static_cast<char>(tokens[j].text[0])))
+    if (tokens[j].text.size() == 1 && puncts::kPunctuations.contains(tokens[j].text[0]))
       continue;
     seen++;
     if (tokens[j].text == U"to") {
@@ -147,7 +148,7 @@ std::u32string LexiconPhonemizer::lookup(const std::u32string& word, const Tag& 
 }
 
 std::u32string LexiconPhonemizer::lookup_and_restress(const std::u32string& word, const Tag& tag,
-                                                      std::optional<float> stress) const {
+                                                      std::optional<stress::Level> stress) const {
   std::u32string phonemes = lookup(word, tag);
 
   if (!phonemes.empty() && stress.has_value()) {
@@ -159,7 +160,7 @@ std::u32string LexiconPhonemizer::lookup_and_restress(const std::u32string& word
 
 std::u32string LexiconPhonemizer::lookup_stem_ed(const std::u32string& word, 
                                                  const Tag& tag,
-                                                 std::optional<float> stress) const {
+                                                 std::optional<stress::Level> stress) const {
   std::u32string stem;
 
   // Find the stem - a main part of the word without the "d" / "ed" suffix
@@ -198,7 +199,7 @@ std::u32string LexiconPhonemizer::lookup_stem_ed(const std::u32string& word,
   if (british_ || phonemes.size() < 2) {
     return phonemes + U"ɪd";
   }
-  if (constants::kUSTaus.find(phonemes[phonemes.size() - 2]) != std::u32string::npos) {
+  if (constants::ipa::kUSTaus.contains(phonemes[phonemes.size() - 2])) {
     return phonemes.substr(0, phonemes.size() - 1) + U"ɾᵻd";
   }
   
@@ -207,7 +208,7 @@ std::u32string LexiconPhonemizer::lookup_stem_ed(const std::u32string& word,
 
 std::u32string LexiconPhonemizer::lookup_stem_s(const std::u32string& word, 
                                                 const Tag& tag,
-                                                std::optional<float> stress) const {
+                                                std::optional<stress::Level> stress) const {
   std::u32string stem;
 
   if (word.size() < 3 || word.back() != U's') {
@@ -247,7 +248,7 @@ std::u32string LexiconPhonemizer::lookup_stem_s(const std::u32string& word,
 
 std::u32string LexiconPhonemizer::lookup_stem_ing(const std::u32string& word, 
                                                   const Tag& tag,
-                                                  std::optional<float> stress) const {
+                                                  std::optional<stress::Level> stress) const {
   std::u32string stem;
 
   static const std::u32string double_consonants = U"bcdgklmnprstvxz";
@@ -290,7 +291,7 @@ std::u32string LexiconPhonemizer::lookup_stem_ing(const std::u32string& word,
     return phonemes + U"ɪŋ";
   }
   if (phonemes.size() > 1 && phonemes.back() == U't' &&
-      constants::kUSTaus.find(phonemes[phonemes.size() - 2]) != std::u32string::npos) {
+      constants::ipa::kUSTaus.contains(phonemes[phonemes.size() - 2])) {
     return phonemes.substr(0, phonemes.size() - 1) + U"ɾɪŋ";
   }
   
@@ -316,9 +317,9 @@ std::u32string LexiconPhonemizer::lookup_nnp(const std::u32string& word) const {
     return U"";
   }
 
-  stress::apply(phonemes, 0.F);
+  stress::apply(phonemes, stress::Level::NORMAL);
 
-  size_t last_secondary = phonemes.find_last_of(kSecondary);
+  size_t last_secondary = phonemes.rfind(kSecondary);
   if (last_secondary != std::u32string::npos) {
     phonemes[last_secondary] = kPrimary;
   }
@@ -327,7 +328,7 @@ std::u32string LexiconPhonemizer::lookup_nnp(const std::u32string& word) const {
 }
 
 std::u32string LexiconPhonemizer::lookup_special(const std::u32string& word, const Tag& tag,
-                                                 std::optional<float> stress,
+                                                 std::optional<stress::Level> stress,
                                                  std::optional<bool> vowel_next, bool future_to) const {
   bool is_single_char = word.size() == 1;
   bool is_add_symbol = is_single_char && constants::kAddSymbols.contains(word[0]);
@@ -345,7 +346,7 @@ std::u32string LexiconPhonemizer::lookup_special(const std::u32string& word, con
   std::u32string lower_word = strings::to_lower(word);
   
   if (tag == "ADD" && is_add_symbol) {
-    return lookup_and_restress(constants::kAddSymbols.at(word[0]), Tag(""), -0.5F);
+    return lookup_and_restress(constants::kAddSymbols.at(word[0]), Tag(""), stress::Level::NORMAL);
   } else if (is_other_symbol) {
     return lookup_and_restress(constants::kSymbols.at(word[0]), Tag(""), stress);
   } else if (word_stripped.find(U'.') != std::u32string::npos &&
@@ -358,7 +359,7 @@ std::u32string LexiconPhonemizer::lookup_special(const std::u32string& word, con
     if (strings::starts_with(tag, "NN")) {
       return lookup_nnp(word);
     }
-    if (!vowel_next.has_value() || word != U"am" || (stress.has_value() && stress.value() > 0)) {
+    if (!vowel_next.has_value() || word != U"am" || (stress.has_value() && *stress >= stress::Level::NORMAL)) {
       return lookup_and_restress(U"am", Tag(""), stress);
     } else {
       return U"ɐm";

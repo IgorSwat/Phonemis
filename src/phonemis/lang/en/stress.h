@@ -5,19 +5,28 @@
 namespace phonemis::en::stress {
 
 /**
+ * Characteristic stress levels for English phonemization.
+ */
+enum class Level : int32_t {
+  /** Remove all stress markers. */
+  UNSTRESSED = -3,
+  /** Primary becomes secondary, existing secondary is dropped. */
+  REDUCED = -2,
+  /** Default stress levels. Adds secondary if missing; downgrades primary. */
+  NORMAL = 0,
+  /** Promote secondary to primary. */
+  EMPHASIZED = 1,
+  /** Insert primary if none exist. */
+  FORCED = 3
+};
+
+/**
  * Adjusts stress markers (ˈ, ˌ) based on a target stress level.
  * 
- * Stress levels:
- * < -1  : Remove all stress markers.
- * = -1  : Reduced (primary becomes secondary, secondary is dropped).
- * 0..1  : Normal (add secondary if missing; downgrade primary).
- * >= 1  : Emphasized (promote secondary to primary).
- * > 1   : Forced primary (insert primary if none exist).
- * 
  * @param phonemes The UTF-32 phoneme string to modify in-place.
- * @param stress   The target stress intensity.
+ * @param level    The target stress level.
  */
-void apply(std::u32string& phonemes, float stress);
+void apply(std::u32string& phonemes, Level level);
 
 /**
  * Repositions stress markers so they immediately precede the nearest vowel.

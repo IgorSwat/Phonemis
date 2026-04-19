@@ -4,6 +4,8 @@
 #include <phonemis/utils/unicode.h>
 
 #include <algorithm>
+#include <cmath>
+#include <limits>
 #include <stdexcept>
 
 namespace phonemis::tagger {
@@ -26,22 +28,25 @@ HMMTagger::HMMTagger(const Config& config) {
   }
 
   // 1. Start Probabilities (defines the tag set)
+  // Store as log probabilities (numeric stability)
   for (const auto& [tag, prob] : json["start_prob"].items()) {
     tags_.insert(tag);
-    start_probs_[tag] = prob.get<double>();
+    start_probs_[tag] = std::log(prob.get<double>());
   }
 
   // 2. Emission Probabilities: P(Word | Tag)
+  // Store as log probabilities (numeric stability)
   for (const auto& [tag, words] : json["emission"].items()) {
     for (const auto& [word, prob] : words.items()) {
-      emission_probs_[tag][word] = prob.get<double>();
+      emission_probs_[tag][word] = std::log(prob.get<double>());
     }
   }
 
   // 3. Transition Probabilities: P(Tag_i | Tag_{i-1})
+  // Store as log probabilities (numeric stability)
   for (const auto& [prev_tag, next_tags] : json["transition"].items()) {
     for (const auto& [next_tag, prob] : next_tags.items()) {
-      transition_probs_[prev_tag][next_tag] = prob.get<double>();
+      transition_probs_[prev_tag][next_tag] = std::log(prob.get<double>());
     }
   }
 }
@@ -49,7 +54,8 @@ HMMTagger::HMMTagger(const Config& config) {
 void HMMTagger::tag_sentence(std::span<Token> sentence) const {
   if (sentence.empty()) return;
 
-  constexpr double EPSILON = 1e-6; // Fallback for unseen observations
+  // Small constant for unseen observations in log space
+  const double LOG_EPSILON = std::log(1e-6);
 
   // Viterbi tables: [step][state]
   std::vector<std::unordered_map<Tag, double>> dp(sentence.size());
@@ -59,18 +65,18 @@ void HMMTagger::tag_sentence(std::span<Token> sentence) const {
   std::string first_word = conversions::u32_to_utf8(sentence[0].text);
   for (const auto& tag : tags_) {
     double emit_p = emission_probs_.at(tag).contains(first_word) 
-                    ? emission_probs_.at(tag).at(first_word) : EPSILON;
-    dp[0][tag] = start_probs_.at(tag) * emit_p;
+                    ? emission_probs_.at(tag).at(first_word) : LOG_EPSILON;
+    dp[0][tag] = start_probs_.at(tag) + emit_p;
 
     // Check lowercase variant for better robustness
-    if (unicode::isalpha(sentence[0].text[0])) {
+    if (!sentence[0].text.empty() && unicode::isalpha(sentence[0].text[0])) {
       std::u32string lower_text = sentence[0].text;
       lower_text[0] = unicode::tolower(lower_text[0]);
       std::string lower_utf8 = conversions::u32_to_utf8(lower_text);
 
       double lower_emit_p = emission_probs_.at(tag).contains(lower_utf8)
-                            ? emission_probs_.at(tag).at(lower_utf8) : EPSILON;
-      dp[0][tag] = std::max(dp[0][tag], start_probs_.at(tag) * lower_emit_p);
+                            ? emission_probs_.at(tag).at(lower_utf8) : LOG_EPSILON;
+      dp[0][tag] = std::max(dp[0][tag], start_probs_.at(tag) + lower_emit_p);
     }
   }
 
@@ -79,17 +85,17 @@ void HMMTagger::tag_sentence(std::span<Token> sentence) const {
     std::string word = conversions::u32_to_utf8(sentence[t].text);
 
     for (const auto& curr_tag : tags_) {
-      double max_p = -1.0;
-      Tag best_prev;
+      double max_p = -std::numeric_limits<double>::infinity();
+      Tag best_prev = *tags_.begin();
 
       double emit_p = emission_probs_.at(curr_tag).contains(word) 
-                      ? emission_probs_.at(curr_tag).at(word) : EPSILON;
+                      ? emission_probs_.at(curr_tag).at(word) : LOG_EPSILON;
 
       for (const auto& prev_tag : tags_) {
         double trans_p = transition_probs_.at(prev_tag).contains(curr_tag)
-                         ? transition_probs_.at(prev_tag).at(curr_tag) : EPSILON;
+                         ? transition_probs_.at(prev_tag).at(curr_tag) : LOG_EPSILON;
         
-        double p = dp[t - 1][prev_tag] * trans_p * emit_p;
+        double p = dp[t - 1][prev_tag] + trans_p + emit_p;
         if (p > max_p) {
           max_p = p;
           best_prev = prev_tag;

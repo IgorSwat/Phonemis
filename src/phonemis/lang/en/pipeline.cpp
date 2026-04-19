@@ -11,12 +11,16 @@ using namespace utils;
 Pipeline::Pipeline(const Config& config)
     : tokenizer_(&constants::tokenizer::kSpecialCharacters,
                  &constants::tokenizer::kExceptions),
-      tagger_(config.tagger),
       phonemizer_(config.phonemizer) {
   
   // 1. Setup Preprocessing layers
   preprocessor_.add_layer(std::make_unique<preprocessor::TrimLayer>());
   preprocessor_.add_layer(std::make_unique<Num2Word>());
+
+  // 2. Setup PoS tagger if specified
+  if (config.tagger.has_value()) {
+    tagger_ = std::make_unique<tagger::HMMTagger>(*config.tagger);
+  }
 }
 
 std::u32string Pipeline::process(std::string_view text) {
@@ -28,7 +32,9 @@ std::u32string Pipeline::process(std::string_view text) {
   auto tokens = tokenizer_.tokenize(preprocessed);
 
   // 3. Apply Part-of-Speech tags
-  tagger_.tag(tokens);
+  if (tagger_) {
+    tagger_->tag(tokens);
+  }
 
   // 4. Generate phonemes (Lexicon with Neural fallback)
   return phonemizer_.phonemize(tokens);

@@ -38,6 +38,34 @@ inline bool is_alpha(const StringT& str) {
 }
 
 /**
+ * Checks if given string contains only lowercase characters.
+ * @param str The string to check.
+ * @return True if all characters are lowercase.
+ */
+template <typename StringT>
+inline bool is_all_lower(const StringT& str) {
+	using std::islower;
+	using unicode::islower;
+
+	return std::all_of(str.cbegin(), str.cend(), 
+										 [](auto c) -> bool { return islower(c); });
+}
+
+/**
+ * Checks if given string contains only uppercase characters.
+ * @param str The string to check.
+ * @return True if all characters are uppercase.
+ */
+template <typename StringT>
+inline bool is_all_upper(const StringT& str) {
+	using std::isupper;
+	using unicode::isupper;
+
+	return std::all_of(str.cbegin(), str.cend(), 
+										 [](auto c) -> bool { return isupper(c); });
+}
+
+/**
  * Checks if given string ends with a given suffix.
  * @param str The string to check.
  * @param suffix The suffix to look for.
@@ -177,7 +205,9 @@ inline StringT strip(const StringT& str, std::optional<CharT> c = std::nullopt) 
 	auto rbound = std::find_if(str.crbegin(), str.crend(),
 														 [&c](CharT a) -> bool { return c.has_value() ? a != c : !isspace(a); });
 	
-	return lbound != str.end() ? StringT(lbound, std::prev(rbound.base())) : StringT();
+	auto rbound_base = rbound.base();
+
+	return (lbound < rbound_base) ? StringT(lbound, rbound_base) : StringT();
 }
 
 
@@ -243,5 +273,5 @@ MAKE_NON_INPLACE(filter)
 MAKE_NON_INPLACE(replace)
 MAKE_NON_INPLACE(remove)
 
-} // namespace phonemis::utilities::strings 
+} // namespace phonemis::utils::strings 
 

@@ -84,7 +84,7 @@ std::u32string Num2Word::to_cardinal_float(float value, std::u32string_view repr
 
     // Digit-by-digit verbalization of the fractional part.
     for (char c : fractional_part_str) {
-      if (isdigit(c)) {
+      if (isdigit(static_cast<unsigned char>(c))) {
         res += U" " + to_cardinal_int(c - '0');
       }
     }
@@ -128,8 +128,28 @@ std::u32string Num2Word::to_ordinal_int(int32_t value, std::u32string_view suffi
 }
 
 std::u32string Num2Word::to_currency(char32_t currency, std::variant<int32_t, float> number) const {
-  return num2word::kCurrencies.contains(currency) ?
-         num2word::kCurrencies.at(currency) : std::u32string(1, currency);
+  if (!num2word::kCurrencies.contains(currency)) {
+    return std::u32string(1, currency);
+  }
+
+  std::u32string result = num2word::kCurrencies.at(currency);
+  
+  // Determine if the amount is singular (exactly 1) to decide on pluralization.
+  // For floats, we use a small epsilon for comparison.
+  bool is_singular = std::visit([](auto&& arg) -> bool {
+    using T = std::decay_t<decltype(arg)>;
+    if constexpr (std::is_same_v<T, int32_t>) {
+      return arg == 1;
+    } else {
+      return std::abs(arg - 1.0F) < 1e-6F;
+    }
+  }, number);
+
+  if (!is_singular) {
+    result += U"s";
+  }
+
+  return result;
 }
 
 std::u32string Num2Word::to_month(uint32_t month) const {

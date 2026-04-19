@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Configuration
-BINARY="./build/phonemis"
+BINARY="./build/phonemis_runner"
 
 if [ ! -f "$BINARY" ]; then
     echo "Error: Binary not found at $BINARY. Please build the project first."

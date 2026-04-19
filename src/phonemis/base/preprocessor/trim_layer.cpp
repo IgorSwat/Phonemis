@@ -19,7 +19,7 @@ std::u32string TrimLayer::transform(std::u32string_view input) const {
   bool last_was_space = true;
 
   for (auto it = input.begin(); it != input.end(); ++it) {
-    bool isSpace = std::isspace(*it);
+    bool isSpace = utils::unicode::isspace(*it);
     if (isSpace && !last_was_space) {
       result += U' ';
       last_was_space = true;
@@ -30,7 +30,7 @@ std::u32string TrimLayer::transform(std::u32string_view input) const {
   }
 
   // Remove trailing space if it exists
-  if (!result.empty() && std::isspace(result.back())) {
+  if (!result.empty() && utils::unicode::isspace(result.back())) {
     result.pop_back();
   }
 

@@ -15,7 +15,7 @@ struct Config {
    * Language information. Some phonemizers use it to adjust the
    * phonemization for different dialects.
    */
-  Lang lang = Lang::DEFAULT;
+  Lang lang;
 
   /**
    * Path to the lexicon file for dictionary-based phonemization (LexiconPhonemizer class).

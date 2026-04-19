@@ -8,7 +8,7 @@ namespace phonemis::test {
 using namespace en;
 
 static LexiconPhonemizer g_phonemizer(phonemizer::Config{
-  .lang = Lang::EN_US,
+  .lang = "en-us",
   .lexicon_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/english/us_small.json"
 });
 

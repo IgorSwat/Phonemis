@@ -88,7 +88,7 @@ std::optional<std::u32string> NeuralPhonemizer::phonemize(const tokenizer::Token
 
   // Perform an argmax over the class dimension to obtain exact phonemes.
   std::vector<int64_t> output_tokens(no_steps);
-  for (int64_t i = 0; i < no_steps; ++i) {
+  for (size_t i = 0; i < no_steps; ++i) {
     const float* row = logits_data + i * no_classes;
     output_tokens[i] = static_cast<int64_t>(std::max_element(row, row + no_classes) - row);
   }

@@ -14,7 +14,7 @@ public:
     std::u32string to_cardinal_int(int32_t number) const override { return U"[CARDINAL]"; }
     std::u32string to_cardinal_float(float number, std::u32string_view repr) const override { return U"[CARDINAL]"; }
     std::u32string to_ordinal_int(int32_t number, std::u32string_view suffix = U"") const override {
-        if (!suffix.empty() || is_ordinal_suffix(suffix)) return U"[POTENTIALY_ORDINAL]";
+        if (!suffix.empty() || is_ordinal_suffix(suffix)) return U"[POTENTIALLY_ORDINAL]";
         return U"[ORDINAL]";
     }
     std::u32string to_currency(char32_t currency, std::variant<int32_t, float> number) const override { return U"[CURRENCY]"; }
@@ -49,13 +49,13 @@ REGISTER_TEST(num2word_base_basic_transform_test)
 REGISTER_TEST(num2word_base_ordinal_dot_test)
 {
     Config config;
-    config.allowGeneralOrdNotation = true;
+    config.allow_general_ord_notation = true;
     TestNum2Word layer(config);
 
     // Potentialy ordinal
-    ASSERT_EQUALS(U"[POTENTIALY_ORDINAL]", layer.transform(U"1st"));
-    ASSERT_EQUALS(U"[POTENTIALY_ORDINAL]", layer.transform(U"2nd"));
-    ASSERT_EQUALS(U"[POTENTIALY_ORDINAL]", layer.transform(U"12th"));
+    ASSERT_EQUALS(U"[POTENTIALLY_ORDINAL]", layer.transform(U"1st"));
+    ASSERT_EQUALS(U"[POTENTIALLY_ORDINAL]", layer.transform(U"2nd"));
+    ASSERT_EQUALS(U"[POTENTIALLY_ORDINAL]", layer.transform(U"12th"));
 
     // Ordinal with dot followed by lowercase
     ASSERT_EQUALS(U"[ORDINAL] word", layer.transform(U"1. word"));
@@ -65,7 +65,7 @@ REGISTER_TEST(num2word_base_ordinal_dot_test)
     ASSERT_EQUALS(U"[CARDINAL].", layer.transform(U"1."));
 
     // Disabled by config
-    config.allowGeneralOrdNotation = false;
+    config.allow_general_ord_notation = false;
     TestNum2Word layer_disabled(config);
     ASSERT_EQUALS(U"[CARDINAL]. word", layer_disabled.transform(U"1. word"));
 
@@ -86,15 +86,15 @@ REGISTER_TEST(num2word_base_complex_sequence_test)
 {
     TestNum2Word layer;
     Config config;
-    config.allowGeneralOrdNotation = true;
+    config.allow_general_ord_notation = true;
     TestNum2Word layer_with_ord(config);
 
     // Mixed content: ordinals, dates, fractions, and potential ordinals
     std::u32string input = U"On 2026-03-27, the 1st runner finished 1/2 of the race. "
                             "He was 1. in line, while the 2nd followed at 12.5 seconds.";
     
-    std::u32string expected = U"On [ORDINAL] [MONTH] [YEAR], the [POTENTIALY_ORDINAL] runner finished [CARDINAL] [ORDINAL] of the race. "
-                               "He was [ORDINAL] in line, while the [POTENTIALY_ORDINAL] followed at [CARDINAL] seconds.";
+    std::u32string expected = U"On [ORDINAL] [MONTH] [YEAR], the [POTENTIALLY_ORDINAL] runner finished [CARDINAL] [ORDINAL] of the race. "
+                               "He was [ORDINAL] in line, while the [POTENTIALLY_ORDINAL] followed at [CARDINAL] seconds.";
 
     ASSERT_EQUALS(expected, layer_with_ord.transform(input));
 

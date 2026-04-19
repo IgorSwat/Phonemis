@@ -3,9 +3,10 @@
 #include <phonemis/utils/unicode.h>
 #include <phonemis/utils/conversions.h>
 
+#include <iostream>
 #include <algorithm>
 #include <optional>
-#include <iostream>
+#include <stdexcept>
 
 namespace phonemis::preprocessor::num2word {
 
@@ -13,28 +14,34 @@ namespace {
 // Checks if a character serves as a word boundary.
 // In other words, it's either white space or special character.
 bool is_boundary(char32_t c) {
-  return !std::isalnum(c) && c != U'_';
+  return !utils::unicode::isalnum(c) && c != U'_';
 }
 
 // Counts and returns the number of consecutive digits from the start index
 size_t count_digits(std::u32string_view input, size_t start) {
   auto it = std::find_if(
       input.begin() + start, input.end(),
-      [](unsigned char c) { return !std::isdigit(c); });
+      [](char32_t c) { return !utils::unicode::isdigit(c); });
   return static_cast<size_t>(it - (input.begin() + start));
+}
+
+// Checks if a character is a known currency symbol.
+bool is_currency(char32_t c) {
+  for (auto sym : constants::kCurrencies) {
+    if (c == sym) return true;
+  }
+  return false;
 }
 } // namespace
 
 std::u32string Num2WordLayer::transform(std::u32string_view input) const {
   std::u32string result;
-
-  // A bit of a heuristic for estimating output size to minimize number of reallocs.
-  result.reserve(input.size() + 32);
+  result.reserve(input.size());
 
   size_t last_pos = 0;
   for (size_t i = 0; i < input.size(); ++i) {
     // Look for the start of a number, ensuring it's at a word boundary
-    if (!std::isdigit(input[i])) continue;
+    if (!utils::unicode::isdigit(input[i])) continue;
     if (i > 0 && !is_boundary(input[i - 1])) continue;
 
     size_t start = i;
@@ -68,7 +75,14 @@ std::u32string Num2WordLayer::transform(std::u32string_view input) const {
         // If it's not a date, evaluate for FLOAT or FRACTION
         if (len == 0 && (curr + 1 + p2 == input.size() || is_boundary(input[curr + 1 + p2]))) {
           len = curr + 1 + p2 - start;
-          mode = (sep == U'/') ? Mode::FRACTION : Mode::CARDINAL;
+          size_t after = start + len;
+          if (sep != U'/' && after < input.size() && is_currency(input[after]) &&
+              (after + 1 == input.size() || is_boundary(input[after + 1]))) {
+            len++;
+            mode = Mode::CURRENCY;
+          } else {
+            mode = (sep == U'/') ? Mode::FRACTION : Mode::CARDINAL;
+          }
         }
       } else if (sep == U'.') {
         // No second digit part found, might be an ORDINAL ending with a dot (e.g. '1.')
@@ -80,7 +94,7 @@ std::u32string Num2WordLayer::transform(std::u32string_view input) const {
         while (next_pos < input.size() && std::isspace(input[next_pos])) {
           next_pos++;
         }
-        if (!config_.allowGeneralOrdNotation || next_pos >= input.size() || !std::islower(input[next_pos])) {
+        if (!config_.allow_general_ord_notation || next_pos >= input.size() || !std::islower(input[next_pos])) {
           // Revert to plain Cardinal if context does not match ordinal expectations
           mode = Mode::CARDINAL;
           len--; // Exclude the trailing dot
@@ -91,7 +105,7 @@ std::u32string Num2WordLayer::transform(std::u32string_view input) const {
     // If no compound pattern was successfully identified
     if (len == 0) {
       // Check for CURRENCY (number followed by single currency symbol)
-      if (curr < input.size() && constants::kCurrencies.contains(input[curr]) &&
+      if (curr < input.size() && is_currency(input[curr]) &&
           (curr + 1 == input.size() || is_boundary(input[curr + 1]))) {
         len = p1 + 1;
         mode = Mode::CURRENCY;
@@ -104,7 +118,7 @@ std::u32string Num2WordLayer::transform(std::u32string_view input) const {
         // Check for POTENTIALLY ORDINAL values (numbers directly followed by letters, e.g., '1st', '2nd')
         if (alpha > 0 && (curr + alpha == input.size() || is_boundary(input[curr + alpha]))) {
           len = p1 + alpha;
-          mode = Mode::POTENTIALY_ORDINAL;
+          mode = Mode::POTENTIALLY_ORDINAL;
         }
         // Otherwise, assume it's a standard integer CARDINAL
         else if (curr == input.size() || is_boundary(input[curr])) {
@@ -119,7 +133,8 @@ std::u32string Num2WordLayer::transform(std::u32string_view input) const {
       result.append(input.substr(last_pos, start - last_pos)); // Append preceding text
       result.append(verbalize({input.substr(start, len), mode})); // Append converted number
       last_pos = start + len;
-      i = start + len - 1; // Fast-forward iterator to end of replaced segment
+      // Fast-forward the loop index to avoid re-processing the characters in the current numeric chunk.
+      i = start + len - 1; 
     }
   }
 
@@ -140,7 +155,7 @@ std::u32string Num2WordLayer::verbalize(const StringifiedNumber& number) const {
         return to_cardinal_int(*val);
       }
     }
-    case Mode::POTENTIALY_ORDINAL: {
+    case Mode::POTENTIALLY_ORDINAL: {
       size_t i = 0;
       while (i < number.text.size() && std::isdigit(number.text[i])) i++;
       std::u32string_view num_part = number.text.substr(0, i);
@@ -206,6 +221,11 @@ std::u32string Num2WordLayer::verbalize(const StringifiedNumber& number) const {
       if (!m) return U"";
       return (*m >= 1 && *m <= 12) ? to_month(*m) : to_cardinal_int(*m);
     }
+    case Mode::YEAR: {
+      auto y = as_int(number.text);
+      if (!y) return U"";
+      return to_year(*y);
+    }
     default:
       return std::u32string(number.text);
   }
@@ -215,8 +235,7 @@ std::optional<int32_t> Num2WordLayer::as_int(std::u32string_view s) const {
   try {
     return std::stoi(utils::conversions::u32_to_utf8(s));
   } catch (const std::exception& e) {
-    std::cerr << "Error converting to int: " << e.what() << std::endl;
-    return std::nullopt;
+    throw std::runtime_error("Error converting to int: " + std::string(e.what()));
   }
 }
 
@@ -224,8 +243,7 @@ std::optional<float> Num2WordLayer::as_float(std::u32string_view s) const {
   try {
     return std::stof(utils::conversions::u32_to_utf8(s));
   } catch (const std::exception& e) {
-    std::cerr << "Error converting to float: " << e.what() << std::endl;
-    return std::nullopt;
+    throw std::runtime_error("Error converting to float: " + std::string(e.what()));
   }
 }
 

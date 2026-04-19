@@ -1,5 +1,6 @@
 #pragma once
 
+#include "stress.h"
 #include <phonemis/base/phonemizer/lexicon_phonemizer.h>
 #include <phonemis/base/tagger/types.h>
 #include <phonemis/base/tokenizer/token.h>
@@ -35,16 +36,16 @@ public:
   // Lookup specializations
   std::u32string lookup(const std::u32string& word, const Tag& tag) const; // A modified standard lookup with tag as a context.
   std::u32string lookup_and_restress(const std::u32string& word, const Tag& tag,  // Lookup + stress application in one method.
-                                     std::optional<float> stress) const;
+                                     std::optional<stress::Level> stress) const;
   std::u32string lookup_stem_ed(const std::u32string& word, const Tag& tag,  // Lookup with an extended capability to handle custom 'ed' suffix applications.
-                                std::optional<float> stress) const;
+                                std::optional<stress::Level> stress) const;
   std::u32string lookup_stem_s(const std::u32string& word, const Tag& tag,  // Lookup with an extended capability to handle custom 's' suffix applications.
-                                std::optional<float> stress) const;
+                                std::optional<stress::Level> stress) const;
   std::u32string lookup_stem_ing(const std::u32string& word, const Tag& tag,  // Lookup with an extended capability to handle custom 'ing' suffix applications.
-                                std::optional<float> stress) const;
+                                std::optional<stress::Level> stress) const;
   std::u32string lookup_nnp(const std::u32string& word) const; // Specialized lookup for acronyms and initialisms
   std::u32string lookup_special(const std::u32string& word, const Tag& tag,  // A lookup for special words, with non-standard phonemization rules.
-                                std::optional<float> stress,
+                                std::optional<stress::Level> stress,
                                 std::optional<bool> vowel_next, bool future_to = false) const;
 
 private:

@@ -2,10 +2,8 @@
 
 #include "layer.h"
 
-#include <memory>
+#include <functional>
 #include <string>
-#include <unordered_set>
-#include <unordered_map>
 
 namespace phonemis::preprocessor {
 
@@ -13,31 +11,21 @@ namespace phonemis::preprocessor {
  * Sanitizer layer is responsible for filtering out (and/or replacing) unrecognizable
  * or undesirable characters in given language.
  * 
- * It is controlled by keep/reject set of characters and an optional mapping.
+ * It is controlled by a filter function and a mapping function.
  */
 class SanitizerLayer : public Layer {
 public:
-  // Sanitizer's filtering mode
-  enum class Mode {
-    // KEEP: Only characters in the set are kept; all others are filtered out.
-    KEEP = 0,
-    // KEEP_ALPHABETICAL: Similar to keep, but only checks the alphabetical characters.
-    KEEP_ALPHABETICAL,
-    // REJECT: Only characters in the set are filtered out; all others are kept.
-    REJECT
-  };
+  using Filter = std::function<bool(char32_t)>;
+  using Mapper = std::function<char32_t(char32_t)>;
 
-  SanitizerLayer(const std::unordered_set<char32_t>* filter = nullptr,
-                 const std::unordered_map<char32_t, char32_t>* mapper = nullptr,
-                 Mode mode = Mode::KEEP);
+  SanitizerLayer(Filter filter = [](char32_t c) { return true; },
+                 Mapper mapper = [](char32_t c) { return c; });
 
   std::u32string transform(std::u32string_view input) const override;
 
 private:
-  const std::unordered_set<char32_t>* filter_ = nullptr;
-  const std::unordered_map<char32_t, char32_t>* mapper_ = nullptr;
-
-  Mode mode_ = Mode::KEEP;
+  Filter filter_;
+  Mapper mapper_;
 };
 
 } // namespace phonemis::preprocessor
