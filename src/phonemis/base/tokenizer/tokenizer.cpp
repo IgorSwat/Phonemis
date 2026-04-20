@@ -118,7 +118,6 @@ void Tokenizer::process_chunk(std::u32string_view chunk,
 	// If special character was found, then apply rules and divide into subwords
 	std::u32string_view left = chunk.substr(0, special_pos);
 	std::u32string_view right = chunk.substr(special_pos + 1);
-	char32_t special_char = chunk[special_pos];
 	std::u32string_view special_str(chunk.data() + special_pos, 1);
 
 	switch (rule) {

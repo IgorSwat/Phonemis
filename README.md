@@ -1,5 +1,7 @@
 # Phonemis
 
+![Status: In Development](https://img.shields.io/badge/status-in%20development-green)
+
 ## From Text to Sound
 Phonemis is a high-performance C++ library designed for **Grapheme-to-Phoneme (G2P)** conversion. It provides a robust pipeline for transforming raw text into *phonetic transcriptions* using the **International Phonetic Alphabet (IPA)**. The library is optimized for efficiency and portability, being pure C++ with no external dependencies, which makes it easy to implement on a wide range of systems including standard and mobile applications requiring text-to-speech frontend processing.
 

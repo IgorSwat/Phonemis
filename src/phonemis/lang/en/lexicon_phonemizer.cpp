@@ -259,7 +259,7 @@ std::u32string LexiconPhonemizer::lookup_stem_ing(const std::u32string& word,
     stem = word.substr(0, word.size() - 3);
   } else if (is_known(word.substr(0, word.size() - 3) + U"e")) {
     stem = word.substr(0, word.size() - 3) + U"e";
-  } else if ((word.size() >= 7 && strings::ends_with(word, U"cking") || 
+  } else if (((word.size() >= 7 && strings::ends_with(word, U"cking")) || 
               (word[word.size() - 4] == word[word.size() - 5] && 
                double_consonants.find(word[word.size() - 4]) != std::u32string::npos)) &&
              is_known(word.substr(0, word.size() - 4))) {

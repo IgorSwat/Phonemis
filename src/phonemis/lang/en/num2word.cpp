@@ -94,7 +94,7 @@ std::u32string Num2Word::to_cardinal_float(float value, std::u32string_view repr
 
 std::u32string Num2Word::to_ordinal_int(int32_t value, std::u32string_view suffix) const {
   // A helper function to create a proper suffix based on verbalized representation.
-  auto get_ordinal_suffix_word = [this](const std::u32string& word) -> std::u32string {
+  auto get_ordinal_suffix_word = [](const std::u32string& word) -> std::u32string {
     return num2word::kOrdinals.contains(word) ? num2word::kOrdinals.at(word) :
            word.empty()                       ? U"th" :
            word.back() == U'y'                ? word.substr(0, word.length() - 1) + U"ieth" :
