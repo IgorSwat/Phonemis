@@ -1,5 +1,6 @@
 #pragma once
 
+#include "characters.h"
 #include "constants.h"
 
 #include <phonemis/base/config.h>
@@ -19,7 +20,7 @@ public:
   explicit Pipeline(const Config& config)
       : tokenizer_(&constants::tokenizer::kSpecialCharacters,
                    &constants::tokenizer::kExceptions),
-        phonemizer_(config.phonemizer) {
+        phonemizer_(make_phonemizer_config(config.phonemizer)) {
 
     // 1. Setup Preprocessing layers
     preprocessor_.add_layer(std::make_unique<processor::TrimLayer>());
@@ -46,6 +47,14 @@ public:
   }
 
 private:
+  static phonemizer::Config make_phonemizer_config(const phonemizer::Config& config) {
+    phonemizer::Config result = config;
+    if (!result.nn_grapheme_mapping) {
+      result.nn_grapheme_mapping = &constants::kCharToToken;
+    }
+    return result;
+  }
+
   // Required submodules
   processor::Preprocessor preprocessor_;
   tokenizer::Tokenizer tokenizer_;
