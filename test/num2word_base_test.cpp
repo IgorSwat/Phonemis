@@ -11,6 +11,7 @@ class TestNum2Word : public Num2WordLayer {
 public:
     using Num2WordLayer::Num2WordLayer;
 
+    char32_t decimal_separator() const override { return U'.'; }
     std::u32string to_cardinal_int(int32_t number) const override { return U"[CARDINAL]"; }
     std::u32string to_cardinal_float(float number, std::u32string_view repr) const override { return U"[CARDINAL]"; }
     std::u32string to_ordinal_int(int32_t number, std::u32string_view suffix = U"") const override {
@@ -18,6 +19,10 @@ public:
         return U"[ORDINAL]";
     }
     std::u32string to_currency(char32_t currency, std::variant<int32_t, float> number) const override { return U"[CURRENCY]"; }
+    std::u32string to_fraction(int32_t numerator, int32_t denominator) const override {
+        return to_cardinal_int(numerator) + U" " + to_ordinal_int(denominator);
+    }
+    std::u32string to_day(uint32_t day) const override { return to_ordinal_int(static_cast<int32_t>(day)); }
     std::u32string to_month(uint32_t month) const override { return U"[MONTH]"; }
     std::u32string to_year(uint32_t year) const override { return U"[YEAR]"; }
     bool is_ordinal_suffix(std::u32string_view suffix) const override {

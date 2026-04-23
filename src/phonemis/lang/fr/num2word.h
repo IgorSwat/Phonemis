@@ -2,16 +2,15 @@
 
 #include <phonemis/base/processor/num2word/layer.h>
 #include <string>
-#include <vector>
-#include <map>
+#include <variant>
 
-namespace phonemis::en {
+namespace phonemis::fr {
 
 class Num2Word : public processor::num2word::Num2WordLayer {
 public:
     using Num2WordLayer::Num2WordLayer;
 
-    char32_t decimal_separator() const override { return U'.'; }
+    char32_t decimal_separator() const override { return U','; }
     std::u32string to_cardinal_int(int32_t number) const override;
     std::u32string to_cardinal_float(float number, std::u32string_view repr) const override;
     std::u32string to_ordinal_int(int32_t number, std::u32string_view suffix = U"") const override;
@@ -23,4 +22,4 @@ public:
     bool is_ordinal_suffix(std::u32string_view suffix) const override;
 };
 
-} // namespace phonemis::en
+} // namespace phonemis::fr

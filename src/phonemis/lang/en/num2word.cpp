@@ -183,4 +183,12 @@ bool Num2Word::is_ordinal_suffix(std::u32string_view suffix) const {
     return suffix == U"st" || suffix == U"nd" || suffix == U"rd" || suffix == U"th";
 }
 
+std::u32string Num2Word::to_fraction(int32_t numerator, int32_t denominator) const {
+    return to_cardinal_int(numerator) + U" " + to_ordinal_int(denominator);
+}
+
+std::u32string Num2Word::to_day(uint32_t day) const {
+    return to_ordinal_int(static_cast<int32_t>(day));
+}
+
 } // namespace phonemis::en

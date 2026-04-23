@@ -21,11 +21,13 @@ public:
     // Utilizes template method pattern with abstract convertion (`convert()`) mechanism
     std::u32string transform(std::u32string_view input) const override;
 
-    // Required methods - needs to be implemented by language-specyfic layers.
+    virtual char32_t decimal_separator() const = 0;
     virtual std::u32string to_cardinal_int(int32_t number) const = 0;
     virtual std::u32string to_cardinal_float(float number, std::u32string_view repr) const = 0;
     virtual std::u32string to_ordinal_int(int32_t number, std::u32string_view suffix = U"") const = 0;
     virtual std::u32string to_currency(char32_t currency, std::variant<int32_t, float> number) const = 0;
+    virtual std::u32string to_fraction(int32_t numerator, int32_t denominator) const = 0;
+    virtual std::u32string to_day(uint32_t day) const = 0;
     virtual std::u32string to_month(uint32_t month) const = 0;
     virtual std::u32string to_year(uint32_t year) const = 0;
     virtual bool is_ordinal_suffix(std::u32string_view suffix) const = 0;
