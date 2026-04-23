@@ -1,5 +1,7 @@
 #pragma once
 
+#include <phonemis/base/tokenizer/types.h>
+
 #include <cstdint>
 #include <map>
 #include <string>
@@ -47,5 +49,20 @@ namespace num2word {
     U"e",  U"es",  U"ème", U"èmes", U"ième", U"ièmes"
   };
 } // namespace num2word
+
+// --- Tokenization Rules ---
+namespace tokenizer {
+  using ::phonemis::tokenizer::split::Rule;
+  using ::phonemis::tokenizer::split::Exceptions;
+
+  inline const std::unordered_map<char32_t, Rule> kSpecialCharacters = {
+    {U'\'', Rule::KEEP_WITH_RIGHT},
+    {U'-',  Rule::TOTAL_DIVIDE},
+    {U'.',  Rule::TOTAL_DIVIDE},
+    {U':',  Rule::TOTAL_DIVIDE}
+  };
+
+  inline const Exceptions kExceptions = {};
+} // namespace tokenizer
 
 } // namespace phonemis::fr::constants
