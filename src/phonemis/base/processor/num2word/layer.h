@@ -33,7 +33,7 @@ public:
     virtual bool is_ordinal_suffix(std::u32string_view suffix) const = 0;
 
 protected:
-    std::u32string verbalize(const StringifiedNumber& number) const;
+    virtual std::u32string verbalize(const StringifiedNumber& number) const;
 
     // Conversion wrappers, with extra logic & verbose behavior on errors.
     std::optional<int32_t> as_int(std::u32string_view s) const;
