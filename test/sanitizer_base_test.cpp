@@ -1,5 +1,5 @@
 #include "test.h"
-#include <phonemis/base/preprocessor/sanitizer_layer.h>
+#include <phonemis/base/processor/sanitizer_layer.h>
 #include <phonemis/utils/io.h>
 #include <phonemis/utils/unicode.h>
 
@@ -8,7 +8,7 @@
 
 namespace phonemis::test {
 
-using namespace preprocessor;
+using namespace processor;
 
 static const std::unordered_set<char32_t> TEST_KEEP_SET = {U'a', U'b', U'1', U' '};
 static const std::unordered_set<char32_t> TEST_REJECT_SET = {U'x', U'y'};

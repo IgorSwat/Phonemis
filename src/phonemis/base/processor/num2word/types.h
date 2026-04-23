@@ -3,7 +3,7 @@
 #include <string>
 #include <string_view>
 
-namespace phonemis::preprocessor::num2word {
+namespace phonemis::processor::num2word {
 
 // Specializes the behavior of `convert()` method.
 enum class Mode {
@@ -26,4 +26,4 @@ struct StringifiedNumber {
   Mode conversionMode = Mode::CARDINAL;
 };
 
-} // namespace phonemis::preprocessor::num2word
+} // namespace phonemis::processor::num2word

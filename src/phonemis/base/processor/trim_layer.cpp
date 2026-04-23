@@ -5,7 +5,7 @@
 #include <cctype>
 #include <iterator>
 
-namespace phonemis::preprocessor {
+namespace phonemis::processor {
 
 std::u32string TrimLayer::transform(std::u32string_view input) const {
   if (input.empty()) {
@@ -37,4 +37,4 @@ std::u32string TrimLayer::transform(std::u32string_view input) const {
   return result;
 }
 
-} // namespace phonemis::preprocessor
+} // namespace phonemis::processor

@@ -1,13 +1,13 @@
 #pragma once
 
-#include <phonemis/base/preprocessor/num2word/layer.h>
+#include <phonemis/base/processor/num2word/layer.h>
 #include <string>
 #include <vector>
 #include <map>
 
 namespace phonemis::en {
 
-class Num2Word : public preprocessor::num2word::Num2WordLayer {
+class Num2Word : public processor::num2word::Num2WordLayer {
 public:
     using Num2WordLayer::Num2WordLayer;
 

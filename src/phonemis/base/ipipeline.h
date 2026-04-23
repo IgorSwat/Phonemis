@@ -10,7 +10,15 @@ class IPipeline {
 public:
   virtual ~IPipeline() = default;
 
-  virtual std::u32string process(std::string_view text) = 0;
+  virtual std::u32string operator()(std::string_view text, 
+                                    bool preprocess = true,
+                                    bool postprocess = true);
+
+  virtual std::u32string preprocess(const std::u32string& input) = 0;
+
+  virtual std::u32string process(const std::u32string& input) = 0;
+
+  virtual std::u32string postprocess(const std::u32string& input) = 0;
 };
 
 } // namespace phonemis

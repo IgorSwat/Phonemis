@@ -5,22 +5,22 @@
 #include <memory>
 #include <vector>
 
-namespace phonemis::preprocessor {
+namespace phonemis::processor {
 
 // Can be customized in derived classes by adding different preprocessing layers.
-class Preprocessor {
+class Processor {
 public:
-  Preprocessor() = default;
+  Processor() = default;
 
   /**
-   * Allows to customize Preprocessor's behavior by expanding it with custom layers.
+   * Allows to customize Processor's behavior by expanding it with custom layers.
    * @param layer a new transformation layer to be added.
    */
   void add_layer(std::unique_ptr<Layer> layer);
 
   /**
-   * Processes the input text by applying all of it's transformation layers.
-   * @param input an input text to be processed
+   * Processes the input by applying all of it's transformation layers.
+   * @param input an input to be processed
    * @returns processed input.
    */
   std::u32string process(std::u32string_view input) const;
@@ -31,4 +31,8 @@ private:
   std::vector<std::unique_ptr<Layer>> layers_;
 };
 
-} // namespace phonemis::preprocessor
+// Naming abstraction
+using Preprocessor = Processor;
+using Postprocessor = Processor;
+
+} // namespace phonemis::processor

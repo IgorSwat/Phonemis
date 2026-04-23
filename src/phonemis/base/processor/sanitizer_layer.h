@@ -5,7 +5,7 @@
 #include <functional>
 #include <string>
 
-namespace phonemis::preprocessor {
+namespace phonemis::processor {
 
 /**
  * Sanitizer layer is responsible for filtering out (and/or replacing) unrecognizable
@@ -28,4 +28,4 @@ private:
   Mapper mapper_;
 };
 
-} // namespace phonemis::preprocessor
+} // namespace phonemis::processor

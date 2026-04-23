@@ -2,10 +2,10 @@
 
 #include <array>
 
-namespace phonemis::preprocessor::constants {
+namespace phonemis::processor::constants {
 
 inline constexpr std::array<char32_t, 3> kCurrencies = {
   U'$', U'€', U'£', 
 };
 
-} // namespace phonemis::preprocessor::constants
+} // namespace phonemis::processor::constants

@@ -1,10 +1,10 @@
 #include "test.h"
-#include <phonemis/base/preprocessor/trim_layer.h>
+#include <phonemis/base/processor/trim_layer.h>
 #include <phonemis/utils/io.h>
 
 namespace phonemis::test {
 
-using namespace preprocessor;
+using namespace processor;
 
 REGISTER_TEST(trim_layer_base_basic_whitespace_test)
 {

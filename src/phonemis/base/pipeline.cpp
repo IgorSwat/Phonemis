@@ -21,8 +21,21 @@ std::unique_ptr<IPipeline> Pipeline::create_pipeline(const Config& config) {
   throw std::invalid_argument("Unsupported language profile: " + config.lang);
 }
 
-std::u32string Pipeline::process(std::string_view text) {
-  return impl_->process(text);
+std::u32string Pipeline::operator()(std::string_view text, bool preprocess,
+                                    bool postprocess) {
+  return (*impl_)(text, preprocess, postprocess);
+}
+
+std::u32string Pipeline::preprocess(const std::u32string& input) {
+  return impl_->preprocess(input);
+}
+
+std::u32string Pipeline::process(const std::u32string& input) {
+  return impl_->process(input);
+}
+
+std::u32string Pipeline::postprocess(const std::u32string& input) {
+  return impl_->postprocess(input);
 }
 
 } // namespace phonemis

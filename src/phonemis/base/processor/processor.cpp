@@ -1,12 +1,12 @@
-#include "preprocessor.h"
+#include "processor.h"
 
-namespace phonemis::preprocessor {
+namespace phonemis::processor {
 
-void Preprocessor::add_layer(std::unique_ptr<Layer> layer) {
+void Processor::add_layer(std::unique_ptr<Layer> layer) {
   layers_.push_back(std::move(layer));
 }
 
-std::u32string Preprocessor::process(std::u32string_view input) const {
+std::u32string Processor::process(std::u32string_view input) const {
   if (layers_.empty()) {
     return std::u32string(input);
   }
@@ -20,4 +20,4 @@ std::u32string Preprocessor::process(std::u32string_view input) const {
   return result;
 }
 
-} // namespace phonemis::preprocessor
+} // namespace phonemis::processor

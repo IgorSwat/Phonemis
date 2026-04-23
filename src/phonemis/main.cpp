@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
 
     try {
         phonemis::Pipeline pipeline(config);
-        std::u32string result = pipeline.process(text_to_process);
+        std::u32string result = pipeline(text_to_process);
 
         std::cout << "\n\033[1;32mPhonemization Result:\033[0m" << std::endl;
         std::cout << "\033[1;34mInput:  \033[0m" << text_to_process << std::endl;

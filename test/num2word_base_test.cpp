@@ -1,10 +1,10 @@
 #include "test.h"
-#include <phonemis/base/preprocessor/num2word/layer.h>
+#include <phonemis/base/processor/num2word/layer.h>
 #include <phonemis/utils/io.h>
 
 namespace phonemis::test {
 
-using namespace preprocessor::num2word;
+using namespace processor::num2word;
 
 // A dumb class to simplify the testing procedure.
 class TestNum2Word : public Num2WordLayer {

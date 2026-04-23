@@ -54,7 +54,7 @@ REGISTER_TEST(num2word_en_date_test)
 
 REGISTER_TEST(num2word_en_complex_test)
 {
-    preprocessor::num2word::Config config;
+    processor::num2word::Config config;
     config.allow_general_ord_notation = true;
     Num2Word layer(config);
 

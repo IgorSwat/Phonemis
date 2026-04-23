@@ -1,7 +1,7 @@
 #include "pipeline.h"
 #include "constants.h"
 
-#include <phonemis/base/preprocessor/trim_layer.h>
+#include <phonemis/base/processor/trim_layer.h>
 #include <phonemis/utils/conversions.h>
 
 namespace phonemis::en {
@@ -14,7 +14,7 @@ Pipeline::Pipeline(const Config& config)
       phonemizer_(config.phonemizer) {
   
   // 1. Setup Preprocessing layers
-  preprocessor_.add_layer(std::make_unique<preprocessor::TrimLayer>());
+  preprocessor_.add_layer(std::make_unique<processor::TrimLayer>());
   preprocessor_.add_layer(std::make_unique<Num2Word>());
 
   // 2. Setup PoS tagger if specified
@@ -23,21 +23,26 @@ Pipeline::Pipeline(const Config& config)
   }
 }
 
-std::u32string Pipeline::process(std::string_view text) {
-  // 1. Clean and normalize input
-  // num2word + trim + (optionally) unicode related normalizations
-  auto preprocessed = preprocessor_.process(conversions::utf8_to_u32(text));
+std::u32string Pipeline::preprocess(const std::u32string& input) {
+  return preprocessor_.process(input);
+}
 
-  // 2. Tokenize
-  auto tokens = tokenizer_.tokenize(preprocessed);
+std::u32string Pipeline::process(const std::u32string& input) {
+  // 1. Tokenize
+  auto tokens = tokenizer_.tokenize(input);
 
-  // 3. Apply Part-of-Speech tags
+  // 2. Apply Part-of-Speech tags
   if (tagger_) {
     tagger_->tag(tokens);
   }
 
-  // 4. Generate phonemes (Lexicon with Neural fallback)
+  // 3. Generate phonemes (Lexicon with Neural fallback)
   return phonemizer_.phonemize(tokens);
+}
+
+std::u32string Pipeline::postprocess(const std::u32string& input) {
+  // No postprocessing
+  return input;
 }
 
 } // namespace phonemis::en

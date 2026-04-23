@@ -2,7 +2,7 @@
 
 #include <unordered_set>
 
-namespace phonemis::preprocessor::num2word {
+namespace phonemis::processor::num2word {
 
 /**
  * A basic num2word configuration.
@@ -13,4 +13,4 @@ struct Config {
     bool allow_general_ord_notation = true;
 };
 
-} // namespace phonemis::preprocessor::num2word
+} // namespace phonemis::processor::num2word

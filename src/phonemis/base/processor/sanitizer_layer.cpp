@@ -1,6 +1,6 @@
 #include "sanitizer_layer.h"
 
-namespace phonemis::preprocessor {
+namespace phonemis::processor {
 
 SanitizerLayer::SanitizerLayer(Filter filter, Mapper mapper)
   : filter_(std::move(filter)), mapper_(std::move(mapper)) {}
@@ -18,5 +18,5 @@ std::u32string SanitizerLayer::transform(std::u32string_view input) const {
   return out;
 }
 
-} // namespace phonemis::preprocessor
+} // namespace phonemis::processor
 

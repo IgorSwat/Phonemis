@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <variant>
 
-namespace phonemis::preprocessor::num2word {
+namespace phonemis::processor::num2word {
 
 /**
  * A skeleton for all numeric verbalizations inside the package.
@@ -40,4 +40,4 @@ protected:
     Config config_;
 };
 
-} // namespace phonemis::preprocessor::num2word
+} // namespace phonemis::processor::num2word

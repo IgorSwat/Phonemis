@@ -8,7 +8,7 @@
 #include <optional>
 #include <stdexcept>
 
-namespace phonemis::preprocessor::num2word {
+namespace phonemis::processor::num2word {
 
 namespace {
 // Checks if a character serves as a word boundary.
@@ -247,4 +247,4 @@ std::optional<float> Num2WordLayer::as_float(std::u32string_view s) const {
   }
 }
 
-} // namespace phonemis::preprocessor::num2word
+} // namespace phonemis::processor::num2word

@@ -1,6 +1,6 @@
 #include "num2word.h"
 #include "constants.h"
-#include <phonemis/base/preprocessor/constants.h>
+#include <phonemis/base/processor/constants.h>
 #include <phonemis/utils/conversions.h>
 #include <phonemis/utils/strings.h>
 #include <algorithm>
@@ -12,7 +12,7 @@
 namespace phonemis::en {
 
 using namespace constants;
-using namespace phonemis::preprocessor;
+using namespace phonemis::processor;
 using namespace utils;
 
 std::u32string Num2Word::to_cardinal_int(int32_t value) const {

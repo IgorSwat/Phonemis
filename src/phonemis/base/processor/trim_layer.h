@@ -5,7 +5,7 @@
 #include <string>
 #include <string_view>
 
-namespace phonemis::preprocessor {
+namespace phonemis::processor {
 
 /**
  * Preprocessor layer that collapses multiple consecutive whitespaces into a single space.
@@ -19,4 +19,4 @@ public:
   std::u32string transform(std::u32string_view input) const override;
 };
 
-} // namespace phonemis::preprocessor
+} // namespace phonemis::processor
