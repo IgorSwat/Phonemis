@@ -14,13 +14,24 @@ public:
   explicit Pipeline(const Config& config);
 
   /**
-   * A main API point. Performs a complete G2P (grapheme-to-phoneme) processing.
+   * Performs a complete G2P (grapheme-to-phoneme) processing.
    * @param text an input text (utf-8) to be processed.
    * @param preprocess decides whether to perform preprocessing stage.
    * @param postprocess decides whether to perform postprocessing stage.
    * @returns phonemization (u32) of given input text.
    */
   std::u32string operator()(std::string_view text, 
+                            bool preprocess = true,
+                            bool postprocess = true) override;
+
+  /**
+   * Performs a complete G2P (grapheme-to-phoneme) processing.
+   * @param text an input text (u32string_view) to be processed.
+   * @param preprocess decides whether to perform preprocessing stage.
+   * @param postprocess decides whether to perform postprocessing stage.
+   * @returns phonemization (u32) of given input text.
+   */
+  std::u32string operator()(std::u32string_view text,
                             bool preprocess = true,
                             bool postprocess = true) override;
 

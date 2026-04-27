@@ -7,7 +7,13 @@ namespace phonemis {
 std::u32string IPipeline::operator()(std::string_view text,
                                      bool preprocess_flag,
                                      bool postprocess_flag) {
-  std::u32string result = utils::conversions::utf8_to_u32(text);
+  return operator()(utils::conversions::utf8_to_u32(text), preprocess_flag, postprocess_flag);
+}
+
+std::u32string IPipeline::operator()(std::u32string_view text,
+                                     bool preprocess_flag,
+                                     bool postprocess_flag) {
+  std::u32string result{text};
 
   if (preprocess_flag) {
     result = preprocess(result);
