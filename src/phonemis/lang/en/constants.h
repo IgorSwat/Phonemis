@@ -103,6 +103,10 @@ namespace ipa {
 } // namespace ipa
 
 // --- Symbols & Punctuation Mapping ---
+inline const std::unordered_map<char32_t, char32_t> kSanitizerReplacements = {
+  {U'’', U'\''}
+};
+
 inline const std::unordered_map<char32_t, std::u32string> kAddSymbols = {
   {U'.', U"dot"},
   {U'/', U"slash"}

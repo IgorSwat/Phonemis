@@ -8,6 +8,7 @@
 #include <phonemis/base/ipipeline.h>
 #include <phonemis/base/phonemizer/hybrid_phonemizer.h>
 #include <phonemis/base/processor/processor.h>
+#include <phonemis/base/processor/sanitizer_layer.h>
 #include <phonemis/base/processor/trim_layer.h>
 #include <phonemis/base/tagger/hmm_tagger.h>
 #include <phonemis/base/tokenizer/tokenizer.h>
@@ -27,6 +28,12 @@ public:
     // 1. Setup Preprocessing layers
     preprocessor_.add_layer(std::make_unique<processor::TrimLayer>());
     preprocessor_.add_layer(std::make_unique<Num2Word>());
+    preprocessor_.add_layer(std::make_unique<processor::SanitizerLayer>(
+        [](char32_t) { return true; },
+        [](char32_t c) {
+          auto it = constants::kSanitizerReplacements.find(c);
+          return it != constants::kSanitizerReplacements.end() ? it->second : c;
+        }));
 
     // 2. Setup PoS tagger if specified
     if (config.tagger.has_value()) {
