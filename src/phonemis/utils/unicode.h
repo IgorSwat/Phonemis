@@ -16,16 +16,16 @@ constexpr inline bool is_ascii(char32_t c) {
   return (c & ~0x7F) == 0;
 }
 
-constexpr inline bool isalnum(char32_t c) {
-  return isalpha(c) || isdigit(c);
-}
-
 constexpr inline bool isalpha(char32_t c) {
   return (c < kLutSize) ? kUnicodeLut[c].is_alpha : false;
 }
 
 constexpr inline bool isdigit(char32_t c) {
   return is_ascii(c) && std::isdigit(static_cast<unsigned char>(c));
+}
+
+constexpr inline bool isalnum(char32_t c) {
+  return isalpha(c) || isdigit(c);
 }
 
 constexpr inline bool isspace(char32_t c) {
