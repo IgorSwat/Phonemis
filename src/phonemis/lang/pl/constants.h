@@ -8,9 +8,9 @@ namespace phonemis::pl::constants {
 
 // --- Sanitization Rules ---
 namespace sanitizer {
-  // Character replacements for postprocessing (e.g. ʑ → z).
+  // Character replacements for postprocessing (e.g. ʑ → ʒ).
   inline const std::unordered_map<char32_t, char32_t> kCharReplacements = {
-    {U'ʑ', U'z'}
+    {U'ʑ', U'ʒ'}
   };
 } // namespace sanitizer
 
