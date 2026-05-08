@@ -1,6 +1,7 @@
 #pragma once
 
 #include "constants.h"
+#include "num2word.h"
 
 #include <phonemis/base/config.h>
 #include <phonemis/base/ipipeline.h>
@@ -24,6 +25,7 @@ public:
 
     // 1. Setup Preprocessing layers
     preprocessor_.add_layer(std::make_unique<processor::TrimLayer>());
+    preprocessor_.add_layer(std::make_unique<Num2Word>());
 
     // 2. Setup Postprocessing layers
     postprocessor_.add_layer(std::make_unique<processor::SanitizerLayer>(
