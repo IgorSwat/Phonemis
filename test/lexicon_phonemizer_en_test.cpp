@@ -9,7 +9,7 @@ using namespace en;
 
 static LexiconPhonemizer g_phonemizer(phonemizer::Config{
   .lang = "en-us",
-  .lexicon_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/english/us_small.json"
+  .lexicon_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/en-us/lexicon_small.json"
 });
 
 REGISTER_TEST(lexicon_phonemizer_en_standard_words_test)

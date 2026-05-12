@@ -9,10 +9,10 @@ using namespace en;
 static Pipeline g_pipeline(Config{
     .lang = "en-us",
     .tagger = tagger::Config{
-      .data_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/english/hmm.json"
+      .data_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/en-us/tagger.json"
     },
     .phonemizer = phonemizer::Config{
-      .lexicon_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/english/us_small.json"
+      .lexicon_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/en-us/lexicon_small.json"
     }
 });
 

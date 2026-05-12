@@ -10,7 +10,7 @@ using namespace tagger;
 
 REGISTER_TEST(hmm_tagger_en_basic_test) {
   Config config;
-  config.data_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/english/hmm.json";
+  config.data_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/en-us/tagger.json";
 
   HMMTagger tagger(config);
 
@@ -33,7 +33,7 @@ REGISTER_TEST(hmm_tagger_en_basic_test) {
 
   // "I" should be a pronoun (PRP)
   ASSERT_EQUALS("PRP", tokens[0].tag.value());
-  // "read" - VBP (present tense) in this context
+  // "read" - VB (Verb)
   ASSERT_EQUALS("VB", tokens[1].tag.value());
   // "a" - DT (Determiner)
   ASSERT_EQUALS("DT", tokens[2].tag.value());
@@ -47,7 +47,7 @@ REGISTER_TEST(hmm_tagger_en_basic_test) {
 
 REGISTER_TEST(hmm_tagger_en_case_insensitivity_test) {
   Config config;
-  config.data_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/english/hmm.json";
+  config.data_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/en-us/tagger.json";
 
   HMMTagger tagger(config);
 
