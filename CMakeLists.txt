@@ -14,6 +14,7 @@ file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS
 list(FILTER SOURCE_FILES EXCLUDE REGEX "main\\.cpp$")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/third-party)
 
 # Option to build runner
 option(BUILD_RUNNER "Build phonemis runner" OFF)
