@@ -1,6 +1,10 @@
 #pragma once
 
+#include "numeric.h"
+#include "tensor_utils.h"
+#include "tensor_view.h"
 #include <third-party/xsimd/xsimd.hpp>
+
 #include <algorithm>
 #include <numeric>
 #include <vector>
@@ -14,53 +18,52 @@ namespace phonemis::protophone {
 template <typename T>
 class Tensor {
 public:
-  /**
-   * Constructs a tensor with a given shape. Data is zero-initialized.
-   * @param shape The dimensions of the tensor.
-   */
   explicit Tensor(std::vector<size_t> shape)
     : shape_(std::move(shape)) {
-    build_strides();
+    strides_ = utils::compute_strides(shape_);
     data_.resize(size(), static_cast<T>(0));
   }
 
-  /**
-   * Constructs a tensor with a given shape and initializes it with external data.
-   * @param shape The dimensions of the tensor.
-   * @param data_ptr Pointer to the data to copy into the tensor.
-   */
-  Tensor(std::vector<size_t> shape, const T* data_ptr)
+  explicit Tensor(std::vector<size_t> shape, const T* data_ptr)
     : shape_(std::move(shape)) {
-    build_strides();
+    strides_ = utils::compute_strides(shape_);
     data_.assign(data_ptr, data_ptr + size());
   }
 
-  /**
-   * Calculates and returns number of elements in it's data storage.
-   */
-  size_t size() const { 
-    return !shape_.empty() ? std::accumulate(shape_.begin(), shape_.end(), 1ULL, std::multiplies<size_t>()) : 0; 
+  explicit Tensor(std::vector<size_t> shape, const T* data_ptr, std::vector<size_t> strides)
+    : shape_(std::move(shape)), strides_(std::move(strides)) {
+    data_.assign(data_ptr, data_ptr + size());
   }
 
-  // Accessors
+  explicit Tensor(const TensorView<T>& view)
+      : shape_(view.shape()), strides_(view.strides()) {
+    data_.assign(view.data() + view.offset(), view.data() + view.offset() + size());
+  }
+
+  /**
+   * Returns a non-owning view of the tensor.
+   */
+  TensorView<T> view() {
+    return TensorView<T>(data_.data(), shape_, strides_);
+  }
+
+  /**
+   * Returns a non-owning view of the tensor (const version).
+   */
+  TensorView<const T> view() const {
+    return TensorView<const T>(data_.data(), shape_, strides_);
+  }
+
+  // Simple accessors
   const std::vector<size_t>& shape() const { return shape_; }
   const std::vector<size_t>& strides() const { return strides_; }
+  size_t size() const { return !shape_.empty() ? numeric::product(shape_) : 0; }
   const std::vector<T, xsimd::default_allocator<T>>& data() const { return data_; }
 
 private:
-  /**
-   * Calculates strides based on the current shape for row-major layout.
-   */
-  void build_strides() {
-    strides_.resize(shape_.size());
-    if (shape_.empty()) return;
-
-    size_t stride = 1;
-    for (int i = static_cast<int>(shape_.size()) - 1; i >= 0; --i) {
-      strides_[i] = stride;
-      stride *= shape_[i];
-    }
-  }
+  // Friends declarations
+  template <typename U>
+  friend void utils::repack(Tensor<U>& tensor);
 
   // Tensor data
   std::vector<T, xsimd::default_allocator<T>> data_;

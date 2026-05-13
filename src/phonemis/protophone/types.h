@@ -28,4 +28,15 @@ struct Range {
   using ALL = All;
 };
 
+/**
+ * A simple abstraction for possible tensor dimensionalities.
+ * For example, D2 corresponds to 2-dimensional tensor (or, in simple terms - a matrix).
+ */
+enum Rank : uint8_t {
+  D1 = 1,
+  D2 = 2,
+  D3 = 3,
+  D4 = 4
+};
+
 } // namespace phonemis::protophone

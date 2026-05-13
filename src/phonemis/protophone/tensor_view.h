@@ -2,7 +2,9 @@
 
 #include "meta.h"
 #include "numeric.h"
+#include "tensor_utils.h"
 #include "types.h"
+
 #include <algorithm>
 #include <cstddef>
 #include <numeric>
@@ -22,12 +24,13 @@ public:
   TensorView(T* data, std::vector<size_t> shape, std::vector<size_t> strides, size_t offset = 0)
       : data_(data), shape_(std::move(shape)), strides_(std::move(strides)), offset_(offset) {}
 
-  // Accessors
+  // Simple accessors
   T* data() { return data_; }
   const T* data() const { return data_; }
   const std::vector<size_t>& shape() const { return shape_; }
   const std::vector<size_t>& strides() const { return strides_; }
   size_t offset() const { return offset_; }
+  size_t size() const { return !shape_.empty() ? numeric::product(shape_) : 0; }
 
   /**
    * Returns a reshaped view with the same data.
@@ -41,14 +44,7 @@ public:
     }
 
     // Logic for stride calculation in a reshaped view (assuming row-major linearized data)
-    std::vector<size_t> new_strides(new_shape.size());
-    if (!new_shape.empty()) {
-      size_t stride = 1;
-      for (int i = static_cast<int>(new_shape.size()) - 1; i >= 0; --i) {
-        new_strides[i] = stride;
-        stride *= new_shape[i];
-      }
-    }
+    std::vector<size_t> new_strides = utils::compute_strides(new_shape);
 
     return TensorView(data_, std::move(new_shape), std::move(new_strides), offset_);
   }
@@ -113,6 +109,10 @@ public:
   }
 
 private:
+  // Friends declarations
+  template <typename U>
+  friend void utils::repack(TensorView<U>& view);
+
   // Pointer to the original data buffer (non-owning)
   T* data_;
 
