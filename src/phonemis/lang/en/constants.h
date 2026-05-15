@@ -68,7 +68,7 @@ namespace tokenizer {
     // Contractions
     U"'bout",    U"'d",        U"'em",       U"'ll",       U"'m",        U"'re",       U"'s",        U"'ve",
     U"can't",    U"goin'",     U"let's",     U"ma'am",     U"n't",       U"nothin'",   U"o'clock",   U"o'er",
-    U"somethin'", U"what's",    U"y'know",    U"y'all"
+    U"somethin'", U"what's",    U"y'know",    U"y'all",    U"mr.",       U"Mr.",       U"mrs.",      U"Mrs."
   };
 } // namespace tokenizer
 

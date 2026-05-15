@@ -27,7 +27,13 @@ public:
    */
   void tag_sentence(std::span<Token> sentence) const override;
 
-private:
+protected:
+  /**
+   * Returns true if the (first) word should be transformed to lowercase
+   * before processing.
+   */
+  virtual bool should_lowercase(std::u32string_view word) const { return false; }
+
   // Set of all possible tags extracted from the model
   std::unordered_set<Tag> tags_;
 

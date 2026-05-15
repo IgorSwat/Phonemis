@@ -1,6 +1,7 @@
 #pragma once
 
 #include "constants.h"
+#include "hmm_tagger.h"
 #include "lexicon_phonemizer.h"
 #include "num2word.h"
 
@@ -37,7 +38,7 @@ public:
 
     // 2. Setup PoS tagger if specified
     if (config.tagger.has_value()) {
-      tagger_ = std::make_unique<tagger::HMMTagger>(*config.tagger);
+      tagger_ = std::make_unique<en::HMMTagger>(*config.tagger);
     }
   }
 

@@ -1,6 +1,7 @@
 #include "hmm_tagger.h"
 #include <phonemis/utils/conversions.h>
 #include <phonemis/utils/io.h>
+#include <phonemis/utils/strings.h>
 #include <phonemis/utils/unicode.h>
 
 #include <algorithm>
@@ -49,35 +50,35 @@ HMMTagger::HMMTagger(const Config& config) {
       transition_probs_[prev_tag][next_tag] = std::log(prob.get<double>());
     }
   }
+
+  // Ensure all tags exist in emission and transition maps
+  for (const auto& tag : tags_) {
+    emission_probs_[tag];    // Ensures outer map entry exists
+    transition_probs_[tag];  // Ensures outer map entry exists
+  }
 }
 
 void HMMTagger::tag_sentence(std::span<Token> sentence) const {
   if (sentence.empty()) return;
 
   // Small constant for unseen observations in log space
-  const double LOG_EPSILON = std::log(1e-6);
+  const double LOG_EPSILON = std::log(1e-7);
 
   // Viterbi tables: [step][state]
   std::vector<std::unordered_map<Tag, double>> dp(sentence.size());
   std::vector<std::unordered_map<Tag, Tag>> backtrace(sentence.size());
 
   // Step 0: Initialization
-  std::string first_word = conversions::u32_to_utf8(sentence[0].text);
+  std::string first_word = conversions::u32_to_utf8(
+    should_lowercase(sentence[0].text)    ? 
+      strings::to_lower(sentence[0].text) : 
+      sentence[0].text
+  );
+
   for (const auto& tag : tags_) {
     double emit_p = emission_probs_.at(tag).contains(first_word) 
                     ? emission_probs_.at(tag).at(first_word) : LOG_EPSILON;
     dp[0][tag] = start_probs_.at(tag) + emit_p;
-
-    // Check lowercase variant for better robustness
-    if (!sentence[0].text.empty() && unicode::isalpha(sentence[0].text[0])) {
-      std::u32string lower_text = sentence[0].text;
-      lower_text[0] = unicode::tolower(lower_text[0]);
-      std::string lower_utf8 = conversions::u32_to_utf8(lower_text);
-
-      double lower_emit_p = emission_probs_.at(tag).contains(lower_utf8)
-                            ? emission_probs_.at(tag).at(lower_utf8) : LOG_EPSILON;
-      dp[0][tag] = std::max(dp[0][tag], start_probs_.at(tag) + lower_emit_p);
-    }
   }
 
   // Steps 1..N: Viterbi Recursion

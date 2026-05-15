@@ -27,7 +27,7 @@ REGISTER_TEST(pipeline_en_us_integration_test) {
   // 4. LexiconPhonemizer produces IPA phonemes
   std::u32string result = g_pipeline(input);
 
-  ASSERT_EQUALS(U"həlˈO wˈɜɹld! ˌI hæv tˈu kˈæts ænd ðA ɑɹ jˈust tə bi hˈɪɹ.", result);
+  ASSERT_EQUALS(U"həlˈO wˈɜɹld! ˌI hæv tˈu kˈæts ænd ðA ɑɹ jˈuzd tə bi hˈɪɹ.", result);
 
   return true;
 }

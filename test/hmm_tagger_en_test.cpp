@@ -1,5 +1,5 @@
 #include "test.h"
-#include <phonemis/base/tagger/hmm_tagger.h>
+#include <phonemis/lang/en/hmm_tagger.h>
 #include <phonemis/utils/conversions.h>
 
 #include <vector>
@@ -12,7 +12,7 @@ REGISTER_TEST(hmm_tagger_en_basic_test) {
   Config config;
   config.data_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/en-us/tagger.json";
 
-  HMMTagger tagger(config);
+  en::HMMTagger tagger(config);
 
   // Test sentence: "I read a book." vs "I read that book yesterday."
   // "read" can be VBD (past) or VBP (present)
@@ -33,8 +33,8 @@ REGISTER_TEST(hmm_tagger_en_basic_test) {
 
   // "I" should be a pronoun (PRP)
   ASSERT_EQUALS("PRP", tokens[0].tag.value());
-  // "read" - VB (Verb)
-  ASSERT_EQUALS("VB", tokens[1].tag.value());
+  // "read" - VBP (Verb, present tense)
+  ASSERT_EQUALS("VBP", tokens[1].tag.value());
   // "a" - DT (Determiner)
   ASSERT_EQUALS("DT", tokens[2].tag.value());
   // "book" - NN (Noun, singular or mass)
@@ -49,7 +49,7 @@ REGISTER_TEST(hmm_tagger_en_case_insensitivity_test) {
   Config config;
   config.data_filepath = std::string(PHONEMIS_PROJECT_ROOT) + "/data/en-us/tagger.json";
 
-  HMMTagger tagger(config);
+  en::HMMTagger tagger(config);
 
   // Test lowercase vs uppercase start of sentence
   std::vector<Token> tokens_upper = {{U"The", true, true}, {U"cat", false, true}};
