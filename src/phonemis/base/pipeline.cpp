@@ -1,5 +1,6 @@
 #include "pipeline.h"
 #include <phonemis/lang/en/pipeline.h>
+#include <phonemis/lang/de/pipeline.h>
 #include <phonemis/lang/fr/pipeline.h>
 #include <phonemis/lang/es/pipeline.h>
 #include <phonemis/lang/it/pipeline.h>
@@ -22,6 +23,9 @@ std::unique_ptr<IPipeline> Pipeline::create_pipeline(const Config& config) {
 
   if (config.lang == "en-us" || config.lang == "en-gb") {  // English: US/GB variants
     return std::make_unique<en::Pipeline>(config);
+  }
+  if (config.lang == "de") {  // German
+    return std::make_unique<de::Pipeline>(config);
   }
   if (config.lang == "fr") {  // French
     return std::make_unique<fr::Pipeline>(config);
