@@ -166,8 +166,6 @@ inline const std::unordered_map<char32_t, int64_t> kCharToToken = {
     // Entries 177-184 (nukta combinations) are multi-codepoint and skipped.
     {U'ॠ', 185}, // ॠ
     {U'ॢ', 186}, // ॢ
-    {U'।', 187}, // ।  DEVANAGARI DANDA
-    {U'॥', 188}, // ॥  DEVANAGARI DOUBLE DANDA
     {U'॰', 189}, // ॰  DEVANAGARI ABBREVIATION SIGN
     {U'ॱ', 190}, // ॱ
     {U'ॲ', 191}, // ॲ

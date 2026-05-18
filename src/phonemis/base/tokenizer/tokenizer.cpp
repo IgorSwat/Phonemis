@@ -1,4 +1,5 @@
 #include "tokenizer.h"
+#include "constants.h"
 #include <phonemis/utils/strings.h>
 #include <phonemis/utils/unicode.h>
 
@@ -47,9 +48,18 @@ Tokenizer::tokenize(std::u32string_view input) const {
     process_phrase(std::u32string_view(input.data() + currw_offset, currw_len), tokens);
   }
 
-  // Add a mark for the first token in the sequence
-  if (!tokens.empty()) {
-    tokens.front().first = true;
+	// Mark beginning tokens in each sentence.
+  bool next_is_first = true;
+  for (auto& token : tokens) {
+    if (next_is_first) {
+      token.first = true;
+      next_is_first = false;
+    }
+
+    if (token.text.size() == 1 && is_hard_separator(token.text[0]) &&
+        constants::kEosCharacters.contains(token.text[0])) {
+      next_is_first = true;
+    }
   }
 
   return tokens;
@@ -150,15 +160,9 @@ void Tokenizer::process_chunk(std::u32string_view chunk,
 			break;
 
 		case split::Rule::TOTAL_JOIN:
-			// xyz:abc -> xyz:abc (unless abc empty -> xyz, :)
-			if (!right.empty()) {
-				// Treat as one word (join from both sides)
-				token_vec.push_back({std::u32string(chunk)});
-			} else {
-				// xyz: -> xyz, :
-				process_chunk(left, token_vec);
-				token_vec.push_back({std::u32string(special_str)});
-			}
+			// xyz:abc or xyz: -> xyz:abc / xyz:
+			// Treat as one word (join from both sides)
+			token_vec.push_back({std::u32string(chunk)});
 			break;
 
 		case split::Rule::TOTAL_DIVIDE:

@@ -214,7 +214,7 @@ REGISTER_TEST(tokenizer_base_complex_rules_test)
 
     // Test 3: TOTAL_JOIN with empty right side
     tokens = tokenizer.tokenize(U"ratio:");
-    expected = {U"ratio", U":"};  // Empty right, so split
+    expected = {U"ratio:"};  // No split
     ASSERT_EQUALS(expected, tokens);
 
     // Test 4: Complex combination

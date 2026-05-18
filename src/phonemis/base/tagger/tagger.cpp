@@ -1,5 +1,5 @@
 #include "tagger.h"
-#include "constants.h"
+#include "../tokenizer/constants.h"
 
 #include <algorithm>
 #include <iterator>
@@ -13,7 +13,7 @@ void Tagger::tag(std::span<Token> tokens) const {
     // 1. Identify sentence boundaries (End-Of-Sentence character with trailing whitespace)
     auto it = std::find_if(tokens.begin() + start_idx, tokens.end(), [](const Token& token) {
       return token.whitespace && token.text.size() == 1 &&
-             constants::kEosCharacters.contains(token.text[0]);
+             tokenizer::constants::kEosCharacters.contains(token.text[0]);
     });
 
     // 2. Determine span size (including the punctuation token)
