@@ -4,6 +4,9 @@
 
 namespace phonemis::protophone {
 
+// Forward declarations
+template <typename T> class Tensor;
+
 /**
  * General type definitions for custom neural inference.
  */
@@ -29,14 +32,12 @@ struct Range {
 };
 
 /**
- * A simple abstraction for possible tensor dimensionalities.
- * For example, D2 corresponds to 2-dimensional tensor (or, in simple terms - a matrix).
+ * Defines weights of an affine transormation Wx + b.
  */
-enum Rank : uint8_t {
-  D1 = 1,
-  D2 = 2,
-  D3 = 3,
-  D4 = 4
+template <typename T>
+struct Weights {
+  Tensor<T> weight;
+  Tensor<T> bias;
 };
 
 } // namespace phonemis::protophone
