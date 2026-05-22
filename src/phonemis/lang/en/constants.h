@@ -67,7 +67,19 @@ namespace tokenizer {
   inline const Exceptions kExceptions = {
     // Contractions
     U"'bout",    U"'d",        U"'em",       U"'ll",       U"'m",        U"'re",       U"'s",        U"'ve",
-    U"can't",    U"goin'",     U"let's",     U"ma'am",     U"n't",       U"nothin'",   U"o'clock",   U"o'er",
+    U"I'm",      U"I've",      U"I'll",      U"I'd",
+    U"you're",   U"you've",    U"you'll",    U"you'd",    U"You're",    U"You've",    U"You'll",    U"You'd",
+    U"he's",     U"he'll",     U"he'd",      U"He's",     U"He'll",     U"He'd",
+    U"she's",    U"she'll",    U"she'd",     U"She's",    U"She'll",    U"She'd",
+    U"it's",     U"it'll",     U"it'd",      U"It's",     U"It'll",     U"It'd",
+    U"we're",    U"we've",     U"we'll",     U"we'd",     U"We're",     U"We've",     U"We'll",     U"We'd",
+    U"they're",  U"they've",   U"they'll",   U"they'd",   U"They're",   U"They've",   U"They'll",   U"They'd",
+    U"that's",   U"there's",   U"here's",    U"That's",    U"There's",   U"Here's",
+    U"who's",    U"where's",   U"how's",     U"Who's",     U"Where's",   U"How's",
+    U"can't",    U"don't",     U"doesn't",   U"didn't",    U"isn't",     U"aren't",    U"wasn't",    U"weren't",
+    U"hasn't",   U"haven't",   U"hadn't",    U"won't",     U"wouldn't",  U"shouldn't", U"couldn't",
+    U"mustn't",  U"shan't",
+    U"goin'",     U"let's",     U"ma'am",     U"n't",       U"nothin'",   U"o'clock",   U"o'er",
     U"somethin'", U"what's",    U"y'know",    U"y'all",    U"mr.",       U"Mr.",       U"mrs.",      U"Mrs."
   };
 } // namespace tokenizer
