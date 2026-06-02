@@ -6,7 +6,7 @@
 #include <span>
 #include <string>
 #include <unordered_map>
-#include <unordered_set>
+#include <vector>
 
 namespace phonemis::tagger {
 
@@ -34,15 +34,22 @@ protected:
    */
   virtual bool should_lowercase(std::u32string_view word) const { return false; }
 
-  // Set of all possible tags extracted from the model
-  std::unordered_set<Tag> tags_;
+  // Tags are stored as a dense, sorted integer index: tag_names_[id] is the
+  // tag string. Every probability table below is indexed by this id, so the
+  // Viterbi hot path uses array lookups instead of hashing tag strings.
+  std::vector<Tag> tag_names_;
 
-  // Probability tables
-  std::unordered_map<Tag, double> start_probs_;
-  // Tag -> Word -> Probability (UTF-8 word keys to save memory)
-  std::unordered_map<Tag, std::unordered_map<std::string, double>> emission_probs_;
-  // PrevTag -> NextTag -> Probability
-  std::unordered_map<Tag, std::unordered_map<Tag, double>> transition_probs_;
+  // start_probs_[id] : log P(first tag == id)
+  std::vector<double> start_probs_;
+
+  // transition_probs_[prev * T + curr] : log P(curr | prev), with
+  // T == tag_names_.size(). Missing transitions are pre-filled with a small
+  // log-epsilon, so the recursion needs no per-cell presence check.
+  std::vector<double> transition_probs_;
+
+  // emission_probs_[id] : word -> log P(word | tag == id). Words stay
+  // string-keyed because the observation vocabulary is open-ended.
+  std::vector<std::unordered_map<std::string, double>> emission_probs_;
 };
 
 } // namespace phonemis::tagger

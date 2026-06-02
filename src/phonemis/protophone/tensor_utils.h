@@ -64,7 +64,7 @@ inline void repack(TensorView<T>& view) {
   }
 
   T* dest = view.data() + view.offset();
-  std::copy(buffer.begin(), buffer.end(), dest);
+  std::ranges::copy(buffer, dest);
 
   // Update view metadata to reflect canonical strides
   view.strides_ = std::move(new_strides);

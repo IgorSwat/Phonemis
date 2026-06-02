@@ -3,6 +3,7 @@
 #include <phonemis/utils/io.h>
 #include <phonemis/utils/unicode.h>
 
+#include <algorithm>
 #include <stdexcept>
 
 namespace phonemis::phonemizer::nn {
@@ -56,8 +57,15 @@ std::u32string Tokenizer::decode(const std::vector<int64_t>& tokens) const {
   text.reserve(tokens.size());
 
   for (int64_t t : tokens) {
-    if (auto it = token_to_char_.find(t); it != token_to_char_.end()) {
-      text.push_back(it->second);
+    // token_to_char_ is indexed directly by ID (dense [0, N) range), so this is
+    // a bounds-checked array access rather than a hash lookup. U'\0' marks a
+    // slot with no mapped character and is skipped, matching the previous
+    // "missing key" behaviour.
+    if (t >= 0 && t < static_cast<int64_t>(token_to_char_.size())) {
+      char32_t c = token_to_char_[t];
+      if (c != U'\0') {
+        text.push_back(c);
+      }
     }
   }
 
@@ -65,11 +73,18 @@ std::u32string Tokenizer::decode(const std::vector<int64_t>& tokens) const {
 }
 
 void Tokenizer::build_reverse_mapping() {
-  token_to_char_.clear();
-  token_to_char_.reserve(char_to_token_.size());
-  
+  // Token IDs form a dense, contiguous range, so we store the reverse map as a
+  // vector indexed by ID. Size it to hold the largest ID and fill unused slots
+  // with U'\0' ("no character"). assign() reuses the existing buffer on repeat
+  // calls instead of reallocating from scratch.
+  int64_t max_id = -1;
   for (const auto& [character, id] : char_to_token_) {
-    token_to_char_[id] = character;
+    max_id = std::max(max_id, id);
+  }
+
+  token_to_char_.assign(static_cast<size_t>(max_id + 1), U'\0');
+  for (const auto& [character, id] : char_to_token_) {
+    token_to_char_[static_cast<size_t>(id)] = character;
   }
 }
 

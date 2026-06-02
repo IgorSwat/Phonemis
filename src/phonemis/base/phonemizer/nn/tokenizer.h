@@ -49,11 +49,20 @@ private:
      */
     void build_reverse_mapping();
 
-    // Primary mapping: Character -> ID
+    // Primary mapping: Character -> ID.
+    // Kept as a hash map because the keys are Unicode codepoints, which are
+    // sparse (the default mapping spans codepoints up to ~8600 for only ~256
+    // entries, and external/JSON mappings may use codepoints up to U+10FFFF).
+    // A codepoint-indexed vector would waste the vast majority of its slots.
     std::unordered_map<char32_t, int64_t> char_to_token_;
-    
-    // Reverse mapping: ID -> Character (used for decoding)
-    std::unordered_map<int64_t, char32_t> token_to_char_;
+
+    // Reverse mapping: ID -> Character (used for decoding).
+    // Stored as a flat vector indexed directly by token ID instead of a hash
+    // map: token IDs are assigned as a dense, contiguous range [0, N), so the
+    // ID *is* a valid array index. This gives a single contiguous allocation
+    // (vs. one heap node per entry), no hashing on the hot decode() path, and
+    // better cache locality. An unset slot holds U'\0' to mean "no character".
+    std::vector<char32_t> token_to_char_;
 };
 
 } // namespace phonemis::phonemizer::nn

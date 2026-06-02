@@ -26,10 +26,43 @@ size_t count_digits(std::u32string_view input, size_t start) {
 
 // Checks if a character is a known currency symbol.
 bool is_currency(char32_t c) {
-  for (auto sym : constants::kCurrencies) {
-    if (c == sym) return true;
+  return std::ranges::any_of(constants::kCurrencies, [c](char32_t sym) { return c == sym; });
+}
+
+// Rewrites a language-specific decimal separator to the canonical U'.' whenever
+// it sits between two digits, copying everything else verbatim. The first and
+// last characters can never be between two digits, so they bypass the scan.
+std::u32string normalize_decimal_separator(std::u32string_view input, char32_t dec_sep) {
+  const size_t n = input.size();
+  std::u32string out;
+  out.reserve(n);
+  if (n > 0) {
+    out.push_back(input[0]);
   }
-  return false;
+  for (size_t i = 1; i + 1 < n; ++i) {
+    if (input[i] == dec_sep &&
+        utils::unicode::isdigit(input[i - 1]) && utils::unicode::isdigit(input[i + 1])) {
+      out.push_back(U'.');
+    } else {
+      out.push_back(input[i]);
+    }
+  }
+  if (n > 1) {
+    out.push_back(input[n - 1]);
+  }
+  return out;
+}
+
+// True when `pos` marks the end of the current token: either the end of the
+// string or a word-boundary character.
+bool at_word_end(std::u32string_view s, size_t pos) {
+  return pos == s.size() || is_boundary(s[pos]);
+}
+
+// True when a single currency symbol sits at `pos` and the token ends right
+// after it (e.g. the '$' in "50$" or "3.50$").
+bool is_trailing_currency(std::u32string_view s, size_t pos) {
+  return pos < s.size() && is_currency(s[pos]) && at_word_end(s, pos + 1);
 }
 } // namespace
 
@@ -42,15 +75,7 @@ std::u32string Num2WordLayer::transform(std::u32string_view input) const {
   std::u32string owned;
   std::u32string_view work = input;
   if (dec_sep != U'.') {
-    owned.reserve(input.size());
-    for (size_t i = 0; i < input.size(); ++i) {
-      if (input[i] == dec_sep && i > 0 && i + 1 < input.size() &&
-          utils::unicode::isdigit(input[i - 1]) && utils::unicode::isdigit(input[i + 1])) {
-        owned.push_back(U'.');
-      } else {
-        owned.push_back(input[i]);
-      }
-    }
+    owned = normalize_decimal_separator(input, dec_sep);
     work = owned;
   }
 
@@ -63,104 +88,107 @@ std::u32string Num2WordLayer::transform(std::u32string_view input) const {
     if (!utils::unicode::isdigit(work[i])) continue;
     if (i > 0 && !is_boundary(work[i - 1])) continue;
 
-    size_t start = i;
-    size_t len = 0;
-    Mode mode = Mode::CARDINAL;
-
-    // Parse the first group of digits
-    size_t p1 = count_digits(work, start);
-    size_t curr = start + p1;
-
-    // Check for compound numbers like dates, floats, fractions, or dot-ordinals
-    if (curr < work.size() && (work[curr] == U'.' || work[curr] == U'-' || work[curr] == U'/')) {
-      char32_t sep = work[curr];
-      size_t p2 = count_digits(work, curr + 1);
-
-      if (p2 > 0) {
-        size_t next_curr = curr + 1 + p2;
-
-        // Try to match a DATE pattern (e.g., DD.MM.YYYY, YYYY-MM-DD)
-        if (next_curr < work.size() && work[next_curr] == sep && (sep == U'.' || sep == U'-')) {
-          size_t p3 = count_digits(work, next_curr + 1);
-          // Ensure the date ends at a boundary and parts have reasonable lengths
-          if (p3 > 0 && (next_curr + 1 + p3 == work.size() || is_boundary(work[next_curr + 1 + p3]))) {
-            if (p1 <= 4 && p2 <= 2 && p3 <= 4) {
-              len = next_curr + 1 + p3 - start;
-              mode = Mode::DATE;
-            }
-          }
-        }
-
-        // If it's not a date, evaluate for FLOAT or FRACTION
-        if (len == 0 && (curr + 1 + p2 == work.size() || is_boundary(work[curr + 1 + p2]))) {
-          len = curr + 1 + p2 - start;
-          size_t after = start + len;
-          if (sep != U'/' && after < work.size() && is_currency(work[after]) &&
-              (after + 1 == work.size() || is_boundary(work[after + 1]))) {
-            len++;
-            mode = Mode::CURRENCY;
-          } else {
-            mode = (sep == U'/') ? Mode::FRACTION : Mode::CARDINAL;
-          }
-        }
-      } else if (sep == U'.') {
-        // No second digit part found, might be an ORDINAL ending with a dot (e.g. '1.')
-        len = p1 + 1;
-        mode = Mode::ORDINAL;
-
-        // Check the trailing context for ordinal notation validation (typically expects a lowercase word next)
-        size_t next_pos = start + len;
-        while (next_pos < work.size() && utils::unicode::isspace(work[next_pos])) {
-          next_pos++;
-        }
-        if (!config_.allow_general_ord_notation || next_pos >= work.size() || !utils::unicode::islower(work[next_pos])) {
-          // Revert to plain Cardinal if context does not match ordinal expectations
-          mode = Mode::CARDINAL;
-          len--; // Exclude the trailing dot
-        }
-      }
-    }
-
-    // If no compound pattern was successfully identified
-    if (len == 0) {
-      // Check for CURRENCY (number followed by single currency symbol)
-      if (curr < work.size() && is_currency(work[curr]) &&
-          (curr + 1 == work.size() || is_boundary(work[curr + 1]))) {
-        len = p1 + 1;
-        mode = Mode::CURRENCY;
-      } else {
-        // Unicode-aware scan so language suffixes with non-ASCII letters
-        // (e.g. French "ème", Spanish "º") are captured in full.
-        size_t alpha = 0;
-        while (curr + alpha < work.size() && utils::unicode::isalpha(work[curr + alpha])) {
-          alpha++;
-        }
-
-        // Check for POTENTIALLY ORDINAL values (numbers directly followed by letters, e.g., '1st', '2nd')
-        if (alpha > 0 && (curr + alpha == work.size() || is_boundary(work[curr + alpha]))) {
-          len = p1 + alpha;
-          mode = Mode::POTENTIALLY_ORDINAL;
-        }
-        // Otherwise, assume it's a standard integer CARDINAL
-        else if (curr == work.size() || is_boundary(work[curr])) {
-          len = p1;
-          mode = Mode::CARDINAL;
-        }
-      }
-    }
+    auto [len, mode] = match_number_at(work, i);
 
     // Apply translation if a valid numeric chunk was found
     if (len > 0) {
-      result.append(work.substr(last_pos, start - last_pos)); // Append preceding text
-      result.append(verbalize({work.substr(start, len), mode})); // Append converted number
-      last_pos = start + len;
+      result.append(work.substr(last_pos, i - last_pos)); // Append preceding text
+      result.append(verbalize({work.substr(i, len), mode})); // Append converted number
+      last_pos = i + len;
       // Fast-forward the loop index to avoid re-processing the characters in the current numeric chunk.
-      i = start + len - 1;
+      i += len - 1;
     }
   }
 
   result.append(work.substr(last_pos));
   return result;
+}
+
+Num2WordLayer::NumberMatch Num2WordLayer::match_number_at(std::u32string_view work, size_t start) const {
+  size_t len = 0;
+  Mode mode = Mode::CARDINAL;
+
+  // Parse the first group of digits
+  size_t p1 = count_digits(work, start);
+  size_t curr = start + p1;
+
+  // Check for compound numbers like dates, floats, fractions, or dot-ordinals
+  if (curr < work.size() && (work[curr] == U'.' || work[curr] == U'-' || work[curr] == U'/')) {
+    char32_t sep = work[curr];
+    size_t p2 = count_digits(work, curr + 1);
+
+    if (p2 > 0) {
+      size_t next_curr = curr + 1 + p2;
+
+      // Try to match a DATE pattern (e.g., DD.MM.YYYY, YYYY-MM-DD)
+      if (next_curr < work.size() && work[next_curr] == sep && (sep == U'.' || sep == U'-')) {
+        size_t p3 = count_digits(work, next_curr + 1);
+        size_t date_end = next_curr + 1 + p3;
+        // Ensure there is a third part, it ends at a boundary, and the parts
+        // have date-plausible lengths.
+        if (p3 > 0 && at_word_end(work, date_end) && p1 <= 4 && p2 <= 2 && p3 <= 4) {
+          len = date_end - start;
+          mode = Mode::DATE;
+        }
+      }
+
+      // If it's not a date, evaluate for FLOAT, FRACTION, or trailing CURRENCY
+      if (len == 0 && at_word_end(work, next_curr)) {
+        len = next_curr - start;
+        // start + len == next_curr, so the symbol (if any) sits at next_curr.
+        if (sep != U'/' && is_trailing_currency(work, next_curr)) {
+          len++;
+          mode = Mode::CURRENCY;
+        } else {
+          mode = (sep == U'/') ? Mode::FRACTION : Mode::CARDINAL;
+        }
+      }
+    } else if (sep == U'.') {
+      // No second digit part found, might be an ORDINAL ending with a dot (e.g. '1.')
+      len = p1 + 1;
+      mode = Mode::ORDINAL;
+
+      // Check the trailing context for ordinal notation validation (typically expects a lowercase word next)
+      size_t next_pos = start + len;
+      while (next_pos < work.size() && utils::unicode::isspace(work[next_pos])) {
+        next_pos++;
+      }
+      if (!config_.allow_general_ord_notation || next_pos >= work.size() || !utils::unicode::islower(work[next_pos])) {
+        // Revert to plain Cardinal if context does not match ordinal expectations
+        mode = Mode::CARDINAL;
+        len--; // Exclude the trailing dot
+      }
+    }
+  }
+
+  // If no compound pattern was successfully identified
+  if (len == 0) {
+    // Check for CURRENCY (number followed by single currency symbol)
+    if (is_trailing_currency(work, curr)) {
+      len = p1 + 1;
+      mode = Mode::CURRENCY;
+    } else {
+      // Unicode-aware scan so language suffixes with non-ASCII letters
+      // (e.g. French "ème", Spanish "º") are captured in full.
+      size_t alpha = 0;
+      while (curr + alpha < work.size() && utils::unicode::isalpha(work[curr + alpha])) {
+        alpha++;
+      }
+
+      // Check for POTENTIALLY ORDINAL values (numbers directly followed by letters, e.g., '1st', '2nd')
+      if (alpha > 0 && at_word_end(work, curr + alpha)) {
+        len = p1 + alpha;
+        mode = Mode::POTENTIALLY_ORDINAL;
+      }
+      // Otherwise, assume it's a standard integer CARDINAL
+      else if (at_word_end(work, curr)) {
+        len = p1;
+        mode = Mode::CARDINAL;
+      }
+    }
+  }
+
+  return {len, mode};
 }
 
 std::u32string Num2WordLayer::verbalize(const StringifiedNumber& number) const {
@@ -232,10 +260,10 @@ std::u32string Num2WordLayer::verbalize(const StringifiedNumber& number) const {
 
       // ISO format: YYYY-MM-DD
       if (p1.size() == 4) {
-        return to_day(static_cast<uint32_t>(*val3)) + U" " + to_month(*val2) + U" " + to_year(*val1);
+        return to_day(static_cast<uint32_t>(*val3)) + U" " + to_month(static_cast<uint32_t>(*val2)) + U" " + to_year(static_cast<uint32_t>(*val1));
       }
       // Common format: DD.MM.YYYY (or similar)
-      return to_day(static_cast<uint32_t>(*val1)) + U" " + to_month(*val2) + U" " + to_year(*val3);
+      return to_day(static_cast<uint32_t>(*val1)) + U" " + to_month(static_cast<uint32_t>(*val2)) + U" " + to_year(static_cast<uint32_t>(*val3));
     }
     case Mode::MONTH: {
       auto m = as_int(number.text);
@@ -253,18 +281,21 @@ std::u32string Num2WordLayer::verbalize(const StringifiedNumber& number) const {
 }
 
 std::optional<int32_t> Num2WordLayer::as_int(std::u32string_view s) const {
+  // Returns nullopt (rather than throwing) on malformed or out-of-range input,
+  // so a single unconvertible number degrades to "" instead of aborting the
+  // whole phonemization. Callers rely on this via `if (!val) return U"";`.
   try {
     return std::stoi(utils::conversions::u32_to_utf8(s));
-  } catch (const std::exception& e) {
-    throw std::runtime_error("Error converting to int: " + std::string(e.what()));
+  } catch (const std::exception&) {
+    return std::nullopt;
   }
 }
 
 std::optional<float> Num2WordLayer::as_float(std::u32string_view s) const {
   try {
     return std::stof(utils::conversions::u32_to_utf8(s));
-  } catch (const std::exception& e) {
-    throw std::runtime_error("Error converting to float: " + std::string(e.what()));
+  } catch (const std::exception&) {
+    return std::nullopt;
   }
 }
 

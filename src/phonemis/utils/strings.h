@@ -33,8 +33,7 @@ inline bool is_alpha(const StringT& str) {
 	using std::isalpha;
 	using unicode::isalpha;
 
-	return std::all_of(str.cbegin(), str.cend(), 
-										 [](auto c) -> bool { return isalpha(c); });
+	return std::ranges::all_of(str, [](auto c) -> bool { return isalpha(c); });
 }
 
 /**
@@ -47,8 +46,7 @@ inline bool is_all_lower(const StringT& str) {
 	using std::islower;
 	using unicode::islower;
 
-	return std::all_of(str.cbegin(), str.cend(), 
-										 [](auto c) -> bool { return islower(c); });
+	return std::ranges::all_of(str, [](auto c) -> bool { return islower(c); });
 }
 
 /**
@@ -61,8 +59,7 @@ inline bool is_all_upper(const StringT& str) {
 	using std::isupper;
 	using unicode::isupper;
 
-	return std::all_of(str.cbegin(), str.cend(), 
-										 [](auto c) -> bool { return isupper(c); });
+	return std::ranges::all_of(str, [](auto c) -> bool { return isupper(c); });
 }
 
 /**
@@ -135,8 +132,7 @@ inline void to_lower__(StringT& str) {
 	using std::tolower;
 	using unicode::tolower;
 
-	std::transform(str.cbegin(), str.cend(), str.begin(), 
-								 [](auto c) { return tolower(c); });
+	std::ranges::transform(str, str.begin(), [](auto c) { return tolower(c); });
 }
 
 /**
@@ -148,8 +144,7 @@ inline void to_upper__(StringT& str) {
 	using std::toupper;
 	using unicode::toupper;
 
-	std::transform(str.cbegin(), str.cend(), str.begin(),
-								 [](auto c) { return toupper(c); });
+	std::ranges::transform(str, str.begin(), [](auto c) { return toupper(c); });
 }
 
 
@@ -165,7 +160,7 @@ inline void to_upper__(StringT& str) {
  */
 template <typename StringT, typename Pred>
 inline void filter__(StringT& str, Pred pred) {
-	str.erase(std::remove_if(str.begin(), str.end(), pred), str.end());
+	str.erase(std::ranges::remove_if(str, pred).begin(), str.end());
 }
 
 /**
@@ -176,7 +171,7 @@ inline void filter__(StringT& str, Pred pred) {
  */
 template <typename StringT, typename CharT>
 inline void replace__(StringT& str, CharT a, CharT b) {
-	std::replace(str.begin(), str.end(), a, b);
+	std::ranges::replace(str, a, b);
 }
 
 /**
@@ -186,7 +181,7 @@ inline void replace__(StringT& str, CharT a, CharT b) {
  */
 template <typename StringT, typename CharT>
 inline void remove__(StringT& str, CharT a) {
-	str.erase(std::remove(str.begin(), str.end(), a), str.end());
+	str.erase(std::ranges::remove(str, a).begin(), str.end());
 }
 
 /**
@@ -200,7 +195,7 @@ inline StringT strip(const StringT& str, std::optional<CharT> c = std::nullopt) 
 	using std::isspace;
 	using unicode::isspace;
 
-	auto lbound = std::find_if(str.cbegin(), str.cend(), 
+	auto lbound = std::find_if(str.cbegin(), str.cend(),
 														 [&c](CharT a) -> bool { return c.has_value() ? a != c : !isspace(a); });
 	auto rbound = std::find_if(str.crbegin(), str.crend(),
 														 [&c](CharT a) -> bool { return c.has_value() ? a != c : !isspace(a); });

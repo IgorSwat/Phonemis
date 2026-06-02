@@ -16,13 +16,11 @@ bool HMMTagger::should_lowercase(std::u32string_view word) const {
   Tag best_tag = "XX";
   double max_prob = -std::numeric_limits<double>::infinity();
 
-  for (const auto& [tag, word_map] : emission_probs_) {
-    auto it = word_map.find(utf8_lower_word);
-    if (it != word_map.end()) {
-      if (it->second > max_prob) {
-        max_prob = it->second;
-        best_tag = tag;
-      }
+  for (size_t id = 0; id < emission_probs_.size(); ++id) {
+    auto it = emission_probs_[id].find(utf8_lower_word);
+    if (it != emission_probs_[id].end() && it->second > max_prob) {
+      max_prob = it->second;
+      best_tag = tag_names_[id];
     }
   }
 

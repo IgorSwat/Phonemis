@@ -14,13 +14,13 @@ Tokenizer::Tokenizer(const split::Rules* split_rules,
 std::vector<Token>
 Tokenizer::tokenize(std::u32string_view input) const {
   // A resulting list of tokens
-	std::vector<Token> tokens;
+  std::vector<Token> tokens;
   tokens.reserve(input.size() / 5);
 
   // A dynamic buffer to collect characters to be processed.
   // Since we try to avoid copying strings, we represent the buffer as a view
   // parametrized by offset (start) and length (len), similarly to string_view.
-	size_t currw_offset = 0, currw_len = 0;
+  size_t currw_offset = 0, currw_len = 0;
 
   for (size_t idx = 0; idx < input.size(); ++idx) {
     char32_t c = input[idx];
@@ -30,13 +30,13 @@ Tokenizer::tokenize(std::u32string_view input) const {
       // and there cannot be 2 or more consecutive white characters.
 
       // If we have a pending word, process it
-			if (currw_len > 0) {  // equivalent to !curr_word.empty()
-				process_phrase(std::u32string_view(input.data() + currw_offset, currw_len), tokens);
-				currw_len = 0;  // resets the current word view
+	  if (currw_len > 0) {  // equivalent to !curr_word.empty()
+		  process_phrase(std::u32string_view(input.data() + currw_offset, currw_len), tokens);
+		  currw_len = 0;  // resets the current word view
 
-				// The right-most token always gets the trailing white space flag, except for the last token in the sequence
-				tokens.back().whitespace = true;
-			}
+		  // The right-most token always gets the trailing white space flag, except for the last token in the sequence
+		  tokens.back().whitespace = true;
+	  }
     } else {
       currw_offset = currw_len == 0 ? idx : currw_offset;
       currw_len++;
@@ -97,13 +97,13 @@ void Tokenizer::process_phrase(std::u32string_view word,
 
 void Tokenizer::process_chunk(std::u32string_view chunk, 
                               std::vector<Token>& token_vec) const {
-  // Edge case - an empty chunk/word ("")
+    // Edge case - an empty chunk/word ("")
 	if (chunk.empty()) return;
 
 	// Special word set lookup
 	// If an entire chunk is a special word/phrase, we should return it without
 	// further divisions.
-  // Note that the lookup is not case sensitive.
+    // Note that the lookup is not case sensitive.
 	if (exceptions_ && is_exception(strings::to_lower(chunk))) {
 		token_vec.push_back({std::u32string(chunk)});
 		return;
@@ -175,8 +175,9 @@ void Tokenizer::process_chunk(std::u32string_view chunk,
 }
 
 split::Rule Tokenizer::get_rule(char32_t c) const {
-  return rules_ && rules_->contains(c) ?
-         rules_->at(c) : split::Rule::TOTAL_DIVIDE;
+  // A character has a rule exactly when it is a soft separator; everything
+  // else falls back to splitting on both sides.
+  return is_soft_separator(c) ? rules_->at(c) : split::Rule::TOTAL_DIVIDE;
 }
 
 bool Tokenizer::is_soft_separator(char32_t c) const {

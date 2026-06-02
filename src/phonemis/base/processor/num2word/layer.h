@@ -40,6 +40,20 @@ protected:
     std::optional<float> as_float(std::u32string_view s) const;
 
     Config config_;
+
+private:
+    // Result of probing for a number at a given position: the chunk length in
+    // characters and how it should be verbalized. len == 0 means no valid
+    // number begins there.
+    struct NumberMatch {
+        size_t len = 0;
+        Mode mode = Mode::CARDINAL;
+    };
+
+    // Classifies the numeric token beginning at `start` in `work`, recognizing
+    // dates, floats, fractions, currencies and (potential) ordinals, falling
+    // back to a plain cardinal. Pure scanning: it does not mutate any state.
+    NumberMatch match_number_at(std::u32string_view work, size_t start) const;
 };
 
 } // namespace phonemis::processor::num2word
