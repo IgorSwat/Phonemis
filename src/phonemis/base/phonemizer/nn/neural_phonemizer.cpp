@@ -13,6 +13,10 @@
 
 using executorch::extension::module::Module;
 using executorch::extension::make_tensor_ptr;
+#else
+#include <phonemis/protophone/protophone.h>
+
+using phonemis::protophone::Protophone;
 #endif
 
 namespace phonemis::phonemizer::nn {
@@ -26,11 +30,12 @@ NeuralPhonemizer::NeuralPhonemizer(const Config& config)
 
 #ifdef ET_ON
   module_ = std::make_unique<Module>(config.nn_model_filepath.value(), Module::LoadMode::MmapUseMlockIgnoreErrors);
+#else
+  module_ = std::make_unique<Protophone>(config.nn_model_filepath.value());
 #endif
 }
 
 std::optional<std::u32string> NeuralPhonemizer::phonemize(const tokenizer::Token& token) const {
-#ifdef ET_ON
   std::u32string_view text = token.text;
 
   if (text.empty()) {
@@ -68,6 +73,7 @@ std::optional<std::u32string> NeuralPhonemizer::phonemize(const tokenizer::Token
   }
 
   // Step 3: Infer the model
+  #ifdef ET_ON
   const std::vector<int32_t> input_shape = {1, static_cast<int32_t>(input_tokens.size())};
   auto input_tensor = make_tensor_ptr(
       input_shape,
@@ -83,8 +89,14 @@ std::optional<std::u32string> NeuralPhonemizer::phonemize(const tokenizer::Token
   // The expected shape of the output tensor is [1, 2 * seq_len, no_classes].
   const auto& logits = result->at(0).toTensor();
   const float* logits_data = logits.const_data_ptr<float>();
-
   size_t no_steps = logits.sizes()[1], no_classes = logits.sizes()[2];
+  #else
+  auto result = module_->forward(input_tokens);
+
+  const auto& logits = result;
+  const float* logits_data = logits.data().data();
+  size_t no_steps = logits.shape()[0], no_classes = logits.shape()[1];
+  #endif
 
   // Perform an argmax over the class dimension to obtain exact phonemes.
   std::vector<int64_t> output_tokens(no_steps);
@@ -98,9 +110,6 @@ std::optional<std::u32string> NeuralPhonemizer::phonemize(const tokenizer::Token
   output_tokens = remove_blanks(output_tokens);
 
   return std::make_optional(phone_tokenizer_.decode(output_tokens));
-#else
-  return std::nullopt;
-#endif
 }
 
 std::vector<int64_t> NeuralPhonemizer::remove_blanks(const std::vector<int64_t>& tokens) const {

@@ -5,7 +5,7 @@ mkdir -p build
 cd build
 
 # 2. Builds the project with cmake
-cmake .. -DBUILD_TESTS=ON
+cmake .. -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo
 
 # 3. Compiles it
 make -j$(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 1)
