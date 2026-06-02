@@ -10,6 +10,8 @@
 
 #ifdef ET_ON
 #include <executorch/extension/module/module.h>
+#else
+#include <phonemis/protophone/protophone.h>
 #endif
 
 namespace phonemis::phonemizer::nn {
@@ -33,6 +35,8 @@ private:
 
 #ifdef ET_ON
   std::unique_ptr<executorch::extension::module::Module> module_;
+#else
+  std::unique_ptr<protophone::Protophone> module_;
 #endif
 };
 

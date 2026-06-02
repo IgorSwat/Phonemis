@@ -4,6 +4,8 @@
 #include <phonemis/utils/io.h>
 #include <phonemis/utils/strings.h>
 
+#include <chrono>
+#include <iomanip>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -57,11 +59,17 @@ int main(int argc, char* argv[]) {
 
     try {
         phonemis::Pipeline pipeline(config);
+
+        auto start = std::chrono::high_resolution_clock::now();
         std::u32string result = pipeline(text_to_process);
+        auto end = std::chrono::high_resolution_clock::now();
+
+        auto ms = std::chrono::duration<double, std::milli>(end - start).count();
 
         std::cout << "\n\033[1;32mPhonemization Result:\033[0m" << std::endl;
         std::cout << "\033[1;34mInput:  \033[0m" << text_to_process << std::endl;
         std::cout << "\033[1;36mOutput: \033[0m" << phonemis::utils::conversions::u32_to_utf8(result) << std::endl;
+        std::cout << "\033[1;33mTime:   \033[0m" << std::fixed << std::setprecision(2) << ms << " ms" << std::endl;
         std::cout << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "\033[1;31mError:\033[0m " << e.what() << std::endl;
