@@ -18,9 +18,7 @@ LexiconPhonemizer::LexiconPhonemizer(const Config& config) {
 	auto json_obj = utils::io::load_json(config.lexicon_filepath.value());
 
 	// We assume the lexicon has a strict string -> string structure.
-	for (auto& item : json_obj.items()) {
-		std::string key = item.key(); // `word` or `word|context`
-		auto value = item.value();
+	for (const auto& [key, value] : json_obj.items()) {
 
 		if (!value.is_string()) {
 			throw std::runtime_error("Lexicon phonemizer expects a string-to-string JSON structure.");
@@ -67,8 +65,9 @@ std::u32string LexiconPhonemizer::lookup(const std::string& word, std::string_vi
   }
 
   auto it = dict_.find(key);
-  if (it == dict_.end())
+  if (it == dict_.end()) {
     return U"";
+  }
 
   return conversions::utf8_to_u32(it->second);
 }

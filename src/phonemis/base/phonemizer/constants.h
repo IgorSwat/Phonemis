@@ -6,15 +6,12 @@
 namespace phonemis::phonemizer::constants {
 
 // IPA (International Phonetic Alphabet) related constants
-namespace ipa {
-
 // Stressing symbols
-namespace stress {
+namespace ipa::stress {
   inline constexpr char32_t kPrimary = U'ˈ';
   inline constexpr char32_t kSecondary = U'ˌ';
-} // namespace stress
+} // namespace ipa::stress
 
-} // namespace ipa
 
 // Punctation character constants
 namespace puncts {

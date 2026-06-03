@@ -68,7 +68,7 @@ std::optional<std::u32string> NeuralPhonemizer::phonemize(const tokenizer::Token
   std::vector<int64_t> input_tokens = grapheme_tokenizer_.tokenize(utils::strings::to_lower(text));
 
   // If there are no valid input tokens, do not even proceed with the phonemization.
-  if (input_tokens.empty() || std::all_of(input_tokens.begin(), input_tokens.end(), [](int64_t t) { return t == constants::PAD_TOKEN; })) {
+  if (input_tokens.empty() || std::ranges::all_of(input_tokens, [](int64_t t) { return t == constants::PAD_TOKEN; })) {
     return std::nullopt;
   }
 
@@ -116,7 +116,7 @@ std::vector<int64_t> NeuralPhonemizer::remove_blanks(const std::vector<int64_t>&
   std::vector<int64_t> result;
   result.reserve(tokens.size());
 
-  std::copy_if(tokens.begin(), tokens.end(), std::back_inserter(result),
+  std::ranges::copy_if(tokens, std::back_inserter(result),
                [](int64_t token) { return token != constants::BLANK_TOKEN; });
 
   return result;
@@ -126,7 +126,7 @@ std::vector<int64_t> NeuralPhonemizer::remove_duplicates(const std::vector<int64
   std::vector<int64_t> result;
   result.reserve(tokens.size());
 
-  std::unique_copy(tokens.begin(), tokens.end(), std::back_inserter(result));
+  std::ranges::unique_copy(tokens, std::back_inserter(result));
 
   return result;
 }
