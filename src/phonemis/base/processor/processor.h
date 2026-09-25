@@ -21,9 +21,10 @@ public:
   /**
    * Processes the input by applying all of it's transformation layers.
    * @param input an input to be processed
+   * @param alignment if not null, receives the alignment of the result onto the input.
    * @returns processed input.
    */
-  std::u32string process(std::u32string_view input) const;
+  std::u32string process(std::u32string_view input, Alignment* alignment = nullptr) const;
 
 private:
   // Preprocessing layers - each layer performs some sort of

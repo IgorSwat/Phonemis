@@ -6,13 +6,18 @@ namespace phonemis::phonemizer {
 using tokenizer::Token;
 
 std::u32string Phonemizer::phonemize(std::span<const Token> tokens) {
+  return join(phonemize_segments(tokens));
+}
+
+std::vector<Segment> Phonemizer::phonemize_segments(std::span<const Token> tokens) {
   using namespace phonemis::phonemizer::constants;
-  
-  std::u32string result;
-  result.reserve(tokens.size() * 5); // Heuristic allocation
+
+  std::vector<Segment> segments;
+  segments.reserve(tokens.size());
 
   for (size_t i = 0; i < tokens.size(); ++i) {
     const auto& token = tokens[i];
+    Segment segment{.begin = token.begin, .end = token.end, .whitespace = token.whitespace};
 
     // 1. Context Update
     update_context(i, tokens);
@@ -20,7 +25,7 @@ std::u32string Phonemizer::phonemize(std::span<const Token> tokens) {
     // 2. Core Phonemization
     auto phonemes = phonemize(token);
     if (phonemes) {
-      result.append(*phonemes);
+      segment.phonemes = std::move(*phonemes);
     }
 
     // 3. Fallback/Punctuation Logic
@@ -34,17 +39,14 @@ std::u32string Phonemizer::phonemize(std::span<const Token> tokens) {
       bool is_last = (i == tokens.size() - 1);
 
       if (is_punct && (!is_soft_punct || token.whitespace || is_last)) {
-        result.push_back(first_char);
+        segment.phonemes.push_back(first_char);
       }
     }
 
-    // 4. Whitespace handling
-    if (token.whitespace) {
-      result.push_back(U' ');
-    }
+    segments.push_back(std::move(segment));
   }
 
-  return result;
+  return segments;
 }
 
 } // namespace phonemis::phonemizer

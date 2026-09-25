@@ -7,34 +7,29 @@
 
 namespace phonemis::processor {
 
-std::u32string TrimLayer::transform(std::u32string_view input) const {
-  if (input.empty()) {
-    return U"";
-  }
-
-  std::u32string result;
-  result.reserve(input.size());
+std::u32string TrimLayer::transform(std::u32string_view input, Alignment* alignment) const {
+  AlignedWriter out(alignment, input.size());
 
   // A hack to omit the leading whitespaces
   bool last_was_space = true;
 
-  for (auto it = input.begin(); it != input.end(); ++it) {
-    bool isSpace = utils::unicode::isspace(*it);
+  for (size_t i = 0; i < input.size(); ++i) {
+    bool isSpace = utils::unicode::isspace(input[i]);
     if (isSpace && !last_was_space) {
-      result += U' ';
+      out.push(U' ', i, i + 1);
       last_was_space = true;
     } else if (!isSpace) {
-      result += *it;
+      out.push(input[i], i, i + 1);
       last_was_space = false;
     }
   }
 
   // Remove trailing space if it exists
-  if (!result.empty() && utils::unicode::isspace(result.back())) {
-    result.pop_back();
+  if (!out.text().empty() && utils::unicode::isspace(out.text().back())) {
+    out.pop();
   }
 
-  return result;
+  return out.take();
 }
 
 } // namespace phonemis::processor

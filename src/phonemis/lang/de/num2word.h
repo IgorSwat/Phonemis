@@ -10,7 +10,7 @@ class Num2Word : public processor::num2word::Num2WordLayer {
 public:
     using Num2WordLayer::Num2WordLayer;
 
-    std::u32string transform(std::u32string_view input) const override;
+    std::u32string transform(std::u32string_view input, processor::Alignment* alignment = nullptr) const override;
     char32_t decimal_separator() const override { return U','; }
     std::u32string to_cardinal_int(int32_t number) const override;
     std::u32string to_cardinal_float(float number, std::u32string_view repr) const override;

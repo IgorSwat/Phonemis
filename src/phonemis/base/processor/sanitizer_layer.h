@@ -21,7 +21,7 @@ public:
   SanitizerLayer(Filter filter = [](char32_t c) { return true; },
                  Mapper mapper = [](char32_t c) { return c; });
 
-  std::u32string transform(std::u32string_view input) const override;
+  std::u32string transform(std::u32string_view input, Alignment* alignment = nullptr) const override;
 
 private:
   Filter filter_;

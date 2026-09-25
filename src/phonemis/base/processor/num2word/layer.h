@@ -19,7 +19,7 @@ public:
     explicit Num2WordLayer(const Config& config) : config_(config) {}
 
     // Utilizes template method pattern with abstract convertion (`convert()`) mechanism
-    std::u32string transform(std::u32string_view input) const override;
+    std::u32string transform(std::u32string_view input, Alignment* alignment = nullptr) const override;
 
     virtual char32_t decimal_separator() const = 0;
     virtual std::u32string to_cardinal_int(int32_t number) const = 0;

@@ -59,16 +59,30 @@ std::u32string Pipeline::operator()(std::u32string_view text, bool preprocess,
   return (*impl_)(text, preprocess, postprocess);
 }
 
-std::u32string Pipeline::preprocess(const std::u32string& input) {
-  return impl_->preprocess(input);
+std::vector<Segment> Pipeline::phonemize_segments(std::string_view text, bool preprocess,
+                                                  bool postprocess) {
+  return impl_->phonemize_segments(text, preprocess, postprocess);
+}
+
+std::vector<Segment> Pipeline::phonemize_segments(std::u32string_view text, bool preprocess,
+                                                  bool postprocess) {
+  return impl_->phonemize_segments(text, preprocess, postprocess);
+}
+
+std::u32string Pipeline::preprocess(const std::u32string& input, processor::Alignment* alignment) {
+  return impl_->preprocess(input, alignment);
 }
 
 std::u32string Pipeline::process(const std::u32string& input) {
   return impl_->process(input);
 }
 
-std::u32string Pipeline::postprocess(const std::u32string& input) {
-  return impl_->postprocess(input);
+std::vector<Segment> Pipeline::process_segments(const std::u32string& input) {
+  return impl_->process_segments(input);
+}
+
+std::u32string Pipeline::postprocess(const std::u32string& input, processor::Alignment* alignment) {
+  return impl_->postprocess(input, alignment);
 }
 
 } // namespace phonemis

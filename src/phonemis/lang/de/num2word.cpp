@@ -58,7 +58,7 @@ bool has_nominative_article(std::u32string_view input, size_t start) {
 }
 } // namespace
 
-std::u32string Num2Word::transform(std::u32string_view input) const {
+std::u32string Num2Word::transform(std::u32string_view input, processor::Alignment* alignment) const {
   char32_t dec_sep = decimal_separator();
   std::u32string owned;
   std::u32string_view work = input;
@@ -75,8 +75,8 @@ std::u32string Num2Word::transform(std::u32string_view input) const {
     work = owned;
   }
 
-  std::u32string result;
-  result.reserve(work.size());
+  // The separator normalization is 1:1, so positions in `work` are also positions in `input`.
+  processor::AlignedWriter result(alignment, work.size());
 
   size_t last_pos = 0;
   for (size_t i = 0; i < work.size(); ++i) {
@@ -157,7 +157,7 @@ std::u32string Num2Word::transform(std::u32string_view input) const {
     }
 
     if (len > 0) {
-      result.append(work.substr(last_pos, start - last_pos));
+      result.copy(work, last_pos, start);
 
       if (mode == Mode::DATE) {
         char32_t sep = (work.substr(start, len).find(U'.') != std::u32string_view::npos) ? U'.' : U'-';
@@ -173,21 +173,21 @@ std::u32string Num2Word::transform(std::u32string_view input) const {
         auto val3 = as_int(p3);
 
         if (!val1 || !val2 || !val3) {
-          result.append(work.substr(start, len));
+          result.copy(work, start, start + len);
         } else {
           bool nominative = has_nominative_article(work, start);
           std::u32string day_word;
 
           if (p1.size() == 4) {
             day_word = to_ordinal_int(static_cast<int32_t>(*val3), nominative ? U"e" : U"en");
-            result.append(day_word + U" " + to_month(*val2) + U" " + to_year(*val1));
+            result.replace(day_word + U" " + to_month(*val2) + U" " + to_year(*val1), start, start + len);
           } else {
             day_word = to_ordinal_int(static_cast<int32_t>(*val1), nominative ? U"e" : U"en");
-            result.append(day_word + U" " + to_month(*val2) + U" " + to_year(*val3));
+            result.replace(day_word + U" " + to_month(*val2) + U" " + to_year(*val3), start, start + len);
           }
         }
       } else {
-        result.append(verbalize({work.substr(start, len), mode}));
+        result.replace(verbalize({work.substr(start, len), mode}), start, start + len);
       }
 
       last_pos = start + len;
@@ -195,8 +195,8 @@ std::u32string Num2Word::transform(std::u32string_view input) const {
     }
   }
 
-  result.append(work.substr(last_pos));
-  return result;
+  result.copy(work, last_pos, work.size());
+  return result.take();
 }
 
 std::u32string Num2Word::to_cardinal_int(int32_t value) const {

@@ -131,6 +131,13 @@ The `Pipeline::operator()` accepts both `std::string_view` (UTF-8) and `std::u32
 (UTF-32), returning phonemes as `std::u32string`. Individual pipeline stages —
 `preprocess()`, `process()`, `postprocess()` — are also exposed.
 
+### Aligning Phonemes with the Text
+
+`Pipeline::phonemize_segments()` returns the same phonemization split into `Segment`s, each
+holding the `[begin, end)` character range of the input it was produced from. A verbalized
+number stays one segment (`"25"` → `twˈɛnti fˈIv`), which makes it possible to map e.g. speech
+timings back onto the original words. Joining the segments gives the `operator()` result.
+
 ### CLI Runner
 
 ```bash
@@ -139,6 +146,8 @@ The `Pipeline::operator()` accepts both `std::string_view` (UTF-8) and `std::u32
     --model data/en-us/phonemizer_en_us.bin \
     "Hello world"
 ```
+
+Add `--segments` to also print the segments.
 
 ## The Mechanics of Pronunciation
 

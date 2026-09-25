@@ -17,6 +17,7 @@ void print_usage(const char* prog_name) {
               << "  --model <path>       Path to neural model file\n"
               << "  --tagger <path>      Path to tagger data file\n"
               << "  --lang <lang_code>   Language code (e.g., en-us, en-gb)\n"
+              << "  --segments           Also print which part of the text each phoneme comes from\n"
               << std::endl;
 }
 
@@ -28,6 +29,7 @@ int main(int argc, char* argv[]) {
 
     phonemis::Config config;
     std::string text_to_process;
+    bool print_segments = false;
 
     for (int i = 1; i < argc; ++i) {
         std::string arg = argv[i];
@@ -42,6 +44,8 @@ int main(int argc, char* argv[]) {
         } else if (arg == "--lang" && i + 1 < argc) {
             config.lang = argv[++i];
             config.phonemizer.lang = config.lang;
+        } else if (arg == "--segments") {
+            print_segments = true;
         } else if (i == argc - 1) {
             text_to_process = arg;
         } else {
@@ -70,6 +74,17 @@ int main(int argc, char* argv[]) {
         std::cout << "\033[1;34mInput:  \033[0m" << text_to_process << std::endl;
         std::cout << "\033[1;36mOutput: \033[0m" << phonemis::utils::conversions::u32_to_utf8(result) << std::endl;
         std::cout << "\033[1;33mTime:   \033[0m" << std::fixed << std::setprecision(2) << ms << " ms" << std::endl;
+
+        if (print_segments) {
+            auto text = phonemis::utils::conversions::utf8_to_u32(text_to_process);
+            std::cout << "\033[1;35mSegments:\033[0m" << std::endl;
+            for (const auto& segment : pipeline.phonemize_segments(text)) {
+                std::cout << "  [" << segment.begin << ", " << segment.end << ") "
+                          << phonemis::utils::conversions::u32_to_utf8(text.substr(segment.begin, segment.end - segment.begin))
+                          << " -> " << phonemis::utils::conversions::u32_to_utf8(segment.phonemes)
+                          << (segment.whitespace ? " (+space)" : "") << std::endl;
+            }
+        }
         std::cout << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "\033[1;31mError:\033[0m " << e.what() << std::endl;

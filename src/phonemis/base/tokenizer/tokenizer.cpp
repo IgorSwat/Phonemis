@@ -48,6 +48,16 @@ Tokenizer::tokenize(std::u32string_view input) const {
     process_phrase(std::u32string_view(input.data() + currw_offset, currw_len), tokens);
   }
 
+  // Locate each token in the input. Tokens keep the input order, so each search
+  // starts where the previous token ended.
+  size_t cursor = 0;
+  for (auto& token : tokens) {
+    size_t pos = input.find(token.text, cursor);
+    token.begin = pos != std::u32string_view::npos ? pos : cursor;
+    token.end = pos != std::u32string_view::npos ? pos + token.text.size() : cursor;
+    cursor = token.end;
+  }
+
 	// Mark beginning tokens in each sentence.
   bool next_is_first = true;
   for (auto& token : tokens) {

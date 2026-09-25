@@ -1,9 +1,11 @@
 #pragma once
 
+#include "../segment.h"
 #include "../tokenizer/token.h"
 
 #include <span>
 #include <string>
+#include <vector>
 
 namespace phonemis::phonemizer {
 
@@ -23,6 +25,13 @@ public:
    * @param tokens Sequence to process.
    */
   std::u32string phonemize(std::span<const Token> tokens);
+
+  /**
+   * Converts a sequence of tokens into one segment per token, positioned like the token.
+   * Joining the segments gives the result of phonemize().
+   * @param tokens Sequence to process.
+   */
+  std::vector<Segment> phonemize_segments(std::span<const Token> tokens);
 
   /**
    * Phonemize a single token. Returns nullopt if no mapping exists.

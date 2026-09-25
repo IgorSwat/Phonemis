@@ -29,23 +29,18 @@ public:
   }
 
   // Performs a preprocessing stage of the pipeline.
-  std::u32string preprocess(const std::u32string& input) override {
-    return preprocessor_.process(input);
+  std::u32string preprocess(const std::u32string& input,
+                            processor::Alignment* alignment = nullptr) override {
+    return preprocessor_.process(input, alignment);
   }
 
   // Performs a middle stage of the pipeline - including phonemization.
-  std::u32string process(const std::u32string& input) override {
+  std::vector<Segment> process_segments(const std::u32string& input) override {
     // 1. Tokenize
     auto tokens = tokenizer_.tokenize(input);
 
     // 2. Generate phonemes (Lexicon with Neural fallback)
-    return phonemizer_.phonemize(tokens);
-  }
-
-  // Performs a postprocessing stage of the pipeline.
-  std::u32string postprocess(const std::u32string& input) override {
-    // No postprocessing
-    return input;
+    return phonemizer_.phonemize_segments(tokens);
   }
 
 private:

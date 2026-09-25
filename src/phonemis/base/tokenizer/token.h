@@ -18,6 +18,10 @@ struct Token {
   // Optional fields
   // Those can be set using optional, decorator modules such as PoS tagger.
   std::optional<tagger::Tag> tag = std::nullopt;
+
+  // Position of the token in the tokenized text, as a half-open [begin, end) range.
+  size_t begin = 0;
+  size_t end = 0;
 };
 
 } // namespace phonemis::tokenizer

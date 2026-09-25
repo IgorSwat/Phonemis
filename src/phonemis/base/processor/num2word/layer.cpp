@@ -66,7 +66,7 @@ bool is_trailing_currency(std::u32string_view s, size_t pos) {
 }
 } // namespace
 
-std::u32string Num2WordLayer::transform(std::u32string_view input) const {
+std::u32string Num2WordLayer::transform(std::u32string_view input, Alignment* alignment) const {
   // Normalize this language's decimal separator to U'.' between digits, so the
   // scanning logic below can treat the dot as the canonical float/date separator.
   // For languages whose separator already is U'.' (e.g. English) this is a no-op
@@ -79,8 +79,8 @@ std::u32string Num2WordLayer::transform(std::u32string_view input) const {
     work = owned;
   }
 
-  std::u32string result;
-  result.reserve(work.size());
+  // The separator normalization is 1:1, so positions in `work` are also positions in `input`.
+  AlignedWriter result(alignment, work.size());
 
   size_t last_pos = 0;
   for (size_t i = 0; i < work.size(); ++i) {
@@ -92,16 +92,16 @@ std::u32string Num2WordLayer::transform(std::u32string_view input) const {
 
     // Apply translation if a valid numeric chunk was found
     if (len > 0) {
-      result.append(work.substr(last_pos, i - last_pos)); // Append preceding text
-      result.append(verbalize({work.substr(i, len), mode})); // Append converted number
+      result.copy(work, last_pos, i); // Append preceding text
+      result.replace(verbalize({work.substr(i, len), mode}), i, i + len); // Append converted number
       last_pos = i + len;
       // Fast-forward the loop index to avoid re-processing the characters in the current numeric chunk.
       i += len - 1;
     }
   }
 
-  result.append(work.substr(last_pos));
-  return result;
+  result.copy(work, last_pos, work.size());
+  return result.take();
 }
 
 Num2WordLayer::NumberMatch Num2WordLayer::match_number_at(std::u32string_view work, size_t start) const {
