@@ -35,6 +35,25 @@ public:
                             bool preprocess = true,
                             bool postprocess = true) override;
 
+  /**
+   * Performs a complete G2P processing and locates each word of the input in
+   * the result. Every word maps onto its own space-separated phoneme group,
+   * except for numbers, which take as many groups as they were spelled out into.
+   * @param text an input text (utf-8) to be processed.
+   * @returns phonemization of given input text, with its words located in it.
+   * Word offsets count code points of the input converted to u32.
+   */
+  PhonemizedText phonemize_words(std::string_view text) override;
+
+  /**
+   * Performs a complete G2P processing and locates each word of the input in
+   * the result. Every word maps onto its own space-separated phoneme group,
+   * except for numbers, which take as many groups as they were spelled out into.
+   * @param text an input text (u32string_view) to be processed.
+   * @returns phonemization of given input text, with its words located in it.
+   */
+  PhonemizedText phonemize_words(std::u32string_view text) override;
+
   // Performs a preprocessing stage of the pipeline.
   std::u32string preprocess(const std::u32string& input) override;
 

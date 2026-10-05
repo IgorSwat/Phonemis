@@ -59,6 +59,14 @@ std::u32string Pipeline::operator()(std::u32string_view text, bool preprocess,
   return (*impl_)(text, preprocess, postprocess);
 }
 
+PhonemizedText Pipeline::phonemize_words(std::string_view text) {
+  return impl_->phonemize_words(text);
+}
+
+PhonemizedText Pipeline::phonemize_words(std::u32string_view text) {
+  return impl_->phonemize_words(text);
+}
+
 std::u32string Pipeline::preprocess(const std::u32string& input) {
   return impl_->preprocess(input);
 }
