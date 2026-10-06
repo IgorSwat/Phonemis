@@ -7,6 +7,10 @@
 namespace phonemis::utils::io {
 
 nlohmann::json load_json(std::string_view fp) {
+  return load_json(fp, nullptr);
+}
+
+nlohmann::json load_json(std::string_view fp, const nlohmann::json::parser_callback_t& callback) {
   std::filesystem::path file_path(fp);
 	if (!std::filesystem::exists(file_path) || !std::filesystem::is_regular_file(file_path)) {
 		throw std::invalid_argument("File not found: " + std::string(fp));
@@ -18,14 +22,11 @@ nlohmann::json load_json(std::string_view fp) {
 		throw std::runtime_error("Failed to open file: " + std::string(fp));
 	}
 
-	nlohmann::json json_obj;
 	try {
-		file_stream >> json_obj;
+		return nlohmann::json::parse(file_stream, callback);
 	} catch (const nlohmann::json::parse_error& e) {
 		throw std::invalid_argument(std::string("Invalid JSON format: ") + e.what());
 	}
-
-  return json_obj;
 }
 
 } // namespace phonemis::utils

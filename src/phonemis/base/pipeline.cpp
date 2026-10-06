@@ -7,6 +7,7 @@
 #include <phonemis/lang/pl/pipeline.h>
 #include <phonemis/lang/pt/pipeline.h>
 #include <phonemis/lang/hi/pipeline.h>
+#include <phonemis/lang/zh/pipeline.h>
 
 #include <stdexcept>
 
@@ -44,6 +45,9 @@ std::unique_ptr<IPipeline> Pipeline::create_pipeline(const Config& config) {
   }
   if (config.lang == "hi") {  // Hindi
     return std::make_unique<hi::Pipeline>(config);
+  }
+  if (config.lang == "zh") {  // Mandarin Chinese
+    return std::make_unique<zh::Pipeline>(config);
   }
 
   throw std::invalid_argument("Unsupported language profile: " + config.lang);

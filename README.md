@@ -18,6 +18,7 @@ Currently supported languages:
 *  🇵🇱 Polish — `pl`
 *  🇵🇹 Portuguese — `pt`
 *  🇮🇳 Hindi — `hi`
+*  🇨🇳 Mandarin Chinese — `zh` (word segmentation data passed as the tagger file)
 
 ## Repository Structure
 
