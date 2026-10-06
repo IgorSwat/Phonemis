@@ -18,7 +18,7 @@ from pypinyin.constants import PINYIN_DICT
 
 
 def is_han(text: str) -> bool:
-    return all("一" <= c <= "鿿" for c in text)
+    return all("\u4e00" <= c <= "\u9fff" for c in text)
 
 
 def phonemize(text: str):

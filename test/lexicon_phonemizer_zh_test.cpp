@@ -39,7 +39,7 @@ REGISTER_TEST(lexicon_phonemizer_zh_test)
     ASSERT_EQUALS(U"yan3 bu2 jian4 xin1 bu2 fan2 ", phonemizer.phonemize_word(U"眼不见心不烦"));
 
     // Unknown characters are skipped.
-    ASSERT_EQUALS(U"ren2 dao4 ", phonemizer.phonemize_word(U"人丁道"));
+    ASSERT_EQUALS(U"ren2 dao4 ", phonemizer.phonemize_word(U"人\u4E01道"));
 
     return true;
 }

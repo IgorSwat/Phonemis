@@ -1,17 +1,15 @@
 #pragma once
 
-#include "constants.h"
 #include "lexicon_phonemizer.h"
 #include "num2word.h"
 #include "punctuation.h"
 #include "segmenter.h"
+#include "types.h"
 
 #include <phonemis/base/config.h>
 #include <phonemis/base/ipipeline.h>
-#include <phonemis/base/processor/processor.h>
 
 #include <memory>
-#include <vector>
 
 namespace phonemis::zh {
 
@@ -24,69 +22,35 @@ namespace phonemis::zh {
  */
 class Pipeline : public IPipeline {
 public:
-  explicit Pipeline(const Config& config) {
-    // 1. Setup Preprocessing layers
-    preprocessor_.add_layer(std::make_unique<Num2Word>());
-    preprocessor_.add_layer(std::make_unique<PunctuationLayer>());
+  explicit Pipeline(const Config& config);
 
-    // 2. Setup phonemization and word segmentation if specified
-    if (config.phonemizer.lexicon_filepath.has_value()) {
-      phonemizer_ = std::make_unique<zh::LexiconPhonemizer>(config.phonemizer);
-    }
-    if (config.tagger.has_value()) {
-      segmenter_ = std::make_unique<Segmenter>(*config.tagger);
-    }
-  }
+  using IPipeline::phonemize_words;
+
+  /**
+   * Locates the words of the input in its phonemization. Chinese has no spaces between
+   * words, so each phoneme group is traced back to the input characters it came from;
+   * groups from the same spelled-out number or date make one word.
+   */
+  PhonemizedText phonemize_words(std::u32string_view text) override;
 
   // Performs a preprocessing stage of the pipeline.
-  std::u32string preprocess(const std::u32string& input) override {
-    return preprocessor_.process(input);
-  }
+  std::u32string preprocess(const std::u32string& input) override;
 
   // Performs a middle stage of the pipeline - including phonemization.
-  std::u32string process(const std::u32string& input) override {
-    using constants::han::is_han;
-
-    std::u32string result;
-    for (size_t start = 0; start < input.size();) {
-      bool han = is_han(input[start]);
-      size_t end = start;
-      while (end < input.size() && is_han(input[end]) == han) {
-        end++;
-      }
-
-      std::u32string_view run = std::u32string_view{input}.substr(start, end - start);
-      if (!han) {
-        result += run;
-      } else if (phonemizer_) {
-        auto words = segmenter_ ? segmenter_->segment(run) : std::vector{run};
-        bool first = true;
-        for (auto word : words) {
-          auto phonemes = phonemizer_->phonemize_word(word);
-          if (phonemes.empty()) {
-            continue;
-          }
-          if (!first) {
-            result += U' ';
-          }
-          result += phonemes;
-          first = false;
-        }
-      }
-      start = end;
-    }
-    return result;
-  }
+  std::u32string process(const std::u32string& input) override;
 
   // Performs a postprocessing stage of the pipeline.
-  std::u32string postprocess(const std::u32string& input) override {
-    // No postprocessing
-    return input;
-  }
+  std::u32string postprocess(const std::u32string& input) override;
 
 private:
+  // Phonemizes preprocessed text. With `sources` (one per input character), it also
+  // records in `phoneme_sources` where each phoneme came from.
+  std::u32string phonemize(std::u32string_view input, const SourceSpans* sources,
+                           SourceSpans* phoneme_sources) const;
+
   // Required submodules
-  processor::Preprocessor preprocessor_;
+  Num2Word num2word_;
+  PunctuationLayer punctuation_;
 
   // Optional submodules
   std::unique_ptr<zh::LexiconPhonemizer> phonemizer_ = nullptr;

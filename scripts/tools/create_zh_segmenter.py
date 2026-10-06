@@ -19,7 +19,7 @@ from jieba.finalseg import prob_emit, prob_start, prob_trans
 
 def is_segmentable(word: str) -> bool:
     # jieba's HMM and the pipeline's character runs only cover U+4E00..U+9FD5.
-    return all("一" <= c <= "鿕" for c in word)
+    return all("\u4e00" <= c <= "\u9fd5" for c in word)
 
 
 def main(output_path: str) -> None:

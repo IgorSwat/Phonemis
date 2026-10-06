@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types.h"
+
 #include <phonemis/base/processor/layer.h>
 
 #include <optional>
@@ -17,6 +19,9 @@ namespace phonemis::zh {
 class Num2Word : public processor::Layer {
 public:
   std::u32string transform(std::u32string_view input) const override;
+
+  // The same, also tracking where each character of the result came from.
+  std::u32string transform(std::u32string_view input, SourceSpans* sources) const;
 
   /**
    * Reads a number such as "-12.5" ("负十二点五").

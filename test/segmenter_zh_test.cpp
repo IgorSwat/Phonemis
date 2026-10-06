@@ -34,7 +34,7 @@ REGISTER_TEST(segmenter_zh_test)
     ASSERT_EQUALS(U"他/来到/了/网易/杭研/大厦", segment(segmenter, U"他来到了网易杭研大厦"));
 
     // Characters past U+9FD5 stand alone.
-    ASSERT_EQUALS(U"研究/鿪/生命", segment(segmenter, U"研究鿪生命"));
+    ASSERT_EQUALS(U"研究/\u9FEA/生命", segment(segmenter, U"研究\u9FEA生命"));
 
     ASSERT_EQUALS(U"", segment(segmenter, U""));
 
