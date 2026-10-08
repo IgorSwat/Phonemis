@@ -23,6 +23,17 @@ namespace utils::io {
  */
 nlohmann::json load_json(std::string_view fp);
 
+/**
+ * JSON file parsing with a callback, which sees every element as it is parsed and can
+ * keep it out of the result, to avoid holding a large file in memory twice.
+ * @param fp The file path to the JSON file.
+ * @param callback The nlohmann::json parser callback; returning false drops the element.
+ * @return The parsed nlohmann::json object, without the dropped elements.
+ * @throws std::invalid_argument If the file is not found or the JSON format is invalid.
+ * @throws std::runtime_error If the file fails to open.
+ */
+nlohmann::json load_json(std::string_view fp, const nlohmann::json::parser_callback_t& callback);
+
 }	// utils::io
 
 /**

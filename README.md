@@ -18,6 +18,7 @@ Currently supported languages:
 *  🇵🇱 Polish — `pl`
 *  🇵🇹 Portuguese — `pt`
 *  🇮🇳 Hindi — `hi`
+*  🇨🇳 Mandarin Chinese — `zh`
 
 ## Repository Structure
 
