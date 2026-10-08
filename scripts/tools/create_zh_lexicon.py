@@ -42,7 +42,7 @@ def main(output_path: str) -> None:
             skipped.append(entry)
 
     with open(output_path, "w", encoding="utf-8") as f:
-        json.dump(lexicon, f, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
+        json.dump(lexicon, f, indent=2, ensure_ascii=False, sort_keys=True)
 
     print(f"{len(lexicon)} entries -> {output_path}; skipped {len(skipped)}: {''.join(skipped[:20])}")
 

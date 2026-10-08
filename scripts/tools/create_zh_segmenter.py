@@ -37,7 +37,7 @@ def main(output_path: str) -> None:
     }
 
     with open(output_path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
+        json.dump(data, f, indent=2, ensure_ascii=False, sort_keys=True)
 
     print(f"{len(words)} words, total frequency {jieba.dt.total} -> {output_path}")
 
