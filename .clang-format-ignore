@@ -1,0 +1,5 @@
+# Hand-aligned data tables and generated files keep their own layout
+src/phonemis/*/*/constants.h
+src/phonemis/*/*/*/constants.h
+src/phonemis/lang/hi/characters.h
+src/phonemis/utils/unicode_table.h

@@ -1,0 +1,63 @@
+# Formatting rules (see .claude/CLAUDE.md, section 4), checked by ./scripts/lint.sh.
+# Hand-aligned data tables and generated files are excluded in .clang-format-ignore.
+BasedOnStyle: Google
+Language: Cpp
+Standard: c++20
+ColumnLimit: 120
+IndentWidth: 2
+ContinuationIndentWidth: 4
+UseTab: Never
+
+# Braces & blocks
+BreakBeforeBraces: Attach
+AccessModifierOffset: -2
+IndentCaseLabels: true
+AllowShortBlocksOnASingleLine: Never
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: false
+AllowShortLambdasOnASingleLine: All
+AllowShortCaseLabelsOnASingleLine: false
+
+# Namespaces
+NamespaceIndentation: None
+FixNamespaceComments: true
+ShortNamespaceLines: 0
+
+# Empty lines
+KeepEmptyLinesAtTheStartOfBlocks: true
+MaxEmptyLinesToKeep: 2
+
+# Pointers & references attach to the type
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+# Line wrapping
+AlignAfterOpenBracket: Align
+AlignOperands: Align
+BreakBeforeBinaryOperators: None
+BreakBeforeTernaryOperators: false
+BreakConstructorInitializers: BeforeColon
+ConstructorInitializerIndentWidth: 4
+PackConstructorInitializers: NextLine
+
+# Comments (their length is checked by ./scripts/lint.sh, not reflowed)
+AlignTrailingComments: true
+SpacesBeforeTrailingComments: 1
+ReflowComments: false
+
+# Includes: quoted -> <phonemis/...> -> <third-party/...> -> standard library.
+# The own header is not forced first.
+SortIncludes: CaseSensitive
+IncludeBlocks: Preserve
+IncludeIsMainRegex: '(_no_main_header)$'
+IncludeCategories:
+  - Regex: '^"'
+    Priority: 1
+  - Regex: '^<phonemis/'
+    Priority: 2
+  - Regex: '^<third-party/'
+    Priority: 3
+  - Regex: '^<'
+    Priority: 4
+SortUsingDeclarations: false

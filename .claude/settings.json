@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/scripts/tools/lint/claude_hook.py\"",
+            "timeout": 60,
+            "statusMessage": "Linting edited file..."
+          }
+        ]
+      }
+    ]
+  }
+}
