@@ -3,8 +3,6 @@
 #include "../utils/conversions.h"
 #include "../utils/unicode.h"
 
-#include <algorithm>
-
 namespace phonemis {
 
 namespace {
@@ -52,9 +50,10 @@ PhonemizedText IPipeline::phonemize_words(std::string_view text) {
 }
 
 PhonemizedText IPipeline::phonemize_words(std::u32string_view text) {
-  // Preprocessing leaves each word intact, except for numbers, which it can
-  // spell out as several words. Processing then turns each preprocessed word
-  // into one space-separated group of phonemes.
+  // Preprocessing can spell a word out as several (numbers, abbreviations,
+  // symbols, web addresses), so each word is preprocessed alone to count them.
+  // Processing then turns each preprocessed word into one space-separated group
+  // of phonemes.
   std::u32string normalized = preprocess(std::u32string{text});
   PhonemizedText result{.phonemes = postprocess(process(normalized))};
 
@@ -80,8 +79,7 @@ PhonemizedText IPipeline::phonemize_words(std::u32string_view text) {
     }
 
     auto word = text.substr(start, end - start);
-    std::size_t count =
-        std::ranges::any_of(word, utils::unicode::isdigit) ? count_words(preprocess(std::u32string{word})) : 1;
+    std::size_t count = count_words(preprocess(std::u32string{word}));
 
     std::size_t phoneme_length = count > 0 ? count - 1 : 0;  // Separating spaces.
     for (std::size_t i = group; i < group + count && i < group_lengths.size(); i++) {
