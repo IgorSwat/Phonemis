@@ -1,109 +1,94 @@
+#include "processing.h"
 #include "test.h"
-#include <phonemis/base/processor/num2word/layer.h>
+#include <phonemis/base/processor/layers/num2word/layer.h>
 #include <phonemis/utils/io.h>
 
 namespace phonemis::test {
 
+using namespace processor;
 using namespace processor::num2word;
 
-// A dumb class to simplify the testing procedure.
-class TestNum2Word : public Num2WordLayer {
+namespace {
+struct NoReading {};
+
+// Digits spelled out, so that later patterns do not read them again: 27 -> two-seven
+std::u32string spelled(std::u32string_view digits) {
+  static const std::u32string names[] = {U"zero", U"one", U"two",   U"three", U"four",
+                                         U"five", U"six", U"seven", U"eight", U"nine"};
+  std::u32string words;
+  for (char32_t c : digits) {
+    words += (words.empty() ? U"" : U"-") + names[c - U'0'];
+  }
+  return words;
+}
+
+// A language which marks the numbers its patterns find (<one-two>) and keeps the default readings of the rest.
+class MarkingNum2Word : public Num2WordLayer<NoReading> {
 public:
-    using Num2WordLayer::Num2WordLayer;
+  MarkingNum2Word()
+      : Num2WordLayer(Notation{.group_separators = U",",
+                               .decimal_separators = U".",
+                               .time_separators = U":",
+                               .currencies = {U"$"},
+                               .scales = {U"k"},
+                               .units = {U"km"},
+                               .fractions = true},
+                      Joiners{.point = U"point",
+                              .dot = U"dot",
+                              .range = U" to ",
+                              .by = U"by",
+                              .score = U" to ",
+                              .minus = U"minus",
+                              .plus = U"plus"}) {}
 
-    char32_t decimal_separator() const override { return U'.'; }
-    std::u32string to_cardinal_int(int32_t number) const override { return U"[CARDINAL]"; }
-    std::u32string to_cardinal_float(float number, std::u32string_view repr) const override { return U"[CARDINAL]"; }
-    std::u32string to_ordinal_int(int32_t number, std::u32string_view suffix = U"") const override {
-        if (!suffix.empty() || is_ordinal_suffix(suffix)) return U"[POTENTIALLY_ORDINAL]";
-        return U"[ORDINAL]";
-    }
-    std::u32string to_currency(char32_t currency, std::variant<int32_t, float> number) const override { return U"[CURRENCY]"; }
-    std::u32string to_fraction(int32_t numerator, int32_t denominator) const override {
-        return to_cardinal_int(numerator) + U" " + to_ordinal_int(denominator);
-    }
-    std::u32string to_day(uint32_t day) const override { return to_ordinal_int(static_cast<int32_t>(day)); }
-    std::u32string to_month(uint32_t month) const override { return U"[MONTH]"; }
-    std::u32string to_year(uint32_t year) const override { return U"[YEAR]"; }
-    bool is_ordinal_suffix(std::u32string_view suffix) const override {
-        return suffix == U"st" || suffix == U"nd" || suffix == U"rd" || suffix == U"th";
-    }
+protected:
+  NoReading resolve(const Match& /*match*/, const Context& /*context*/) const override { return {}; }
+
+  std::u32string read_number(const Number& number, const NoReading& /*reading*/) const override {
+    std::u32string fraction = number.fraction.empty() ? U"" : U" point " + spelled(number.fraction);
+    return U"<" + spelled(number.integer) + fraction + U">";
+  }
+
+  std::u32string read_code_digits(std::u32string_view digits) const override {
+    return U"<" + spelled(digits) + U">";
+  }
 };
+} // namespace
 
-REGISTER_TEST(num2word_base_basic_transform_test)
-{
-    TestNum2Word layer;
+REGISTER_TEST(num2word_base_kinds_test) {
+  MarkingNum2Word layer;
 
-    // Integers and Floats
-    ASSERT_EQUALS(U"[CARDINAL]", layer.transform(U"123"));
-    ASSERT_EQUALS(U"[CARDINAL]", layer.transform(U"123.45"));
+  // Whole expressions
+  ASSERT_EQUALS(U"<two-seven> <zero-three> <two-zero-two-six>", apply(layer, U"2026-03-27"));
+  ASSERT_EQUALS(U"<three> point <eight> point <one-zero>", apply(layer, U"3.8.10"));
+  ASSERT_EQUALS(U"<one-zero> dot <zero> dot <zero> dot <five-one>", apply(layer, U"10.0.0.51"));
 
-    // Fractions
-    ASSERT_EQUALS(U"[CARDINAL] [ORDINAL]", layer.transform(U"1/2"));
+  // Symbols between numbers
+  ASSERT_EQUALS(U"<five> minus <three>, <two> plus <two>", apply(layer, U"5 - 3, 2+2"));
+  ASSERT_EQUALS(U"<one-zero> to <one-five>, <one-nine-two-zero> by <one-zero-eight-zero>",
+                apply(layer, U"10-15, 1920x1080"));
+  ASSERT_EQUALS(U"<three> <four> and minus <five>", apply(layer, U"3/4 and -5"));
+  ASSERT_EQUALS(U"<one-zero> <three-zero> and <two> to <one>", apply(layer, U"10:30 and 2:1"));
 
-    // Currency
-    ASSERT_EQUALS(U"[CARDINAL] [CURRENCY]", layer.transform(U"50$"));
-    ASSERT_EQUALS(U"The price is [CARDINAL] [CURRENCY].", layer.transform(U"The price is 99€."));
+  // Numbers with what they count
+  ASSERT_EQUALS(U"<five> $, <five-zero-zero> k, <two-zero> %, <one-zero> to <one-five> km",
+                apply(layer, U"$5, 500k, 20%, 10-15 km"));
 
-    // Mixed text
-    ASSERT_EQUALS(U"Value: [CARDINAL], Ratio: [CARDINAL] [ORDINAL].", layer.transform(U"Value: 42, Ratio: 1/3."));
+  // Numbers joined to letters, then any other number
+  ASSERT_EQUALS(U"a <two-one>-year-old MP <three>", apply(layer, U"a 21-year-old MP3"));
+  ASSERT_EQUALS(U"<one-zero-zero-zero-zero-zero-zero point five> and < point five>",
+                apply(layer, U"1,000,000.5 and .5"));
 
-    return true;
+  return true;
 }
 
-REGISTER_TEST(num2word_base_ordinal_dot_test)
-{
-    Config config;
-    config.allow_general_ord_notation = true;
-    TestNum2Word layer(config);
+REGISTER_TEST(num2word_base_untouched_text_test) {
+  MarkingNum2Word layer;
 
-    // Potentialy ordinal
-    ASSERT_EQUALS(U"[POTENTIALLY_ORDINAL]", layer.transform(U"1st"));
-    ASSERT_EQUALS(U"[POTENTIALLY_ORDINAL]", layer.transform(U"2nd"));
-    ASSERT_EQUALS(U"[POTENTIALLY_ORDINAL]", layer.transform(U"12th"));
+  ASSERT_EQUALS(U"", apply(layer, U""));
+  ASSERT_EQUALS(U"No numbers here.", apply(layer, U"No numbers here."));
 
-    // Ordinal with dot followed by lowercase
-    ASSERT_EQUALS(U"[ORDINAL] word", layer.transform(U"1. word"));
-    
-    // Not an ordinal (uppercase follows or no following alphabetical character)
-    ASSERT_EQUALS(U"[CARDINAL]. Word", layer.transform(U"1. Word"));
-    ASSERT_EQUALS(U"[CARDINAL].", layer.transform(U"1."));
-
-    // Disabled by config
-    config.allow_general_ord_notation = false;
-    TestNum2Word layer_disabled(config);
-    ASSERT_EQUALS(U"[CARDINAL]. word", layer_disabled.transform(U"1. word"));
-
-    return true;
-}
-
-REGISTER_TEST(num2word_base_date_test)
-{
-    TestNum2Word layer;
-
-    ASSERT_EQUALS(U"[ORDINAL] [MONTH] [YEAR]", layer.transform(U"2026-03-27"));
-    ASSERT_EQUALS(U"[ORDINAL] [MONTH] [YEAR]", layer.transform(U"27.03.2026"));
-    ASSERT_EQUALS(U"Today is [ORDINAL] [MONTH] [YEAR].", layer.transform(U"Today is 27-03-2026."));
-
-    return true;
-}
-REGISTER_TEST(num2word_base_complex_sequence_test)
-{
-    TestNum2Word layer;
-    Config config;
-    config.allow_general_ord_notation = true;
-    TestNum2Word layer_with_ord(config);
-
-    // Mixed content: ordinals, dates, fractions, and potential ordinals
-    std::u32string input = U"On 2026-03-27, the 1st runner finished 1/2 of the race. "
-                            "He was 1. in line, while the 2nd followed at 12.5 seconds.";
-    
-    std::u32string expected = U"On [ORDINAL] [MONTH] [YEAR], the [POTENTIALLY_ORDINAL] runner finished [CARDINAL] [ORDINAL] of the race. "
-                               "He was [ORDINAL] in line, while the [POTENTIALLY_ORDINAL] followed at [CARDINAL] seconds.";
-
-    ASSERT_EQUALS(expected, layer_with_ord.transform(input));
-
-    return true;
+  return true;
 }
 
 } // namespace phonemis::test

@@ -1,5 +1,9 @@
 #pragma once
 
+#include <phonemis/base/processor/common/conditions.h>
+#include <phonemis/base/processor/layers/normalize/types.h>
+#include <phonemis/base/processor/layers/num2word/notation.h>
+#include <phonemis/base/processor/layers/term2word/types.h>
 #include <phonemis/base/tokenizer/types.h>
 
 #include <array>
@@ -12,8 +16,25 @@
 
 namespace phonemis::hi::constants {
 
+// --- Character Normalization ---
+namespace normalize {
+  using ::phonemis::processor::normalize::Characters;
+
+  // Echo's classes, but the zero-width non-joiner and joiner stay: they decide how Devanagari letters join
+  inline const Characters kCharacters = {
+    {U"…",                U"..."}, // Ellipsis
+    {U"«»„“”‟˝",          U"\""},  // Quotes
+    {U"‘’‚‛´`ʼ",          U"'"},   // Apostrophes
+    {U"\u200b\ufeff",     U""}     // Invisible: zero-width space, byte order mark
+  };
+} // namespace normalize
+
 // --- Number to Word Normalization ---
 namespace num2word {
+  using ::phonemis::processor::num2word::DateFormat;
+  using ::phonemis::processor::num2word::Joiners;
+  using ::phonemis::processor::num2word::keys_of;
+  using ::phonemis::processor::num2word::Notation;
   // Hindi has unique cardinal words for every number 0-99 — they are not
   // compositionally derivable from tens + units like in most European
   // languages. Above 99 the construction becomes regular: hundreds use
@@ -53,10 +74,10 @@ namespace num2word {
 
   // Currencies. Hindi loanword currencies are invariable in form, so only the
   // singular noun is stored.
-  inline const std::unordered_map<char32_t, std::u32string> kCurrencies = {
-    {U'$', U"डॉलर"},
-    {U'€', U"यूरो"},
-    {U'£', U"पाउंड"}
+  inline const std::unordered_map<std::u32string, std::u32string> kCurrencies = {
+    {U"$", U"डॉलर"},
+    {U"€", U"यूरो"},
+    {U"£", U"पाउंड"}
   };
 
   // Months: standard Gregorian month names in Hindi (used as-is in dates).
@@ -84,14 +105,45 @@ namespace num2word {
     U"वाँ", U"वीं", U"वें"
   };
 
-  // Recognized ordinal suffixes for digit-attached notation. Only the
-  // alpha-only base "व" is matched at scan time; trailing matras / nasal
-  // marks of the suffix are reattached to the verbalized form because the
-  // base scanner does not classify combining marks as alphabetic.
-  inline const std::unordered_set<std::u32string> kOrdinalSuffixes = {
-    U"व"
+  // Ordinal suffixes after digits, in the order of OrdinalForms: 5वाँ, 5वीं, 5वें
+  inline const std::vector<std::u32string> kOrdinalSuffixes = {
+    U"वाँ", U"वीं", U"वें"
   };
+
+  // --- Notation: how numbers are written ---
+  inline const Notation kNotation = {
+    .group_separators = U",", .decimal_separators = U".", .time_separators = U":", .currencies = keys_of(kCurrencies),
+    .fractions = true
+  };
+
+  // Words between numbers: 3.8.10, 10.0.0.51, 10-15, 1920x1080, 2:1, -5, 2 + 2
+  inline const Joiners kJoiners = {
+    .point = U"दशमलव", .dot = U"दशमलव", .range = U" से ", .by = U"गुणा", .score = U" ", .minus = U"माइनस", .plus = U"प्लस"
+  };
+
+  // 27.03.2026, 27-03-2026: the year has four digits
+  inline const DateFormat kDateFormat = {.separators = U".-/", .short_year = false};
 } // namespace num2word
+
+// --- Symbols to Word Normalization ---
+namespace sym2word {
+  using ::phonemis::processor::Readings;
+
+  // TODO: not verified against a reference verbalizer yet
+  inline const Readings kSymbols = {
+    {U"&", {U"और"}},       {U"+", {U"प्लस"}},     {U"=", {U"बराबर"}},    {U"%", {U"प्रतिशत"}},  {U"@", {U"एट"}},
+    {U"°", {U"डिग्री"}},    {U"$", {U"डॉलर"}},     {U"€", {U"यूरो"}},      {U"£", {U"पाउंड"}},    {U"₹", {U"रुपये"}}
+  };
+} // namespace sym2word
+
+// --- Terms to Word Normalization ---
+namespace term2word {
+  using ::phonemis::processor::term2word::Terms;
+
+  inline const Terms kTerms = {
+    .web = {.dot = U"डॉट", .at = U"एट", .slash = U"स्लैश"}
+  };
+} // namespace term2word
 
 // --- Tokenization Rules ---
 namespace tokenizer {

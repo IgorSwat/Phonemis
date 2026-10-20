@@ -38,7 +38,7 @@ REGISTER_TEST(pipeline_en_us_contraction_test) {
   std::u32string result = g_pipeline(input);
 
   // Expected: "He's" split to "He" + "'s", "25" to "twenty-five", "10:30" to "ten thirty"
-  ASSERT_EQUALS(U"hˌiz twˈɛnti fˈIv jˈɪɹz ˈOld. ˌɪts tˈɛn:θˈɜɹɾi pˌiˈɛm.", result);
+  ASSERT_EQUALS(U"hˌiz twˈɛntifˈIv jˈɪɹz ˈOld. ˌɪts tˈɛn θˈɜɹɾi pˌiˈɛm.", result);
   return true;
 }
 

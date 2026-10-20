@@ -1,6 +1,7 @@
 #pragma once
 
 #include "phonemizer/config.h"
+#include "processor/config.h"
 #include "tagger/config.h"
 #include "types.h"
 
@@ -15,6 +16,11 @@ struct Config {
    * Language profile for phonemization (e.g., @ref 'en-us' for American English).
    */
   Lang lang;
+
+  /**
+   * Preprocessing subconfiguration - optional: every layer is on by default.
+   */
+  processor::Config preprocessor;
 
   /**
    * Tagger subconfiguration - optional (unused by some languages).

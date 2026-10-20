@@ -62,7 +62,7 @@ should understand a class or function at a glance.
   `Processor` applies `Layer`s, a `Pipeline` runs stages. Name the class after its role and its
   main method after the verb.
 - **Minimal public interface.** Expose only what a caller needs: `Processor` has `add_layer()` and
-  `process()`, `Layer` has `transform()`, `Tokenizer` has `tokenize()`. Helpers are private or
+  `process()`, `Layer` has `apply()`, `Tokenizer` has `tokenize()`. Helpers are private or
   file-local, and private helpers are still documented in the header.
 - **Model with types:**
   - Give domain concepts names even when the alias is trivial: `using Lang = std::string;`,
@@ -76,7 +76,7 @@ should understand a class or function at a glance.
   - `Phonemizer::phonemize(std::span<const Token>)` → `phonemize(const Token&) const = 0`
     + `update_context()`
   - `Tagger::tag()` → `tag_sentence()`
-  - `Num2WordLayer::transform()` → `to_cardinal_int()`, `to_month()`, …
+  - `Num2WordLayer<Reading>::apply()` → `resolve()`, `read_number()`, `read_date()`, …
 - **Compose submodules.** A language pipeline is a preprocessor, a tokenizer and a phonemizer,
   plus an optional tagger:
   - Required parts are value members.
@@ -85,10 +85,12 @@ should understand a class or function at a glance.
 - **Specialise with data first, subclasses second:**
   - Language behaviour lives in `lang/xx/constants.h` tables, passed to generic components as
     `const T*`.
-  - Generic layers take callables: `SanitizerLayer(Filter, Mapper)`.
+  - Generic layers take callables or tables: `SanitizerLayer(Filter, Mapper)`,
+    `Sym2WordLayer(Symbols)`, `Term2WordLayer(Terms)`, `DatePattern(DateFormat)`.
+  - Context-dependent data is still data: a reading with a condition (`{U"+", {{U"plus", after_name}, U"más"}}`).
   - Subclass only when data is not enough. The subclass reuses the base name inside the language
-    namespace (`en::LexiconPhonemizer : phonemizer::LexiconPhonemizer`), inherits constructors
-    (`using Num2WordLayer::Num2WordLayer;`) and aliases the base
+    namespace (`en::LexiconPhonemizer : phonemizer::LexiconPhonemizer`, `en::Num2Word :
+    Num2WordLayer`), passes its tables to the base constructor and aliases the base
     (`using Base = …; using Base::phonemize;`).
 - **Constrain templates with concepts:**
   `template <std::derived_from<LexiconPhonemizer> LXP, std::derived_from<nn::NeuralPhonemizer> NNP>`.
@@ -126,8 +128,11 @@ should understand a class or function at a glance.
   - `config.h`: the module's `struct Config`.
   - `<interface>.h/.cpp`: an abstract base and its driver (`ipipeline.h/.cpp`,
     `phonemizer.h/.cpp`, `tagger.h/.cpp`, `layer.h`).
-  - `<impl>_<module>.h/.cpp`: a concrete implementation (`lexicon_phonemizer`, `hmm_tagger`,
-    `trim_layer`).
+  - `<impl>_<module>.h/.cpp`: a concrete implementation (`lexicon_phonemizer`, `hmm_tagger`).
+  - Each processor layer has its own subdirectory with a `layer.h/.cpp` and its helpers
+    (`processor/layers/trim/`, `processor/layers/num2word/`), in namespace `processor::<layer>`.
+    Their shared building blocks (Document, Context, conditions, text scanning) live in
+    `processor/common/`, in namespace `processor`.
   - A central data struct can have its own file (`tokenizer/token.h`).
 - Templates and small declarative classes are header-only (`HybridPhonemizer`,
   `lang/*/pipeline.h`, `utils/strings.h`). Everything else is split into `.h` and `.cpp`.
@@ -354,8 +359,15 @@ std::u32string preprocess(const std::u32string& input) override;
 
 ## 7. Adding a language `xx`
 
-1. `lang/xx/constants.h`: tables (`num2word`, `tokenizer` rules and exceptions).
-2. `lang/xx/num2word.h/.cpp`: `class Num2Word : public processor::num2word::Num2WordLayer`.
-3. `lang/xx/pipeline.h`: header-only. Copy the shape of `lang/de/pipeline.h`.
+1. `lang/xx/constants.h`: all the language's data (`num2word`, `sym2word`, `term2word`, `tokenizer`
+   rules and exceptions). In `num2word`, besides the words, how numbers are written: `kNotation`,
+   `kJoiners` and the formats of configurable patterns (`kDateFormat`, `kPhoneFormat`, suffixes).
+2. `lang/xx/num2word.h/.cpp`: a `NumberReading` struct (what context decides) and
+   `class Num2Word : public processor::num2word::Num2WordLayer<NumberReading>`: the list of its
+   patterns, `resolve()` and readings. Patterns beyond the configurable ones go to `lang/xx/patterns.h`.
+3. `lang/xx/pipeline.h`: header-only. Copy the shape of `lang/de/pipeline.h`: its preprocessing is
+   `processor::make_preprocessor<Num2Word>(config.preprocessor, {...its tables...})`, which adds the
+   layers `processor::Config` enables in their fixed order (Normalize, Trim, Term2Word, Num2Word,
+   Sym2Word, Sanitizer).
 4. Register it in `Pipeline::create_pipeline` (`base/pipeline.cpp`).
 5. Put data in `data/xx/` and add tests in `test/`.

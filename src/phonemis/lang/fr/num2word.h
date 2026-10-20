@@ -1,25 +1,48 @@
 #pragma once
 
-#include <phonemis/base/processor/num2word/layer.h>
+#include <phonemis/base/processor/layers/num2word/layer.h>
+
 #include <string>
-#include <variant>
 
 namespace phonemis::fr {
 
-class Num2Word : public processor::num2word::Num2WordLayer {
-public:
-    using Num2WordLayer::Num2WordLayer;
+// How a French number is read, from the words around it.
+struct NumberReading {
+  bool feminine = false; // vingt et une heures: before a feminine noun
+  bool plural_s = true;  // quatre-vingts, deux cents; but les années quatre-vingt
+  bool equation = false; // 12 x 4 = 48: "x" is "fois" rather than "par"
+};
 
-    char32_t decimal_separator() const override { return U','; }
-    std::u32string to_cardinal_int(int32_t number) const override;
-    std::u32string to_cardinal_float(float number, std::u32string_view repr) const override;
-    std::u32string to_ordinal_int(int32_t number, std::u32string_view suffix = U"") const override;
-    std::u32string to_currency(char32_t currency, std::variant<int32_t, float> number) const override;
-    std::u32string to_fraction(int32_t numerator, int32_t denominator) const override;
-    std::u32string to_day(uint32_t day) const override;
-    std::u32string to_month(uint32_t month) const override;
-    std::u32string to_year(uint32_t year) const override;
-    bool is_ordinal_suffix(std::u32string_view suffix) const override;
+class Num2Word : public processor::num2word::Num2WordLayer<NumberReading> {
+public:
+  Num2Word();
+
+protected:
+  using Context = processor::Context;
+  using Match = processor::num2word::Match;
+  using Number = processor::num2word::Number;
+
+  // Resolution
+  bool accept(const Match& match, const Context& context) const override;
+  NumberReading resolve(const Match& match, const Context& context) const override;
+
+  // Readings
+  std::u32string read_number(const Number& number, const NumberReading& reading) const override;
+  std::u32string read_code_digits(std::u32string_view digits) const override;
+  std::u32string read_date(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_phone(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_fraction(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_time(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_ordinal(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_money(const Number& number, const Match& match, const NumberReading& reading) const override;
+  std::u32string read_scale(const Number& number, const Match& match, const NumberReading& reading) const override;
+  std::u32string read_percent(const Number& number, const Match& match, const NumberReading& reading) const override;
+  std::u32string read_unit(const Number& number, const Match& match, const NumberReading& reading) const override;
+  std::u32string read_joiner(const Match& match, const NumberReading& reading) const override;
+
+private:
+  // A number with an explicit gender, as before a currency or a unit
+  std::u32string read_gendered(const Number& number, const NumberReading& reading, bool feminine) const;
 };
 
 } // namespace phonemis::fr

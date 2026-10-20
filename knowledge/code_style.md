@@ -56,7 +56,7 @@ new code (a language, a component, a fix) that reads like the author wrote it.
 | `IPipeline::operator()` | `preprocess` / `process` / `postprocess` (`= 0`) |
 | `Phonemizer::phonemize(std::span<const Token>)` | `phonemize(const Token&) const = 0`, `update_context(idx, tokens)` (no-op by default) |
 | `Tagger::tag(std::span<Token>)` (splits the stream on EOS characters) | `tag_sentence(std::span<Token>) const = 0` |
-| `Num2WordLayer::transform()` → `verbalize()` | `to_cardinal_int`, `to_ordinal_int`, `to_currency`, `to_month`, … (`= 0`), `decimal_separator()`, `is_ordinal_suffix()` |
+| `Num2WordLayer<Reading>::apply()` (each pattern rewrites a draft: scan → `accept` → `resolve` → verbalize) | `resolve`, `read_number`, `read_code_digits` (`= 0`), `accept`, `read_date`, `read_money`, … (defaults) |
 | `HMMTagger::tag_sentence()` | `should_lowercase(word)`: protected virtual, defaults to `false`, English overrides it |
 
 - Per-unit hooks are `const` (pure lookups). All state changes go through one hook that is
@@ -270,7 +270,9 @@ base/<module>/
   types.h                  // enums, aliases, small structs
   constants.h              // inline tables in <module>::constants
   <module>.h/.cpp          // interface / abstract base with the driver
-  <impl>_<module>.h/.cpp   // concrete: lexicon_phonemizer, hmm_tagger, trim_layer, sanitizer_layer
+  <impl>_<module>.h/.cpp   // concrete: lexicon_phonemizer, hmm_tagger
+base/processor/<layer>/
+  layer.h/.cpp             // one directory per layer: trim, sanitizer, term2word, num2word, sym2word
 lang/<code>/
   constants.h  pipeline.h (header-only)  num2word.h/.cpp  [lexicon_phonemizer|hmm_tagger|stress].h/.cpp
 ```
@@ -575,7 +577,7 @@ Use the dominant form in new code. Do not "fix" these in unrelated changes.
            phonemizer_(config.phonemizer) {
 
        // 1. Setup Preprocessing layers
-       preprocessor_.add_layer(std::make_unique<processor::TrimLayer>());
+       preprocessor_.add_layer(std::make_unique<processor::trim::TrimLayer>());
        preprocessor_.add_layer(std::make_unique<Num2Word>());
      }
 

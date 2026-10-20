@@ -125,7 +125,7 @@ REGISTER_TEST(pipeline_words_en_us_test) {
   auto result = g_en_pipeline.phonemize_words(text);
 
   ASSERT_EQUALS(g_en_pipeline(text), result.phonemes);
-  ASSERT_EQUALS(U"He's:hˌiz|25:twˈɛnti fˈIv|years:jˈɪɹz|old.:ˈOld.|It's:ˌɪts|10:30:tˈɛn:θˈɜɹɾi|PM.:pˌiˈɛm.",
+  ASSERT_EQUALS(U"He's:hˌiz|25:twˈɛntifˈIv|years:jˈɪɹz|old.:ˈOld.|It's:ˌɪts|10:30:tˈɛn θˈɜɹɾi|PM.:pˌiˈɛm.",
                 describe(text, result));
   return true;
 }

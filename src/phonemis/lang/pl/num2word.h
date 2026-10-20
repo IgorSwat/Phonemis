@@ -1,25 +1,57 @@
 #pragma once
 
-#include <phonemis/base/processor/num2word/layer.h>
+#include <phonemis/base/processor/layers/num2word/layer.h>
+
 #include <string>
-#include <variant>
 
 namespace phonemis::pl {
 
-class Num2Word : public processor::num2word::Num2WordLayer {
-public:
-    using Num2WordLayer::Num2WordLayer;
+using processor::num2word::Case;
+using processor::num2word::Form;
+using processor::num2word::Gender;
 
-    char32_t decimal_separator() const override { return U','; }
-    std::u32string to_cardinal_int(int32_t number) const override;
-    std::u32string to_cardinal_float(float number, std::u32string_view repr) const override;
-    std::u32string to_ordinal_int(int32_t number, std::u32string_view suffix = U"") const override;
-    std::u32string to_currency(char32_t currency, std::variant<int32_t, float> number) const override;
-    std::u32string to_fraction(int32_t numerator, int32_t denominator) const override;
-    std::u32string to_day(uint32_t day) const override;
-    std::u32string to_month(uint32_t month) const override;
-    std::u32string to_year(uint32_t year) const override;
-    bool is_ordinal_suffix(std::u32string_view suffix) const override;
+// How a Polish number is read: its form, and the case and gender its words agree with.
+struct NumberReading {
+  Form form = Form::CARDINAL; // An ordinal for years, days of a month and headings
+  Case grammatical_case = Case::NOMINATIVE;
+  Gender gender = Gender::MASCULINE;
+  bool plural = false;                 // lata 70.: an ordinal in the plural
+  Case amount_case = Case::NOMINATIVE; // The case of an amount (5 kg): of its number and its noun
+  bool numbered = false;               // numerem 3x38: the "x" of a document number stands for a slash
+};
+
+/**
+ * Polish numbers inflect for case and gender, so most readings first find the case a number takes:
+ * from the preposition before it (od pięciu), the noun after it (z trzema kolegami), a governing noun or verb
+ * (od kwoty trzystu tysięcy), or the year and date patterns which make it an ordinal (w 1985 roku).
+ */
+class Num2Word : public processor::num2word::Num2WordLayer<NumberReading> {
+public:
+  Num2Word();
+
+protected:
+  using Context = processor::Context;
+  using Match = processor::num2word::Match;
+  using Number = processor::num2word::Number;
+
+  // Resolution
+  bool accept(const Match& match, const Context& context) const override;
+  NumberReading resolve(const Match& match, const Context& context) const override;
+
+  // Readings
+  std::u32string read_number(const Number& number, const NumberReading& reading) const override;
+  std::u32string read_code_digits(std::u32string_view digits) const override;
+  std::u32string read_date(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_phone(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_time(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_ordinal(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_compound(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_plain(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_money(const Number& number, const Match& match, const NumberReading& reading) const override;
+  std::u32string read_scale(const Number& number, const Match& match, const NumberReading& reading) const override;
+  std::u32string read_percent(const Number& number, const Match& match, const NumberReading& reading) const override;
+  std::u32string read_unit(const Number& number, const Match& match, const NumberReading& reading) const override;
+  std::u32string read_joiner(const Match& match, const NumberReading& reading) const override;
 };
 
 } // namespace phonemis::pl

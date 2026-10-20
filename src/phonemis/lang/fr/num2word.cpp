@@ -1,244 +1,317 @@
-#include "num2word.h"
 #include "constants.h"
-#include <phonemis/utils/conversions.h>
-#include <algorithm>
-#include <cmath>
-#include <cstdlib>
+#include "num2word.h"
+#include "patterns.h"
+#include <phonemis/base/processor/layers/num2word/numerals.h>
+#include <phonemis/base/processor/layers/num2word/patterns.h>
+#include <phonemis/base/processor/layers/num2word/primitives.h>
+#include <phonemis/utils/strings.h>
+#include <phonemis/utils/unicode.h>
 
 namespace phonemis::fr {
 
-using namespace constants;
-using namespace phonemis::utils;
+using namespace constants::num2word;
+using namespace processor;
+using namespace processor::num2word;
+using namespace utils;
 
 namespace {
-
-// Returns the position right after the last separator (space or hyphen) in `word`,
-// which marks the start of the last atomic cardinal token.
-size_t last_token_start(const std::u32string& word) {
-  size_t pos = word.size();
-  while (pos > 0 && word[pos - 1] != U' ' && word[pos - 1] != U'-') {
-    pos--;
-  }
-  return pos;
+uint64_t value(const Number& number) {
+  return value_of(number.integer).value_or(0);
 }
 
-// Converts a cardinal token to its ordinal form (e.g. "douze" -> "douzième").
-std::u32string cardinal_to_ordinal_token(std::u32string_view token) {
-  if (token == U"un")   return U"unième";
-  if (token == U"cinq") return U"cinquième";
-  if (token == U"neuf") return U"neuvième";
-  // The plural 's' on "cents" / "quatre-vingts" is dropped for ordinals; other
-  // tokens naturally ending in 's' (e.g. "trois") keep it.
-  if (token == U"vingts") return U"vingtième";
-  if (token == U"cents")  return U"centième";
+// ------------------------
+// ----- Number words -----
+// ------------------------
 
-  std::u32string stem(token);
-  if (!stem.empty() && stem.back() == U'e') {
-    stem.pop_back();
+std::u32string below_hundred(uint64_t n, bool feminine, bool plural_s) {
+  if (n < 20) {
+    return feminine && n == 1 ? U"une" : std::u32string(kOnes[n]);
   }
-  return stem + U"ième";
+
+  // soixante-dix, quatre-vingt-dix
+  uint64_t t = n / 10, u = n % 10;
+  if (t == 7 || t == 9) {
+    t--;
+    u += 10;
+  }
+  if (u == 0) {
+    return std::u32string(kTens[t]) + (t == 8 && plural_s ? U"s" : U"");
+  }
+  std::u32string unit = feminine && u == 1 ? U"une" : std::u32string(kOnes[u]);
+  return std::u32string(kTens[t]) + ((u == 1 || u == 11) && t < 8 ? U" et " : U"-") + unit;
 }
 
-} // namespace
-
-std::u32string Num2Word::to_cardinal_int(int32_t value) const {
-  if (value < 0) {
-    return U"moins " + to_cardinal_int(std::abs(value));
+std::u32string below_thousand(uint64_t n, bool feminine, bool plural_s) {
+  uint64_t h = n / 100, r = n % 100;
+  if (h == 0) {
+    return below_hundred(r, feminine, plural_s);
   }
+  std::u32string head = h == 1 ? U"cent" : std::u32string(kOnes[h]) + U" cent" + (r == 0 && plural_s ? U"s" : U"");
+  return head + (r ? U" " + below_hundred(r, feminine, plural_s) : U"");
+}
 
-  if (num2word::kCardinals.contains(value)) {
-    return num2word::kCardinals.at(value);
+// A cardinal; `plural_s` is false when "mille" follows (deux cent mille, quatre-vingt mille).
+std::u32string cardinal(uint64_t n, bool feminine = false, bool plural_s = true) {
+  if (n < 1000) {
+    return below_thousand(n, feminine, plural_s);
   }
-
-  if (value < 70) {
-    // Regular tens-units composition with "et" insertion for *1 values (e.g. 21, 31...).
-    int32_t tens = (value / 10) * 10;
-    int32_t units = value % 10;
-    std::u32string sep = (units == 1) ? U" et " : U" ";
-    return num2word::kCardinals.at(tens) + sep + num2word::kCardinals.at(units);
+  if (n < 1000000) {
+    uint64_t t = n / 1000, r = n % 1000;
+    std::u32string head = t == 1 ? U"mille" : below_thousand(t, false, false) + U" mille";
+    return head + (r ? U" " + below_thousand(r, feminine, plural_s) : U"");
   }
-
-  if (value < 80) {
-    // 70-79: "soixante" base with an extended units word (dix, onze, ..., dix neuf).
-    int32_t units = value - 60;
-    if (units == 11) return U"soixante et onze";
-    return U"soixante " + num2word::kCardinals.at(units);
-  }
-
-  if (value < 100) {
-    // 80-99: "quatre vingt(s)" base, no "et" even at 81/91.
-    int32_t units = value - 80;
-    if (units == 0) return U"quatre vingts";
-    return U"quatre vingt " + num2word::kCardinals.at(units);
-  }
-
-  // Handle large numbers by iterating through the large scales map (cent, mille, million, ...)
-  // in descending order to find the largest applicable base.
-  for (auto it = num2word::kLargeCardinals.rbegin(); it != num2word::kLargeCardinals.rend(); ++it) {
-    int64_t base = it->first;
-    if (static_cast<int64_t>(value) >= base) {
-      int32_t high = value / static_cast<int32_t>(base);
-      int32_t low = value % static_cast<int32_t>(base);
-
-      // "cent" and "mille" drop the leading "un" when used as multiplier of 1.
-      std::u32string head;
-      if (high == 1 && (base == 100LL || base == 1000LL)) {
-        head = U"";
-      } else {
-        head = to_cardinal_int(high) + U" ";
-      }
-
-      std::u32string scale = it->second;
-      // "cent" takes an 's' when multiplied and not followed by a smaller part.
-      // "million"/"milliard" pluralize as normal nouns when multiplied.
-      // "mille" is invariable.
-      if (base == 100LL && high > 1 && low == 0) {
-        scale += U"s";
-      } else if (base >= 1000000LL && high > 1) {
-        scale += U"s";
-      }
-
-      std::u32string res = head + scale;
-      if (low > 0) {
-        res += U" " + to_cardinal_int(low);
-      }
-      return res;
+  for (auto [scale, word] : {std::pair{1000000000ULL, U"milliard"}, std::pair{1000000ULL, U"million"}}) {
+    if (n >= scale) {
+      uint64_t q = n / scale, r = n % scale;
+      std::u32string head = cardinal(q) + U" " + std::u32string(word) + (q > 1 ? U"s" : U"");
+      return head + (r ? U" " + cardinal(r, feminine, plural_s) : U"");
     }
-  }
-
-  return conversions::utf8_to_u32(std::to_string(value));
-}
-
-std::u32string Num2Word::to_cardinal_float(float value, std::u32string_view repr) const {
-  if (value < 0.0f) {
-    return U"moins " + to_cardinal_float(std::abs(value), repr);
-  }
-
-  // The base transform normalizes the decimal separator to '.', but accept ',' too
-  // for direct callers.
-  std::string value_str = conversions::u32_to_utf8(repr);
-  std::replace(value_str.begin(), value_str.end(), ',', '.');
-
-  // Trim trailing zeros in the fractional part and a dangling decimal point.
-  auto rit = std::find_if(value_str.rbegin(), value_str.rend(),
-                          [](char c) { return c != '0'; });
-  value_str = std::string(value_str.begin(), rit.base());
-  if (!value_str.empty() && value_str.back() == '.') {
-    value_str.pop_back();
-  }
-
-  size_t dot_pos = value_str.find('.');
-  if (dot_pos == std::string::npos) {
-    return to_cardinal_int(value_str.empty() ? 0 : std::stoi(value_str));
-  }
-
-  std::string integer_part_str = value_str.substr(0, dot_pos);
-  std::string fractional_part_str = value_str.substr(dot_pos + 1);
-
-  int32_t integer_part = integer_part_str.empty() ? 0 : std::stoi(integer_part_str);
-
-  // French verbalizes the fractional part as a single cardinal number
-  // (e.g. "45" -> "quarante cinq"), but any leading zeros preserve their value
-  // as spoken "zéro" words (e.g. "05" -> "zéro cinq").
-  std::u32string frac_words;
-  size_t pos = 0;
-  while (pos < fractional_part_str.size() && fractional_part_str[pos] == '0') {
-    if (!frac_words.empty()) frac_words += U" ";
-    frac_words += U"zéro";
-    pos++;
-  }
-  if (pos < fractional_part_str.size()) {
-    if (!frac_words.empty()) frac_words += U" ";
-    frac_words += to_cardinal_int(std::stoi(fractional_part_str.substr(pos)));
-  }
-
-  return to_cardinal_int(integer_part) + U" virgule " + frac_words;
-}
-
-std::u32string Num2Word::to_ordinal_int(int32_t value, std::u32string_view suffix) const {
-  // "premier"/"première" are the only fully irregular ordinals; they do not appear
-  // as a suffix in compounds (21 -> "vingt et unième"), so we only apply them
-  // when the value is exactly 1. The suffix disambiguates masculine vs. feminine.
-  if (value == 1) {
-    bool feminine = (suffix == U"re" || suffix == U"res" ||
-                     suffix == U"ère" || suffix == U"ères");
-    return feminine ? U"première" : U"premier";
-  }
-
-  std::u32string card = to_cardinal_int(value);
-  size_t split = last_token_start(card);
-  std::u32string prefix = card.substr(0, split);
-  std::u32string_view last = std::u32string_view(card).substr(split);
-
-  return prefix + cardinal_to_ordinal_token(last);
-}
-
-std::u32string Num2Word::to_currency(char32_t currency, std::variant<int32_t, float> number) const {
-  if (!num2word::kCurrencies.contains(currency)) {
-    return std::u32string(1, currency);
-  }
-
-  std::u32string result = num2word::kCurrencies.at(currency);
-
-  // French pluralization follows the same |value| > 1 heuristic as English:
-  // singular only for an amount that rounds to exactly 1.
-  bool is_singular = std::visit([](auto&& arg) -> bool {
-    using T = std::decay_t<decltype(arg)>;
-    if constexpr (std::is_same_v<T, int32_t>) {
-      return arg == 1;
-    } else {
-      return std::abs(arg - 1.0F) < 1e-6F;
-    }
-  }, number);
-
-  if (!is_singular) {
-    result += U"s";
-  }
-  return result;
-}
-
-std::u32string Num2Word::to_month(uint32_t month) const {
-  if (month >= 1 && month <= 12) {
-    return num2word::kMonths[month];
   }
   return U"";
 }
 
-std::u32string Num2Word::to_year(uint32_t year) const {
-  // French reads years as plain cardinals (e.g. 2026 -> "deux mille vingt six"),
-  // unlike the English "twenty twenty-six" style.
-  return to_cardinal_int(static_cast<int32_t>(year));
+std::u32string ordinal(uint64_t n, bool feminine = false) {
+  if (n == 1) {
+    return feminine ? U"première" : U"premier";
+  }
+
+  // vingtième, cinquième, neuvième, onzième
+  std::u32string words = cardinal(n);
+  if (words.ends_with(U"vingts") || words.ends_with(U"cents")) {
+    words.pop_back();
+  }
+  if (words.ends_with(U"neuf")) {
+    words.back() = U'v';
+  } else if (words.ends_with(U"cinq")) {
+    words += U"u";
+  }
+  if (words.ends_with(U'e')) {
+    words.pop_back();
+  }
+  return words + U"ième";
 }
 
-bool Num2Word::is_ordinal_suffix(std::u32string_view suffix) const {
-  return num2word::kOrdinalSuffixes.contains(std::u32string(suffix));
+std::u32string digits(std::u32string_view text) {
+  std::vector<std::u32string> words;
+  for (char32_t c : text) {
+    words.emplace_back(kOnes[c - U'0']);
+  }
+  return join(words);
 }
 
-std::u32string Num2Word::to_fraction(int32_t numerator, int32_t denominator) const {
-  // Common fractions have dedicated French nouns instead of the ordinal form,
-  // and the denominator noun agrees in number with the numerator.
-  std::u32string num_word = to_cardinal_int(numerator);
-  bool plural = std::abs(numerator) > 1;
+// -------------------
+// ----- Context -----
+// -------------------
 
-  auto with_plural = [&](std::u32string_view base) {
-    std::u32string w(base);
-    if (plural) w += U"s";
-    return num_word + U" " + w;
-  };
-
-  if (denominator == 2) return with_plural(U"demi");
-  if (denominator == 3) return with_plural(U"tiers");
-  if (denominator == 4) return with_plural(U"quart");
-
-  std::u32string ord = to_ordinal_int(denominator);
-  if (plural) ord += U"s";
-  return num_word + U" " + ord;
+bool feminine(std::u32string_view noun) {
+  std::u32string word = strings::to_lower(noun);
+  word = word.substr(word.find_last_of(U'-') + 1);
+  if (!kFeminineNouns.contains(word) && word.ends_with(U's')) {
+    word.pop_back();
+  }
+  if (kFeminineNouns.contains(word)) {
+    return true;
+  }
+  bool masculine_ending = std::ranges::any_of(kMasculineEndings, [&](const auto& e) { return word.ends_with(e); });
+  bool date = std::ranges::find(kMonths, word) != kMonths.end() || kWeekdays.contains(word);
+  return word.ends_with(U'e') && !kMasculineInE.contains(word) && !date && !masculine_ending;
 }
 
-std::u32string Num2Word::to_day(uint32_t day) const {
-  // French dates read the day as a cardinal, except for the first of the month.
-  if (day == 1) return to_ordinal_int(1);
-  return to_cardinal_int(static_cast<int32_t>(day));
+// A lowercase noun follows: 10k abonnés
+bool counted(const Context& context) {
+  std::u32string word = context.after();
+  bool lowercase_word = word.size() > 2 && std::ranges::all_of(word, [](char32_t c) { return unicode::islower(c); });
+  return lowercase_word && !kStopWords.contains(word) && !kNumberWords.contains(word);
+}
+
+// A noun after a number is singular below 2: un virgule cinq kilomètre, deux kilomètres
+const std::u32string& number_form(const Number& number, const Forms& forms) {
+  return value(number) < 2 ? forms.one : forms.many;
+}
+} // namespace
+
+Num2Word::Num2Word() : Num2WordLayer(kNotation, kJoiners) {
+  add_pattern(std::make_unique<DatePattern>(kDateFormat));
+  add_pattern(std::make_unique<PhonePattern>(kPhoneFormat));
+  add_pattern(std::make_unique<SuffixPattern>(Kind::ORDINAL, kOrdinalSuffixes));
+  add_pattern(std::make_unique<RomanOrdinalPattern>());
+}
+
+// -----------------------
+// ----- Resolution -----
+// -----------------------
+
+bool Num2Word::accept(const Match& match, const Context& context) const {
+  switch (match.kind) {
+    case Kind::DATE:
+      // Without a year only a zero-padded day or month is a date: 05/11, but not 3/4
+      return match.numbers.size() == 3 || match.numbers[0].integer[0] == U'0' || match.numbers[1].integer[0] == U'0';
+    case Kind::TIME:
+      if (match.numbers.size() == 2) {
+        bool decimal = match.separator == U'.' && !kTimeWords.contains(context.before());
+        return value(match.numbers[0]) <= 24 && value(match.numbers[1]) <= 59 && !decimal;
+      }
+      return true;
+    case Kind::SCALE:
+      // 4K, 3k de Q: a letter, read as a code
+      return kScales.at(std::u32string(match.scale)) != U"mille" || counted(context);
+    default:
+      return true;
+  }
+}
+
+NumberReading Num2Word::resolve(const Match& match, const Context& context) const {
+  std::u32string previous = context.before();
+  return {.feminine = feminine(context.after()),
+          .plural_s = previous != U"années" && previous != U"année",
+          .equation = match.kind == Kind::DIMENSION && context.tail().find(U'=') != std::u32string_view::npos};
+}
+
+// --------------------
+// ----- Readings -----
+// --------------------
+
+std::u32string Num2Word::read_gendered(const Number& number, const NumberReading& reading, bool feminine) const {
+  if (number.fraction.empty()) {
+    auto n = value_of(number.integer);
+    return !n || spoken_digits(number, 5) ? digits(number.integer) : cardinal(*n, feminine, reading.plural_s);
+  }
+
+  // Up to three decimals read as a number: zéro virgule zéro cinq, deux virgule soixante-quinze
+  std::u32string fraction;
+  if (number.fraction.size() > 3) {
+    fraction = digits(number.fraction);
+  } else {
+    std::vector<std::u32string> words;
+    size_t zeros = number.fraction.find_first_not_of(U'0');
+    words.insert(words.end(), std::min(zeros, number.fraction.size()), U"zéro");
+    if (zeros != std::u32string::npos) {
+      words.push_back(cardinal(value_of(number.fraction).value_or(0)));
+    }
+    fraction = join(words);
+  }
+  std::u32string head = number.integer.empty() ? U"" : cardinal(value(number), feminine) + U" ";
+  return head + U"virgule " + fraction;
+}
+
+std::u32string Num2Word::read_number(const Number& number, const NumberReading& reading) const {
+  return read_gendered(number, reading, number.fraction.empty() && reading.feminine);
+}
+
+std::u32string Num2Word::read_code_digits(std::u32string_view text) const {
+  auto n = value_of(text);
+  if ((text.size() > 1 && text[0] == U'0') || text.size() > 4 || !n) {
+    return digits(text);
+  }
+  return cardinal(*n);
+}
+
+std::u32string Num2Word::read_date(const Match& match, const NumberReading& reading) const {
+  uint64_t day = value(match.numbers[0]);
+  std::u32string words = (day == 1 ? ordinal(1) : cardinal(day)) + U" " + kMonths[value(match.numbers[1]) - 1];
+  return match.numbers.size() < 3 ? words : words + U" " + cardinal(value(match.numbers[2]));
+}
+
+std::u32string Num2Word::read_phone(const Match& match, const NumberReading& reading) const {
+  // In pairs: zéro six douze trente-quatre ...
+  std::vector<std::u32string> words;
+  for (const auto& pair : match.numbers) {
+    bool zero = pair.integer.size() == 2 && pair.integer[0] == U'0';
+    if (pair.integer.size() > 3) {
+      words.push_back(digits(pair.integer)); // A longer group of a foreign number
+    } else {
+      words.push_back(zero ? U"zéro " + std::u32string(kOnes[pair.integer[1] - U'0']) : cardinal(value(pair)));
+    }
+  }
+  return join(words);
+}
+
+std::u32string Num2Word::read_fraction(const Match& match, const NumberReading& reading) const {
+  uint64_t a = value(match.numbers[0]), b = value(match.numbers[1]);
+  auto it = kFractions.find({a, b});
+  return it != kFractions.end() ? it->second : cardinal(a) + U" sur " + cardinal(b);
+}
+
+std::u32string Num2Word::read_time(const Match& match, const NumberReading& reading) const {
+  uint64_t hours = value(match.numbers[0]);
+  std::u32string words = cardinal(hours, true) + (hours < 2 ? U" heure" : U" heures");
+  if (match.numbers.size() == 2 && value(match.numbers[1]) > 0) {
+    words += U" " + cardinal(value(match.numbers[1]), true);
+  }
+  return words;
+}
+
+std::u32string Num2Word::read_ordinal(const Match& match, const NumberReading& reading) const {
+  std::u32string_view suffix = match.suffix;
+  std::u32string words;
+  if (suffix.starts_with(U"nd")) {
+    words = suffix.starts_with(U"nde") ? U"seconde" : U"second";
+  } else {
+    bool feminine = suffix == U"re" || suffix == U"ère" || suffix == U"res" || suffix == U"ères";
+    words = ordinal(value(match.numbers[0]), feminine);
+  }
+  return words + (suffix.ends_with(U's') ? U"s" : U"");
+}
+
+std::u32string Num2Word::read_money(const Number& number, const Match& match, const NumberReading& reading) const {
+  Forms currency = kCurrencies.at(std::u32string(match.unit));
+  std::u32string scale(match.scale);
+  if (match.unit == U"M€") {
+    scale = U"millions";
+    currency = {U"euro", U"euros"};
+  }
+
+  if (!scale.empty()) {
+    // trois millions d'euros, but dix mille euros
+    std::u32string words = read_scale(number, Match{.scale = scale}, reading);
+    if (kScales.at(scale) == U"mille") {
+      return words + U" " + currency.many;
+    }
+    bool vowel = strings::contains(std::u32string_view(U"aeiouyéh"), currency.many[0]);
+    return words + (vowel ? U" d'" : U" de ") + currency.many;
+  }
+
+  // A price: trois euros cinquante, quatre-vingt-dix-neuf centimes
+  bool feminine = currency.one == U"livre";
+  if (number.fraction.size() == 2) {
+    uint64_t cents = value_of(number.fraction).value_or(0);
+    if (value(number) == 0) {
+      return cardinal(cents) + U" centimes";
+    }
+    Number whole{.integer = number.integer, .grouped = number.grouped};
+    return read_gendered(whole, reading, feminine) + U" " + (number.integer == U"1" ? currency.one : currency.many) +
+           U" " + cardinal(cents);
+  }
+  return read_gendered(number, reading, feminine) + U" " + number_form(number, currency);
+}
+
+std::u32string Num2Word::read_scale(const Number& number, const Match& match, const NumberReading& reading) const {
+  const std::u32string& word = kScales.at(std::u32string(match.scale));
+  if (word == U"mille") {
+    return read_gendered(number, reading, false) + U" mille";
+  }
+
+  // trois millions, un virgule cinq million
+  std::u32string one = word.ends_with(U's') ? word.substr(0, word.size() - 1) : word;
+  return read_gendered(number, reading, false) + U" " + number_form(number, {one, one + U"s"});
+}
+
+std::u32string Num2Word::read_percent(const Number& number, const Match& match, const NumberReading& reading) const {
+  std::u32string suffix = match.suffix.empty() ? U"" : U" " + std::u32string(match.suffix);
+  return read_gendered(number, reading, false) + U" pour cent" + suffix;
+}
+
+std::u32string Num2Word::read_unit(const Number& number, const Match& match, const NumberReading& reading) const {
+  const Forms& unit = kUnits.at(std::u32string(match.unit));
+  std::u32string_view first_word = std::u32string_view(unit.one).substr(0, unit.one.find(U' '));
+  return read_gendered(number, reading, feminine(first_word)) + U" " + number_form(number, unit);
+}
+
+std::u32string Num2Word::read_joiner(const Match& match, const NumberReading& reading) const {
+  if (match.kind == Kind::DIMENSION) {
+    return reading.equation ? U" fois " : U" par ";
+  }
+  return Num2WordLayer::read_joiner(match, reading);
 }
 
 } // namespace phonemis::fr
