@@ -211,3 +211,10 @@ three files under `src/phonemis/lang/XX/`:
 | Lexicon JSON / Protophone model | Word-to-phoneme mappings **or** trained neural model (`.bin`). | At least one required |
 
 Then register the language in the factory method at `src/phonemis/base/pipeline.cpp`.
+
+## License
+
+The source code of Phonemis is released under the [MIT license](LICENSE). Some of the data in `data/` and the bundled
+libraries in `src/third-party/` come from other projects under their own licenses: see
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). In particular, the English part-of-speech tagger (`tagger.json`)
+is derived from a corpus licensed for non-commercial use only, so leave out `Config::tagger` in commercial products.
