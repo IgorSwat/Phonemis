@@ -7,9 +7,9 @@
 #include <phonemis/base/ipipeline.h>
 #include <phonemis/base/phonemizer/hybrid_phonemizer.h>
 #include <phonemis/base/phonemizer/lexicon_phonemizer.h>
+#include <phonemis/base/processor/layers/sanitizer/layer.h>
+#include <phonemis/base/processor/preprocessor.h>
 #include <phonemis/base/processor/processor.h>
-#include <phonemis/base/processor/sanitizer_layer.h>
-#include <phonemis/base/processor/trim_layer.h>
 #include <phonemis/base/tokenizer/tokenizer.h>
 
 #include <memory>
@@ -24,11 +24,11 @@ public:
         phonemizer_(config.phonemizer) {
 
     // 1. Setup Preprocessing layers
-    preprocessor_.add_layer(std::make_unique<processor::TrimLayer>());
-    preprocessor_.add_layer(std::make_unique<Num2Word>());
+    preprocessor_ = processor::make_preprocessor<Num2Word>(
+        config.preprocessor, {.terms = &constants::term2word::kTerms, .symbols = &constants::sym2word::kSymbols});
 
     // 2. Setup Postprocessing layers
-    postprocessor_.add_layer(std::make_unique<processor::SanitizerLayer>(
+    postprocessor_.add_layer(std::make_unique<processor::sanitizer::SanitizerLayer>(
         [](char32_t) { return true; },
         [](char32_t c) {
           if (constants::sanitizer::kCharReplacements.contains(c)) {
@@ -60,7 +60,7 @@ public:
 private:
   // Required submodules
   processor::Preprocessor preprocessor_;
-  processor::Preprocessor postprocessor_;
+  processor::Postprocessor postprocessor_;
   tokenizer::Tokenizer tokenizer_;
   phonemizer::HybridPhonemizer<phonemizer::LexiconPhonemizer, phonemizer::nn::NeuralPhonemizer> phonemizer_;
 };

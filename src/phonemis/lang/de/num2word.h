@@ -1,29 +1,54 @@
 #pragma once
 
-#include <phonemis/base/processor/num2word/layer.h>
+#include <phonemis/base/processor/layers/num2word/layer.h>
+
 #include <string>
-#include <variant>
 
 namespace phonemis::de {
 
-class Num2Word : public processor::num2word::Num2WordLayer {
-public:
-    using Num2WordLayer::Num2WordLayer;
+using processor::num2word::Case;
+using processor::num2word::Gender;
 
-    std::u32string transform(std::u32string_view input) const override;
-    char32_t decimal_separator() const override { return U','; }
-    std::u32string to_cardinal_int(int32_t number) const override;
-    std::u32string to_cardinal_float(float number, std::u32string_view repr) const override;
-    std::u32string to_ordinal_int(int32_t number, std::u32string_view suffix = U"") const override;
-    std::u32string to_currency(char32_t currency, std::variant<int32_t, float> number) const override;
-    std::u32string to_fraction(int32_t numerator, int32_t denominator) const override;
-    std::u32string to_day(uint32_t day) const override;
-    std::u32string to_month(uint32_t month) const override;
-    std::u32string to_year(uint32_t year) const override;
-    bool is_ordinal_suffix(std::u32string_view suffix) const override;
+// How the ending of an ordinal follows the word before it: am dritten (weak), ein zweiter (mixed), dritter (strong)
+enum class Declension { WEAK = 0, MIXED, STRONG };
+
+// How a German number is read, from the words around it.
+struct NumberReading {
+  Case grammatical_case = Case::NOMINATIVE; // Given by the word before: mit einer Stimme, am dritten
+  Gender gender = Gender::MASCULINE;        // Of the noun after: eine Stunde, der dritte Platz
+  Declension declension = Declension::STRONG;
+  bool article = false;    // "1" before a noun is said like an article: eine Stunde
+  bool year = true;        // A 4-digit number reads as a year (1998 Abi), unless it counts a noun (1945 Einwohner)
+  bool capitalized = true; // A decade is a noun (die Neunziger), but an adjective before Jahre (neunziger Jahre)
+};
+
+class Num2Word : public processor::num2word::Num2WordLayer<NumberReading> {
+public:
+  Num2Word();
 
 protected:
-    std::u32string verbalize(const processor::num2word::StringifiedNumber& number) const override;
+  using Context = processor::Context;
+  using Match = processor::num2word::Match;
+  using Number = processor::num2word::Number;
+
+  // Resolution
+  bool accept(const Match& match, const Context& context) const override;
+  NumberReading resolve(const Match& match, const Context& context) const override;
+
+  // Readings
+  std::u32string read_number(const Number& number, const NumberReading& reading) const override;
+  std::u32string read_code_digits(std::u32string_view digits) const override;
+  std::u32string read_date(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_phone(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_fraction(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_time(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_ordinal(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_decade(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_compound(const Match& match, const NumberReading& reading) const override;
+  std::u32string read_money(const Number& number, const Match& match, const NumberReading& reading) const override;
+  std::u32string read_scale(const Number& number, const Match& match, const NumberReading& reading) const override;
+  std::u32string read_percent(const Number& number, const Match& match, const NumberReading& reading) const override;
+  std::u32string read_unit(const Number& number, const Match& match, const NumberReading& reading) const override;
 };
 
 } // namespace phonemis::de

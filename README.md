@@ -131,6 +131,34 @@ The `Pipeline::operator()` accepts both `std::string_view` (UTF-8) and `std::u32
 (UTF-32), returning phonemes as `std::u32string`. Individual pipeline stages —
 `preprocess()`, `process()`, `postprocess()` — are also exposed.
 
+### Customizing preprocessing
+
+Before phonemization, the text goes through layers which read it out loud: character and
+whitespace normalization, abbreviations and web addresses, numbers, symbols, and character fixes. Each can be
+turned off, and a language's own abbreviations and symbols can be extended or overridden:
+
+```cpp
+Config config;
+config.lang = "en-us";
+config.phonemizer = phon_config;
+config.preprocessor = {
+    .symbols = false,                                    // Keep "&", "+", ... as written
+    .abbreviations = {{U"approx.", {U"approximately"}}}, // Added to the language's own
+};
+```
+
+| Field | Layer | Example |
+|---|---|---|
+| `normalize` | one form of each character | `’` → `'`, `„a“` → `"a"`, `a – b` → `a - b`, `…` → `...` |
+| `trim` | whitespace normalization | `"  a   b , c"` → `"a b, c"` |
+| `terms` | abbreviations, web addresses | `e.g.` → *for example*, `example.com` → *example dot com* |
+| `numbers` | numbers, dates, money, units, ... | `$5` → *five dollars* |
+| `symbols` | remaining symbols | `&` → *and* |
+| `sanitize` | language's character fixes, if it has any | |
+| `abbreviations`, `symbol_words` | extra table entries | `{U"™", {U"trademark"}}` |
+
+All layers are on by default, and always run in this order: normalize, trim, terms, numbers, symbols, sanitize.
+
 ### CLI Runner
 
 ```bash
@@ -176,9 +204,10 @@ three files under `src/phonemis/lang/XX/`:
 
 | File | Purpose | Requirement |
 |------|---------|-------------|
-| `constants.h` | Language-specific data: number words (cardinals, ordinals), currency names, months, tokenizer special-character rules. | Mandatory |
-| `num2word.h` / `num2word.cpp` | Number-to-word converter extending `processor::num2word::Num2WordLayer`. Implements verbalization rules (decimal separator, ordinal suffixes, currency handling, year pronunciation). | Mandatory |
-| `pipeline.h` | Pipeline class extending `IPipeline`. Orchestrates preprocessing layers (trimming, number verbalization), a tokenizer, and a `HybridPhonemizer<LexiconPhonemizer, NeuralPhonemizer>`. | Mandatory |
+| `constants.h` | Language-specific data: number words (cardinals, ordinals), currencies, units, months, symbol words, tokenizer special-character rules. | Mandatory |
+| `num2word.h` / `num2word.cpp` | Number verbalizer extending `processor::num2word::Num2WordLayer<NumberReading>`: the language's number notation, its own patterns (dates, phones, ordinal suffixes), how context decides a reading (`resolve`) and the readings themselves (`read_*`). | Mandatory |
+| `patterns.h` / `patterns.cpp` | Number patterns the generic ones do not cover (Roman ordinals, law numbers). | Optional |
+| `pipeline.h` | Pipeline class extending `IPipeline`. Orchestrates preprocessing layers (trimming, number and symbol verbalization), a tokenizer, and a `HybridPhonemizer<LexiconPhonemizer, NeuralPhonemizer>`. | Mandatory |
 | Lexicon JSON / Protophone model | Word-to-phoneme mappings **or** trained neural model (`.bin`). | At least one required |
 
 Then register the language in the factory method at `src/phonemis/base/pipeline.cpp`.

@@ -1,6 +1,7 @@
 #include "ipipeline.h"
 
 #include "../utils/conversions.h"
+#include "../utils/unicode.h"
 
 #include <algorithm>
 
@@ -8,23 +9,14 @@ namespace phonemis {
 
 namespace {
 
-// The pipelines only treat ASCII whitespace and digits as such.
-bool is_space(char32_t c) {
-  return c == U' ' || (c >= U'\t' && c <= U'\r');
-}
-
-bool is_digit(char32_t c) {
-  return c >= U'0' && c <= U'9';
-}
-
 std::size_t count_words(std::u32string_view text) {
   std::size_t count = 0;
   bool in_word = false;
   for (char32_t c : text) {
-    if (!is_space(c) && !in_word) {
+    if (!utils::unicode::isspace(c) && !in_word) {
       count++;
     }
-    in_word = !is_space(c);
+    in_word = !utils::unicode::isspace(c);
   }
   return count;
 }
@@ -78,19 +70,18 @@ PhonemizedText IPipeline::phonemize_words(std::u32string_view text) {
   std::size_t group = 0;
   std::size_t phoneme_offset = 0;
   for (std::size_t start = 0; start < text.size();) {
-    if (is_space(text[start])) {
+    if (utils::unicode::isspace(text[start])) {
       start++;
       continue;
     }
     std::size_t end = start;
-    while (end < text.size() && !is_space(text[end])) {
+    while (end < text.size() && !utils::unicode::isspace(text[end])) {
       end++;
     }
 
     auto word = text.substr(start, end - start);
-    std::size_t count = std::ranges::any_of(word, is_digit)
-                            ? count_words(preprocess(std::u32string{word}))
-                            : 1;
+    std::size_t count =
+        std::ranges::any_of(word, utils::unicode::isdigit) ? count_words(preprocess(std::u32string{word})) : 1;
 
     std::size_t phoneme_length = count > 0 ? count - 1 : 0;  // Separating spaces.
     for (std::size_t i = group; i < group + count && i < group_lengths.size(); i++) {

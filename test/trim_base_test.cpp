@@ -1,38 +1,41 @@
+#include "processing.h"
 #include "test.h"
-#include <phonemis/base/processor/trim_layer.h>
+#include <phonemis/base/processor/layers/trim/layer.h>
 #include <phonemis/utils/io.h>
 
 namespace phonemis::test {
 
-using namespace processor;
+using namespace processor::trim;
 
-REGISTER_TEST(trim_layer_base_basic_whitespace_test)
-{
-    TrimLayer layer;
+REGISTER_TEST(trim_layer_base_basic_whitespace_test) {
+  TrimLayer layer;
 
-    // Consecutive whitespaces
-    ASSERT_EQUALS(U"hello world", layer.transform(U"hello    world"));
-    ASSERT_EQUALS(U"a b c", layer.transform(U"a  b   c"));
-    
-    // Different whitespace characters
-    ASSERT_EQUALS(U"line1 line2", layer.transform(U"line1\n\t line2"));
+  // Consecutive whitespaces
+  ASSERT_EQUALS(U"hello world", apply(layer, U"hello    world"));
+  ASSERT_EQUALS(U"a b c", apply(layer, U"a  b   c"));
 
-    return true;
+  // A run with a line break becomes one line break
+  ASSERT_EQUALS(U"line1\nline2", apply(layer, U"line1\n\t line2"));
+  ASSERT_EQUALS(U"line1\nline2", apply(layer, U"line1\n\n\nline2"));
+
+  // No space before punctuation, but before an ellipsis
+  ASSERT_EQUALS(U"Hello, world! Ok? Yes; no: maybe. And ...", apply(layer, U"Hello , world ! Ok ? Yes ; no : maybe . And ..."));
+
+  return true;
 }
 
-REGISTER_TEST(trim_layer_base_leading_trailing_test)
-{
-    TrimLayer layer;
+REGISTER_TEST(trim_layer_base_leading_trailing_test) {
+  TrimLayer layer;
 
-    // Leading and trailing whitespaces
-    ASSERT_EQUALS(U"trimmed", layer.transform(U"   trimmed   "));
-    ASSERT_EQUALS(U"multiple words trimmed", layer.transform(U"\n  multiple words trimmed\t "));
-    
-    // Empty or only whitespace input
-    ASSERT_EQUALS(U"", layer.transform(U"   "));
-    ASSERT_EQUALS(U"", layer.transform(U""));
+  // Leading and trailing whitespaces
+  ASSERT_EQUALS(U"trimmed", apply(layer, U"   trimmed   "));
+  ASSERT_EQUALS(U"multiple words trimmed", apply(layer, U"\n  multiple words trimmed\t "));
 
-    return true;
+  // Empty or only whitespace input
+  ASSERT_EQUALS(U"", apply(layer, U"   "));
+  ASSERT_EQUALS(U"", apply(layer, U""));
+
+  return true;
 }
 
 } // namespace phonemis::test

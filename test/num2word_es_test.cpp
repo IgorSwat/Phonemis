@@ -1,92 +1,46 @@
+#include "processing.h"
 #include "test.h"
 #include <phonemis/lang/es/num2word.h>
 #include <phonemis/utils/io.h>
 
 namespace phonemis::test {
 
-using namespace es;
+// Spanish readings follow the Echo verbalizer; ISO dates are read by phonemis only.
+REGISTER_TEST(num2word_es_test) {
+  es::Num2Word layer;
 
-REGISTER_TEST(num2word_es_basic_transform_test)
-{
-    Num2Word layer;
+  ASSERT_EQUALS(U"La Ley dos de dos mil dieciocho entró en vigor el catorce de julio de dos mil veintitrés.",
+                apply(layer, U"La Ley 2/2018 entró en vigor el 14/07/2023."));
+  ASSERT_EQUALS(U"Llame al seis cero cero uno dos tres cuatro cinco seis o al nueve uno dos tres cuatro cinco seis siete ocho.",
+                apply(layer, U"Llame al 600-123-456 o al 912-345-678."));
+  ASSERT_EQUALS(U"Tiene veintiún años y treinta y una personas, una casa y veintiuna mesas.",
+                apply(layer, U"Tiene 21 años y 31 personas, 1 casa y 21 mesas."));
+  ASSERT_EQUALS(U"A las dieciocho treinta o a las nueve quince, pero uno punto trece metros.",
+                apply(layer, U"A las 18:30 o a las 9.15, pero 1.13 metros."));
+  ASSERT_EQUALS(U"Cuesta cinco dólares con cincuenta o tres euros con noventa y nueve y una libra, son cinco mil dólares.",
+                apply(layer, U"Cuesta $5,50 o 3,99 € y 1 £, son $5.000 dólares."));
+  ASSERT_EQUALS(U"Ganó tres millones de euros y dos mil quinientos millones.",
+                apply(layer, U"Ganó 3 millones de euros y 2.500 millones."));
+  ASSERT_EQUALS(U"Tiene diez mil seguidores y una tarjeta cuatro K.",
+                apply(layer, U"Tiene 10k seguidores y una tarjeta 4K."));
+  ASSERT_EQUALS(U"Mide un kilómetro y veintiún kilómetros, uno coma cinco kilogramos de harina, una hectárea.",
+                apply(layer, U"Mide 1 km y 21 km, 1,5 kg de harina, 1 ha."));
+  ASSERT_EQUALS(U"Llegó primero y segunda, el tercer puesto y el primer día, la quinta.",
+                apply(layer, U"Llegó 1º y 2ª, el 3er puesto y el 1er día, la 5ta."));
+  ASSERT_EQUALS(U"En los ochentas y los noventas hubo cambios.",
+                apply(layer, U"En los 80s y los 90's hubo cambios."));
+  ASSERT_EQUALS(U"La versión tres punto ocho punto diez y el resultado dos-uno, el marcador tres a dos.",
+                apply(layer, U"La versión 3.8.10 y el resultado 2-1, el marcador 3:2."));
+  ASSERT_EQUALS(U"En el minuto noventa más seis y dos más dos.",
+                apply(layer, U"En el minuto 90+6 y 2 + 2."));
+  ASSERT_EQUALS(U"Alcanzó mil novecientos ochenta,6 millones de dólares.",
+                apply(layer, U"Alcanzó 1.980,6 millones de dólares."));
+  ASSERT_EQUALS(U"Son las una cinco y la una.",
+                apply(layer, U"Son las 1:05 y la 1."));
+  ASSERT_EQUALS(U"Pagó mil doscientos treinta y cuatro,56 € por dos libros.",
+                apply(layer, U"Pagó 1.234,56 € por 2 libros."));
 
-    // Integers and Floats
-    ASSERT_EQUALS(U"cero", layer.transform(U"0"));
-    ASSERT_EQUALS(U"veintiuno", layer.transform(U"21"));
-    ASSERT_EQUALS(U"setenta", layer.transform(U"70"));
-    ASSERT_EQUALS(U"setenta y uno", layer.transform(U"71"));
-    ASSERT_EQUALS(U"ochenta", layer.transform(U"80"));
-    ASSERT_EQUALS(U"noventa y nueve", layer.transform(U"99"));
-    ASSERT_EQUALS(U"cien", layer.transform(U"100"));
-    ASSERT_EQUALS(U"ciento veintitrés", layer.transform(U"123"));
-    ASSERT_EQUALS(U"doscientos", layer.transform(U"200"));
-    ASSERT_EQUALS(U"mil", layer.transform(U"1000"));
-    ASSERT_EQUALS(U"dos mil", layer.transform(U"2000"));
-    ASSERT_EQUALS(U"un millón", layer.transform(U"1000000"));
-    ASSERT_EQUALS(U"ciento veintitrés coma cuarenta y cinco", layer.transform(U"123,45"));
-    ASSERT_EQUALS(U"cero coma cero cinco", layer.transform(U"0,05"));
-
-    // Fractions
-    ASSERT_EQUALS(U"un medio", layer.transform(U"1/2"));
-    ASSERT_EQUALS(U"un tercio", layer.transform(U"1/3"));
-    ASSERT_EQUALS(U"un cuarto", layer.transform(U"1/4"));
-    ASSERT_EQUALS(U"tres cuartos", layer.transform(U"3/4"));
-    ASSERT_EQUALS(U"tres décimos", layer.transform(U"3/10"));
-
-    // Currency
-    ASSERT_EQUALS(U"un dólar", layer.transform(U"1$"));
-    ASSERT_EQUALS(U"cincuenta dólares", layer.transform(U"50$"));
-    ASSERT_EQUALS(U"un euro", layer.transform(U"1,00€"));
-    ASSERT_EQUALS(U"dos libras", layer.transform(U"2£"));
-    ASSERT_EQUALS(U"El precio es noventa y nueve euros.", layer.transform(U"El precio es 99€."));
-
-    return true;
-}
-
-REGISTER_TEST(num2word_es_ordinal_test)
-{
-    Num2Word layer;
-
-    // Potentialy ordinal
-    ASSERT_EQUALS(U"primer", layer.transform(U"1er"));
-    ASSERT_EQUALS(U"primera", layer.transform(U"1ª"));
-    ASSERT_EQUALS(U"primero", layer.transform(U"1º"));
-    ASSERT_EQUALS(U"segundo", layer.transform(U"2º"));
-    ASSERT_EQUALS(U"tercer", layer.transform(U"3er"));
-    ASSERT_EQUALS(U"décimo", layer.transform(U"10º"));
-    ASSERT_EQUALS(U"duodécimo", layer.transform(U"12º"));
-    ASSERT_EQUALS(U"vigésimo", layer.transform(U"20º"));
-    ASSERT_EQUALS(U"centésimo", layer.transform(U"100º"));
-
-    return true;
-}
-
-REGISTER_TEST(num2word_es_date_test)
-{
-    Num2Word layer;
-
-    ASSERT_EQUALS(U"veintisiete de marzo de dos mil veintiséis", layer.transform(U"27.03.2026"));
-    ASSERT_EQUALS(U"Hoy es el veintisiete de marzo de dos mil veintiséis.", layer.transform(U"Hoy es el 27-03-2026."));
-    ASSERT_EQUALS(U"Hoy es el veintisiete de marzo de dos mil veintiséis.", layer.transform(U"Hoy es el 2026-03-27."));
-
-    return true;
-}
-
-REGISTER_TEST(num2word_es_complex_test)
-{
-    processor::num2word::Config config;
-    config.allow_general_ord_notation = true;
-    Num2Word layer(config);
-
-    std::u32string input = U"El 2026-03-27, el 1er corredor terminó 1/2 de la carrera. "
-                            "Él estaba 1º en la fila, mientras que el 2º seguía a 12,5 segundos.";
-    
-    std::u32string expected = U"El veintisiete de marzo de dos mil veintiséis, el primer corredor terminó un medio de la carrera. "
-                               "Él estaba primero en la fila, mientras que el segundo seguía a doce coma cinco segundos.";
-
-    ASSERT_EQUALS(expected, layer.transform(input));
-
-    return true;
+  return true;
 }
 
 } // namespace phonemis::test

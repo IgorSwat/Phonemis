@@ -8,8 +8,8 @@
 #include <phonemis/base/ipipeline.h>
 #include <phonemis/base/phonemizer/hybrid_phonemizer.h>
 #include <phonemis/base/phonemizer/lexicon_phonemizer.h>
+#include <phonemis/base/processor/preprocessor.h>
 #include <phonemis/base/processor/processor.h>
-#include <phonemis/base/processor/trim_layer.h>
 #include <phonemis/base/tokenizer/tokenizer.h>
 
 #include <memory>
@@ -24,8 +24,10 @@ public:
         phonemizer_(make_phonemizer_config(config.phonemizer)) {
 
     // 1. Setup Preprocessing layers
-    preprocessor_.add_layer(std::make_unique<processor::TrimLayer>());
-    preprocessor_.add_layer(std::make_unique<Num2Word>());
+    preprocessor_ =
+        processor::make_preprocessor<Num2Word>(config.preprocessor, {.characters = &constants::normalize::kCharacters,
+                                                                     .terms = &constants::term2word::kTerms,
+                                                                     .symbols = &constants::sym2word::kSymbols});
   }
 
   // Performs a preprocessing stage of the pipeline.
