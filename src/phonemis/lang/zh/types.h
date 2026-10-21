@@ -7,7 +7,7 @@
 
 namespace phonemis::zh {
 
-// For each character of a transformed text, the range [first, second) of the original
+// For each character of a processed text, the range [first, second) of the original
 // text it came from. Characters inserted from nowhere, like the spaces between words,
 // have kNoSource.
 using SourceSpan = std::pair<size_t, size_t>;

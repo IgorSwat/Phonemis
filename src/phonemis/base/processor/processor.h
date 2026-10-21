@@ -17,12 +17,20 @@ public:
   Processor() = default;
 
   /**
-   * Processes the input by applying all of it's transformation layers, one after another.
-   * @details Everything the layers learn about the text lives in a Document, which is dropped on return.
+   * Processes a text by applying all of its layers, one after another.
+   * @details A shortcut for when only the result matters; see the overload above to keep its origins.
    * @param input an input to be processed
    * @returns processed input.
    */
   std::u32string process(std::u32string_view input) const;
+
+  /**
+   * Processes a document by applying all of its layers, one after another.
+   * @details This overload exists for callers which need to know where the result came from: the document keeps
+   * the origin of every change (see Document::changes()), which the text alone loses.
+   * @param document a document to be processed in place.
+   */
+  void process(Document& document) const;
 
   /**
    * Allows to customize Processor's behavior by expanding it with custom layers.

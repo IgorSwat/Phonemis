@@ -42,6 +42,27 @@ are distributed under their own terms, listed below. The full texts of those lic
 - **License:** MIT, as the rest of Phonemis. The models contain only weights learned from those pronunciations: no
   code or dictionaries of misaki or espeak-ng.
 
+### Mandarin lexicon
+
+- **Files:** `data/zh/lexicon.json`
+- **Source:** built by [`scripts/tools/create_zh_lexicon.py`](scripts/tools/create_zh_lexicon.py): the phonemes
+  [misaki](https://github.com/hexgrad/misaki) gives (its Kokoro v1.0 Mandarin G2P) for every Han character and phrase
+  of the dictionaries of [pypinyin](https://github.com/mozillazg/python-pinyin) by mozillazg.
+- **License:** misaki: Apache License 2.0, see [`licenses/misaki-Apache-2.0.txt`](licenses/misaki-Apache-2.0.txt);
+  pypinyin: MIT, see [`licenses/pypinyin-MIT.txt`](licenses/pypinyin-MIT.txt).
+
+### Mandarin word segmentation
+
+- **Files:** `data/zh/segmenter.json`
+- **Source:** the default dictionary and the HMM probabilities of [jieba](https://github.com/fxsjy/jieba) by Sun
+  Junyi, exported by [`scripts/tools/create_zh_segmenter.py`](scripts/tools/create_zh_segmenter.py).
+- **License:** MIT, see [`licenses/jieba-MIT.txt`](licenses/jieba-MIT.txt).
+
+## Ported code
+
+`src/phonemis/lang/zh/num2word.cpp` reads numbers as [cn2an](https://github.com/Ailln/cn2an) by Ailln does: a C++ port
+of its Arabic-to-Chinese conversion (`an2cn`). MIT, see [`licenses/cn2an-MIT.txt`](licenses/cn2an-MIT.txt).
+
 ## Bundled libraries
 
 | Library | Location | License |

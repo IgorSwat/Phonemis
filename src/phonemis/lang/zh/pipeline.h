@@ -2,12 +2,12 @@
 
 #include "lexicon_phonemizer.h"
 #include "num2word.h"
-#include "punctuation.h"
 #include "segmenter.h"
 #include "types.h"
 
 #include <phonemis/base/config.h>
 #include <phonemis/base/ipipeline.h>
+#include <phonemis/base/processor/preprocessor.h>
 
 #include <memory>
 
@@ -49,8 +49,7 @@ private:
                            SourceSpans* phoneme_sources) const;
 
   // Required submodules
-  Num2Word num2word_;
-  PunctuationLayer punctuation_;
+  processor::Preprocessor preprocessor_;
 
   // Optional submodules
   std::unique_ptr<zh::LexiconPhonemizer> phonemizer_ = nullptr;

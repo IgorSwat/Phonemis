@@ -1,11 +1,34 @@
-#include "pipeline.h"
 #include "constants.h"
+#include "pipeline.h"
 
 #include <vector>
 
 namespace phonemis::zh {
 
-Pipeline::Pipeline(const Config& config) {
+namespace {
+// The span of the input each character of a processed document came from: copied text maps to itself,
+// and every character of a change to the whole span it replaced
+SourceSpans sources_of(const processor::Document& document, size_t input_size) {
+  SourceSpans sources;
+  size_t original = 0;
+  for (const auto& [span, text] : document.changes()) {
+    for (; original < span.begin; original++) {
+      sources.push_back({original, original + 1});
+    }
+    SourceSpan source = span.begin < span.end ? SourceSpan{span.begin, span.end} : kNoSource;
+    sources.insert(sources.end(), text.size(), source);
+    original = span.end;
+  }
+  for (; original < input_size; original++) {
+    sources.push_back({original, original + 1});
+  }
+  return sources;
+}
+} // namespace
+
+Pipeline::Pipeline(const Config& config)
+    : preprocessor_(processor::make_preprocessor<Num2Word>(config.preprocessor,
+                                                           {.characters = &constants::normalize::kCharacters})) {
   if (config.phonemizer.lexicon_filepath.has_value()) {
     phonemizer_ = std::make_unique<zh::LexiconPhonemizer>(config.phonemizer);
   }
@@ -15,7 +38,7 @@ Pipeline::Pipeline(const Config& config) {
 }
 
 std::u32string Pipeline::preprocess(const std::u32string& input) {
-  return punctuation_.transform(num2word_.transform(input));
+  return preprocessor_.process(input);
 }
 
 std::u32string Pipeline::process(const std::u32string& input) {
@@ -80,12 +103,11 @@ std::u32string Pipeline::phonemize(std::u32string_view input, const SourceSpans*
 }
 
 PhonemizedText Pipeline::phonemize_words(std::u32string_view text) {
-  SourceSpans sources(text.size());
-  for (size_t i = 0; i < text.size(); i++) {
-    sources[i] = {i, i + 1};
-  }
-  std::u32string normalized = num2word_.transform(text, &sources);
-  normalized = punctuation_.transform(normalized, &sources);
+  // Preprocessing on a document, which keeps the origin of each character of the result
+  processor::Document document(text);
+  preprocessor_.process(document);
+  std::u32string_view normalized = document.text();
+  SourceSpans sources = sources_of(document, text.size());
 
   SourceSpans phoneme_sources;
   PhonemizedText result{.phonemes = postprocess(phonemize(normalized, &sources, &phoneme_sources))};

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <phonemis/base/processor/layers/normalize/types.h>
+
 #include <array>
 #include <string>
 #include <unordered_map>
@@ -53,16 +55,15 @@ namespace num2word {
   };
 } // namespace num2word
 
-// --- Punctuation ---
-namespace punctuation {
-  // Full-width punctuation mapped onto the forms Kokoro reads.
-  inline const std::unordered_map<char32_t, std::u32string> kReplacements = {
-    {U'、', U", "}, {U'，', U", "}, {U'。', U". "}, {U'．', U". "},
-    {U'！', U"! "}, {U'：', U": "}, {U'；', U"; "}, {U'？', U"? "},
-    {U'«', U" “"},  {U'»', U"” "},  {U'《', U" “"}, {U'》', U"” "},
-    {U'「', U" “"}, {U'」', U"” "}, {U'【', U" “"}, {U'】', U"” "},
-    {U'（', U" ("}, {U'）', U") "}
+// --- Character Normalization ---
+namespace normalize {
+  using ::phonemis::processor::normalize::Characters;
+
+  // Full-width punctuation in the forms Kokoro reads; it replaces the default classes, which misaki does not apply
+  inline const Characters kCharacters = {
+    {U"、，",   U", "}, {U"。．", U". "}, {U"！", U"! "}, {U"：", U": "}, {U"；", U"; "}, {U"？", U"? "},
+    {U"«《「【", U" “"}, {U"»》」】", U"” "}, {U"（", U" ("}, {U"）", U") "}
   };
-} // namespace punctuation
+} // namespace normalize
 
 } // namespace phonemis::zh::constants

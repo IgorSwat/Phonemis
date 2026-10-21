@@ -61,37 +61,23 @@ std::u32string replace(std::u32string_view s, std::u32string_view from, std::u32
   return result;
 }
 
-// Replaces every match left to right, like re.sub(). `match` returns the length of the
-// match at a position (0 for none), and `convert` its replacement, or nullopt to keep it.
-// Every character of a replacement comes from the whole match it replaces.
+// One pass of cn2an: replaces every match left to right, like re.sub(). `match` returns the length of the match
+// at a position (0 for none), and `convert` its replacement, or nullopt to keep it.
 template <typename Match, typename Convert>
-std::u32string substitute(std::u32string_view s, SourceSpans* sources, Match match,
-                          Convert convert) {
-  std::u32string result;
-  SourceSpans result_sources;
-  for (size_t i = 0; i < s.size();) {
-    if (size_t len = match(s, i); len > 0) {
-      auto text = s.substr(i, len);
-      result += convert(text).value_or(std::u32string{text});
-      if (sources) {
-        SourceSpan source = (*sources)[i];
-        for (size_t j = i + 1; j < i + len; j++) {
-          source = merge(source, (*sources)[j]);
-        }
-        result_sources.resize(result.size(), source);
-      }
-      i += len;
-    } else {
-      if (sources) {
-        result_sources.push_back((*sources)[i]);
-      }
-      result += s[i++];
+void substitute(processor::Document& draft, Match match, Convert convert) {
+  std::u32string_view text = draft.text();
+  for (size_t i = 0; i < text.size();) {
+    size_t length = match(text, i);
+    if (length == 0) {
+      i++;
+      continue;
     }
+    if (auto words = convert(text.substr(i, length))) {
+      draft.replace({i, i + length}, std::move(*words));
+    }
+    i += length;
   }
-  if (sources) {
-    *sources = std::move(result_sources);
-  }
-  return result;
+  draft.commit();
 }
 
 // Reads the digits of a number without its sign and decimal part, e.g. "1024" -> "一千零二十四".
@@ -196,14 +182,13 @@ std::u32string Num2Word::to_digits(std::u32string_view number) {
   return words;
 }
 
-std::u32string Num2Word::transform(std::u32string_view input) const {
-  return transform(input, nullptr);
-}
+void Num2Word::apply(processor::Document& document) const {
+  // Each pass rewrites a draft in turn, as cn2an's regular expressions do: later passes see the words of earlier ones
+  processor::Document draft(document.text());
 
-std::u32string Num2Word::transform(std::u32string_view input, SourceSpans* sources) const {
   // 1. Ranges before a measure word: "3-5个" -> "三到五个"
-  std::u32string text = substitute(
-      input, sources,
+  substitute(
+      draft,
       [](std::u32string_view s, size_t i) -> size_t {
         size_t from = decimal_at(s, i);
         if (from == 0 || !is_at(s, i + from, U'-')) {
@@ -224,8 +209,8 @@ std::u32string Num2Word::transform(std::u32string_view input, SourceSpans* sourc
       });
 
   // 2. Dates: years digit by digit, months and days as numbers
-  text = substitute(
-      text, sources,
+  substitute(
+      draft,
       [](std::u32string_view s, size_t i) -> size_t {
         size_t j = i;
         if (size_t n = digits_at(s, j); n >= 2 && n <= 4 && is_at(s, j + n, U'年')) {
@@ -255,8 +240,8 @@ std::u32string Num2Word::transform(std::u32string_view input, SourceSpans* sourc
       });
 
   // 3. Fractions: "1/3" -> "三分之一"
-  text = substitute(
-      text, sources,
+  substitute(
+      draft,
       [](std::u32string_view s, size_t i) -> size_t {
         size_t numerator = digits_at(s, i);
         if (numerator == 0 || !is_at(s, i + numerator, U'/')) {
@@ -276,8 +261,8 @@ std::u32string Num2Word::transform(std::u32string_view input, SourceSpans* sourc
       });
 
   // 4. Percentages: "-5%" -> "百分之负五"
-  text = substitute(
-      text, sources,
+  substitute(
+      draft,
       [](std::u32string_view s, size_t i) -> size_t {
         size_t j = is_at(s, i, U'-') ? i + 1 : i;
         size_t integer = digits_at(s, j);
@@ -300,8 +285,8 @@ std::u32string Num2Word::transform(std::u32string_view input, SourceSpans* sourc
       });
 
   // 5. Degrees Celsius: "25℃" -> "二十五摄氏度"
-  text = substitute(
-      text, sources,
+  substitute(
+      draft,
       [](std::u32string_view s, size_t i) -> size_t {
         size_t n = digits_at(s, i);
         return n > 0 && is_at(s, i + n, U'℃') ? n + 1 : 0;
@@ -315,14 +300,19 @@ std::u32string Num2Word::transform(std::u32string_view input, SourceSpans* sourc
       });
 
   // 6. Remaining numbers
-  return substitute(
-      text, sources,
+  substitute(
+      draft,
       [](std::u32string_view s, size_t i) -> size_t {
         size_t j = is_at(s, i, U'-') ? i + 1 : i;
         size_t n = decimal_at(s, j);
         return n > 0 ? j + n - i : 0;
       },
       [](std::u32string_view number) { return to_cardinal(number); });
+
+  // The changes of the draft are the edits of the document
+  for (auto& [span, words] : draft.changes()) {
+    document.replace(span, std::move(words));
+  }
 }
 
 } // namespace phonemis::zh
