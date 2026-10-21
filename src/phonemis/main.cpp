@@ -10,14 +10,29 @@
 #include <string>
 #include <vector>
 
+// Turns off a preprocessing layer by its name; false if there is no such layer.
+bool turn_off(phonemis::processor::Config& config, const std::string& layer) {
+  for (auto [name, enabled] : {std::pair{"normalize", &config.normalize}, std::pair{"trim", &config.trim},
+                               std::pair{"terms", &config.terms}, std::pair{"numbers", &config.numbers},
+                               std::pair{"symbols", &config.symbols}, std::pair{"sanitize", &config.sanitize}}) {
+    if (layer == name) {
+      *enabled = false;
+      return true;
+    }
+  }
+  return false;
+}
+
 void print_usage(const char* prog_name) {
-    std::cout << "Usage: " << prog_name << " [options] <text>\n"
-              << "Options:\n"
-              << "  --lexicon <path>     Path to lexicon file\n"
-              << "  --model <path>       Path to neural model file\n"
-              << "  --tagger <path>      Path to tagger data file\n"
-              << "  --lang <lang_code>   Language code (e.g., en-us, en-gb)\n"
-              << std::endl;
+  std::cout
+      << "Usage: " << prog_name << " [options] <text>\n"
+      << "Options:\n"
+      << "  --lexicon <path>     Path to lexicon file\n"
+      << "  --model <path>       Path to neural model file\n"
+      << "  --tagger <path>      Path to tagger data file\n"
+      << "  --lang <lang_code>   Language code (e.g., en-us, en-gb)\n"
+      << "  --no <layer>         Turn off a preprocessing layer: normalize, trim, terms, numbers, symbols, sanitize\n"
+      << std::endl;
 }
 
 int main(int argc, char* argv[]) {
@@ -42,12 +57,17 @@ int main(int argc, char* argv[]) {
         } else if (arg == "--lang" && i + 1 < argc) {
             config.lang = argv[++i];
             config.phonemizer.lang = config.lang;
-        } else if (i == argc - 1) {
-            text_to_process = arg;
-        } else {
-            std::cerr << "Unknown or incomplete option: " << arg << std::endl;
-            print_usage(argv[0]);
+        } else if (arg == "--no" && i + 1 < argc) {
+          if (!turn_off(config.preprocessor, argv[++i])) {
+            std::cerr << "Unknown preprocessing layer: " << argv[i] << std::endl;
             return 1;
+          }
+        } else if (i == argc - 1) {
+          text_to_process = arg;
+        } else {
+          std::cerr << "Unknown or incomplete option: " << arg << std::endl;
+          print_usage(argv[0]);
+          return 1;
         }
     }
 
@@ -65,9 +85,12 @@ int main(int argc, char* argv[]) {
         auto end = std::chrono::high_resolution_clock::now();
 
         auto ms = std::chrono::duration<double, std::milli>(end - start).count();
+        std::u32string preprocessed = pipeline.preprocess(phonemis::utils::conversions::utf8_to_u32(text_to_process));
 
         std::cout << "\n\033[1;32mPhonemization Result:\033[0m" << std::endl;
         std::cout << "\033[1;34mInput:  \033[0m" << text_to_process << std::endl;
+        std::cout << "\033[1;35mPreprocessed: \033[0m" << phonemis::utils::conversions::u32_to_utf8(preprocessed)
+                  << std::endl;
         std::cout << "\033[1;36mOutput: \033[0m" << phonemis::utils::conversions::u32_to_utf8(result) << std::endl;
         std::cout << "\033[1;33mTime:   \033[0m" << std::fixed << std::setprecision(2) << ms << " ms" << std::endl;
         std::cout << std::endl;

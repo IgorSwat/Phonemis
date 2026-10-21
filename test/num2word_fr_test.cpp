@@ -1,91 +1,44 @@
+#include "processing.h"
 #include "test.h"
 #include <phonemis/lang/fr/num2word.h>
 #include <phonemis/utils/io.h>
 
 namespace phonemis::test {
 
-using namespace fr;
+// French readings follow the Echo verbalizer; ISO dates are read by phonemis only.
+REGISTER_TEST(num2word_fr_test) {
+  fr::Num2Word layer;
 
-REGISTER_TEST(num2word_fr_basic_transform_test)
-{
-    Num2Word layer;
+  ASSERT_EQUALS(U"Le premier janvier deux mille vingt à dix-huit heures trente, vingt et une personnes, trois euros cinquante.",
+                apply(layer, U"Le 1er janvier 2020 à 18h30, 21 personnes, 3,50 €."));
+  ASSERT_EQUALS(U"Au vingtième siècle, au zéro six douze trente-quatre cinquante-six soixante-dix-huit.",
+                apply(layer, U"Au XXe siècle, au 06 12 34 56 78."));
+  ASSERT_EQUALS(U"Elle a vingt et un ans et trente et une heures de travail.",
+                apply(layer, U"Elle a 21 ans et 31 heures de travail."));
+  ASSERT_EQUALS(U"Les années quatre-vingt et deux cent mille habitants, quatre-vingts pages.",
+                apply(layer, U"Les années 80 et 200 000 habitants, 80 pages."));
+  ASSERT_EQUALS(U"Le cinq novembre et le trois quarts du gâteau, puis un demi litre.",
+                apply(layer, U"Le 05/11 et le 3/4 du gâteau, puis 1/2 litre."));
+  ASSERT_EQUALS(U"Rendez-vous à dix-huit heures trente ou quatorze heures, pas un virgule treize mètres.",
+                apply(layer, U"Rendez-vous à 18.30 ou 14h, pas 1.13 mètres."));
+  ASSERT_EQUALS(U"Il a gagné trois millions d'euros et dix mille abonnés, quatre mille vidéo.",
+                apply(layer, U"Il a gagné 3 millions d'euros et 10k abonnés, 4K vidéo."));
+  ASSERT_EQUALS(U"Une pièce de douze fois quatre = quarante-huit et un écran de mille neuf cent vingt par mille quatre-vingts.",
+                apply(layer, U"Une pièce de 12 x 4 = 48 et un écran de 1920x1080."));
+  ASSERT_EQUALS(U"Il est arrivé deuxième, puis première et seconde, les troisièmes.",
+                apply(layer, U"Il est arrivé 2e, puis 1re et 2nde, les 3èmes."));
+  ASSERT_EQUALS(U"Il fait moins cinq degrés Celsius, vingt-cinq kilomètres par heure et un virgule cinq kilogramme de farine.",
+                apply(layer, U"Il fait -5 °C, 25 km/h et 1,5 kg de farine."));
+  ASSERT_EQUALS(U"soixante-quinze centimes et quatre-vingt-dix-neuf centimes, une livre et deux virgule cinq livres, trois millions d'euros.",
+                apply(layer, U"0,75 € et 99 centimes, 1 £ et 2,5 £, 3M€."));
+  ASSERT_EQUALS(U"Le quatorze juillet mille sept cent quatre-vingt-neuf et le premier mai deux mille vingt-quatre.",
+                apply(layer, U"Le 14 juillet 1789 et le 1.5.2024."));
+  ASSERT_EQUALS(U"Il a cent un ans et soixante et onze euros, quatre-vingt-onze pommes, quatre-vingt-une voitures.",
+                apply(layer, U"Il a 101 ans et 71 euros, 91 pommes, 81 voitures."));
+  ASSERT_EQUALS(U"Il était quatorze heures vingt ce mercredi.",
+                apply(layer, U"Il était 14 h 20 ce mercredi."));
 
-    // Integers and Floats
-    ASSERT_EQUALS(U"zéro", layer.transform(U"0"));
-    ASSERT_EQUALS(U"vingt et un", layer.transform(U"21"));
-    ASSERT_EQUALS(U"soixante dix", layer.transform(U"70"));
-    ASSERT_EQUALS(U"soixante et onze", layer.transform(U"71"));
-    ASSERT_EQUALS(U"quatre vingts", layer.transform(U"80"));
-    ASSERT_EQUALS(U"quatre vingt dix neuf", layer.transform(U"99"));
-    ASSERT_EQUALS(U"cent", layer.transform(U"100"));
-    ASSERT_EQUALS(U"cent vingt trois", layer.transform(U"123"));
-    ASSERT_EQUALS(U"deux cents", layer.transform(U"200"));
-    ASSERT_EQUALS(U"mille", layer.transform(U"1000"));
-    ASSERT_EQUALS(U"deux mille", layer.transform(U"2000"));
-    ASSERT_EQUALS(U"un million", layer.transform(U"1000000"));
-    ASSERT_EQUALS(U"cent vingt trois virgule quarante cinq", layer.transform(U"123,45"));
-    ASSERT_EQUALS(U"zéro virgule zéro cinq", layer.transform(U"0,05"));
-
-    // Fractions
-    ASSERT_EQUALS(U"un demi", layer.transform(U"1/2"));
-    ASSERT_EQUALS(U"un tiers", layer.transform(U"1/3"));
-    ASSERT_EQUALS(U"un quart", layer.transform(U"1/4"));
-    ASSERT_EQUALS(U"trois quarts", layer.transform(U"3/4"));
-    ASSERT_EQUALS(U"trois dixièmes", layer.transform(U"3/10"));
-
-    // Currency
-    ASSERT_EQUALS(U"un dollar", layer.transform(U"1$"));
-    ASSERT_EQUALS(U"cinquante dollars", layer.transform(U"50$"));
-    ASSERT_EQUALS(U"un euro", layer.transform(U"1,00€"));
-    ASSERT_EQUALS(U"deux livres", layer.transform(U"2£"));
-    ASSERT_EQUALS(U"Le prix est quatre vingt dix neuf euros.", layer.transform(U"Le prix est 99€."));
-
-    return true;
-}
-
-REGISTER_TEST(num2word_fr_ordinal_test)
-{
-    Num2Word layer;
-
-    // Potentialy ordinal
-    ASSERT_EQUALS(U"premier", layer.transform(U"1er"));
-    ASSERT_EQUALS(U"première", layer.transform(U"1re"));
-    ASSERT_EQUALS(U"deuxième", layer.transform(U"2ème"));
-    ASSERT_EQUALS(U"troisième", layer.transform(U"3e"));
-    ASSERT_EQUALS(U"dixième", layer.transform(U"10e"));
-    ASSERT_EQUALS(U"douzième", layer.transform(U"12ème"));
-    ASSERT_EQUALS(U"vingt et unième", layer.transform(U"21e"));
-    ASSERT_EQUALS(U"centième", layer.transform(U"100e"));
-
-    return true;
-}
-
-REGISTER_TEST(num2word_fr_date_test)
-{
-    Num2Word layer;
-
-    ASSERT_EQUALS(U"vingt sept mars deux mille vingt six", layer.transform(U"27.03.2026"));
-    ASSERT_EQUALS(U"Aujourd'hui c'est le vingt sept mars deux mille vingt six.", layer.transform(U"Aujourd'hui c'est le 27-03-2026."));
-    ASSERT_EQUALS(U"Aujourd'hui c'est le vingt sept mars deux mille vingt six.", layer.transform(U"Aujourd'hui c'est le 2026-03-27."));
-
-    return true;
-}
-
-REGISTER_TEST(num2word_fr_complex_test)
-{
-    processor::num2word::Config config;
-    config.allow_general_ord_notation = true;
-    Num2Word layer(config);
-
-    std::u32string input = U"Le 2026-03-27, le 1er coureur a terminé 1/2 de la course. "
-                            "Il était 1. dans la file, tandis que le 2e suivait à 12,5 secondes.";
-    
-    std::u32string expected = U"Le vingt sept mars deux mille vingt six, le premier coureur a terminé un demi de la course. "
-                               "Il était premier dans la file, tandis que le deuxième suivait à douze virgule cinq secondes.";
-
-    ASSERT_EQUALS(expected, layer.transform(input));
-
-    return true;
+  return true;
 }
 
 } // namespace phonemis::test

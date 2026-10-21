@@ -1,13 +1,14 @@
 #pragma once
 
 #include "constants.h"
+#include "num2word.h"
 
 #include <phonemis/base/config.h>
 #include <phonemis/base/ipipeline.h>
 #include <phonemis/base/phonemizer/hybrid_phonemizer.h>
 #include <phonemis/base/phonemizer/lexicon_phonemizer.h>
+#include <phonemis/base/processor/preprocessor.h>
 #include <phonemis/base/processor/processor.h>
-#include <phonemis/base/processor/trim_layer.h>
 #include <phonemis/base/tokenizer/tokenizer.h>
 
 #include <memory>
@@ -22,7 +23,8 @@ public:
         phonemizer_(config.phonemizer) {
 
     // 1. Setup Preprocessing layers
-    preprocessor_.add_layer(std::make_unique<processor::TrimLayer>());
+    preprocessor_ = processor::make_preprocessor<Num2Word>(
+        config.preprocessor, {.terms = &constants::term2word::kTerms, .symbols = &constants::sym2word::kSymbols});
   }
 
   // Performs a preprocessing stage of the pipeline.

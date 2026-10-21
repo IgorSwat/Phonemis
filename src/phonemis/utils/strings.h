@@ -88,6 +88,17 @@ inline bool starts_with(const StringT1& str, const PrefixT& prefix) {
 				 str.substr(0, prefix_view.size()) == prefix_view;
 }
 
+/**
+ * Checks if given string contains a given character.
+ * @param str The string to check.
+ * @param c The character to look for.
+ * @return True if c occurs in str.
+ */
+template <typename StringT, typename CharT>
+inline bool contains(const StringT& str, CharT c) {
+  return std::ranges::find(str, c) != std::ranges::end(str);
+}
+
 
 // --------------------------------------------
 // ----- Lower/Upper case transformations -----

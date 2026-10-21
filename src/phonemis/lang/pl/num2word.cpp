@@ -1,326 +1,711 @@
-#include "num2word.h"
 #include "constants.h"
-#include <phonemis/utils/conversions.h>
+#include "num2word.h"
+#include <phonemis/base/processor/common/constants.h>
+#include <phonemis/base/processor/layers/num2word/numerals.h>
+#include <phonemis/base/processor/layers/num2word/patterns.h>
+#include <phonemis/base/processor/layers/num2word/primitives.h>
+#include <phonemis/utils/strings.h>
+#include <phonemis/utils/unicode.h>
+
 #include <algorithm>
-#include <cmath>
-#include <cstdlib>
 #include <optional>
-#include <vector>
+#include <unordered_set>
 
 namespace phonemis::pl {
 
-using namespace constants;
-using namespace phonemis::utils;
-using num2word::PluralForm;
+using namespace constants::num2word;
+using namespace processor;
+using namespace processor::num2word;
+using namespace utils;
 
 namespace {
-
-// Polish nouns following a numeral take one of three plural forms based on
-// the numeral's last one or two digits: singular for 1, "few" (-y/-e endings)
-// for 2-4 except 12-14, and "many" (genitive plural) for everything else.
-PluralForm pick_plural_form(int32_t n) {
-  int32_t abs_n = std::abs(n);
-  if (abs_n == 1) return PluralForm::SINGULAR;
-  int32_t last_two = abs_n % 100;
-  int32_t last = abs_n % 10;
-  if (last_two >= 12 && last_two <= 14) return PluralForm::MANY;
-  if (last >= 2 && last <= 4) return PluralForm::FEW;
-  return PluralForm::MANY;
+size_t index(Case c) {
+  return static_cast<size_t>(c);
 }
 
-// Inflects an ordinal word from its masculine-nominative form. The form code
-// reuses PluralForm to share a single inflection table:
-//   - SINGULAR  -> feminine singular ("druga", "trzecia")
-//   - FEW       -> neuter / non-masc-plural ("drugie", "czwarte")
-//   - MANY      -> genitive plural ("drugich", "czwartych")
-// The ending shape depends on the masculine stem:
-//   - hard stem (-y): drop "y", append plain ending (a / e / ych)
-//   - soft stem (-i): drop "i", append i-prefixed ending (ia / ie / ich)
-//   - velar stem (-gi/-ki): drop "i", "a" doesn't get the leading "i"
-// Words not ending in -y or -i are returned unchanged so the helper is safe
-// to apply across cardinal tokens of a compound ordinal phrase.
-std::u32string inflect_ordinal(std::u32string_view word, PluralForm form) {
-  if (word.empty()) return std::u32string(word);
-  char32_t last = word.back();
-  std::u32string stem(word);
-  stem.pop_back();
-
-  if (last == U'y') {
-    if (form == PluralForm::SINGULAR) return stem + U"a";
-    if (form == PluralForm::FEW)      return stem + U"e";
-    return stem + U"ych";
-  }
-  if (last == U'i') {
-    char32_t prev = stem.empty() ? U'\0' : stem.back();
-    bool velar = (prev == U'g' || prev == U'k');
-    if (form == PluralForm::SINGULAR) return stem + (velar ? U"a" : U"ia");
-    if (form == PluralForm::FEW)      return stem + U"ie";
-    return stem + U"ich";
-  }
-  return std::u32string(word);
+uint64_t value(const Number& number) {
+  return value_of(number.integer).value_or(0);
 }
 
-// Builds the masculine-nominative ordinal phrase for `value`. Ordinals beyond
-// 100 keep the upper magnitude as a cardinal phrase and only inflect the
-// trailing sub-100 portion (e.g. 2026 -> "dwa tysiące dwudziesty szósty").
-std::u32string ordinal_masc(int32_t value, const Num2Word& self) {
-  if (auto it = num2word::kOrdinals.find(value); it != num2word::kOrdinals.end()) {
-    return it->second;
+bool starts_with_any(std::u32string_view word, const std::vector<std::u32string>& stems) {
+  return std::ranges::any_of(stems, [word](const auto& stem) { return word.starts_with(stem); });
+}
+
+// ------------------------
+// ----- Number words -----
+// ------------------------
+
+// The column of kCardinals: nominative and accusative, genitive and locative, dative, instrumental
+size_t column(Case c) {
+  switch (c) {
+    case Case::NOMINATIVE:
+    case Case::ACCUSATIVE:
+      return 0;
+    case Case::GENITIVE:
+    case Case::LOCATIVE:
+      return 1;
+    case Case::DATIVE:
+      return 2;
+    default:
+      return 3;
+  }
+}
+
+// The form of a noun after a number: 1 / 2-4 / 5+ in the nominative, the plural of the case otherwise
+const std::u32string& form(const Noun& noun, uint64_t n, Case c, bool fraction = false) {
+  if (fraction) {
+    return noun.singular[index(Case::GENITIVE)];
+  }
+  if (n == 1) {
+    return noun.singular[index(c)];
+  }
+  if (c == Case::NOMINATIVE || c == Case::ACCUSATIVE) {
+    bool few = n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14);
+    return noun.plural[index(few ? Case::NOMINATIVE : Case::GENITIVE)];
+  }
+  return noun.plural[index(c)];
+}
+
+std::u32string below_thousand(uint64_t n, Case c, Gender g) {
+  if (n == 0) {
+    return std::u32string(kCardinals.at(0)[column(c)]);
   }
 
-  if (value < 100) {
-    int32_t tens = (value / 10) * 10;
-    int32_t units = value % 10;
-    return num2word::kOrdinals.at(tens) + U" " + num2word::kOrdinals.at(units);
-  }
-
-  if (value < 1000) {
-    int32_t hundreds = (value / 100) * 100;
-    int32_t rest = value % 100;
-    if (rest == 0) {
-      // 200-900 lack dedicated ordinal entries; the cardinal form is the
-      // pragmatic fallback (the literal "dwusetny" family is rarely used).
-      return num2word::kCardinals.at(hundreds);
-    }
-    return num2word::kCardinals.at(hundreds) + U" " + ordinal_masc(rest, self);
-  }
-
-  for (auto it = num2word::kLargeCardinals.rbegin(); it != num2word::kLargeCardinals.rend(); ++it) {
-    int64_t base = it->first;
-    if (static_cast<int64_t>(value) >= base) {
-      int32_t high = value / static_cast<int32_t>(base);
-      int32_t low = value % static_cast<int32_t>(base);
-      const auto& forms = it->second;
-      const auto& scale_word = forms[static_cast<std::size_t>(pick_plural_form(high))];
-
-      if (low == 0) {
-        // 1000 -> "tysięczny", 1000000 -> "milionowy" already in kOrdinals.
-        // For 2000+ we fall back to "<cardinal high> <scale word>" since
-        // round multiple ordinals ("dwutysięczny", ...) aren't tabulated.
-        return self.to_cardinal_int(high) + U" " + scale_word;
-      }
-
-      std::u32string head = (high == 1 && base == 1000LL) ? U"" : (self.to_cardinal_int(high) + U" ");
-      return head + scale_word + U" " + ordinal_masc(low, self);
+  uint64_t r = n % 100;
+  std::vector<std::u32string> words;
+  for (uint64_t part : {n - r, r < 20 ? r : r - r % 10, r < 20 ? 0 : r % 10}) {
+    if (part == 1) {
+      words.push_back(U"jeden"); // Inside a compound number "jeden" does not inflect
+    } else if (part == 2 && g == Gender::FEMININE &&
+               (c == Case::NOMINATIVE || c == Case::ACCUSATIVE || c == Case::INSTRUMENTAL)) {
+      words.push_back(c == Case::INSTRUMENTAL ? U"dwiema" : U"dwie");
+    } else if (part) {
+      words.emplace_back(kCardinals.at(part)[column(c)]);
     }
   }
-
-  return self.to_cardinal_int(value);
+  return join(words);
 }
 
-// Inflects the trailing ordinal tokens of a compound phrase, leaving the
-// preceding cardinal part untouched. Tokens are scanned from the end and
-// inflected as long as they end in -y or -i (the hallmark of a masculine
-// ordinal); the scan stops at the first non-ordinal token (e.g. "tysiące",
-// "sto"), which is preserved verbatim.
-std::u32string inflect_trailing_ordinals(const std::u32string& phrase, PluralForm form) {
+std::u32string cardinal(uint64_t n, Case c = Case::NOMINATIVE, Gender g = Gender::MASCULINE) {
+  if (n == 1) {
+    return std::u32string(kOne[static_cast<size_t>(g)][index(c)]);
+  }
+
   std::vector<std::u32string> parts;
-  size_t pos = 0;
-  while (pos <= phrase.size()) {
-    size_t next = phrase.find(U' ', pos);
-    if (next == std::u32string::npos) {
-      parts.push_back(phrase.substr(pos));
-      break;
+  for (auto [scale, noun] : {std::pair{1000000000ULL, &kBillion}, {1000000ULL, &kMillion}, {1000ULL, &kThousand}}) {
+    uint64_t q = n / scale;
+    n %= scale;
+    if (q) {
+      parts.push_back(q == 1 ? form(*noun, q, c) : cardinal(q, c) + U" " + form(*noun, q, c));
     }
-    parts.push_back(phrase.substr(pos, next - pos));
-    pos = next + 1;
+  }
+  if (n || parts.empty()) {
+    parts.push_back(below_thousand(n, c, g));
+  }
+  return join(parts);
+}
+
+// An ordinal stem with an adjective ending: drug + y -> drugi, trzec + a -> trzecia
+std::u32string adjective(std::u32string_view stem, std::u32string_view ending) {
+  std::u32string e(ending);
+  if (stem.ends_with(U'g') || stem.ends_with(U'k')) {
+    e = e[0] == U'y' ? U"i" + e.substr(1) : e[0] == U'e' ? U"i" + e : e;
+  } else if (stem.ends_with(U'c')) {
+    e = e[0] == U'y' ? U"i" + e.substr(1) : U"i" + e;
+  }
+  return std::u32string(stem) + e;
+}
+
+// The form of a number inside a compound: czterdziestopięcio(metrowe), stu(letni)
+std::u32string combining(uint64_t n) {
+  uint64_t h = n - n % 100, r = n % 100;
+  if (h >= 1000) {
+    return cardinal(n);
+  }
+  std::u32string words(h ? kCombining.at(h) : U"");
+  if (r) {
+    words += r < 20 || r % 10 == 0 ? std::u32string(kCombining.at(r)) :
+                                     std::u32string(kCombining.at(r - r % 10)) + std::u32string(kCombining.at(r % 10));
+  }
+  return words;
+}
+
+// Only the last two parts inflect: dwa tysiące dwudziestym drugim, tysiąc osiemsetnym
+std::u32string ordinal(uint64_t n, Case c = Case::NOMINATIVE, Gender g = Gender::MASCULINE, bool plural = false) {
+  std::u32string_view e = kAdjectiveEndings[plural ? 3 : static_cast<size_t>(g)][index(c)];
+
+  uint64_t r = n % 100;
+  if (r) {
+    std::vector<std::u32string> words = {n - r ? cardinal(n - r) : U""};
+    if (r < 20 || r % 10 == 0) {
+      words.push_back(adjective(kOrdinalStems.at(r), e));
+    } else {
+      words.push_back(adjective(kOrdinalStems.at(r - r % 10), e));
+      words.push_back(adjective(kOrdinalStems.at(r % 10), e));
+    }
+    return join(words);
   }
 
-  size_t boundary = parts.size();
-  while (boundary > 0 && !parts[boundary - 1].empty()) {
-    char32_t back = parts[boundary - 1].back();
-    if (back != U'y' && back != U'i') break;
-    boundary--;
+  uint64_t h = n % 1000;
+  if (h) {
+    std::vector<std::u32string> words = {n - h ? cardinal(n - h) : U"", adjective(kOrdinalStems.at(h), e)};
+    return join(words);
   }
 
-  std::u32string result;
-  for (size_t i = 0; i < parts.size(); ++i) {
-    if (i > 0) result += U" ";
-    result += (i >= boundary) ? inflect_ordinal(parts[i], form) : parts[i];
+  uint64_t t = n / 1000;
+  return adjective((t == 1 ? U"" : combining(t)) + U"tysięczn", e);
+}
+
+std::u32string digits(std::u32string_view text) {
+  std::vector<std::u32string> words;
+  for (char32_t c : text) {
+    words.emplace_back(c == U'1' ? U"jeden" : kCardinals.at(c - U'0')[0]);
+  }
+  return join(words);
+}
+
+// -------------------
+// ----- Context -----
+// -------------------
+
+// Inflection of a number: its form, case and gender
+struct Features {
+  Form form = Form::CARDINAL;
+  Case grammatical_case = Case::NOMINATIVE;
+  Gender gender = Gender::MASCULINE;
+};
+
+// A noun's case, gender and number, guessed from its ending (as seen after an ordinal): sesji, sesję, roku
+struct NounForm {
+  Case grammatical_case = Case::NOMINATIVE;
+  Gender gender = Gender::MASCULINE;
+  bool plural = false;
+};
+
+// Whether a word is made only of given characters (and is not empty).
+bool made_of(std::u32string_view word, std::u32string_view characters) {
+  return !word.empty() && std::ranges::all_of(word, [&](char32_t c) { return strings::contains(characters, c); });
+}
+
+constexpr std::u32string_view kDigits = U"0123456789";
+
+const std::unordered_set<std::u32string>& genitive_plurals() {
+  static const std::unordered_set<std::u32string> forms = [] {
+    std::unordered_set<std::u32string> result;
+    for (const auto* table : {&kUnits, &kCurrencies, &kScales}) {
+      for (const auto& [key, noun] : *table) {
+        result.insert(noun.plural[index(Case::GENITIVE)]);
+      }
+    }
+    return result;
+  }();
+  return forms;
+}
+
+// A noun that a number counts: osób, metrów, złotych (as opposed to a verb, or nothing after a year)
+bool counted(std::u32string_view word) {
+  std::u32string w(word);
+  return kCountNouns.contains(w) || genitive_plurals().contains(w) || word.ends_with(U"ów") || word.ends_with(U"ych") ||
+         word.ends_with(U"ich");
+}
+
+/**
+ * The words before a number within its clause (lowercased), and the first word after it, skipping a range
+ * or coordination it belongs to (20-30, 3 a 368) and the złote of an amount of grosze (39 532 złotych 20 groszy).
+ */
+std::pair<std::vector<std::u32string>, std::u32string> surroundings(const Context& context) {
+  std::u32string_view head = context.head();
+  size_t clause = 0;
+  for (size_t i = 0; i + 1 < head.size(); ++i) {
+    if (strings::contains(std::u32string_view(U",;:.!?"), head[i]) && unicode::isspace(head[i + 1])) {
+      clause = i + 1;
+    }
+  }
+
+  std::vector<std::u32string> before;
+  for (auto word : words_of(head.substr(clause))) {
+    before.push_back(strings::to_lower(stripped(word)));
+  }
+  auto range_start = [](std::u32string_view w) {
+    return w.size() > 1 && unicode::isdigit(w[0]) && w.back() == U'-' &&
+           made_of(w.substr(0, w.size() - 1), U"0123456789,. ");
+  };
+  while (!before.empty() && range_start(before.back())) {
+    before.pop_back();
+  }
+  while (before.size() >= 2 && kConjunctions.contains(before.back()) &&
+         made_of(before[before.size() - 2], U"0123456789,.")) {
+    before.resize(before.size() - 2);
+  }
+  if (!before.empty() && kCurrencyWords.contains(before.back())) {
+    before.pop_back();
+    while (!before.empty() && made_of(before.back(), kDigits)) {
+      before.pop_back();
+    }
+  }
+
+  // The first word after, beyond the end of a range (-30)
+  std::u32string next;
+  std::u32string_view tail = context.tail();
+  if (tail.empty() || !strings::contains(processor::constants::kPunctuation, tail[0])) {
+    for (auto word : words_of(tail)) {
+      std::u32string_view w = stripped(word);
+      if (!(w.size() > 1 && w[0] == U'-' && made_of(w.substr(1), U"0123456789,."))) {
+        next = strings::to_lower(w);
+        break;
+      }
+    }
+  }
+  return {before, next};
+}
+
+// The context of the number this one continues after a comma (140 g mąki, 130 g mąki): both share a case.
+std::optional<Context> enumerated(const Context& context) {
+  std::u32string_view head = context.head();
+  size_t end = head.find_last_not_of(U" \t\n\r");
+  if (end == std::u32string_view::npos || head[end] != U',') {
+    return std::nullopt;
+  }
+
+  // The last number before the comma, at most four words before it
+  std::u32string_view text = head.substr(0, end);
+  std::optional<Span> number;
+  for (size_t i = 0; i < text.size();) {
+    if (unicode::isdigit(text[i]) && is_clear_before(text, i, U".,")) {
+      number = Span{i, digits_end(text, i)};
+      i = number->end;
+    } else {
+      i++;
+    }
+  }
+  if (!number || words_of(text.substr(number->end)).size() > 4) {
+    return std::nullopt;
+  }
+  return Context(text, *number);
+}
+
+// The case of a number governed by an amount noun, a genitive verb or a negation right before it.
+std::optional<Case> governed(const std::vector<std::u32string>& before) {
+  std::u32string w1 = before.empty() ? U"" : before.back();
+  for (const auto& stem : kAmountNouns) {
+    if (w1.starts_with(stem) && kNounEndings.contains(std::u32string(w1.substr(stem.size())))) {
+      return Case::GENITIVE; // od kwoty trzystu tysięcy
+    }
+  }
+
+  std::vector<std::u32string> window(before.end() - std::min<size_t>(before.size(), 3), before.end());
+  std::vector<std::u32string> verbs;
+  std::ranges::copy_if(window, std::back_inserter(verbs), [](const auto& w) { return !kClitics.contains(w); });
+  if (!verbs.empty() && starts_with_any(verbs.back(), kGenitiveVerbs)) {
+    return Case::GENITIVE; // potrzebowali stu czterdziestu gramów, brakuje nam trzech osób
+  }
+
+  // nie powinno przekraczać pięciu gramów, but not: nie jest to pięć, nie więcej niż pięć
+  auto no = std::ranges::find(window, U"nie");
+  if (no != window.end() && std::none_of(no + 1, window.end(), [](const auto& w) {
+        return kCopulas.contains(w) || w == U"niż" || w == U"tylko";
+      })) {
+    return Case::GENITIVE;
+  }
+  return std::nullopt;
+}
+
+NounForm noun_form(std::u32string_view word, std::u32string_view preposition) {
+  bool locative = kLocativePrepositions.contains(std::u32string(preposition));
+  bool instrumental = preposition == U"z" || preposition == U"ze" || preposition == U"przed" || preposition == U"nad" ||
+                      preposition == U"pod";
+
+  const std::vector<std::pair<std::u32string_view, NounForm>> endings = {
+      {U"ami", {Case::INSTRUMENTAL, Gender::MASCULINE, true}},
+      {U"ach", {Case::LOCATIVE, Gender::MASCULINE, true}},
+      {U"ych", {Case::GENITIVE, Gender::MASCULINE, true}},
+      {U"ów", {Case::GENITIVE, Gender::MASCULINE, true}},
+      {U"iem", {Case::INSTRUMENTAL, Gender::MASCULINE}},
+      {U"em", {Case::INSTRUMENTAL, Gender::MASCULINE}},
+      {U"ą", {instrumental ? Case::INSTRUMENTAL : Case::ACCUSATIVE, Gender::FEMININE}},
+      {U"ę", {Case::ACCUSATIVE, Gender::FEMININE}},
+      {U"a", {Case::NOMINATIVE, Gender::FEMININE}},
+      {U"i", {locative ? Case::LOCATIVE : Case::GENITIVE, Gender::FEMININE}},
+      {U"y", {locative ? Case::LOCATIVE : Case::GENITIVE, Gender::FEMININE}},
+      {U"u", {locative ? Case::LOCATIVE : Case::GENITIVE, Gender::MASCULINE}},
+      {U"ie", {Case::LOCATIVE, Gender::MASCULINE}},
+      {U"e", {Case::NOMINATIVE, Gender::NEUTER}},
+      {U"o", {Case::NOMINATIVE, Gender::NEUTER}}};
+  for (const auto& [ending, form] : endings) {
+    if (word.ends_with(ending)) {
+      return form;
+    }
+  }
+  return {};
+}
+
+// The form, case and gender of a number from its context: an ordinal for years, days and headings.
+Features features(const Context& context, uint64_t n, bool decimal, bool year_abbreviation = false) {
+  auto [before, next] = surroundings(context);
+  std::u32string w1 = before.empty() ? U"" : before.back();
+  std::u32string w2 = before.size() < 2 ? U"" : before[before.size() - 2];
+  std::u32string noun = year_abbreviation ? U"roku" : next; // 2020 r.
+
+  // 1. Years, days and headings are ordinals
+  bool locative = kLocativePrepositions.contains(w1);
+  if (noun == U"roku" || noun == U"rok" || noun == U"rokiem") {
+    Case c = noun == U"rok"    ? Case::NOMINATIVE :
+             noun == U"rokiem" ? Case::INSTRUMENTAL :
+             locative          ? Case::LOCATIVE :
+                                 Case::GENITIVE;
+    return {Form::ORDINAL, c};
+  }
+  if (w1 == U"dnia") {
+    return {Form::ORDINAL, Case::GENITIVE}; // z dnia 1.
+  }
+  if (w1 == U"roku" || w1 == U"rok") {
+    bool w2_locative = kLocativePrepositions.contains(w2);
+    return {Form::ORDINAL, w1 == U"rok" ? Case::NOMINATIVE : w2_locative ? Case::LOCATIVE : Case::GENITIVE};
+  }
+  if (std::ranges::find(kMonthsGenitive, noun) != kMonthsGenitive.end() && n >= 1 && n <= 31) {
+    return {Form::ORDINAL, kCopulas.contains(w1) ? Case::NOMINATIVE : Case::GENITIVE}; // od pierwszego kwietnia
+  }
+  if (kMonths.contains(w1) && n >= 1000 && n <= 2100) {
+    return {Form::ORDINAL, Case::GENITIVE};
+  }
+  if ((w1 == U"w" || w1 == U"we") && n >= 1000 && n <= 2100 && !genitive_plurals().contains(noun)) {
+    return {Form::ORDINAL, Case::LOCATIVE};
+  }
+  if (auto it = kYearPrepositions.find(w1); it != kYearPrepositions.end() && n >= 1900 && n <= 2100 && !counted(noun)) {
+    return {Form::ORDINAL, it->second}; // od dwa tysiące dwudziestego do dwa tysiące dwudziestego drugiego
+  }
+  if (starts_with_any(w1, kOrdinalHeadings) && n < 100) {
+    return {Form::ORDINAL, noun_form(w1, w2).grammatical_case}; // w punkcie drugim
+  }
+
+  // 2. The case of a cardinal: from a preposition, a governing word or a number it continues
+  Features result;
+  if (auto it = kPrepositionCases.find(w1); it != kPrepositionCases.end()) {
+    result.grammatical_case = it->second;
+  } else if (auto it = kComplexPrepositions.find(w1); it != kComplexPrepositions.end() && it->second == w2) {
+    result.grammatical_case = Case::GENITIVE;
+  } else if (auto governing = decimal ? std::nullopt : governed(before)) {
+    result.grammatical_case = *governing;
+  } else if (auto earlier = enumerated(context)) {
+    result.grammatical_case = features(*earlier, 0, false).grammatical_case;
+  }
+
+  // 3. The noun after it, as it agrees with the number
+  bool few = n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14);
+  bool nominative = result.grammatical_case == Case::NOMINATIVE || result.grammatical_case == Case::ACCUSATIVE;
+  if ((noun.ends_with(U"ami") || noun.ends_with(U"mi")) && noun.size() > 4) {
+    result.grammatical_case = Case::INSTRUMENTAL;
+  } else if (noun.ends_with(U"ach") && noun.size() > 4) {
+    result.grammatical_case = Case::LOCATIVE;
+  } else if (nominative && few && counted(noun)) {
+    result.grammatical_case = Case::GENITIVE; // trzech osób: the noun is genitive, so the number is too
+  }
+
+  if ((noun.ends_with(U'a') && n == 1) || starts_with_any(noun, kFemininePlurals)) {
+    result.gender = Gender::FEMININE;
+  } else if (noun == U"euro") {
+    result.gender = Gender::NEUTER;
   }
   return result;
 }
 
-// Maps an ordinal-suffix's terminal letter to the inflection class. Polish
-// ordinal abbreviations encode the gender/number of the inflected ending in
-// their last character: -y/-i = masculine nominative singular, -a = feminine
-// singular, -e = neuter singular or non-masculine plural.
-std::optional<PluralForm> form_from_suffix(std::u32string_view suffix) {
-  if (suffix.empty()) return std::nullopt;
-  switch (suffix.back()) {
-    case U'a': return PluralForm::SINGULAR;
-    case U'e': return PluralForm::FEW;
-    default:   return std::nullopt;
+// The word governing a dot ordinal: the one before it, or before the first ordinal of "lat 50. i 60."
+std::u32string ordinal_cue(const Context& context) {
+  std::u32string w1 = context.before();
+  auto head = words_of(context.head());
+  if (w1 != U"czy" && kConjunctions.contains(w1) && head.size() > 1) {
+    std::u32string_view previous = head[head.size() - 2];
+    if (previous.ends_with(U'.') && made_of(previous.substr(0, previous.size() - 1), kDigits)) {
+      return context.before(3);
+    }
   }
+  return w1;
 }
 
-// Builds the masculine-genitive ordinal phrase used for date days. Days fall
-// in [1, 31], so a flat lookup with a single tens+units fallback suffices.
-std::u32string ordinal_gen(int32_t value) {
-  if (auto it = num2word::kOrdinalsGen.find(value); it != num2word::kOrdinalsGen.end()) {
-    return it->second;
-  }
-  int32_t tens = (value / 10) * 10;
-  int32_t units = value % 10;
-  return num2word::kOrdinalsGen.at(tens) + U" " + num2word::kOrdinalsGen.at(units);
+// The gender of a counted noun, for the number before it: dwie tony, dwa metry
+Gender gender_of(const Noun& noun) {
+  const auto& nominative = noun.singular[index(Case::NOMINATIVE)];
+  return nominative.ends_with(U'a') ? Gender::FEMININE : nominative == U"euro" ? Gender::NEUTER : Gender::MASCULINE;
 }
 
+// A decimal number in a case: dwa przecinek pięć, półtora, dwa i pół
+std::u32string decimal(const Number& number, Case c) {
+  // 801.04, 4.0: a dotted code rather than a decimal
+  if (number.decimal_mark == U'.' && (number.fraction.size() == 2 || number.fraction == U"0")) {
+    uint64_t f = value_of(number.fraction).value_or(0);
+    return cardinal(value(number)) + U" " + (number.fraction[0] == U'0' ? digits(number.fraction) : cardinal(f));
+  }
+
+  bool zero = !number.integer.empty(); // .5 has no zero before its point
+  if (number.integer == U"1" && number.fraction == U"5") {
+    return U"półtora";
+  }
+  std::u32string head = zero ? cardinal(value(number), c) + U" " : U"";
+  if (number.fraction == U"5") {
+    return head + U"i pół";
+  }
+
+  std::vector<std::u32string> words = {U"przecinek"};
+  size_t zeros = number.fraction.find_first_not_of(U'0');
+  words.insert(words.end(), std::min(zeros, number.fraction.size()), U"zero");
+  if (zeros != std::u32string::npos) {
+    words.push_back(cardinal(value_of(number.fraction).value_or(0), c));
+  }
+  return head + join(words);
+}
+
+// A number counting a noun, both in a case: pięćset dwadzieścia cztery kilometry
+std::u32string amount(const Number& number, const Noun& noun, Case c) {
+  std::u32string words;
+  if (!number.fraction.empty()) {
+    words = decimal(number, c);
+  } else {
+    auto n = value_of(number.integer);
+    words = !n || spoken_digits(number, 7) ? digits(number.integer) : cardinal(*n, c, gender_of(noun));
+  }
+  return words + U" " + form(noun, value(number), c, !number.fraction.empty());
+}
+
+bool is_zloty(std::u32string_view currency) {
+  return currency == U"zł" || currency == U"PLN";
+}
 } // namespace
 
-std::u32string Num2Word::to_cardinal_int(int32_t value) const {
-  if (value < 0) {
-    return U"minus " + to_cardinal_int(std::abs(value));
+Num2Word::Num2Word() : Num2WordLayer(kNotation, kJoiners) {
+  add_pattern(std::make_unique<DatePattern>(kDateFormat));
+  for (const auto& format : kPhoneFormats) {
+    add_pattern(std::make_unique<PhonePattern>(format));
   }
+  add_pattern(std::make_unique<DotOrdinalPattern>(true, true));
+  add_pattern(std::make_unique<SuffixPattern>(Kind::NUMBER, kYearSuffixes, kYearFormat));
+}
 
-  if (auto it = num2word::kCardinals.find(value); it != num2word::kCardinals.end()) {
-    return it->second;
+// -----------------------
+// ----- Resolution -----
+// -----------------------
+
+bool Num2Word::accept(const Match& match, const Context& context) const {
+  switch (match.kind) {
+    case Kind::PHONE:
+      // 600 123 456 is a count, unless a word says it is a phone number
+      return match.separator != U' ' || kPhoneWords.contains(context.before());
+    case Kind::TIME: {
+      const auto& minutes = match.numbers[1].integer;
+      bool round = minutes == U"00" || minutes == U"15" || minutes == U"30" || minutes == U"45";
+      bool decimal = match.separator == U'.' && !round && !kTimeWords.contains(context.before());
+      return value(match.numbers[0]) <= 24 && value(match.numbers[1]) <= 59 && !decimal;
+    }
+    case Kind::ORDINAL: {
+      // An ordinal agrees with the noun after it: "29. sesji", but "Punkt 3. Dalej" ends a sentence
+      std::u32string w1 = ordinal_cue(context);
+      auto words = words_of(context.tail());
+      std::u32string_view next = words.empty() ? U"" : stripped(words[0]);
+      bool heading = starts_with_any(w1, kHeadings) && value(match.numbers[0]) < 100;
+      return kDecadeWords.contains(w1) || heading || (!next.empty() && unicode::islower(next[0]));
+    }
+    default:
+      return true;
   }
+}
 
-  if (value < 100) {
-    // 21..99 (excluding round tens): tens word + units word, no connector.
-    int32_t tens = (value / 10) * 10;
-    int32_t units = value % 10;
-    return num2word::kCardinals.at(tens) + U" " + num2word::kCardinals.at(units);
-  }
+NumberReading Num2Word::resolve(const Match& match, const Context& context) const {
+  NumberReading reading;
 
-  if (value < 1000) {
-    int32_t hundreds = (value / 100) * 100;
-    int32_t rest = value % 100;
-    return num2word::kCardinals.at(hundreds) + U" " + to_cardinal_int(rest);
-  }
+  switch (match.kind) {
+    case Kind::DATE:
+      reading.grammatical_case = kCopulas.contains(context.before()) ? Case::NOMINATIVE : Case::GENITIVE;
+      return reading;
 
-  // Large-scale decomposition (tysiąc / milion / miliard) in descending order.
-  for (auto it = num2word::kLargeCardinals.rbegin(); it != num2word::kLargeCardinals.rend(); ++it) {
-    int64_t base = it->first;
-    if (static_cast<int64_t>(value) >= base) {
-      int32_t high = value / static_cast<int32_t>(base);
-      int32_t low = value % static_cast<int32_t>(base);
+    case Kind::TIME: {
+      // o osiemnastej trzydzieści: the hour is a feminine ordinal (godzina) in the case of the word before
+      std::u32string w1 = context.before();
+      reading.grammatical_case = w1 == U"o" || w1 == U"godzinie" || w1 == U"po"                ? Case::LOCATIVE :
+                                 w1 == U"do" || w1 == U"od" || w1 == U"około" || w1 == U"koło" ? Case::GENITIVE :
+                                 w1 == U"przed" || w1 == U"między"                             ? Case::INSTRUMENTAL :
+                                 w1 == U"na" || w1 == U"za"                                    ? Case::ACCUSATIVE :
+                                                                                                 Case::NOMINATIVE;
+      return reading;
+    }
 
-      // Polish drops the leading "jeden" in front of any scale noun; "1000"
-      // reads as "tysiąc" and "1000000" as "milion".
-      std::u32string head = (high == 1) ? U"" : (to_cardinal_int(high) + U" ");
-      const auto& forms = it->second;
-      const auto& scale_word = forms[static_cast<std::size_t>(pick_plural_form(high))];
-
-      std::u32string res = head + scale_word;
-      if (low > 0) {
-        res += U" " + to_cardinal_int(low);
+    case Kind::ORDINAL: {
+      // "29. sesji": an ordinal agreeing with the noun after it, the decade of "lat 70.", or a heading
+      reading.form = Form::ORDINAL;
+      std::u32string w1 = ordinal_cue(context);
+      if (auto it = kDecadeWords.find(w1); it != kDecadeWords.end()) {
+        reading.grammatical_case = it->second;
+        reading.plural = true;
+      } else if (starts_with_any(w1, kHeadings) && value(match.numbers[0]) < 100) {
+        reading.grammatical_case = noun_form(w1, context.before(2)).grammatical_case; // Punkt 3., w punkcie 5.
+      } else {
+        auto words = words_of(context.tail());
+        NounForm next = noun_form(words.empty() ? U"" : strings::to_lower(stripped(words[0])), w1);
+        reading.grammatical_case = next.grammatical_case;
+        reading.gender = next.gender;
+        reading.plural = next.plural;
       }
-      return res;
+      return reading;
+    }
+
+    case Kind::DIMENSION: {
+      // numerem 3x38: a document number, where "x" stands for a slash
+      std::u32string_view head = context.head();
+      size_t digits = head.size();
+      while (digits > 0 && unicode::isdigit(head[digits - 1])) {
+        digits--;
+      }
+      size_t word_end = digits;
+      while (word_end > 0 && unicode::isspace(head[word_end - 1])) {
+        word_end--;
+      }
+      size_t word_begin = word_end;
+      while (word_begin > 0 && unicode::isword(head[word_begin - 1])) {
+        word_begin--;
+      }
+      std::u32string_view word = head.substr(word_begin, word_end - word_begin);
+      reading.numbered = digits < head.size() && word_end < digits && (word.starts_with(U"numer") || word == U"nr");
+      return reading;
+    }
+
+    default:
+      break;
+  }
+
+  // A number: its own inflection (the start of a range for amounts), and the case of what it counts
+  if (!match.numbers.empty()) {
+    const Number& first = match.numbers.front();
+    bool year_abbreviation = match.suffix == U"r.";
+    Features own = first.fraction.empty() ? features(context, value(first), false, year_abbreviation) :
+                                            features(context, 0, true, year_abbreviation);
+    reading.form = own.form;
+    reading.grammatical_case = own.grammatical_case;
+    reading.gender = own.gender;
+
+    const Number& last = match.numbers.back();
+    bool grosze = match.kind == Kind::MONEY && match.scale.empty() && last.fraction.size() == 2 && is_zloty(match.unit);
+    reading.amount_case = features(context, 0, !last.fraction.empty() && !grosze).grammatical_case;
+  }
+  return reading;
+}
+
+// --------------------
+// ----- Readings -----
+// --------------------
+
+std::u32string Num2Word::read_number(const Number& number, const NumberReading& reading) const {
+  if (!number.fraction.empty()) {
+    return decimal(number, reading.grammatical_case);
+  }
+
+  auto n = value_of(number.integer);
+  if (!n || spoken_digits(number, 7)) {
+    return digits(number.integer);
+  }
+  if (reading.form == Form::ORDINAL) {
+    return ordinal(*n, reading.grammatical_case, reading.gender);
+  }
+  return cardinal(*n, reading.grammatical_case, reading.gender);
+}
+
+std::u32string Num2Word::read_code_digits(std::u32string_view text) const {
+  auto n = value_of(text);
+  if ((text.size() > 1 && text[0] == U'0') || text.size() >= 7 || !n) {
+    return digits(text);
+  }
+  return cardinal(*n);
+}
+
+std::u32string Num2Word::read_date(const Match& match, const NumberReading& reading) const {
+  std::vector<std::u32string> words = {ordinal(value(match.numbers[0]), reading.grammatical_case),
+                                       std::u32string(kMonthsGenitive[value(match.numbers[1]) - 1]),
+                                       ordinal(value(match.numbers[2]), Case::GENITIVE)};
+  if (!match.suffix.empty()) {
+    words.push_back(U"roku");
+  }
+  return join(words);
+}
+
+std::u32string Num2Word::read_phone(const Match& match, const NumberReading& reading) const {
+  std::vector<std::u32string> words;
+  // In groups: sześćset sto dwadzieścia trzy; a longer one digit by digit
+  for (const auto& group : match.numbers) {
+    words.push_back(group.integer.size() > 3 ? digits(group.integer) : cardinal(value(group)));
+  }
+  return join(words);
+}
+
+std::u32string Num2Word::read_time(const Match& match, const NumberReading& reading) const {
+  std::u32string hours = ordinal(value(match.numbers[0]), reading.grammatical_case, Gender::FEMININE);
+  const auto& minutes = match.numbers[1].integer;
+  if (value(match.numbers[1]) == 0) {
+    return hours;
+  }
+  return hours + U" " + (minutes[0] == U'0' ? digits(minutes) : cardinal(value(match.numbers[1])));
+}
+
+std::u32string Num2Word::read_ordinal(const Match& match, const NumberReading& reading) const {
+  return ordinal(value(match.numbers[0]), reading.grammatical_case, reading.gender, reading.plural);
+}
+
+std::u32string Num2Word::read_compound(const Match& match, const NumberReading& reading) const {
+  const Number& number = match.numbers[0];
+  if (!number.fraction.empty()) {
+    return read_number(number, reading) + U"-" + std::u32string(match.suffix);
+  }
+
+  // lat 70-tych: siedemdziesiątych - the first gender and case taking the ending of the suffix
+  if (auto it = kOrdinalSuffixes.find(std::u32string(match.suffix)); it != kOrdinalSuffixes.end()) {
+    for (size_t g = 0; g < kAdjectiveEndings.size(); ++g) {
+      for (size_t c = 0; c < kAdjectiveEndings[g].size(); ++c) {
+        if (kAdjectiveEndings[g][c] == it->second) {
+          Gender gender = g == 3 ? Gender::MASCULINE : static_cast<Gender>(g);
+          return ordinal(value(number), static_cast<Case>(c), gender, g == 3);
+        }
+      }
     }
   }
 
-  return conversions::utf8_to_u32(std::to_string(value));
+  // 45-metrowe: czterdziestopięciometrowe
+  return combining(value(number)) + std::u32string(match.suffix);
 }
 
-std::u32string Num2Word::to_cardinal_float(float value, std::u32string_view repr) const {
-  if (value < 0.0f) {
-    return U"minus " + to_cardinal_float(std::abs(value), repr);
-  }
-
-  // The base transform normalizes the decimal separator to '.', but accept
-  // ',' too when this method is invoked directly with a raw representation.
-  std::string value_str = conversions::u32_to_utf8(repr);
-  std::replace(value_str.begin(), value_str.end(), ',', '.');
-
-  // Trim trailing zeros and any dangling decimal point.
-  auto rit = std::find_if(value_str.rbegin(), value_str.rend(),
-                          [](char c) { return c != '0'; });
-  value_str = std::string(value_str.begin(), rit.base());
-  if (!value_str.empty() && value_str.back() == '.') {
-    value_str.pop_back();
-  }
-
-  size_t dot_pos = value_str.find('.');
-  if (dot_pos == std::string::npos) {
-    return to_cardinal_int(value_str.empty() ? 0 : std::stoi(value_str));
-  }
-
-  std::string integer_part_str = value_str.substr(0, dot_pos);
-  std::string fractional_part_str = value_str.substr(dot_pos + 1);
-  int32_t integer_part = integer_part_str.empty() ? 0 : std::stoi(integer_part_str);
-
-  // Leading zeros in the fractional part are spoken as "zero" tokens; the
-  // remaining digits are verbalized as a single cardinal (e.g. 0,05 ->
-  // "zero przecinek zero pięć", 123,45 -> "... przecinek czterdzieści pięć").
-  std::u32string frac_words;
-  size_t pos = 0;
-  while (pos < fractional_part_str.size() && fractional_part_str[pos] == '0') {
-    if (!frac_words.empty()) frac_words += U" ";
-    frac_words += U"zero";
-    pos++;
-  }
-  if (pos < fractional_part_str.size()) {
-    if (!frac_words.empty()) frac_words += U" ";
-    frac_words += to_cardinal_int(std::stoi(fractional_part_str.substr(pos)));
-  }
-
-  return to_cardinal_int(integer_part) + U" przecinek " + frac_words;
+std::u32string Num2Word::read_plain(const Match& match, const NumberReading& reading) const {
+  return read_number(match.numbers[0], reading) + (match.suffix == U"r." ? U" roku" : U"");
 }
 
-std::u32string Num2Word::to_ordinal_int(int32_t value, std::u32string_view suffix) const {
-  std::u32string base = ordinal_masc(value, *this);
-  if (auto form = form_from_suffix(suffix)) {
-    return inflect_trailing_ordinals(base, *form);
-  }
-  return base;
-}
-
-std::u32string Num2Word::to_currency(char32_t currency, std::variant<int32_t, float> number) const {
-  auto it = num2word::kCurrencies.find(currency);
-  if (it == num2word::kCurrencies.end()) {
-    return std::u32string(1, currency);
+std::u32string Num2Word::read_money(const Number& number, const Match& match, const NumberReading& reading) const {
+  const Noun& currency = kCurrencies.at(std::u32string(match.unit));
+  Case c = reading.amount_case;
+  if (!match.scale.empty()) {
+    return amount(number, kScales.at(std::u32string(match.scale)), c) + U" " + currency.plural[index(Case::GENITIVE)];
   }
 
-  PluralForm form = std::visit([](auto&& arg) -> PluralForm {
-    using T = std::decay_t<decltype(arg)>;
-    if constexpr (std::is_same_v<T, int32_t>) {
-      return pick_plural_form(arg);
-    } else {
-      // Singular only for amounts that round to exactly 1; otherwise pick
-      // based on the integer part as a coarse approximation.
-      if (std::abs(arg - 1.0F) < 1e-6F) return PluralForm::SINGULAR;
-      return pick_plural_form(static_cast<int32_t>(arg));
-    }
-  }, number);
-
-  return it->second[static_cast<std::size_t>(form)];
-}
-
-std::u32string Num2Word::to_fraction(int32_t numerator, int32_t denominator) const {
-  // The numerator agrees in gender (feminine) with the elided noun "część"
-  // that the fraction implicitly modifies; only 1 and 2 have distinct forms
-  // in this position ("jedna", "dwie"), other numerals are invariable here.
-  std::u32string num_word;
-  if (numerator == 1)      num_word = U"jedna";
-  else if (numerator == 2) num_word = U"dwie";
-  else                     num_word = to_cardinal_int(numerator);
-
-  std::u32string ord_phrase = ordinal_masc(denominator, *this);
-  return num_word + U" " + inflect_trailing_ordinals(ord_phrase, pick_plural_form(numerator));
-}
-
-std::u32string Num2Word::to_day(uint32_t day) const {
-  // Polish dates always render the day as a masculine genitive ordinal.
-  return ordinal_gen(static_cast<int32_t>(day));
-}
-
-std::u32string Num2Word::to_month(uint32_t month) const {
-  if (month >= 1 && month <= 12) {
-    return num2word::kMonths[month];
+  // dwanaście złotych dziewięćdziesiąt dziewięć groszy
+  if (number.fraction.size() == 2 && is_zloty(match.unit)) {
+    uint64_t grosze = value_of(number.fraction).value_or(0);
+    Number zlote{.integer = number.integer, .grouped = number.grouped};
+    return amount(zlote, currency, c) + U" " + cardinal(grosze, c) + U" " + form(kGrosz, grosze, c);
   }
-  return U"";
+  return amount(number, currency, c);
 }
 
-std::u32string Num2Word::to_year(uint32_t year) const {
-  // Polish reads years as plain cardinals (e.g. 2026 -> "dwa tysiące
-  // dwadzieścia sześć"). The fully-inflected form ("dwa tysiące dwudziestego
-  // szóstego roku") is reserved for formal contexts and not produced here.
-  return to_cardinal_int(static_cast<int32_t>(year));
+std::u32string Num2Word::read_scale(const Number& number, const Match& match, const NumberReading& reading) const {
+  return amount(number, kScales.at(std::u32string(match.scale)), reading.amount_case);
 }
 
-bool Num2Word::is_ordinal_suffix(std::u32string_view suffix) const {
-  return num2word::kOrdinalSuffixes.contains(std::u32string(suffix));
+std::u32string Num2Word::read_percent(const Number& number, const Match& match, const NumberReading& reading) const {
+  std::u32string suffix = match.suffix.empty() ? U"" : U" " + std::u32string(match.suffix);
+  return amount(number, kPercent, reading.amount_case) + suffix;
+}
+
+std::u32string Num2Word::read_unit(const Number& number, const Match& match, const NumberReading& reading) const {
+  return amount(number, kUnits.at(std::u32string(match.unit)), reading.amount_case);
+}
+
+std::u32string Num2Word::read_joiner(const Match& match, const NumberReading& reading) const {
+  if (match.kind == Kind::DIMENSION) {
+    return reading.numbered ? U" przez " : U" na ";
+  }
+  return Num2WordLayer::read_joiner(match, reading);
 }
 
 } // namespace phonemis::pl

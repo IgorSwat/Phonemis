@@ -1,279 +1,314 @@
-#include "num2word.h"
 #include "constants.h"
-#include <phonemis/utils/conversions.h>
-#include <algorithm>
-#include <cmath>
-#include <cstdlib>
+#include "num2word.h"
+#include "patterns.h"
+#include <phonemis/base/processor/layers/num2word/numerals.h>
+#include <phonemis/base/processor/layers/num2word/patterns.h>
+#include <phonemis/base/processor/layers/num2word/primitives.h>
+#include <phonemis/utils/strings.h>
+#include <phonemis/utils/unicode.h>
 
 namespace phonemis::es {
 
-using namespace constants;
-using namespace phonemis::utils;
+using namespace constants::num2word;
+using namespace processor;
+using namespace processor::num2word;
+using namespace utils;
 
 namespace {
-
-// Apocopates a trailing cardinal "uno" to "un" (and "veintiuno" to "veintiún")
-// when the cardinal precedes a masculine noun — required for Spanish currency
-// amounts and fraction numerators (e.g. "un dólar", "un medio").
-std::u32string apocopate(std::u32string word) {
-  constexpr std::u32string_view kVeintiuno = U"veintiuno";
-  if (word.size() >= kVeintiuno.size() &&
-      std::u32string_view(word).substr(word.size() - kVeintiuno.size()) == kVeintiuno) {
-    word.replace(word.size() - kVeintiuno.size(), kVeintiuno.size(), U"veintiún");
-    return word;
-  }
-  constexpr std::u32string_view kUno = U"uno";
-  if (word.size() >= kUno.size() &&
-      std::u32string_view(word).substr(word.size() - kUno.size()) == kUno) {
-    // Only apocopate when "uno" is a standalone token (the whole word or
-    // preceded by a word boundary). This guards against accidentally trimming
-    // words that happen to end in the three letters "uno".
-    size_t pre = word.size() - kUno.size();
-    if (pre == 0 || word[pre - 1] == U' ' || word[pre - 1] == U'-') {
-      word.replace(pre, kUno.size(), U"un");
-    }
-  }
-  return word;
+uint64_t value(const Number& number) {
+  return value_of(number.integer).value_or(0);
 }
 
+// The number "1" as written, which counts a singular noun
+bool is_one(const Number& number) {
+  return number.integer == U"1" && number.fraction.empty();
+}
+
+// ------------------------
+// ----- Number words -----
+// ------------------------
+
+std::u32string below_hundred(uint64_t n, One one) {
+  std::u32string words(n < 30 ? kOnes[n] : kTens[n / 10]);
+  if (n >= 30 && n % 10) {
+    words += U" y " + std::u32string(kOnes[n % 10]);
+  }
+
+  // veintiún años, treinta y una personas
+  if (words.ends_with(U"uno") && one != One::UNO) {
+    words.resize(words.size() - 3);
+    words += one == One::UNA ? U"una" : (words == U"veinti" ? U"ún" : U"un");
+  }
+  return words;
+}
+
+std::u32string below_thousand(uint64_t n, One one) {
+  uint64_t h = n / 100, r = n % 100;
+  if (h == 0) {
+    return below_hundred(r, one);
+  }
+  if (n == 100) {
+    return U"cien";
+  }
+
+  // doscientas personas
+  std::u32string head(kHundreds[h]);
+  if (one == One::UNA && h > 1) {
+    head.replace(head.size() - 2, 2, U"as");
+  }
+  return head + (r ? U" " + below_hundred(r, one) : U"");
+}
+
+// A cardinal, ending with the given form of "uno": doscientas mil personas, veintiún años
+std::u32string cardinal(uint64_t n, One one = One::UNO) {
+  if (n < 1000) {
+    return below_thousand(n, one);
+  }
+  if (n < 1000000) {
+    uint64_t t = n / 1000, r = n % 1000;
+    std::u32string head = t == 1 ? U"mil" : below_thousand(t, one == One::UNA ? One::UNA : One::UN) + U" mil";
+    return head + (r ? U" " + below_thousand(r, one) : U"");
+  }
+
+  bool billions = n >= 1000000000000ULL;
+  uint64_t scale = billions ? 1000000000000ULL : 1000000ULL, q = n / scale, r = n % scale;
+  std::u32string head = q == 1 ? (billions ? U"un billón" : U"un millón") :
+                                 cardinal(q, One::UN) + (billions ? U" billones" : U" millones");
+  return head + (r ? U" " + cardinal(r, one) : U"");
+}
+
+// centésima trigésima séptima
+std::u32string ordinal(uint64_t n, bool feminine) {
+  std::vector<std::u32string> words;
+  for (auto [scale, stems] :
+       {std::pair{100, &kOrdinalHundreds}, std::pair{10, &kOrdinalTens}, std::pair{1, &kOrdinalOnes}}) {
+    if (uint64_t digit = n / scale % 10) {
+      words.push_back(std::u32string((*stems)[digit]) + (feminine ? U"a" : U"o"));
+    }
+  }
+  return join(words);
+}
+
+std::u32string digits(std::u32string_view text) {
+  std::vector<std::u32string> words;
+  for (char32_t c : text) {
+    if (unicode::isdigit(c)) {
+      words.emplace_back(kOnes[c - U'0']);
+    }
+  }
+  return join(words);
+}
+
+// -------------------
+// ----- Context -----
+// -------------------
+
+bool feminine(std::u32string_view noun) {
+  std::u32string word = strings::to_lower(noun);
+  std::u32string singular = word;
+  if (word.ends_with(U"iones")) {
+    singular = word.substr(0, word.size() - 5) + U"ión";
+  } else if (word.ends_with(U"as") || word.ends_with(U"es")) {
+    singular.pop_back();
+  }
+
+  if (kFeminineNouns.contains(word) || kFeminineNouns.contains(singular)) {
+    return true;
+  }
+  bool feminine_ending = std::ranges::any_of(kFeminineEndings, [&](const auto& e) { return singular.ends_with(e); });
+  return !kMasculineInA.contains(singular) && feminine_ending;
+}
+
+// The form of "uno" from the noun after a number: veintiún años, veintiuna personas; a la 1
+One one_of(const Context& context) {
+  std::u32string word = context.after();
+  std::u32string previous = context.before();
+  if (previous == U"la" || previous == U"las") {
+    return One::UNA;
+  }
+  if (word.empty() || !unicode::isalpha(word[0]) || kStopWords.contains(strings::to_lower(word))) {
+    return One::UNO;
+  }
+  return feminine(word) ? One::UNA : One::UN;
+}
+
+// A lowercase noun follows: 10k seguidores
+bool counted(const Context& context) {
+  std::u32string word = context.after();
+  bool lowercase_word = word.size() > 2 && std::ranges::all_of(word, [](char32_t c) { return unicode::islower(c); });
+  return lowercase_word && !kStopWords.contains(word);
+}
 } // namespace
 
-std::u32string Num2Word::to_cardinal_int(int32_t value) const {
-  if (value < 0) {
-    return U"menos " + to_cardinal_int(std::abs(value));
+Num2Word::Num2Word() : Num2WordLayer(kNotation, kJoiners) {
+  add_pattern(std::make_unique<LawPattern>());
+  add_pattern(std::make_unique<DatePattern>(kDateFormat));
+  for (const auto& format : kPhoneFormats) {
+    add_pattern(std::make_unique<PhonePattern>(format));
   }
+  add_pattern(std::make_unique<SuffixPattern>(Kind::ORDINAL, kOrdinalSigns, kOrdinalSignFormat));
+  add_pattern(std::make_unique<SuffixPattern>(Kind::ORDINAL, kOrdinalSuffixes));
+  add_pattern(std::make_unique<SuffixPattern>(Kind::DECADE, kDecadeSuffixes, kDecadeFormat));
+}
 
-  if (auto it = num2word::kCardinals.find(value); it != num2word::kCardinals.end()) {
-    return it->second;
-  }
+// ----------------------
+// ----- Resolution -----
+// ----------------------
 
-  if (value < 100) {
-    // 31-99 (non-round tens): Spanish writes them as "<tens> y <units>".
-    int32_t tens = (value / 10) * 10;
-    int32_t units = value % 10;
-    return num2word::kCardinals.at(tens) + U" y " + num2word::kCardinals.at(units);
-  }
-
-  if (value < 1000) {
-    // 100 is "cien" standalone but "ciento" when followed by a smaller part
-    // (e.g. 123 = "ciento veintitrés"). 200-900 keep their base form.
-    int32_t hundreds = (value / 100) * 100;
-    int32_t rest = value % 100;
-    std::u32string head = (hundreds == 100) ? U"ciento" : num2word::kCardinals.at(hundreds);
-    return (rest == 0) ? num2word::kCardinals.at(hundreds)
-                       : head + U" " + to_cardinal_int(rest);
-  }
-
-  // Large-scale decomposition (mil, millón, billón) in descending order.
-  for (auto it = num2word::kLargeCardinals.rbegin(); it != num2word::kLargeCardinals.rend(); ++it) {
-    int64_t base = it->first;
-    if (static_cast<int64_t>(value) >= base) {
-      int32_t high = value / static_cast<int32_t>(base);
-      int32_t low = value % static_cast<int32_t>(base);
-
-      // "mil" drops the leading "un" when used as a multiplier of 1 (1000 =
-      // "mil"), but "millón"/"billón" keep it ("un millón", "un billón").
-      std::u32string head;
-      if (high == 1 && base == 1000LL) {
-        head = U"";
-      } else if (high == 1) {
-        head = U"un ";
-      } else {
-        head = to_cardinal_int(high) + U" ";
+bool Num2Word::accept(const Match& match, const Context& context) const {
+  switch (match.kind) {
+    case Kind::PHONE:
+      // 600 123 456 is a count, unless a word says it is a phone number
+      return match.separator != U' ' || kPhoneWords.contains(context.before());
+    case Kind::FRACTION:
+      return kFractions.contains({value(match.numbers[0]), value(match.numbers[1])});
+    case Kind::TIME: {
+      // Only with minutes; a dot makes a time only after "a las": a las 18.30, but 1.13
+      if (match.numbers.size() < 2) {
+        return false;
       }
-
-      std::u32string scale = (high > 1) ? num2word::kLargeCardinalsPlural.at(base)
-                                        : it->second;
-
-      std::u32string res = head + scale;
-      if (low > 0) {
-        res += U" " + to_cardinal_int(low);
-      }
-      return res;
+      bool decimal = match.separator == U'.' && !kTimeWords.contains(context.before());
+      return value(match.numbers[0]) <= 24 && value(match.numbers[1]) <= 59 && !decimal;
     }
+    case Kind::SCALE:
+      // 4K, 2K: a letter, read as a code
+      return (match.scale != U"k" && match.scale != U"K") || counted(context);
+    case Kind::ORDINAL:
+      // Ordinal words reach 999
+      return value(match.numbers[0]) > 0 && value(match.numbers[0]) < 1000;
+    default:
+      return true;
   }
-
-  return conversions::utf8_to_u32(std::to_string(value));
 }
 
-std::u32string Num2Word::to_cardinal_float(float value, std::u32string_view repr) const {
-  if (value < 0.0f) {
-    return U"menos " + to_cardinal_float(std::abs(value), repr);
+NumberReading Num2Word::resolve(const Match& match, const Context& context) const {
+  // A decade or a compound stands alone: los 80s, 4-carriles
+  bool alone = match.kind == Kind::DECADE || match.kind == Kind::COMPOUND;
+  NumberReading reading{.one = alone ? One::UNO : one_of(context)};
+
+  // $5.000 dólares
+  if (match.kind == Kind::MONEY) {
+    const Forms& currency = kCurrencies.at(std::u32string(match.unit));
+    std::u32string next = strings::to_lower(context.after());
+    reading.named = next == currency.one || next == currency.many || next == U"pesos";
   }
-
-  // The base transform normalizes the decimal separator to '.', but accept ','
-  // too when this method is invoked directly with a raw representation.
-  std::string value_str = conversions::u32_to_utf8(repr);
-  std::replace(value_str.begin(), value_str.end(), ',', '.');
-
-  // Trim trailing zeros and any dangling decimal point.
-  auto rit = std::find_if(value_str.rbegin(), value_str.rend(),
-                          [](char c) { return c != '0'; });
-  value_str = std::string(value_str.begin(), rit.base());
-  if (!value_str.empty() && value_str.back() == '.') {
-    value_str.pop_back();
-  }
-
-  size_t dot_pos = value_str.find('.');
-  if (dot_pos == std::string::npos) {
-    return to_cardinal_int(value_str.empty() ? 0 : std::stoi(value_str));
-  }
-
-  std::string integer_part_str = value_str.substr(0, dot_pos);
-  std::string fractional_part_str = value_str.substr(dot_pos + 1);
-  int32_t integer_part = integer_part_str.empty() ? 0 : std::stoi(integer_part_str);
-
-  // Leading zeros in the fractional part are spoken as "cero" words; the
-  // remaining digits are verbalized as a single cardinal number (e.g. 0,05 ->
-  // "cero coma cero cinco", 123,45 -> "... coma cuarenta y cinco").
-  std::u32string frac_words;
-  size_t pos = 0;
-  while (pos < fractional_part_str.size() && fractional_part_str[pos] == '0') {
-    if (!frac_words.empty()) frac_words += U" ";
-    frac_words += U"cero";
-    pos++;
-  }
-  if (pos < fractional_part_str.size()) {
-    if (!frac_words.empty()) frac_words += U" ";
-    frac_words += to_cardinal_int(std::stoi(fractional_part_str.substr(pos)));
-  }
-
-  return to_cardinal_int(integer_part) + U" coma " + frac_words;
+  return reading;
 }
 
-std::u32string Num2Word::to_ordinal_int(int32_t value, std::u32string_view suffix) const {
-  // The suffix disambiguates gender/number/apocope; the default (no suffix,
-  // e.g. from a "1." token) is masculine singular full form ("primero").
-  bool feminine = (suffix == U"ª" || suffix == U"ªs");
-  bool apocope  = (suffix == U"er" || suffix == U"ers");
-  bool plural   = (suffix == U"ers" || suffix == U"ªs" || suffix == U"ºs");
+// --------------------
+// ----- Readings -----
+// --------------------
 
-  auto inflect = [&](std::u32string word) {
-    if (apocope) {
-      // Only "primero"/"tercero" have distinct apocopated forms; for other
-      // ordinals the "er" suffix is atypical but we fall back to stripping a
-      // trailing "o" to stay consistent.
-      if (!word.empty() && word.back() == U'o') word.pop_back();
-      return word;
+std::u32string Num2Word::read_with(const Number& number, One one) const {
+  if (number.fraction.empty()) {
+    auto n = value_of(number.integer);
+    return !n || spoken_digits(number, 7) ? digits(number.integer) : cardinal(*n, one);
+  }
+
+  // The separator is read as written: tres coma cinco, tres punto cinco
+  std::u32string fraction;
+  if (number.fraction.size() > 2) {
+    fraction = digits(number.fraction);
+  } else {
+    std::vector<std::u32string> words;
+    size_t zeros = number.fraction.find_first_not_of(U'0');
+    words.insert(words.end(), std::min(zeros, number.fraction.size()), U"cero");
+    if (zeros != std::u32string::npos) {
+      words.push_back(cardinal(value_of(number.fraction).value_or(0), one));
     }
-    if (feminine && !word.empty() && word.back() == U'o') {
-      word.back() = U'a';
-    }
-    if (plural) word += U"s";
-    return word;
-  };
+    fraction = join(words);
+  }
+  std::u32string head = number.integer.empty() ? U"" : cardinal(value(number), one == One::UN ? One::UNO : one) + U" ";
+  return head + (number.decimal_mark == U',' ? U"coma " : U"punto ") + fraction;
+}
 
-  if (auto it = num2word::kOrdinals.find(value); it != num2word::kOrdinals.end()) {
-    return inflect(it->second);
+std::u32string Num2Word::read_number(const Number& number, const NumberReading& reading) const {
+  return read_with(number, reading.one);
+}
+
+std::u32string Num2Word::read_code_digits(std::u32string_view text) const {
+  auto n = value_of(text);
+  if ((text.size() > 1 && text[0] == U'0') || text.size() >= 7 || !n) {
+    return digits(text);
+  }
+  return cardinal(*n);
+}
+
+std::u32string Num2Word::read_date(const Match& match, const NumberReading& reading) const {
+  // A law: Ley dos de dos mil dieciocho
+  if (match.numbers.size() == 2) {
+    return cardinal(value(match.numbers[0])) + U" de " + cardinal(value(match.numbers[1]));
   }
 
-  // Fallback for values without a dedicated ordinal entry: read as cardinal.
-  return to_cardinal_int(value);
+  uint64_t day = value(match.numbers[0]);
+  return (day == 1 ? U"primero" : cardinal(day)) + U" de " + kMonths[value(match.numbers[1]) - 1] + U" de " +
+         cardinal(value(match.numbers[2]));
 }
 
-std::u32string Num2Word::to_currency(char32_t currency, std::variant<int32_t, float> number) const {
-  auto it = num2word::kCurrencies.find(currency);
-  if (it == num2word::kCurrencies.end()) {
-    return std::u32string(1, currency);
+std::u32string Num2Word::read_phone(const Match& match, const NumberReading& reading) const {
+  return digits(match.text);
+}
+
+std::u32string Num2Word::read_fraction(const Match& match, const NumberReading& reading) const {
+  return kFractions.at({value(match.numbers[0]), value(match.numbers[1])});
+}
+
+std::u32string Num2Word::read_time(const Match& match, const NumberReading& reading) const {
+  uint64_t minutes = value(match.numbers[1]);
+  return cardinal(value(match.numbers[0]), One::UNA) + (minutes ? U" " + cardinal(minutes) : U"");
+}
+
+std::u32string Num2Word::read_ordinal(const Match& match, const NumberReading& reading) const {
+  uint64_t n = value(match.numbers[0]);
+  std::u32string_view suffix = match.suffix;
+  if (suffix == U"er" && (n == 1 || n == 3)) {
+    return n == 1 ? U"primer" : U"tercer";
+  }
+  bool feminine = suffix == U"ª" || suffix == U"era" || suffix == U"ra" || suffix == U"da" || suffix == U"ta" ||
+                  suffix == U"va" || suffix == U"ma" || suffix == U"na";
+  return ordinal(n, feminine);
+}
+
+std::u32string Num2Word::read_decade(const Match& match, const NumberReading& reading) const {
+  return read_number(match.numbers[0], reading) + U"s"; // los 80s: los ochentas
+}
+
+std::u32string Num2Word::read_money(const Number& number, const Match& match, const NumberReading& reading) const {
+  const Forms& currency = kCurrencies.at(std::u32string(match.unit));
+  One one = currency.one == U"libra" ? One::UNA : One::UN;
+
+  // A price: cinco dólares con cincuenta
+  if (number.fraction.size() == 2 && match.scale.empty()) {
+    Number whole{.integer = number.integer, .grouped = number.grouped};
+    return read_with(whole, one) + U" " + (number.integer == U"1" ? currency.one : currency.many) + U" con " +
+           cardinal(value_of(number.fraction).value_or(0));
   }
 
-  // Singular only for amounts that round to exactly 1 (matches the English
-  // and French conventions).
-  bool is_singular = std::visit([](auto&& arg) -> bool {
-    using T = std::decay_t<decltype(arg)>;
-    if constexpr (std::is_same_v<T, int32_t>) {
-      return arg == 1;
-    } else {
-      return std::abs(arg - 1.0F) < 1e-6F;
-    }
-  }, number);
-
-  return is_singular ? it->second : num2word::kCurrenciesPlural.at(currency);
-}
-
-std::u32string Num2Word::to_fraction(int32_t numerator, int32_t denominator) const {
-  // Numerator takes apocope because it precedes a masculine noun (medio,
-  // tercio, cuarto, or the masculine ordinal form).
-  std::u32string num_word = apocopate(to_cardinal_int(numerator));
-  bool plural = std::abs(numerator) > 1;
-
-  auto with_plural = [&](std::u32string_view base) -> std::u32string {
-    std::u32string w(base);
-    if (plural) w += U"s";
-    return num_word + U" " + w;
-  };
-
-  // Denominators 2/3/4 use dedicated nouns instead of the ordinal form; all
-  // other denominators fall back to the ordinal, agreeing in number.
-  if (denominator == 2) return with_plural(U"medio");
-  if (denominator == 3) return with_plural(U"tercio");
-  if (denominator == 4) return with_plural(U"cuarto");
-
-  std::u32string ord = to_ordinal_int(denominator);
-  if (plural) ord += U"s";
-  return num_word + U" " + ord;
-}
-
-std::u32string Num2Word::to_day(uint32_t day) const {
-  return to_cardinal_int(static_cast<int32_t>(day));
-}
-
-std::u32string Num2Word::to_month(uint32_t month) const {
-  if (month >= 1 && month <= 12) {
-    return num2word::kMonths[month];
+  std::u32string words = match.scale.empty() ? read_with(number, one) : read_scale(number, match, reading);
+  if (reading.named) {
+    return words;
   }
-  return U"";
+  // tres millones de dólares, but cinco mil dólares
+  bool of = !match.scale.empty() && kScales.at(std::u32string(match.scale)) != U"mil";
+  return words + (of ? U" de " : U" ") + (is_one(number) && match.scale.empty() ? currency.one : currency.many);
 }
 
-std::u32string Num2Word::to_year(uint32_t year) const {
-  // Spanish reads years as plain cardinals (e.g. 2026 -> "dos mil veintiséis").
-  return to_cardinal_int(static_cast<int32_t>(year));
+std::u32string Num2Word::read_scale(const Number& number, const Match& match, const NumberReading& reading) const {
+  const std::u32string& scale = kScales.at(std::u32string(match.scale));
+  std::u32string word = scale == U"mil" ? U"mil" : (is_one(number) ? U"millón" : U"millones");
+  return read_with(number, One::UN) + U" " + word;
 }
 
-bool Num2Word::is_ordinal_suffix(std::u32string_view suffix) const {
-  return num2word::kOrdinalSuffixes.contains(std::u32string(suffix));
+std::u32string Num2Word::read_percent(const Number& number, const Match& match, const NumberReading& reading) const {
+  std::u32string suffix = match.suffix.empty() ? U"" : U" " + std::u32string(match.suffix);
+  return read_with(number, One::UNO) + U" por ciento" + suffix;
 }
 
-std::u32string Num2Word::verbalize(const processor::num2word::StringifiedNumber& number) const {
-  using Mode = processor::num2word::Mode;
-
-  // Spanish dates interleave "de" between the day, month, and year parts,
-  // which the base (space-joined) formatter cannot express.
-  if (number.conversionMode == Mode::DATE) {
-    char32_t sep = (number.text.find(U'.') != std::u32string_view::npos) ? U'.' : U'-';
-    size_t first_sep = number.text.find(sep);
-    size_t second_sep = number.text.find(sep, first_sep + 1);
-
-    std::u32string_view p1 = number.text.substr(0, first_sep);
-    std::u32string_view p2 = number.text.substr(first_sep + 1, second_sep - first_sep - 1);
-    std::u32string_view p3 = number.text.substr(second_sep + 1);
-
-    auto val1 = as_int(p1);
-    auto val2 = as_int(p2);
-    auto val3 = as_int(p3);
-    if (!val1 || !val2 || !val3) return U"";
-
-    // ISO: YYYY-MM-DD, otherwise DD.MM.YYYY (or DD-MM-YYYY).
-    if (p1.size() == 4) {
-      return to_day(static_cast<uint32_t>(*val3)) + U" de " + to_month(*val2) + U" de " + to_year(*val1);
-    }
-    return to_day(static_cast<uint32_t>(*val1)) + U" de " + to_month(*val2) + U" de " + to_year(*val3);
-  }
-
-  std::u32string result = Num2WordLayer::verbalize(number);
-
-  // The base produces "<cardinal> <currency>"; apocopate the cardinal half so
-  // amounts of 1 (or ending in "uno") read as "un <noun>" instead of "uno <noun>".
-  if (number.conversionMode == Mode::CURRENCY) {
-    size_t last_space = result.rfind(U' ');
-    if (last_space != std::u32string::npos) {
-      std::u32string head = result.substr(0, last_space);
-      std::u32string tail = result.substr(last_space);
-      result = apocopate(std::move(head)) + tail;
-    }
-  }
-
-  return result;
+std::u32string Num2Word::read_unit(const Number& number, const Match& match, const NumberReading& reading) const {
+  const Forms& unit = kUnits.at(std::u32string(match.unit));
+  std::u32string_view first_word = std::u32string_view(unit.one).substr(0, unit.one.find(U' '));
+  One one = feminine(first_word) ? One::UNA : One::UN;
+  return read_with(number, one) + U" " + (is_one(number) ? unit.one : unit.many);
 }
 
 } // namespace phonemis::es

@@ -1,72 +1,46 @@
+#include "processing.h"
 #include "test.h"
 #include <phonemis/lang/en/num2word.h>
 #include <phonemis/utils/io.h>
 
 namespace phonemis::test {
 
-using namespace en;
+// English readings follow the Echo verbalizer; ISO dates are read by phonemis only.
+REGISTER_TEST(num2word_en_test) {
+  en::Num2Word layer;
 
-REGISTER_TEST(num2word_en_basic_transform_test)
-{
-    Num2Word layer;
+  ASSERT_EQUALS(U"The meeting is at ten thirty, about twenty to twenty-five minutes.",
+                apply(layer, U"The meeting is at 10:30, about 20-25 minutes."));
+  ASSERT_EQUALS(U"He was born on March third, nineteen ninety, and paid one point five million dollars.",
+                apply(layer, U"He was born on March 3, 1990, and paid $1.5 million."));
+  ASSERT_EQUALS(U"About one thousand nine hundred ninety-nine people, a five dollar bill and SCP six oh six's.",
+                apply(layer, U"About 1999 people, a $5 bill and SCP-606's."));
+  ASSERT_EQUALS(U"It costs four ninety-nine or ninety-nine cents, maybe fifteen euros or fifty dollars.",
+                apply(layer, U"It costs $4.99 or 99 cents, maybe €15 or 50$."));
+  ASSERT_EQUALS(U"The twenty-first century began in two thousand one; the nineteen nineties and eighties were fun.",
+                apply(layer, U"The 21st century began in 2001; the 1990s and '80s were fun."));
+  ASSERT_EQUALS(U"A seventy-five millimeter gun fired three rounds at seven p.m., ten to fifteen kilometers away.",
+                apply(layer, U"A 75mm gun fired 3 rounds at 7pm, 10-15 km away."));
+  ASSERT_EQUALS(U"Version three point eight point ten runs on ten dot zero dot zero dot fifty-one with nineteen twenty by ten eighty screens.",
+                apply(layer, U"Version 3.8.10 runs on 10.0.0.51 with 1920x1080 screens."));
+  ASSERT_EQUALS(U"Call one five five five, one two three, four five six seven or five five five, one two three four now.",
+                apply(layer, U"Call 1-555-123-4567 or 555-1234 now."));
+  ASSERT_EQUALS(U"Temperatures of minus five degrees Celsius, twenty percent humidity and one half of the three/seven votes.",
+                apply(layer, U"Temperatures of -5 °C, 20% humidity and 1/2 of the 3/7 votes."));
+  ASSERT_EQUALS(U"The score was two to one and five minus three equals two.",
+                apply(layer, U"The score was 2:1 and 5 - 3 equals 2."));
+  ASSERT_EQUALS(U"MP three, COVID nineteen, F sixteens and H two sixty-four are codes; a twenty-one-year-old won.",
+                apply(layer, U"MP3, COVID-19, F-16s and H.264 are codes; a 21-year-old won."));
+  ASSERT_EQUALS(U"It's one thirteen not one thirteen, and two plus two.",
+                apply(layer, U"It's 1.13 not 1:13, and 2 + 2."));
+  ASSERT_EQUALS(U"On twenty-seventh March twenty twenty-six and twenty-seventh March twenty twenty-six we met.",
+                apply(layer, U"On 2026-03-27 and 27.03.2026 we met."));
+  ASSERT_EQUALS(U"We counted one million people and point five of them.",
+                apply(layer, U"We counted 1,000,000 people and .5 of them."));
+  ASSERT_EQUALS(U"The four K screen and five hundred thousand fans, three billion dollars.",
+                apply(layer, U"The 4K screen and 500k fans, 3 bn dollars."));
 
-    // Integers and Floats
-    ASSERT_EQUALS(U"one hundred and twenty three", layer.transform(U"123"));
-    ASSERT_EQUALS(U"one hundred and twenty three point four five", layer.transform(U"123.45"));
-
-    // Fractions
-    ASSERT_EQUALS(U"one second", layer.transform(U"1/2"));
-    ASSERT_EQUALS(U"three tenth", layer.transform(U"3/10"));  // TODO: change after fixing the num2word
-
-    // Currency
-    ASSERT_EQUALS(U"one dollar", layer.transform(U"1$"));
-    ASSERT_EQUALS(U"fifty dollars", layer.transform(U"50$"));
-    ASSERT_EQUALS(U"one euro", layer.transform(U"1.00€"));
-    ASSERT_EQUALS(U"The price is ninety nine euros.", layer.transform(U"The price is 99€."));
-
-    return true;
-}
-
-REGISTER_TEST(num2word_en_ordinal_test)
-{
-    Num2Word layer;
-
-    // Potentialy ordinal
-    ASSERT_EQUALS(U"first", layer.transform(U"1st"));
-    ASSERT_EQUALS(U"second", layer.transform(U"2nd"));
-    ASSERT_EQUALS(U"third", layer.transform(U"3rd"));
-    ASSERT_EQUALS(U"twelfth", layer.transform(U"12th"));
-    ASSERT_EQUALS(U"twenty first", layer.transform(U"21st"));
-
-    return true;
-}
-
-REGISTER_TEST(num2word_en_date_test)
-{
-    Num2Word layer;
-
-    ASSERT_EQUALS(U"twenty seventh March twenty twenty six", layer.transform(U"27.03.2026"));
-    ASSERT_EQUALS(U"Today is twenty seventh March twenty twenty six.", layer.transform(U"Today is 27-03-2026."));
-    ASSERT_EQUALS(U"Today is twenty seventh March twenty twenty six.", layer.transform(U"Today is 2026-03-27."));
-
-    return true;
-}
-
-REGISTER_TEST(num2word_en_complex_test)
-{
-    processor::num2word::Config config;
-    config.allow_general_ord_notation = true;
-    Num2Word layer(config);
-
-    std::u32string input = U"On 2026-03-27, the 1st runner finished 1/2 of the race. "
-                            "He was 1. in line, while the 2nd followed at 12.5 seconds.";
-    
-    std::u32string expected = U"On twenty seventh March twenty twenty six, the first runner finished one second of the race. "
-                               "He was first in line, while the second followed at twelve point five seconds.";
-
-    ASSERT_EQUALS(expected, layer.transform(input));
-
-    return true;
+  return true;
 }
 
 } // namespace phonemis::test

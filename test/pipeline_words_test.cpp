@@ -82,6 +82,17 @@ REGISTER_TEST(pipeline_words_spelled_out_number_test) {
   return true;
 }
 
+REGISTER_TEST(pipeline_words_spelled_out_term_test) {
+  // Abbreviations and symbols can spell out as several words too.
+  StubPipeline pipeline({{U"see e.g. this", U"see for example this"},
+                         {U"e.g.", U"for example"}});
+  std::u32string text = U"see e.g. this";
+
+  ASSERT_EQUALS(U"see:see|e.g.:for example|this:this",
+                describe(text, pipeline.phonemize_words(text)));
+  return true;
+}
+
 REGISTER_TEST(pipeline_words_dropped_number_test) {
   // A number that preprocessing removes keeps the words after it in place.
   StubPipeline pipeline({{U"a 99 b", U"a b"}, {U"99", U""}});
@@ -125,8 +136,18 @@ REGISTER_TEST(pipeline_words_en_us_test) {
   auto result = g_en_pipeline.phonemize_words(text);
 
   ASSERT_EQUALS(g_en_pipeline(text), result.phonemes);
-  ASSERT_EQUALS(U"He's:hˌiz|25:twˈɛnti fˈIv|years:jˈɪɹz|old.:ˈOld.|It's:ˌɪts|10:30:tˈɛn:θˈɜɹɾi|PM.:pˌiˈɛm.",
+  ASSERT_EQUALS(U"He's:hˌiz|25:twˈɛntifˈIv|years:jˈɪɹz|old.:ˈOld.|It's:ˌɪts|10:30:tˈɛn θˈɜɹɾi|PM.:pˌiˈɛm.",
                 describe(text, result));
+  return true;
+}
+
+REGISTER_TEST(pipeline_words_en_us_terms_test) {
+  std::u32string text = U"Tom & Jerry, e.g. example.com.";
+  auto result = g_en_pipeline.phonemize_words(text);
+
+  ASSERT_EQUALS(g_en_pipeline(text), result.phonemes);
+  ASSERT_EQUALS(5, result.words.size());
+  ASSERT_EQUALS(U"e.g.", text.substr(result.words[3].offset, result.words[3].length));
   return true;
 }
 
